@@ -1208,5 +1208,53 @@ async function sendForm() {
   </div>
 </nav>
 
+
+<!-- summer-buttons-enhancer -->
+<script>
+(function(){
+  function init(){
+    try {
+      var nav = [].slice.call(document.querySelectorAll('a')).find(function(a){
+        return /\u041b\u0435\u0442\u043e 2026/.test(a.textContent) && (a.closest('nav') || a.closest('header'));
+      });
+      if (nav) { nav.setAttribute('href','#summer'); nav.removeAttribute('target'); }
+      var section = document.getElementById('summer');
+      if (!section) return;
+      var k = [].slice.call(section.querySelectorAll('a')).find(function(a){
+        return a.textContent.indexOf('\u041a\u0440\u0430\u0441\u043a\u0438 \u043b\u0435\u0442\u0430') > -1;
+      });
+      if (!k) return;
+      if (k.parentNode.querySelector('[data-summer-buttons]')) return;
+      var wrap = document.createElement('div');
+      wrap.setAttribute('data-summer-buttons','1');
+      wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:24px;';
+      var c1 = document.createElement('div');
+      c1.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:10px;';
+      c1.appendChild(k.cloneNode(true));
+      var l1 = document.createElement('span');
+      l1.style.cssText = 'font-size:.85rem;color:rgba(255,255,255,.85);font-weight:600;';
+      l1.textContent = '\u0410\u043d\u0433\u043b\u0438\u0439\u0441\u043a\u0438\u0439 \u043a\u043b\u0443\u0431 \u043e\u0444\u043b\u0430\u0439\u043d';
+      c1.appendChild(l1);
+      var c2 = document.createElement('div');
+      c2.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:10px;';
+      var b2 = document.createElement('a');
+      b2.href = 'https://continuum.speakandsmile.ru';
+      b2.target = '_blank';
+      b2.style.cssText = 'display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#F5C842,#E8930A);color:#1C1228;padding:16px 36px;border-radius:100px;font-size:1rem;font-weight:700;text-decoration:none;box-shadow:0 8px 32px rgba(0,0,0,.2);';
+      b2.textContent = '\ud83c\udf10 \u041a\u043e\u043d\u0442\u0438\u043d\u0443\u0443\u043c 2026 \u2192';
+      c2.appendChild(b2);
+      var l2 = document.createElement('span');
+      l2.style.cssText = 'font-size:.85rem;color:rgba(255,255,255,.85);font-weight:600;';
+      l2.textContent = '\u041e\u043d\u043b\u0430\u0439\u043d \u0432\u0441\u0451 \u043b\u0435\u0442\u043e';
+      c2.appendChild(l2);
+      wrap.appendChild(c1);
+      wrap.appendChild(c2);
+      k.parentNode.replaceChild(wrap, k);
+    } catch(e){console.error('summer-enhancer:',e);}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
 </body>
 </html>
