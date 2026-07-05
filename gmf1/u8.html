@@ -237,7 +237,7 @@ var GRAM_HIGH=[
  T({type:"mc",tt:"Read and circle",instr:"Read and circle.",say:"I'm wearing boots.",prompt:"🥾  I'm ___ boots.",opts:["wearing","drinking"],ans:"wearing"})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 clothes you like.",say:"a hat, a coat, boots",ans:"FREE",ph:"___, ___, ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 clothes you like.",say:"a hat, a coat, boots",ans:"LIST3",ph:"___, ___, ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"I'm wearing a hat and a coat.",words:["wearing","I'm","a","hat","and","coat","a"],ans:"I'm wearing a hat and a coat"}),
  T({type:"type",tt:"Ask a question",instr:"Ask what they are wearing. Write.",say:"What are you wearing?",ans:"what are you wearing",ph:"What are you ___?"}),
  T({type:"type",tt:"Write about you",instr:"What's your favourite clothes? Write.",say:"My favourite clothes are jeans.",ans:"FREE",ph:"My favourite ___."}),
@@ -394,7 +394,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

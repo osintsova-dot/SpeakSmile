@@ -237,7 +237,7 @@ var GRAM_HIGH=[
  T({type:"mc",tt:"Read and circle",instr:"Read and circle.",say:"I have lunch in the afternoon.",prompt:"🍱  I have lunch in the ___.",opts:["afternoon","night"],ans:"afternoon"})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 things you do every day.",say:"breakfast, school, homework",ans:"FREE",ph:"___, ___, ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 things you do every day.",say:"breakfast, school, homework",ans:"LIST3",ph:"___, ___, ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"I have breakfast in the morning.",words:["have","I","breakfast","in","the","morning"],ans:"I have breakfast in the morning"}),
  T({type:"type",tt:"Ask a question",instr:"Ask when they go to bed. Write.",say:"When do you go to bed?",ans:"when do you",ph:"When do you ___?"}),
  T({type:"type",tt:"Write about you",instr:"What do you do in the morning? Write.",say:"I have breakfast and go to school.",ans:"FREE",ph:"In the morning I ___."}),
@@ -394,7 +394,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

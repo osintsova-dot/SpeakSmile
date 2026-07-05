@@ -237,7 +237,7 @@ var GRAM_HIGH=[
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"Do you like pasta?",words:["you","Do","pasta","like","?"],ans:"Do you like pasta ?"})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 foods you like.",say:"pizza, rice, fish",ans:"FREE",ph:"___, ___, ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 foods you like.",say:"pizza, rice, fish",ans:"LIST3",ph:"___, ___, ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"I love pizza and pasta.",words:["love","I","and","pasta","pizza"],ans:"I love pizza and pasta"}),
  T({type:"type",tt:"Ask a question",instr:"Ask about food. Write.",say:"Do you like fish?",ans:"do you like",ph:"Do you like ___?"}),
  T({type:"type",tt:"Write about you",instr:"What's your favourite food? Write.",say:"My favourite food is pizza.",ans:"FREE",ph:"My favourite food is ___."}),
@@ -394,7 +394,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

@@ -237,7 +237,7 @@ var GRAM_HIGH=[
  T({type:"mc",tt:"Read and circle",instr:"Read and circle.",say:"She's got blue eyes.",prompt:"👀  She's got ___ eyes.",opts:["blue","tall"],ans:"blue"})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 parts of the body.",say:"eyes, nose, hands",ans:"FREE",ph:"___, ___, ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 parts of the body.",say:"eyes, nose, hands",ans:"LIST3",ph:"___, ___, ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"I've got two big eyes.",words:["got","I've","two","eyes","big"],ans:"I've got two big eyes"}),
  T({type:"type",tt:"Ask a question",instr:"Ask about hair. Write.",say:"Have you got long hair?",ans:"have you got",ph:"Have you got ___?"}),
  T({type:"type",tt:"Write about you",instr:"Describe your friend. Write.",say:"My friend has got curly hair.",ans:"FREE",ph:"My friend has got ___."}),
@@ -394,7 +394,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

@@ -237,7 +237,7 @@ var GRAM_HIGH=[
  T({type:"mc",tt:"Read and circle",instr:"Read and circle.",say:"There is a hospital.",prompt:"🏥  There ___ a hospital.",opts:["is","are"],ans:"is"})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 places in your town.",say:"a park, a school, a shop",ans:"FREE",ph:"a ___, a ___, a ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 places in your town.",say:"a park, a school, a shop",ans:"LIST3",ph:"a ___, a ___, a ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"There are two big parks.",words:["are","There","two","parks","big"],ans:"There are two big parks"}),
  T({type:"type",tt:"Ask a question",instr:"Ask how many. Write.",say:"How many shops are there?",ans:"how many",ph:"How many ___?"}),
  T({type:"type",tt:"Write about you",instr:"What's your favourite place? Write.",say:"My favourite place is the park.",ans:"FREE",ph:"My favourite place is ___."}),
@@ -394,7 +394,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

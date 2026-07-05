@@ -238,7 +238,7 @@ var GRAM_HIGH=[
  T({type:"yesno",promptImg:"doll",tt:"Write yes or no",instr:"Look and read. Write yes or no.",say:"Is it a car?",statement:"Is it a car?",ans:"no",short:["Yes, it is.","No, it isn't."]})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 toys you like.",say:"a bike, a ball, a robot",ans:"FREE",ph:"a ___, a ___, a ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 toys you like.",say:"a bike, a ball, a robot",ans:"LIST3",ph:"a ___, a ___, a ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"It's a big fast car.",words:["a","It's","fast","car","big"],ans:"It's a big fast car"}),
  T({type:"type",tt:"Ask a question",instr:"Ask about a toy. Write.",say:"Is it a robot?",ans:"is it a",ph:"Is it a ___?"}),
  T({type:"type",tt:"Write about you",instr:"What's your favourite toy? Write.",say:"My favourite toy is a robot.",ans:"FREE",ph:"My favourite toy is a ___."}),
@@ -395,7 +395,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

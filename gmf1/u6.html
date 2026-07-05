@@ -237,7 +237,7 @@ var GRAM_HIGH=[
  T({type:"scene",prep:"behind",tt:"Look, read and circle",instr:"Where's the ball?",say:"The ball is behind the tree.",opts:["behind","in front of","next to"],ans:"behind"})
 ];
 var BOOST=[
- T({type:"type",tt:"Write a list",instr:"Write 3 things in the park.",say:"a swing, a slide, a tree",ans:"FREE",ph:"a ___, a ___, a ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 things in the park.",say:"a swing, a slide, a tree",ans:"LIST3",ph:"a ___, a ___, a ___"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"The cat is under the tree.",words:["is","The","cat","the","under","tree"],ans:"The cat is under the tree"}),
  T({type:"type",tt:"Ask a question",instr:"Ask where the ball is. Write.",say:"Where's the ball?",ans:"where",ph:"Where's the ___?"}),
  T({type:"type",tt:"Write about you",instr:"Where do you play? Write.",say:"I play in the park.",ans:"FREE",ph:"I play ___."}),
@@ -394,7 +394,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (" "+w+" ").indexOf(" "+a+" ")>=0; }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);

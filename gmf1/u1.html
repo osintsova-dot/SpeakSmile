@@ -236,7 +236,7 @@ var GRAM_HIGH=[
 var BOOST=[
  T({type:"scene",prep:"in",tt:"Look, read and circle",instr:"Where's the pencil?",say:"The pencil is in the bag.",opts:["in","on","under"],ans:"in"}),
  T({type:"order",tt:"Order the words",instr:"Order the words.",say:"Put the ruler under the chair.",words:["the","ruler","under","Put","chair","the"],ans:"Put the ruler under the chair"}),
- T({type:"type",tt:"Write a list",instr:"Write 3 things in your school bag.",say:"a pencil, a book, a ruler",ans:"FREE",ph:"a ___, a ___, a ___"}),
+ T({type:"type",tt:"Write a list",instr:"Write 3 things in your school bag.",say:"a pencil, a book, a ruler",ans:"LIST3",ph:"a ___, a ___, a ___"}),
  T({type:"type",tt:"Ask a question",instr:"Ask to borrow a ruler. Write.",say:"May I borrow your ruler?",ans:"may i borrow|can i borrow|may i have",ph:"___ I borrow your ruler?"}),
  T({type:"type",tt:"Read and write",instr:"Where's your pencil now? Write a sentence.",say:"It's in my bag.",ans:"in|on|under|near|behind|next",ph:"It's ___ my ___."}),
  T({type:"me",tt:"Draw and write",instr:"Draw your school bag. Write: I've got a…",say:"I've got a pencil and a book."})
@@ -396,7 +396,7 @@ function onCheck(){ var t=tasks[idx];
   else if(t.type==="gaps"){ var cm=t.miss.map(function(p){return t.ans[p];}).join(""); ok=(norm(workAns)===norm(cm)); corr=t.ans; }
   else if(t.type==="number"){ ok=(workAns==="ALL"); }
   else if(t.type==="type"){ var w=norm(workAns);
-     if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
+     if(t.ans==="LIST3"){ var it=(w.indexOf(",")>=0?w.split(","):w.split(" ")).map(function(x){return x.trim();}).filter(Boolean); ok=it.length>=3; corr="3: a, b, c"; } else if(t.ans==="FREE"){ ok=(w.length>0); corr=""; }
      else { var acc=t.ans.split("|"); ok=acc.some(function(a){ a=norm(a); return w===a || (a.split(" ").length===1 && (" "+w+" ").indexOf(" "+a+" ")>=0); }); corr=acc[0]; } }
   else if(t.type==="matchImg"){ ok=(workAns==="ALL"); }
   finish(ok,ok?"":"👉 "+corr);
