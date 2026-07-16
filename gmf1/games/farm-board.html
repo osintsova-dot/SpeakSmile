@@ -16,6 +16,7 @@
   .score{ margin-left:auto; display:flex; align-items:center; gap:9px; font-weight:800; font-size:clamp(12px,1.9vh,17px); }
   .score .s{ display:flex; align-items:center; gap:4px; }
   .score .s b{ width:13px;height:13px;border-radius:50%;display:inline-block;border:1.5px solid #fff; }
+  .homebtn{ border:0; background:rgba(255,255,255,.2); color:#fff; font-size:17px; border-radius:10px; padding:6px 11px; cursor:pointer; font-weight:800; }
   .turn{ margin-left:14px; display:flex; align-items:center; gap:8px; font-weight:800; font-size:clamp(13px,2vh,18px); white-space:nowrap; }
   .turn .dot{ width:18px;height:18px;border-radius:50%;border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.3); }
 
@@ -100,6 +101,7 @@
 
 <div id="app">
   <div class="topbar">
+    <button class="homebtn" id="home" title="К темам">☰</button>
     <div class="title" id="gtitle">🎲</div>
     <div class="score" id="score"></div>
     <div class="turn" id="turn"></div>
@@ -138,6 +140,7 @@
   <div style="margin-top:14px;font-weight:800;color:var(--p)">Сколько игроков?</div>
   <div class="pcount" id="pcount"></div>
   <div class="cbtns"><button class="cbtn next" id="startBtn">Играть! ▶</button></div>
+  <div style="margin-top:12px"><a href="index.html" style="color:#8a83a0;font-weight:700;font-size:14px;text-decoration:none">← выбрать другую тему</a></div>
 </div></div>
 
 <!-- win -->
@@ -145,7 +148,7 @@
   <img class="speaky" id="winSp" alt="" style="height:150px">
   <h1 style="color:var(--p)" id="winTxt">🏆 Победа!</h1>
   <div id="winPts" style="font-weight:800;color:#b3760a;margin-top:4px"></div>
-  <div class="cbtns"><button class="cbtn next" id="againBtn">Ещё раз 🎲</button></div>
+  <div class="cbtns"><button class="cbtn next" id="againBtn">Ещё раз 🎲</button><button class="cbtn again" onclick="location.href='index.html'">☰ Темы</button></div>
 </div></div>
 
 <script>
@@ -282,7 +285,7 @@ const ASSETS = {"title": "Ферма", "emoji": "🐄", "bg": "data:image/jpeg;b
   const modal=$("#modal"), mPic=$("#mPic"), mAns=$("#mAns");
   const mAsk=$("#mAsk"); let curSay="";
   function showCard(ask, picSrc, ansText, sayText){ mAsk.textContent=ask; if(picSrc){ mPic.src=picSrc; mPic.style.display=""; } else { mPic.style.display="none"; } mAns.textContent=ansText; curSay=sayText; mAns.classList.remove("show"); modal.classList.add("on"); setTimeout(()=>speak(ask),350); }
-  function showItem(item){ showCard("What's this?", item.img, item.say+"!", item.say); }
+  function showItem(item){ showCard(item.ask||"What's this?", item.img, item.say+"!", item.say); }
   function showGrammar(g){ showCard(g.q, imgByWord[g.word]||"", g.a, g.say||g.a); }
   $("#sayBtn").onclick=()=>{ speak(curSay); mAns.classList.add("show"); };
   $("#nextBtn").onclick=()=>{ modal.classList.remove("on"); addPoints(cur,1); endTurn(false); };
@@ -304,6 +307,7 @@ const ASSETS = {"title": "Ферма", "emoji": "🐄", "bg": "data:image/jpeg;b
 
   rollBtn.onclick=roll;
   $("#reset").onclick=()=>{ cur=0; makeTokens(); };
+  $("#home").onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); cur=0; makeTokens(); };
 
   // ---------- setup screen ----------
