@@ -270,7 +270,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   let curWord="";
   function word2say(w){ return w.replace(/_/g," "); }
   function sentence(w){ const x=word2say(w); return "It's "+(/^[aeiou]/i.test(x)?"an":"a")+" "+x; }
-  function showAnimal(word){ curWord=word; mPic.src=ASSETS.animals[word]; mAns.textContent=sentence(word)+"!"; mAns.classList.remove("show"); modal.classList.add("on"); }
+  function showAnimal(word){ curWord=word; mPic.src=ASSETS.animals[word]; mAns.textContent=sentence(word)+"!"; mAns.classList.remove("show"); modal.classList.add("on"); setTimeout(()=>speak("What's this?"),350); }
   $("#sayBtn").onclick=()=>{ speak(sentence(curWord)); mAns.classList.add("show"); };
   $("#nextBtn").onclick=()=>{ modal.classList.remove("on"); addPoints(cur,1); endTurn(false); };
 
