@@ -12,6 +12,7 @@
 
   .topbar{ display:flex; align-items:center; gap:8px; padding:7px 12px; background:rgba(0,0,0,.28); flex-wrap:wrap; z-index:5; }
   .homebtn,.finbtn{ border:0; background:rgba(255,255,255,.22); color:#fff; font-size:14px; font-weight:800; border-radius:10px; padding:6px 11px; cursor:pointer; }
+  .qcount{ font-weight:800; font-size:14px; background:rgba(245,200,66,.24); color:#fff; padding:6px 10px; border-radius:10px; }
   .title{ font-weight:800; font-size:clamp(13px,2.1vh,19px); }
   .scores{ margin-left:auto; display:flex; gap:6px; flex-wrap:wrap; }
   .sc{ position:relative; display:flex; align-items:center; gap:6px; font-weight:800; font-size:clamp(13px,2vh,18px);
@@ -81,6 +82,15 @@
   .opts{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
   .opt{ min-width:52px; padding:10px 14px; border-radius:14px; border:3px solid #e6ddf5; background:#faf8fe; color:var(--p); font-weight:800; font-size:17px; cursor:pointer; }
   .opt.sel{ border-color:var(--p); background:#efe7fb; }
+  .ballrow{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .ballslot{ display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; }
+  .ballslot canvas{ width:48px; height:48px; }
+  .ballslot .nm{ font-size:11px; font-weight:800; }
+  .ballgrid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0; }
+  .ballopt{ display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; padding:6px 2px; border-radius:12px; border:2px solid transparent; }
+  .ballopt.sel{ border-color:var(--p); background:#efe7fb; }
+  .ballopt canvas{ width:52px; height:52px; }
+  .ballopt .nm{ font-size:10px; font-weight:700; color:#6d6584; }
   #confetti{ position:fixed; inset:0; z-index:16; pointer-events:none; }
   .toast{ position:fixed; left:50%; top:14%; transform:translateX(-50%); z-index:15; background:rgba(0,0,0,.82); color:#fff; font-weight:800; padding:12px 20px; border-radius:14px; font-size:clamp(16px,2.6vh,22px); opacity:0; transition:opacity .2s; pointer-events:none; max-width:90vw; text-align:center; }
   .toast.on{ opacity:1; }
@@ -90,6 +100,7 @@
   <div class="topbar">
     <button class="homebtn" id="home">☰ Темы</button>
     <div class="title" id="gtitle">🎳 Квиз</div>
+    <div class="qcount" id="qcount">❓ 16</div>
     <button class="finbtn" id="fin">🏁 Финиш</button>
     <div class="scores" id="scores"></div>
   </div>
@@ -135,11 +146,19 @@
 <div class="ov setup on" id="setup"><div class="card">
   <img class="speaky" id="spImg" alt="Speaky">
   <h1 id="setupTitle">Квиз-боулинг!</h1>
-  <div style="color:#6d6584;font-weight:600;font-size:14px">Возьми (или нет) трики-подарок → выбери дорожку 1–5 → катни шар! Сколько кеглей собьёшь — столько очков на кону (все 10 = 🔥 СТРАЙК +5!). Ответь верно — очки твои!</div>
+  <div style="color:#6d6584;font-weight:600;font-size:14px">Возьми (или нет) трики-подарок → выбери дорожку 1–5 → катни шар! Сколько кеглей собьёшь — столько очков на кону (все 10 = 🔥 СТРАЙК +5!). Ответь верно — очки твои! Кто наберёт больше за все вопросы — победил! 🏆</div>
   <div class="grp"><div class="lab">Сколько команд?</div><div class="opts" id="teamOpts"></div></div>
-  <div class="grp"><div class="lab">Играем до…</div><div class="opts" id="targetOpts"></div></div>
+  <div class="grp"><div class="lab">Сколько вопросов?</div><div class="opts" id="targetOpts"></div></div>
+  <div class="grp"><div class="lab">Шар команды 🎨 (тап — сменить)</div><div class="ballrow" id="teamBalls"></div></div>
   <div class="cbtns"><button class="cbtn ok" id="startBtn">Играть! ▶</button></div>
   <div style="margin-top:10px"><a href="index.html" style="color:#8a83a0;font-weight:700;font-size:14px;text-decoration:none">← выбрать другую тему</a></div>
+</div></div>
+
+<!-- ball picker -->
+<div class="ov" id="ballpick"><div class="card">
+  <h1 style="font-size:22px" id="ballpickTitle">Выбери шар</h1>
+  <div class="ballgrid" id="ballgrid"></div>
+  <div class="cbtns"><button class="cbtn ok" id="ballpickClose">Готово ✓</button></div>
 </div></div>
 
 <!-- win -->
@@ -163,6 +182,7 @@ const ASSETS = {"title": "День", "emoji": "🌙", "bg": "data:image/jpeg;bas
   if(ASSETS.speaky) $("#spImg").src=ASSETS.speaky;
   const COLORS=["#FF5D5D","#4D96FF","#38C976","#B15CFF"], NAMES=["Красные","Синие","Зелёные","Фиолетовые"];
   const TILECOL=["#8A5FD8","#4DA6E8","#F2789F","#F5B53C","#EF6A5A"];
+  let teamSkin=[0,1,8,3];
   const lerp=(a,b,t)=>a+(b-a)*t;
 
   // ---------- questions: round-robin by theme ----------
@@ -233,18 +253,32 @@ const ASSETS = {"title": "День", "emoji": "🌙", "bg": "data:image/jpeg;bas
     ctx.fillStyle="#FF5D5D"; roundRectPath(-w*0.34,-h*0.62,w*0.68,h*0.14,w*0.1); ctx.fill();
     ctx.restore();
   }
-  function ballFill(){ const c=COLORS[cur]; return c; }
+  // ----- ball skins (own designs, no trademarked characters) -----
+  function ccirc(g,r){ g.beginPath(); g.arc(0,0,r,0,7); }
+  function c2(g,cx,cy,rr){ g.beginPath(); g.arc(cx,cy,rr,0,7); }
+  function rad(g,c1,c2c,r){ const gr=g.createRadialGradient(-r*0.3,-r*0.35,r*0.15,0,0,r); gr.addColorStop(0,"#fff"); gr.addColorStop(.3,c1); gr.addColorStop(1,c2c); return gr; }
+  function shine(g,r){ g.fillStyle="rgba(255,255,255,.42)"; g.beginPath(); g.ellipse(-r*0.33,-r*0.4,r*0.26,r*0.16,-0.5,0,7); g.fill(); }
+  function star(g,cx,cy,ro,col){ g.save(); g.fillStyle=col; g.beginPath(); for(let i=0;i<10;i++){ const rr=i%2?ro*0.45:ro; const a=-Math.PI/2+i*Math.PI/5; const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr; i?g.lineTo(x,y):g.moveTo(x,y);} g.closePath(); g.fill(); g.restore(); }
+  function pent(g,cx,cy,ro,rot){ rot=rot||0; g.beginPath(); for(let i=0;i<5;i++){ const a=-Math.PI/2+rot+i*2*Math.PI/5; const x=cx+Math.cos(a)*ro,y=cy+Math.sin(a)*ro; i?g.lineTo(x,y):g.moveTo(x,y);} g.closePath(); g.fill(); }
+  function clipC(g,r){ g.save(); g.beginPath(); g.arc(0,0,r,0,7); g.clip(); }
+  const SKINS=[
+    {name:"Супергерой",draw(g,r){ g.fillStyle=rad(g,"#ff5a5a","#b3122e",r); ccirc(g,r); g.fill(); clipC(g,r); g.fillStyle="#2f6fe0"; g.fillRect(-r,r*0.28,2*r,r); g.restore(); star(g,0,-r*0.02,r*0.5,"#ffd23f"); shine(g,r); }},
+    {name:"Гоглы",draw(g,r){ g.fillStyle=rad(g,"#ffd83a","#e0a500",r); ccirc(g,r); g.fill(); clipC(g,r); g.fillStyle="#3a6ea5"; g.fillRect(-r,r*0.42,2*r,r); g.strokeStyle="#555"; g.lineWidth=r*0.16; g.beginPath(); g.moveTo(-r,-r*0.06); g.lineTo(r,-r*0.06); g.stroke(); g.restore(); g.fillStyle="#c9ced3"; c2(g,0,-r*0.06,r*0.34); g.fill(); g.fillStyle="#fff"; c2(g,0,-r*0.06,r*0.23); g.fill(); g.fillStyle="#6a4a2a"; c2(g,r*0.05,-r*0.06,r*0.1); g.fill(); g.fillStyle="#000"; c2(g,r*0.07,-r*0.06,r*0.05); g.fill(); shine(g,r); }},
+    {name:"Космос",draw(g,r){ g.fillStyle=rad(g,"#5a4b8a","#181233",r); ccirc(g,r); g.fill(); clipC(g,r); [[-.4,-.3,.16],[.32,-.42,.13],[.44,.2,.13],[-.22,.4,.13],[.08,.05,.1]].forEach(s=>star(g,s[0]*r,s[1]*r,s[2]*r,"#fff")); g.fillStyle="#f2a154"; c2(g,r*0.34,r*0.42,r*0.19); g.fill(); g.strokeStyle="#ffd7a1"; g.lineWidth=r*0.05; g.beginPath(); g.ellipse(r*0.34,r*0.42,r*0.34,r*0.12,-0.5,0,7); g.stroke(); g.restore(); shine(g,r); }},
+    {name:"Инь-Ян",draw(g,r){ g.fillStyle="#f4f4f4"; ccirc(g,r); g.fill(); clipC(g,r); g.fillStyle="#1c1c2b"; g.beginPath(); g.arc(0,0,r,-Math.PI/2,Math.PI/2,false); g.closePath(); g.fill(); g.beginPath(); g.arc(0,r/2,r/2,0,7); g.fill(); g.fillStyle="#f4f4f4"; g.beginPath(); g.arc(0,-r/2,r/2,0,7); g.fill(); g.beginPath(); g.arc(0,r/2,r*0.13,0,7); g.fill(); g.fillStyle="#1c1c2b"; g.beginPath(); g.arc(0,-r/2,r*0.13,0,7); g.fill(); g.restore(); shine(g,r); }},
+    {name:"Радуга",draw(g,r){ clipC(g,r); const cols=["#e2542f","#F5A623","#F5C842","#38C976","#4D96FF","#8A5FD8"]; cols.forEach((c,i)=>{ g.fillStyle=c; g.beginPath(); g.moveTo(0,0); g.arc(0,0,r,i*Math.PI/3,(i+1)*Math.PI/3); g.closePath(); g.fill(); }); g.restore(); shine(g,r); }},
+    {name:"Футбол",draw(g,r){ g.fillStyle="#fff"; ccirc(g,r); g.fill(); clipC(g,r); g.fillStyle="#20202a"; pent(g,0,0,r*0.4); for(let i=0;i<5;i++){ const a=-Math.PI/2+i*2*Math.PI/5; pent(g,Math.cos(a)*r*0.9,Math.sin(a)*r*0.9,r*0.28,a);} g.restore(); g.strokeStyle="#d8d8e0"; g.lineWidth=r*0.03; ccirc(g,r); g.stroke(); shine(g,r); }},
+    {name:"Арбуз",draw(g,r){ g.fillStyle="#2e9e4a"; ccirc(g,r); g.fill(); clipC(g,r); g.fillStyle="#eaffea"; c2(g,0,0,r*0.84); g.fill(); g.fillStyle="#ff5a6a"; c2(g,0,0,r*0.72); g.fill(); g.fillStyle="#2a2a2a"; [[-.3,-.2],[.2,-.3],[.32,.16],[-.15,.32],[0,0],[-.42,.08],[.4,-.05]].forEach(s=>{ g.save(); g.translate(s[0]*r,s[1]*r); g.rotate(0.4); g.beginPath(); g.ellipse(0,0,r*0.05,r*0.09,0,0,7); g.fill(); g.restore(); }); g.restore(); shine(g,r); }},
+    {name:"Смайл",draw(g,r){ g.fillStyle=rad(g,"#ffd83a","#f0a500",r); ccirc(g,r); g.fill(); g.fillStyle="#3a2a10"; c2(g,-r*0.3,-r*0.12,r*0.1); g.fill(); c2(g,r*0.3,-r*0.12,r*0.1); g.fill(); g.strokeStyle="#3a2a10"; g.lineWidth=r*0.1; g.lineCap="round"; g.beginPath(); g.arc(0,r*0.02,r*0.45,0.15*Math.PI,0.85*Math.PI); g.stroke(); shine(g,r); }},
+    {name:"Звёзды",draw(g,r){ g.fillStyle=rad(g,"#8A5FD8","#4c2a90",r); ccirc(g,r); g.fill(); clipC(g,r); [[-.3,-.25,.32],[.35,-.05,.26],[.05,.32,.3],[-.35,.3,.22],[.4,.4,.2]].forEach(s=>star(g,s[0]*r,s[1]*r,s[2]*r,"#F5C842")); g.restore(); shine(g,r); }},
+  ];
   function drawBall(){ if(ball.ly<0) return; const pp=proj(ball.lx,ball.ly); const s=pp.s; const r=W*0.075*s;
     ctx.save(); ctx.translate(pp.x,pp.y);
-    ctx.fillStyle="rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(0,r*0.5,r*0.95,r*0.35,0,0,7); ctx.fill();
-    const g=ctx.createRadialGradient(-r*0.3,-r*0.35,r*0.15,0,0,r);
-    const c=ballFill(); g.addColorStop(0,"#fff"); g.addColorStop(.35,c); g.addColorStop(1,shade(c,-40));
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,r,0,7); ctx.fill();
-    // finger holes
-    ctx.fillStyle="rgba(0,0,0,.32)"; [[-r*0.2,-r*0.15],[r*0.12,-r*0.22],[0,r*0.08]].forEach(h=>{ ctx.beginPath(); ctx.arc(h[0],h[1],r*0.11,0,7); ctx.fill(); });
+    ctx.fillStyle="rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(0,r*0.5,r*0.95,r*0.32,0,0,7); ctx.fill();
+    SKINS[teamSkin[cur]%SKINS.length].draw(ctx,r);
+    ctx.lineWidth=r*0.1; ctx.strokeStyle=COLORS[cur]; ctx.beginPath(); ctx.arc(0,0,r*0.99,0,7); ctx.stroke();
     ctx.restore();
   }
-  function shade(hex,amt){ const n=parseInt(hex.slice(1),16); let r=(n>>16)+amt,g=((n>>8)&255)+amt,b=(n&255)+amt; r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b)); return "#"+(1<<24|r<<16|g<<8|b).toString(16).slice(1); }
 
   function render(){
     ctx.clearRect(0,0,W,H);
@@ -345,17 +379,19 @@ const ASSETS = {"title": "День", "emoji": "🌙", "bg": "data:image/jpeg;bas
   $("#noBtn").onclick=()=>{ modal.classList.remove("on"); toast("❌ Сгорело! Ход переходит"); endTurn(); };
 
   // ---------- teams / turns ----------
-  let nTeams=2, TARGET=25, score=[], cur=0;
+  let nTeams=2, TOTALQ=16, qUsed=0, score=[], cur=0;
   function renderScores(){ const mx=Math.max(...score);
     $("#scores").innerHTML=score.map((s,i)=>`<span class="sc ${i===cur?'cur':''} ${(s===mx&&mx>0)?'lead':''}"><span class="crown">👑</span><span class="dot" style="background:${COLORS[i]}"></span>${s}</span>`).join(""); }
   function setTurn(){ turnHint(); renderScores(); }
   function addScore(t,n){ score[t]+=n; renderScores(); }
-  function endTurn(){ if(score.some(s=>s>=TARGET)){ win(); return; }
+  function updateQ(){ const el=$("#qcount"); if(el) el.textContent="❓ "+Math.max(0,TOTALQ-qUsed); }
+  function endTurn(){ qUsed++; updateQ(); if(qUsed>=TOTALQ){ win(); return; }
     cur=(cur+1)%nTeams; buildPins(); resetShot(); renderScores(); }
-  function startGame(){ score=Array(nTeams).fill(0); cur=0; buildPins(); resetShot(); renderScores(); }
+  function startGame(){ score=Array(nTeams).fill(0); cur=0; qUsed=0; updateQ(); buildPins(); resetShot(); renderScores(); }
 
   function win(){ burst(); const ranked=score.map((s,i)=>({i,s})).sort((a,b)=>b.s-a.s); const top=ranked[0];
-    $("#winTxt").textContent=`🏆 ${NAMES[top.i]} победили!`;
+    const tie=ranked.filter(r=>r.s===top.s).length>1 && top.s>0;
+    $("#winTxt").textContent = tie ? "🤝 Ничья!" : `🏆 ${NAMES[top.i]} победили!`;
     $("#winPts").innerHTML="Очки: "+ranked.map(r=>`${NAMES[r.i]} — ${r.s}`).join(" · ");
     if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; $("#winov").classList.add("on"); }
 
@@ -371,9 +407,17 @@ const ASSETS = {"title": "День", "emoji": "🌙", "bg": "data:image/jpeg;bas
   $("#fin").onclick=()=>{ if(score.some(s=>s>0)) win(); };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); startGame(); };
   const teamOpts=$("#teamOpts");
-  [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; teamOpts.appendChild(b); });
+  [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); rebuildTeamBalls(); }; teamOpts.appendChild(b); });
+
+  // ball-design picker
+  const teamBallsWrap=$("#teamBalls"), ballpick=$("#ballpick"), ballgrid=$("#ballgrid");
+  function drawSwatch(canvas,skinId,teamCol){ const g=canvas.getContext("2d"); const dpr=Math.min(2,window.devicePixelRatio||1); const sz=48; canvas.width=sz*dpr; canvas.height=sz*dpr; g.setTransform(dpr,0,0,dpr,0,0); const r=sz*0.4; g.clearRect(0,0,sz,sz); g.save(); g.translate(sz/2,sz/2); g.fillStyle="rgba(0,0,0,.12)"; g.beginPath(); g.ellipse(0,r*0.5,r*0.85,r*0.28,0,0,7); g.fill(); SKINS[skinId%SKINS.length].draw(g,r); if(teamCol){ g.lineWidth=r*0.1; g.strokeStyle=teamCol; g.beginPath(); g.arc(0,0,r*0.98,0,7); g.stroke(); } g.restore(); }
+  function rebuildTeamBalls(){ teamBallsWrap.innerHTML=""; for(let i=0;i<nTeams;i++){ const slot=document.createElement("div"); slot.className="ballslot"; const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.style.color=COLORS[i]; nm.textContent=NAMES[i]; slot.appendChild(c); slot.appendChild(nm); slot.onclick=()=>openPicker(i); teamBallsWrap.appendChild(slot); drawSwatch(c,teamSkin[i],COLORS[i]); } }
+  function openPicker(i){ $("#ballpickTitle").textContent="Шар: "+NAMES[i]; $("#ballpickTitle").style.color=COLORS[i]; ballgrid.innerHTML=""; SKINS.forEach((sk,idx)=>{ const opt=document.createElement("div"); opt.className="ballopt"+(teamSkin[i]===idx?" sel":""); const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.textContent=sk.name; opt.appendChild(c); opt.appendChild(nm); opt.onclick=()=>{ teamSkin[i]=idx; [...ballgrid.children].forEach(x=>x.classList.remove("sel")); opt.classList.add("sel"); rebuildTeamBalls(); }; ballgrid.appendChild(opt); drawSwatch(c,idx,COLORS[i]); }); ballpick.classList.add("on"); }
+  $("#ballpickClose").onclick=()=>ballpick.classList.remove("on");
+  rebuildTeamBalls();
   const targetOpts=$("#targetOpts");
-  [[15,"быстро"],[25,"обычно"],[40,"надолго"]].forEach(([v,lab],i)=>{ const b=document.createElement("button"); b.className="opt"+(i===1?" sel":""); b.innerHTML=v+"<div style='font-size:11px;font-weight:600;opacity:.7'>"+lab+"</div>"; b.onclick=()=>{ TARGET=v; [...targetOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; targetOpts.appendChild(b); });
+  [[10,"быстро"],[16,"обычно"],[24,"надолго"]].forEach(([v,lab],i)=>{ const b=document.createElement("button"); b.className="opt"+(i===1?" sel":""); b.innerHTML=v+"<div style='font-size:11px;font-weight:600;opacity:.7'>"+lab+"</div>"; b.onclick=()=>{ TOTALQ=v; [...targetOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; targetOpts.appendChild(b); });
   $("#startBtn").onclick=()=>{ $("#setup").classList.remove("on"); resize(); startGame(); speak(""); };
 
   // ---------- confetti ----------
