@@ -13,7 +13,10 @@
   .topbar{ display:flex; align-items:center; gap:10px; padding:8px 12px; background:rgba(0,0,0,.14); }
   .topbar .title{ font-weight:800; font-size:clamp(15px,2.4vh,22px); }
   .topbar .title .q{ color:var(--honey); }
-  .turn{ margin-left:auto; display:flex; align-items:center; gap:8px; font-weight:800; font-size:clamp(13px,2vh,18px); }
+  .score{ margin-left:auto; display:flex; align-items:center; gap:9px; font-weight:800; font-size:clamp(12px,1.9vh,17px); }
+  .score .s{ display:flex; align-items:center; gap:4px; }
+  .score .s b{ width:13px;height:13px;border-radius:50%;display:inline-block;border:1.5px solid #fff; }
+  .turn{ margin-left:14px; display:flex; align-items:center; gap:8px; font-weight:800; font-size:clamp(13px,2vh,18px); white-space:nowrap; }
   .turn .dot{ width:18px;height:18px;border-radius:50%;border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.3); }
 
   /* ---- board ---- */
@@ -30,7 +33,10 @@
   .cell.finish img{ width:92%; height:92%; }
   .cell.sp_fwd{ border-color:#2ea866; background:#e3f7ec; }
   .cell.sp_back{ border-color:#e2683f; background:#fde3d8; }
-  .cell.sp_star{ border-color:var(--honey); background:#fff4d1; }
+  .cell.sp_bonus{ border-color:var(--honey); background:#fff4d1; }
+  .cell.sp_gem{ border-color:#4D96FF; background:#e2eeff; }
+  .cell.sp_oops{ border-color:#e2683f; background:#fde3d8; }
+  .cell.sp_again{ border-color:var(--p); background:#efe7fb; }
   .cell .lbl{ position:absolute; bottom:-16px; left:50%; transform:translateX(-50%);
     font-size:11px; font-weight:800; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.6); white-space:nowrap; }
   /* connecting path line */
@@ -93,7 +99,8 @@
 
 <div id="app">
   <div class="topbar">
-    <div class="title">🐾 Ферма — бродилка</div>
+    <div class="title">🐾 Ферма</div>
+    <div class="score" id="score"></div>
     <div class="turn" id="turn"></div>
   </div>
   <div class="boardwrap">
@@ -136,6 +143,7 @@
 <div class="ov win" id="winov"><div class="card">
   <img class="speaky" id="winSp" alt="" style="height:150px">
   <h1 style="color:var(--p)" id="winTxt">🏆 Победа!</h1>
+  <div id="winPts" style="font-weight:800;color:#b3760a;margin-top:4px"></div>
   <div class="cbtns"><button class="cbtn next" id="againBtn">Ещё раз 🎲</button></div>
 </div></div>
 
@@ -144,7 +152,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
 (function(){
   "use strict";
   const $ = s => document.querySelector(s);
-  const board = $("#board"), TURN=$("#turn");
+  const board = $("#board"), TURN=$("#turn"), SCORE=$("#score");
   board.style.backgroundImage = `url(${ASSETS.bg})`;
   const animalWords = Object.keys(ASSETS.animals);
   const COLORS = ["#FF6B6B","#4D96FF","#38C976","#B15CFF"];
@@ -165,13 +173,14 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   cells[0].type="start";
   cells[N-1].type="finish";
   // specials
-  const specialAt = {3:"sp_fwd", 8:"sp_back", 11:"sp_star", 16:"sp_fwd"};
+  const specialAt = {2:"sp_bonus", 5:"sp_fwd", 8:"sp_oops", 11:"sp_gem", 14:"sp_back", 17:"sp_again"};
   Object.entries(specialAt).forEach(([i,t])=>{ if(+i<N-1) cells[+i].type=t; });
   // assign animals to animal cells
   let ai=0;
   cells.forEach(c=>{ if(c.type==="animal"){ c.word = animalWords[ai%animalWords.length]; ai++; } });
 
   // ---------- render cells ----------
+  function addLbl(el,t){ const l=document.createElement("div"); l.className="lbl"; l.textContent=t; el.appendChild(l); }
   function cellHTML(c,i){
     const el=document.createElement("div");
     el.className="cell "+(c.type==="animal"?"":c.type);
@@ -179,9 +188,12 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     if(c.type==="animal"){ const im=new Image(); im.src=ASSETS.animals[c.word]; el.appendChild(im); }
     else if(c.type==="start"){ el.innerHTML='<div class="em">🚩</div>'; }
     else if(c.type==="finish"){ if(ASSETS.speaky){const im=new Image(); im.src=ASSETS.speaky; el.appendChild(im);} else el.innerHTML='<div class="em">🏠</div>'; const l=document.createElement("div"); l.className="lbl"; l.textContent="Дом Спики"; el.appendChild(l); }
-    else if(c.type==="sp_fwd"){ el.innerHTML='<div class="em">➡️</div>'; const l=document.createElement("div");l.className="lbl";l.textContent="+2";el.appendChild(l); }
-    else if(c.type==="sp_back"){ el.innerHTML='<div class="em">🕳️</div>'; const l=document.createElement("div");l.className="lbl";l.textContent="−1";el.appendChild(l); }
-    else if(c.type==="sp_star"){ el.innerHTML='<div class="em">⭐</div>'; const l=document.createElement("div");l.className="lbl";l.textContent="ещё раз";el.appendChild(l); }
+    else if(c.type==="sp_fwd"){ el.innerHTML='<div class="em">➡️</div>'; addLbl(el,"+2 шага"); }
+    else if(c.type==="sp_back"){ el.innerHTML='<div class="em">🕳️</div>'; addLbl(el,"−2 шага"); }
+    else if(c.type==="sp_bonus"){ el.innerHTML='<div class="em">⭐</div>'; addLbl(el,"+3 очка"); }
+    else if(c.type==="sp_gem"){ el.innerHTML='<div class="em">💎</div>'; addLbl(el,"+5 очков"); }
+    else if(c.type==="sp_oops"){ el.innerHTML='<div class="em">❌</div>'; addLbl(el,"−3 очка"); }
+    else if(c.type==="sp_again"){ el.innerHTML='<div class="em">🔁</div>'; addLbl(el,"ещё раз"); }
     board.appendChild(el);
   }
   cells.forEach(cellHTML);
@@ -191,18 +203,20 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   $("#pathsvg").setAttribute("viewBox","0 0 100 100");
 
   // ---------- players / tokens ----------
-  let nPlayers=2, pos=[], tokens=[], cur=0, busy=false;
+  let nPlayers=2, pos=[], points=[], tokens=[], cur=0, busy=false;
   function makeTokens(){
-    tokens.forEach(t=>t.remove()); tokens=[]; pos=[];
+    tokens.forEach(t=>t.remove()); tokens=[]; pos=[]; points=[];
     for(let p=0;p<nPlayers;p++){
-      pos.push(0);
+      pos.push(0); points.push(0);
       const t=document.createElement("div"); t.className="token"; t.style.background=COLORS[p];
       t.textContent=(p+1);
       board.appendChild(t); tokens.push(t);
     }
     placeAll();
-    setTurn();
+    setTurn(); renderScore();
   }
+  function renderScore(){ SCORE.innerHTML=points.map((pt,p)=>`<span class="s"><b style="background:${COLORS[p]}"></b>${pt}</span>`).join(""); }
+  function addPoints(p,n){ points[p]=Math.max(0,points[p]+n); renderScore(); }
   function cellXY(i){ return {x:cells[i].x, y:cells[i].y}; }
   function placeAll(){
     // offset tokens sharing a cell
@@ -226,7 +240,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   function roll(){
     if(busy) return; busy=true; rollBtn.disabled=true;
     die.classList.add("roll");
-    let ticks=0; const spin=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*6)]; if(++ticks>8){ clearInterval(spin); const n=1+Math.floor(Math.random()*6); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
+    let ticks=0; const spin=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*2)]; if(++ticks>8){ clearInterval(spin); const n=1+Math.floor(Math.random()*2); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
   }
   function step(n){
     let target=Math.min(pos[cur]+n, N-1);
@@ -240,9 +254,12 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     const i=pos[cur], c=cells[i];
     if(i===N-1){ win(cur); return; }
     if(c.type==="animal"){ showAnimal(c.word); return; }
-    if(c.type==="sp_fwd"){ toast("➡️ +2 вперёд!"); setTimeout(()=>{ const t=Math.min(i+2,N-1); animateTo(t,()=>afterSpecial()); },700); return; }
-    if(c.type==="sp_back"){ toast("🕳️ −1 назад"); setTimeout(()=>{ const t=Math.max(i-1,0); animateTo(t,()=>afterSpecial()); },700); return; }
-    if(c.type==="sp_star"){ toast("⭐ Ходи ещё раз!"); setTimeout(()=>{ endTurn(true); },900); return; }
+    if(c.type==="sp_fwd"){ toast("➡️ +2 шага вперёд!"); setTimeout(()=>animateTo(Math.min(i+2,N-1),afterSpecial),700); return; }
+    if(c.type==="sp_back"){ toast("🕳️ −2 шага назад"); setTimeout(()=>animateTo(Math.max(i-2,0),afterSpecial),700); return; }
+    if(c.type==="sp_bonus"){ addPoints(cur,3); toast("⭐ +3 очка!"); setTimeout(()=>endTurn(false),1000); return; }
+    if(c.type==="sp_gem"){ addPoints(cur,5); toast("💎 +5 очков!"); burst(); setTimeout(()=>endTurn(false),1000); return; }
+    if(c.type==="sp_oops"){ addPoints(cur,-3); toast("❌ −3 очка"); setTimeout(()=>endTurn(false),1000); return; }
+    if(c.type==="sp_again"){ toast("🔁 Ходи ещё раз!"); setTimeout(()=>endTurn(true),1000); return; }
     endTurn(false);
   }
   function animateTo(to,cb){ function h(f){ if(f<to){pos[cur]=f+1;placeAll();setTimeout(()=>h(f+1),260);} else if(f>to){pos[cur]=f-1;placeAll();setTimeout(()=>h(f-1),260);} else cb(); } h(pos[cur]); }
@@ -251,10 +268,11 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   // ---------- animal modal ----------
   const modal=$("#modal"), mPic=$("#mPic"), mAns=$("#mAns");
   let curWord="";
-  function showAnimal(word){ curWord=word; mPic.src=ASSETS.animals[word]; mAns.textContent="It's a "+word+"!"; mAns.classList.remove("show"); modal.classList.add("on"); }
-  $("#sayBtn").onclick=()=>{ speak(word2say(curWord)); mAns.classList.add("show"); };
-  $("#nextBtn").onclick=()=>{ modal.classList.remove("on"); endTurn(false); };
   function word2say(w){ return w.replace(/_/g," "); }
+  function sentence(w){ const x=word2say(w); return "It's "+(/^[aeiou]/i.test(x)?"an":"a")+" "+x; }
+  function showAnimal(word){ curWord=word; mPic.src=ASSETS.animals[word]; mAns.textContent=sentence(word)+"!"; mAns.classList.remove("show"); modal.classList.add("on"); }
+  $("#sayBtn").onclick=()=>{ speak(sentence(curWord)); mAns.classList.add("show"); };
+  $("#nextBtn").onclick=()=>{ modal.classList.remove("on"); addPoints(cur,1); endTurn(false); };
 
   // ---------- TTS ----------
   let voice=null;
@@ -266,7 +284,10 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   function endTurn(again){ busy=false; rollBtn.disabled=false; if(!again){ cur=(cur+1)%nPlayers; } setTurn(); }
 
   // ---------- win ----------
-  function win(p){ burst(); const w=$("#winov"); $("#winTxt").textContent=`🏆 Игрок ${p+1} (${NAMES[p]}) победил!`; if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; w.classList.add("on"); }
+  function win(p){ burst(); const w=$("#winov"); $("#winTxt").textContent=`🏆 Игрок ${p+1} дошёл первым!`;
+    const rank=points.map((pt,i)=>({i,pt})).sort((a,b)=>b.pt-a.pt);
+    $("#winPts").innerHTML="Очки: "+rank.map(r=>`игрок ${r.i+1} — ${r.pt}⭐`).join(" · ");
+    if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; w.classList.add("on"); }
 
   rollBtn.onclick=roll;
   $("#reset").onclick=()=>{ cur=0; makeTokens(); };
