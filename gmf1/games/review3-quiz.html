@@ -149,6 +149,7 @@
   <div style="color:#6d6584;font-weight:600;font-size:14px">Возьми (или нет) трики-подарок → выбери дорожку 1–5 → катни шар! Сколько кеглей собьёшь — столько очков на кону (все 10 = 🔥 СТРАЙК +5!). Ответь верно — очки твои! Кто наберёт больше за все вопросы — победил! 🏆</div>
   <div class="grp"><div class="lab">Сколько команд?</div><div class="opts" id="teamOpts"></div></div>
   <div class="grp"><div class="lab">Сколько вопросов?</div><div class="opts" id="targetOpts"></div></div>
+  <div class="grp"><div class="lab">Персонаж команды 🙂 (тап — сменить)</div><div class="ballrow" id="teamChars"></div></div>
   <div class="grp"><div class="lab">Шар команды 🎨 (тап — сменить)</div><div class="ballrow" id="teamBalls"></div></div>
   <div class="cbtns"><button class="cbtn ok" id="startBtn">Играть! ▶</button></div>
   <div style="margin-top:10px"><a href="index.html" style="color:#8a83a0;font-weight:700;font-size:14px;text-decoration:none">← выбрать другую тему</a></div>
@@ -183,6 +184,13 @@ const ASSETS = {"title": "Ревью 3 (Город+Одежда+День)", "emo
   const COLORS=["#FF5D5D","#4D96FF","#38C976","#B15CFF"], NAMES=["Красные","Синие","Зелёные","Фиолетовые"];
   const TILECOL=["#8A5FD8","#4DA6E8","#F2789F","#F5B53C","#EF6A5A"];
   let teamSkin=[0,1,8,3];
+  let teamChar=[0,5,6,10];
+  const CHARS=[
+    {e:"👾",n:"Монстрик"},{e:"👹",n:"Чудик"},{e:"👻",n:"Привидение"},{e:"🤖",n:"Робот"},
+    {e:"👽",n:"Пришелец"},{e:"🚦",n:"Светофор",eyes:1},{e:"🗑️",n:"Бак",eyes:1},{e:"🥤",n:"Стакан",eyes:1},
+    {e:"🧁",n:"Кекс",eyes:1},{e:"🎃",n:"Тыква"},{e:"🐙",n:"Осьминог"},{e:"🦖",n:"Динозавр"},
+    {e:"⭐",n:"Звезда",eyes:1},{e:"🦄",n:"Единорог"},{e:"🐲",n:"Дракоша"},{e:"🌈",n:"Радуга",eyes:1},
+  ];
   const lerp=(a,b,t)=>a+(b-a)*t;
 
   // ---------- questions: round-robin by theme ----------
@@ -272,6 +280,9 @@ const ASSETS = {"title": "Ревью 3 (Город+Одежда+День)", "emo
     {name:"Смайл",draw(g,r){ g.fillStyle=rad(g,"#ffd83a","#f0a500",r); ccirc(g,r); g.fill(); g.fillStyle="#3a2a10"; c2(g,-r*0.3,-r*0.12,r*0.1); g.fill(); c2(g,r*0.3,-r*0.12,r*0.1); g.fill(); g.strokeStyle="#3a2a10"; g.lineWidth=r*0.1; g.lineCap="round"; g.beginPath(); g.arc(0,r*0.02,r*0.45,0.15*Math.PI,0.85*Math.PI); g.stroke(); shine(g,r); }},
     {name:"Звёзды",draw(g,r){ g.fillStyle=rad(g,"#8A5FD8","#4c2a90",r); ccirc(g,r); g.fill(); clipC(g,r); [[-.3,-.25,.32],[.35,-.05,.26],[.05,.32,.3],[-.35,.3,.22],[.4,.4,.2]].forEach(s=>star(g,s[0]*r,s[1]*r,s[2]*r,"#F5C842")); g.restore(); shine(g,r); }},
   ];
+  function googly(g,x,y,r){ g.save(); g.fillStyle="#fff"; g.strokeStyle="#222"; g.lineWidth=r*0.2; g.beginPath(); g.arc(x,y,r,0,7); g.fill(); g.stroke(); g.fillStyle="#111"; g.beginPath(); g.arc(x+r*0.15,y+r*0.28,r*0.5,0,7); g.fill(); g.restore(); }
+  function drawChar(g,size,idx){ const c=CHARS[idx%CHARS.length]; g.save(); g.textAlign="center"; g.textBaseline="middle"; g.font=size+"px serif"; g.fillText(c.e,0,size*0.02);
+    if(c.eyes){ const r=size*0.13; googly(g,-size*0.17,-size*0.06,r); googly(g,size*0.17,-size*0.06,r); } g.restore(); }
   function drawBall(){ if(ball.ly<0) return; const pp=proj(ball.lx,ball.ly); const s=pp.s; const r=W*0.075*s;
     ctx.save(); ctx.translate(pp.x,pp.y);
     ctx.fillStyle="rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(0,r*0.5,r*0.95,r*0.32,0,0,7); ctx.fill();
@@ -299,7 +310,7 @@ const ASSETS = {"title": "Ревью 3 (Город+Одежда+День)", "emo
   function resetShot(){ phase="idle"; busy=false; ball={lx:0.5,ly:0.9,vx:0,vy:0,ax:0,rolling:false};
     armed=null; trickBtn.classList.remove("hide","armed"); trickBtn.disabled=false; trickBtn.innerHTML='<span class="g">🎁</span><span>ТРИКИ</span>';
     showTiles(true); turnHint(); }
-  function turnHint(){ turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${NAMES[cur]}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">трики? → дорожка 1–5</span>`; }
+  function turnHint(){ turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${CHARS[teamChar[cur]].e} ${NAMES[cur]}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">трики? → дорожка 1–5</span>`; }
 
   function launch(tileIdx){
     if(phase!=="idle"||busy) return; phase="rolling"; busy=true; showTiles(false); trickBtn.disabled=true;
@@ -381,7 +392,7 @@ const ASSETS = {"title": "Ревью 3 (Город+Одежда+День)", "emo
   // ---------- teams / turns ----------
   let nTeams=2, TOTALQ=16, qUsed=0, score=[], cur=0;
   function renderScores(){ const mx=Math.max(...score);
-    $("#scores").innerHTML=score.map((s,i)=>`<span class="sc ${i===cur?'cur':''} ${(s===mx&&mx>0)?'lead':''}"><span class="crown">👑</span><span class="dot" style="background:${COLORS[i]}"></span>${s}</span>`).join(""); }
+    $("#scores").innerHTML=score.map((s,i)=>`<span class="sc ${i===cur?'cur':''} ${(s===mx&&mx>0)?'lead':''}"><span class="crown">👑</span><span style="font-size:1.15em">${CHARS[teamChar[i]].e}</span><span class="dot" style="background:${COLORS[i]}"></span>${s}</span>`).join(""); }
   function setTurn(){ turnHint(); renderScores(); }
   function addScore(t,n){ score[t]+=n; renderScores(); }
   function updateQ(){ const el=$("#qcount"); if(el) el.textContent="❓ "+Math.max(0,TOTALQ-qUsed); }
@@ -391,7 +402,7 @@ const ASSETS = {"title": "Ревью 3 (Город+Одежда+День)", "emo
 
   function win(){ burst(); const ranked=score.map((s,i)=>({i,s})).sort((a,b)=>b.s-a.s); const top=ranked[0];
     const tie=ranked.filter(r=>r.s===top.s).length>1 && top.s>0;
-    $("#winTxt").textContent = tie ? "🤝 Ничья!" : `🏆 ${NAMES[top.i]} победили!`;
+    $("#winTxt").textContent = tie ? "🤝 Ничья!" : `🏆 ${CHARS[teamChar[top.i]].e} ${NAMES[top.i]} победили!`;
     $("#winPts").innerHTML="Очки: "+ranked.map(r=>`${NAMES[r.i]} — ${r.s}`).join(" · ");
     if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; $("#winov").classList.add("on"); }
 
@@ -407,15 +418,21 @@ const ASSETS = {"title": "Ревью 3 (Город+Одежда+День)", "emo
   $("#fin").onclick=()=>{ if(score.some(s=>s>0)) win(); };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); startGame(); };
   const teamOpts=$("#teamOpts");
-  [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); rebuildTeamBalls(); }; teamOpts.appendChild(b); });
+  [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); rebuildTeam(); }; teamOpts.appendChild(b); });
 
-  // ball-design picker
-  const teamBallsWrap=$("#teamBalls"), ballpick=$("#ballpick"), ballgrid=$("#ballgrid");
-  function drawSwatch(canvas,skinId,teamCol){ const g=canvas.getContext("2d"); const dpr=Math.min(2,window.devicePixelRatio||1); const sz=48; canvas.width=sz*dpr; canvas.height=sz*dpr; g.setTransform(dpr,0,0,dpr,0,0); const r=sz*0.4; g.clearRect(0,0,sz,sz); g.save(); g.translate(sz/2,sz/2); g.fillStyle="rgba(0,0,0,.12)"; g.beginPath(); g.ellipse(0,r*0.5,r*0.85,r*0.28,0,0,7); g.fill(); SKINS[skinId%SKINS.length].draw(g,r); if(teamCol){ g.lineWidth=r*0.1; g.strokeStyle=teamCol; g.beginPath(); g.arc(0,0,r*0.98,0,7); g.stroke(); } g.restore(); }
-  function rebuildTeamBalls(){ teamBallsWrap.innerHTML=""; for(let i=0;i<nTeams;i++){ const slot=document.createElement("div"); slot.className="ballslot"; const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.style.color=COLORS[i]; nm.textContent=NAMES[i]; slot.appendChild(c); slot.appendChild(nm); slot.onclick=()=>openPicker(i); teamBallsWrap.appendChild(slot); drawSwatch(c,teamSkin[i],COLORS[i]); } }
-  function openPicker(i){ $("#ballpickTitle").textContent="Шар: "+NAMES[i]; $("#ballpickTitle").style.color=COLORS[i]; ballgrid.innerHTML=""; SKINS.forEach((sk,idx)=>{ const opt=document.createElement("div"); opt.className="ballopt"+(teamSkin[i]===idx?" sel":""); const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.textContent=sk.name; opt.appendChild(c); opt.appendChild(nm); opt.onclick=()=>{ teamSkin[i]=idx; [...ballgrid.children].forEach(x=>x.classList.remove("sel")); opt.classList.add("sel"); rebuildTeamBalls(); }; ballgrid.appendChild(opt); drawSwatch(c,idx,COLORS[i]); }); ballpick.classList.add("on"); }
+  // ball + character picker (generic)
+  const teamCharsWrap=$("#teamChars"), teamBallsWrap=$("#teamBalls"), ballpick=$("#ballpick"), ballgrid=$("#ballgrid");
+  function drawSwatch(canvas,kind,id,teamCol){ const g=canvas.getContext("2d"); const dpr=Math.min(2,window.devicePixelRatio||1); const sz=48; canvas.width=sz*dpr; canvas.height=sz*dpr; g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,sz,sz); g.save(); g.translate(sz/2,sz/2);
+    if(kind==="ball"){ const r=sz*0.4; g.fillStyle="rgba(0,0,0,.12)"; g.beginPath(); g.ellipse(0,r*0.5,r*0.85,r*0.28,0,0,7); g.fill(); SKINS[id%SKINS.length].draw(g,r); if(teamCol){ g.lineWidth=r*0.1; g.strokeStyle=teamCol; g.beginPath(); g.arc(0,0,r*0.98,0,7); g.stroke(); } }
+    else drawChar(g,sz*0.78,id);
+    g.restore(); }
+  function mkSlot(wrap,i,kind,id){ const slot=document.createElement("div"); slot.className="ballslot"; const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.style.color=COLORS[i]; nm.textContent=NAMES[i]; slot.appendChild(c); slot.appendChild(nm); slot.onclick=()=>openPicker(kind,i); wrap.appendChild(slot); drawSwatch(c,kind,id,COLORS[i]); }
+  function rebuildTeam(){ teamCharsWrap.innerHTML=""; teamBallsWrap.innerHTML=""; for(let i=0;i<nTeams;i++){ mkSlot(teamCharsWrap,i,"char",teamChar[i]); mkSlot(teamBallsWrap,i,"ball",teamSkin[i]); } }
+  function openPicker(kind,i){ const arr=kind==="ball"?SKINS:CHARS; $("#ballpickTitle").textContent=(kind==="ball"?"Шар: ":"Персонаж: ")+NAMES[i]; $("#ballpickTitle").style.color=COLORS[i]; ballgrid.innerHTML="";
+    arr.forEach((it,idx)=>{ const cur2=kind==="ball"?teamSkin[i]:teamChar[i]; const opt=document.createElement("div"); opt.className="ballopt"+(cur2===idx?" sel":""); const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.textContent=(kind==="ball"?it.name:it.n); opt.appendChild(c); opt.appendChild(nm); opt.onclick=()=>{ if(kind==="ball")teamSkin[i]=idx; else teamChar[i]=idx; [...ballgrid.children].forEach(x=>x.classList.remove("sel")); opt.classList.add("sel"); rebuildTeam(); }; ballgrid.appendChild(opt); drawSwatch(c,kind,idx,COLORS[i]); });
+    ballpick.classList.add("on"); }
   $("#ballpickClose").onclick=()=>ballpick.classList.remove("on");
-  rebuildTeamBalls();
+  rebuildTeam();
   const targetOpts=$("#targetOpts");
   [[10,"быстро"],[16,"обычно"],[24,"надолго"]].forEach(([v,lab],i)=>{ const b=document.createElement("button"); b.className="opt"+(i===1?" sel":""); b.innerHTML=v+"<div style='font-size:11px;font-weight:600;opacity:.7'>"+lab+"</div>"; b.onclick=()=>{ TOTALQ=v; [...targetOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; targetOpts.appendChild(b); });
   $("#startBtn").onclick=()=>{ $("#setup").classList.remove("on"); resize(); startGame(); speak(""); };
