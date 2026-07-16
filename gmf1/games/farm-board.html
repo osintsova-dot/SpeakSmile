@@ -214,6 +214,9 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     }
     placeAll();
     setTurn(); renderScore();
+    busy=false; rollBtn.disabled=false; die.textContent="🎲";
+    try{ speechSynthesis.cancel(); }catch(e){}
+    modal.classList.remove("on");
   }
   function renderScore(){ SCORE.innerHTML=points.map((pt,p)=>`<span class="s"><b style="background:${COLORS[p]}"></b>${pt}</span>`).join(""); }
   function addPoints(p,n){ points[p]=Math.max(0,points[p]+n); renderScore(); }
