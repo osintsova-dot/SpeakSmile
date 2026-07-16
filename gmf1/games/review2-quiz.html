@@ -147,10 +147,11 @@
   <img class="speaky" id="spImg" alt="Speaky">
   <h1 id="setupTitle">Квиз-боулинг!</h1>
   <div style="color:#6d6584;font-weight:600;font-size:14px">Возьми (или нет) трики-подарок → выбери дорожку 1–5 → катни шар! Сколько кеглей собьёшь — столько очков на кону (все 10 = 🔥 СТРАЙК +5!). Ответь верно — очки твои! Кто наберёт больше за все вопросы — победил! 🏆</div>
+  <div class="grp"><div class="lab">Режим</div><div class="opts" id="modeOpts"><button class="opt sel" data-m="bowl">🎳 Боулинг</button><button class="opt" data-m="basket">🏀 Баскетбол</button></div></div>
   <div class="grp"><div class="lab">Сколько команд?</div><div class="opts" id="teamOpts"></div></div>
   <div class="grp"><div class="lab">Сколько вопросов?</div><div class="opts" id="targetOpts"></div></div>
   <div class="grp"><div class="lab">Персонаж команды 🙂 (тап — сменить)</div><div class="ballrow" id="teamChars"></div></div>
-  <div class="grp"><div class="lab">Шар команды 🎨 (тап — сменить)</div><div class="ballrow" id="teamBalls"></div></div>
+  <div class="grp" id="ballGrp"><div class="lab">Шар команды 🎨 (тап — сменить)</div><div class="ballrow" id="teamBalls"></div></div>
   <div class="cbtns"><button class="cbtn ok" id="startBtn">Играть! ▶</button></div>
   <div style="margin-top:10px"><a href="index.html" style="color:#8a83a0;font-weight:700;font-size:14px;text-decoration:none">← выбрать другую тему</a></div>
 </div></div>
@@ -185,6 +186,7 @@ const ASSETS = {"title": "Ревью 2 (Еда+Ферма+Площадка)", "e
   const TILECOL=["#8A5FD8","#4DA6E8","#F2789F","#F5B53C","#EF6A5A"];
   let teamSkin=[0,1,8,3];
   let teamChar=[0,5,6,10];
+  let MODE="bowl";
   const CHARS=[
     {e:"👾",n:"Монстрик"},{e:"👹",n:"Чудик"},{e:"👻",n:"Привидение"},{e:"🤖",n:"Робот"},
     {e:"👽",n:"Пришелец"},{e:"🚦",n:"Светофор",eyes:1},{e:"🗑️",n:"Бак",eyes:1},{e:"🥤",n:"Стакан",eyes:1},
@@ -217,12 +219,18 @@ const ASSETS = {"title": "Ревью 2 (Еда+Ферма+Площадка)", "e
 
   let ball={lx:0.5,ly:0.9,vx:0,vy:0,ax:0,rolling:false};
 
+  // basketball
+  const BSPOT=[{pts:3,p:.75,x:0.37},{pts:5,p:.55,x:0.56},{pts:8,p:.35,x:0.75}];
+  const HOOPX=0.15, RIMY=0.44, FLOORY=0.8;
+  let bball={x:0,y:0,vx:0,vy:0,fly:false}, shooterSpot=2;
+
   function resize(){ DPR=Math.min(2,window.devicePixelRatio||1); W=stage.clientWidth; H=stage.clientHeight;
     cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0); layoutTiles(); }
   window.addEventListener("resize",resize);
 
-  function layoutTiles(){ const els=tilesWrap.children; for(let i=0;i<els.length;i++){ const pp=proj(TILELX[i],TILELY); const e=els[i];
-    const sz=lerp(30,52,pp.s-0.4)*1; e.style.left=pp.x+"px"; e.style.top=pp.y+"px"; e.style.width=Math.round(38*pp.s)+"px"; e.style.height=Math.round(38*pp.s)+"px"; e.style.fontSize=Math.round(20*pp.s)+"px"; } }
+  function layoutTiles(){ const els=tilesWrap.children;
+    if(MODE==="basket"){ const sz=Math.max(46,Math.min(66,W*0.14)); for(let i=0;i<els.length;i++){ const e=els[i]; e.style.left=(BSPOT[i].x*W)+"px"; e.style.top=(H*(FLOORY+0.07))+"px"; e.style.width=sz+"px"; e.style.height=sz+"px"; e.style.fontSize=Math.round(sz*0.42)+"px"; } }
+    else { for(let i=0;i<els.length;i++){ const pp=proj(TILELX[i],TILELY); const e=els[i]; e.style.left=pp.x+"px"; e.style.top=pp.y+"px"; e.style.width=Math.round(38*pp.s)+"px"; e.style.height=Math.round(38*pp.s)+"px"; e.style.fontSize=Math.round(20*pp.s)+"px"; } } }
 
   // ----- drawing -----
   function drawLane(){
@@ -291,26 +299,67 @@ const ASSETS = {"title": "Ревью 2 (Еда+Ферма+Площадка)", "e
     ctx.restore();
   }
 
+  // ----- basketball court -----
+  function drawCourt(){
+    // skyline silhouette on the horizon
+    const hz=H*0.5; ctx.fillStyle="rgba(20,10,45,.55)";
+    for(let x=0;x<W;x+=W*0.09){ const bh=H*(0.08+((x*37)%50)/300); ctx.fillRect(x,hz-bh,W*0.075,bh); }
+    // court floor
+    const g=ctx.createLinearGradient(0,H*FLOORY-H*0.08,0,H); g.addColorStop(0,"#37c7b0"); g.addColorStop(.5,"#6aa0e0"); g.addColorStop(1,"#f0894f");
+    ctx.fillStyle=g; ctx.fillRect(0,H*FLOORY-H*0.02,W,H);
+    ctx.fillStyle="rgba(255,255,255,.14)"; ctx.fillRect(0,H*FLOORY-H*0.02,W,H*0.012);
+    // key semicircle near hoop
+    ctx.strokeStyle="rgba(255,255,255,.35)"; ctx.lineWidth=Math.max(2,W*0.006);
+    ctx.beginPath(); ctx.arc(HOOPX*W,H*0.92,W*0.22,-Math.PI*0.5,Math.PI*0.5); ctx.stroke();
+  }
+  function drawHoop(){
+    const hx=HOOPX*W, ry=RIMY*H;
+    ctx.strokeStyle="#6c3fc5"; ctx.lineWidth=W*0.028; ctx.beginPath(); ctx.moveTo(hx-W*0.02,H*FLOORY); ctx.lineTo(hx-W*0.02,ry-H*0.02); ctx.stroke();
+    ctx.fillStyle="#fff"; ctx.strokeStyle="#c9c2d8"; ctx.lineWidth=2;
+    roundRectPath(hx-W*0.055,ry-H*0.08,W*0.09,H*0.1,6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle="#ff7043"; roundRectPath(hx-W*0.03,ry-H*0.028,W*0.06,H*0.012,3); ctx.fill();
+    // rim front + net
+    ctx.strokeStyle="#ff5a2a"; ctx.lineWidth=Math.max(3,W*0.012); ctx.beginPath(); ctx.ellipse(hx+W*0.03,ry,W*0.05,H*0.014,0,0,7); ctx.stroke();
+    ctx.strokeStyle="rgba(255,255,255,.7)"; ctx.lineWidth=1.4;
+    for(let i=-3;i<=3;i++){ ctx.beginPath(); ctx.moveTo(hx+W*0.03+i*W*0.014,ry); ctx.lineTo(hx+W*0.03+i*W*0.007,ry+H*0.055); ctx.stroke(); }
+  }
+  function drawBasketballBall(x,y,r){ ctx.save(); ctx.translate(x,y);
+    const g=ctx.createRadialGradient(-r*0.3,-r*0.3,r*0.2,0,0,r); g.addColorStop(0,"#ffb266"); g.addColorStop(1,"#e2661f");
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(0,0,r,0,7); ctx.fill();
+    ctx.strokeStyle="#5a2a10"; ctx.lineWidth=r*0.09; ctx.beginPath(); ctx.arc(0,0,r,0,7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,-r); ctx.lineTo(0,r); ctx.moveTo(-r,0); ctx.lineTo(r,0); ctx.stroke();
+    ctx.beginPath(); ctx.arc(-r*1.3,0,r*1.2,-0.6,0.6); ctx.stroke(); ctx.beginPath(); ctx.arc(r*1.3,0,r*1.2,Math.PI-0.6,Math.PI+0.6); ctx.stroke();
+    ctx.restore(); }
+  function drawShooter(){ const sx=BSPOT[shooterSpot].x*W, sy=H*FLOORY; const sz=W*0.2;
+    ctx.save(); ctx.translate(sx,sy-sz*0.42); drawChar(ctx,sz,teamChar[cur]); ctx.restore();
+    if(!bball.fly){ drawBasketballBall(sx-sz*0.36, sy-sz*0.28, W*0.05); } }
+
   function render(){
     ctx.clearRect(0,0,W,H);
-    drawLane();
-    // draw pins far→near for overlap; standing then fallen
-    const order=pins.map((p,i)=>({p,i})).sort((a,b)=>a.p.ly-b.p.ly);
-    order.forEach(o=>drawPin(o.p));
-    drawBall();
+    if(MODE==="basket"){
+      drawCourt(); drawHoop(); drawShooter();
+      if(bball.fly) drawBasketballBall(bball.x,bball.y,W*0.05);
+    } else {
+      drawLane();
+      const order=pins.map((p,i)=>({p,i})).sort((a,b)=>a.p.ly-b.p.ly);
+      order.forEach(o=>drawPin(o.p));
+      drawBall();
+    }
     requestAnimationFrame(render);
   }
 
   // ---------- shot physics ----------
   let phase="idle", busy=false;
   const tilesWrap=$("#tiles"), trickBtn=$("#trick"), turnEl=$("#turn");
-  TILELX.forEach((lx,i)=>{ const b=document.createElement("button"); b.className="tile"; b.style.background=TILECOL[i]; b.textContent=(i+1); b.onclick=()=>launch(i); tilesWrap.appendChild(b); });
-
+  function buildControls(){ tilesWrap.innerHTML="";
+    if(MODE==="basket"){ BSPOT.forEach((sp,i)=>{ const b=document.createElement("button"); b.className="tile"; b.style.background=TILECOL[i]; b.innerHTML=(i+1)+"<div style='font-size:.42em;line-height:1.1;font-weight:700'>"+sp.pts+"оч<br>"+Math.round(sp.p*100)+"%</div>"; b.onclick=()=>shoot(i); tilesWrap.appendChild(b); }); }
+    else { TILELX.forEach((lx,i)=>{ const b=document.createElement("button"); b.className="tile"; b.style.background=TILECOL[i]; b.textContent=(i+1); b.onclick=()=>launch(i); tilesWrap.appendChild(b); }); }
+    layoutTiles(); }
   function showTiles(on){ [...tilesWrap.children].forEach(t=>t.disabled=!on); }
-  function resetShot(){ phase="idle"; busy=false; ball={lx:0.5,ly:0.9,vx:0,vy:0,ax:0,rolling:false};
+  function resetShot(){ phase="idle"; busy=false; ball={lx:0.5,ly:0.9,vx:0,vy:0,ax:0,rolling:false}; bball.fly=false; shooterSpot=2;
     armed=null; trickBtn.classList.remove("hide","armed"); trickBtn.disabled=false; trickBtn.innerHTML='<span class="g">🎁</span><span>ТРИКИ</span>';
     showTiles(true); turnHint(); }
-  function turnHint(){ turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${CHARS[teamChar[cur]].e} ${NAMES[cur]}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">трики? → дорожка 1–5</span>`; }
+  function turnHint(){ const act=MODE==="basket"?"трики? → бросок 1–3":"трики? → дорожка 1–5"; turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${CHARS[teamChar[cur]].e} ${NAMES[cur]}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">${act}</span>`; }
 
   function launch(tileIdx){
     if(phase!=="idle"||busy) return; phase="rolling"; busy=true; showTiles(false); trickBtn.disabled=true;
@@ -348,6 +397,24 @@ const ASSETS = {"title": "Ревью 2 (Еда+Ферма+Площадка)", "e
     b.textContent = strike ? "🔥 СТРАЙК! +5" : (gutter&&n===0 ? "🕳️ Мимо! 0" : ("🎳 "+n+" "+(n===1?"кегля":(n>=5?"кеглей":"кегли"))+"!"));
     b.classList.add("on"); if(strike||n>=6) burst();
     setTimeout(()=>b.classList.remove("on"), strike?1500:1300); }
+
+  // basketball shot
+  function shoot(spotIdx){ if(phase!=="idle"||busy) return; phase="rolling"; busy=true; showTiles(false); trickBtn.disabled=true;
+    shooterSpot=spotIdx; const sp=BSPOT[spotIdx]; const made=Math.random()<sp.p;
+    const sx=sp.x*W-W*0.06, sy=H*FLOORY-W*0.06, hx=HOOPX*W+W*0.03, hy=RIMY*H;
+    bball.fly=true; bball.x=sx; bball.y=sy;
+    const startX=sx,startY=sy, endX=made?hx:hx+W*0.055, endY=made?hy:hy+H*0.01;
+    const peak=-Math.max(H*0.3,(sy-hy)+H*0.16), dur=40; let t=0;
+    function step(){ t++; const k=t/dur; bball.x=lerp(startX,endX,k); bball.y=lerp(startY,endY,k)+peak*Math.sin(Math.PI*k);
+      if(t<dur) requestAnimationFrame(step);
+      else if(made){ let d=0; (function drop(){ d++; bball.y+=H*0.012; if(d<8) requestAnimationFrame(drop); else finishShot(true,sp); })(); }
+      else { let d=0,vy=-H*0.011,vx=W*0.011; (function bnc(){ d++; vy+=H*0.0016; bball.x+=vx; bball.y+=vy; if(d<18) requestAnimationFrame(bnc); else finishShot(false,sp); })(); } }
+    requestAnimationFrame(step); }
+  function finishShot(made,sp){ bball.fly=false; const pts=made?sp.pts:0; const b=$("#pinsbadge");
+    b.classList.toggle("strike",made&&sp.pts>=8);
+    b.textContent = made?("🏀 Попал! +"+sp.pts):"🏀 Мимо! 0"; b.classList.add("on"); if(made)burst();
+    setTimeout(()=>b.classList.remove("on"),1300);
+    setTimeout(()=>{ askQuestion(pts,false); }, made?1300:1150); }
 
   // ---------- trick (pre-roll) ----------
   const riskov=$("#riskov"), riskReveal=$("#riskReveal"), riskBtns=$("#riskBtns");
@@ -398,7 +465,7 @@ const ASSETS = {"title": "Ревью 2 (Еда+Ферма+Площадка)", "e
   function updateQ(){ const el=$("#qcount"); if(el) el.textContent="❓ "+Math.max(0,TOTALQ-qUsed); }
   function endTurn(){ qUsed++; updateQ(); if(qUsed>=TOTALQ){ win(); return; }
     cur=(cur+1)%nTeams; buildPins(); resetShot(); renderScores(); }
-  function startGame(){ score=Array(nTeams).fill(0); cur=0; qUsed=0; updateQ(); buildPins(); resetShot(); renderScores(); }
+  function startGame(){ score=Array(nTeams).fill(0); cur=0; qUsed=0; updateQ(); buildPins(); buildControls(); resetShot(); renderScores(); }
 
   function win(){ burst(); const ranked=score.map((s,i)=>({i,s})).sort((a,b)=>b.s-a.s); const top=ranked[0];
     const tie=ranked.filter(r=>r.s===top.s).length>1 && top.s>0;
@@ -417,6 +484,8 @@ const ASSETS = {"title": "Ревью 2 (Еда+Ферма+Площадка)", "e
   $("#home").onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
   $("#fin").onclick=()=>{ if(score.some(s=>s>0)) win(); };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); startGame(); };
+  const modeOpts=$("#modeOpts");
+  [...modeOpts.children].forEach(b=>b.onclick=()=>{ MODE=b.dataset.m; [...modeOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); $("#ballGrp").style.display=(MODE==="basket"?"none":""); });
   const teamOpts=$("#teamOpts");
   [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); rebuildTeam(); }; teamOpts.appendChild(b); });
 
