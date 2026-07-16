@@ -173,7 +173,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   cells[0].type="start";
   cells[N-1].type="finish";
   // specials
-  const specialAt = {2:"sp_bonus", 5:"sp_fwd", 8:"sp_oops", 11:"sp_gem", 14:"sp_back", 17:"sp_again"};
+  const specialAt = {3:"sp_bonus", 6:"sp_fwd", 9:"sp_oops", 12:"sp_gem", 15:"sp_back", 18:"sp_again"};
   Object.entries(specialAt).forEach(([i,t])=>{ if(+i<N-1) cells[+i].type=t; });
   // assign animals to animal cells
   let ai=0;
@@ -189,7 +189,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     else if(c.type==="start"){ el.innerHTML='<div class="em">🚩</div>'; }
     else if(c.type==="finish"){ if(ASSETS.speaky){const im=new Image(); im.src=ASSETS.speaky; el.appendChild(im);} else el.innerHTML='<div class="em">🏠</div>'; const l=document.createElement("div"); l.className="lbl"; l.textContent="Дом Спики"; el.appendChild(l); }
     else if(c.type==="sp_fwd"){ el.innerHTML='<div class="em">➡️</div>'; addLbl(el,"+2 шага"); }
-    else if(c.type==="sp_back"){ el.innerHTML='<div class="em">🕳️</div>'; addLbl(el,"−2 шага"); }
+    else if(c.type==="sp_back"){ el.innerHTML='<div class="em">🕳️</div>'; addLbl(el,"−1 шаг"); }
     else if(c.type==="sp_bonus"){ el.innerHTML='<div class="em">⭐</div>'; addLbl(el,"+3 очка"); }
     else if(c.type==="sp_gem"){ el.innerHTML='<div class="em">💎</div>'; addLbl(el,"+5 очков"); }
     else if(c.type==="sp_oops"){ el.innerHTML='<div class="em">❌</div>'; addLbl(el,"−3 очка"); }
@@ -240,7 +240,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
   function roll(){
     if(busy) return; busy=true; rollBtn.disabled=true;
     die.classList.add("roll");
-    let ticks=0; const spin=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*2)]; if(++ticks>8){ clearInterval(spin); const n=1+Math.floor(Math.random()*2); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
+    let ticks=0; const spin=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*3)]; if(++ticks>8){ clearInterval(spin); const n=1+Math.floor(Math.random()*3); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
   }
   function step(n){
     let target=Math.min(pos[cur]+n, N-1);
@@ -255,7 +255,7 @@ const ASSETS = {"bg": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA
     if(i===N-1){ win(cur); return; }
     if(c.type==="animal"){ showAnimal(c.word); return; }
     if(c.type==="sp_fwd"){ toast("➡️ +2 шага вперёд!"); setTimeout(()=>animateTo(Math.min(i+2,N-1),afterSpecial),700); return; }
-    if(c.type==="sp_back"){ toast("🕳️ −2 шага назад"); setTimeout(()=>animateTo(Math.max(i-2,0),afterSpecial),700); return; }
+    if(c.type==="sp_back"){ toast("🕳️ −1 шаг назад"); setTimeout(()=>animateTo(Math.max(i-1,0),afterSpecial),700); return; }
     if(c.type==="sp_bonus"){ addPoints(cur,3); toast("⭐ +3 очка!"); setTimeout(()=>endTurn(false),1000); return; }
     if(c.type==="sp_gem"){ addPoints(cur,5); toast("💎 +5 очков!"); burst(); setTimeout(()=>endTurn(false),1000); return; }
     if(c.type==="sp_oops"){ addPoints(cur,-3); toast("❌ −3 очка"); setTimeout(()=>endTurn(false),1000); return; }
