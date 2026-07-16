@@ -184,11 +184,14 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
   // specials
   const specialAt = {3:"sp_bonus", 6:"sp_fwd", 9:"sp_oops", 12:"sp_gem", 15:"sp_back", 18:"sp_again"};
   Object.entries(specialAt).forEach(([i,t])=>{ if(+i<N-1) cells[+i].type=t; });
+  // перемешиваем пулы, чтобы доска показывала МИКС тем (не по порядку), и каждая игра была разной
+  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  const gpool=shuffle(grammar), ipool=shuffle(items);
   // grammar cells (💬) — questions on the unit's structure
-  if(grammar.length){ let gi=0; [4,10,16].forEach(i=>{ if(i<N-1 && cells[i].type==="animal"){ cells[i].type="grammar"; cells[i].gitem=grammar[gi%grammar.length]; gi++; } }); }
+  if(gpool.length){ let gi=0; [4,10,16].forEach(i=>{ if(i<N-1 && cells[i].type==="animal"){ cells[i].type="grammar"; cells[i].gitem=gpool[gi%gpool.length]; gi++; } }); }
   // assign animals to animal cells
   let ai=0;
-  cells.forEach(c=>{ if(c.type==="animal"){ c.item = items[ai%items.length]; ai++; } });
+  cells.forEach(c=>{ if(c.type==="animal"){ c.item = ipool[ai%ipool.length]; ai++; } });
 
   // ---------- render cells ----------
   function addLbl(el,t){ const l=document.createElement("div"); l.className="lbl"; l.textContent=t; el.appendChild(l); }
