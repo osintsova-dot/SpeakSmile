@@ -1,0 +1,253 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phonics Hub · Jolly Phonics · Speak &amp; Smile</title>
+<style>
+  :root{ --p:#6C3FC5; --p2:#8A5FD8; --honey:#F5C842; --ink:#2A2140;
+    --f:"Baloo 2","Trebuchet MS","Segoe UI",ui-rounded,system-ui,sans-serif; }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; margin:0; }
+  body{ font-family:var(--f); color:#fff; margin:0; -webkit-font-smoothing:antialiased;
+    background:linear-gradient(160deg,#7C4DE0,#5B8DEF); min-height:100%; }
+  #app{ min-height:100vh; display:flex; flex-direction:column; }
+  .topbar{ display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(0,0,0,.2); position:sticky; top:0; z-index:5; flex-wrap:wrap; }
+  .btn{ border:0; background:rgba(255,255,255,.22); color:#fff; font-family:var(--f); font-size:15px; font-weight:800; border-radius:11px; padding:8px 13px; cursor:pointer; }
+  .htitle{ font-weight:800; font-size:clamp(15px,2.4vh,21px); }
+  .wrap{ flex:1; max-width:920px; width:100%; margin:0 auto; padding:18px 16px 60px; }
+
+  /* hub */
+  h1{ font-size:clamp(24px,5vw,36px); margin:.1em 0; text-shadow:0 2px 6px rgba(0,0,0,.25); }
+  .sub{ opacity:.92; font-weight:600; margin-bottom:16px; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:13px; }
+  .tile{ text-align:left; background:#fff; color:#2a2140; border:0; border-radius:20px; padding:16px 15px; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,.22); transition:transform .1s; }
+  .tile:active{ transform:translateY(2px); }
+  .tile .big{ font-size:30px; font-weight:800; color:var(--p); letter-spacing:1px; }
+  .tile .t{ font-weight:800; font-size:16px; margin-top:4px; }
+  .tile .d{ font-size:12px; color:#6d6584; font-weight:600; margin-top:2px; }
+
+  /* station tabs */
+  .tabs{ display:flex; gap:7px; overflow-x:auto; padding-bottom:4px; margin-bottom:14px; }
+  .tab{ flex:0 0 auto; border:0; background:rgba(255,255,255,.16); color:#fff; font-family:var(--f); font-weight:800; font-size:14px; padding:9px 14px; border-radius:999px; cursor:pointer; white-space:nowrap; }
+  .tab.on{ background:#fff; color:var(--p); }
+  .panel{ background:rgba(255,255,255,.1); border-radius:22px; padding:clamp(14px,3vh,26px); min-height:50vh; }
+  .lead{ font-weight:700; opacity:.95; margin-bottom:14px; font-size:15px; }
+  .lead b{ color:var(--honey); }
+
+  /* sounds grid */
+  .letters{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .lt{ width:clamp(52px,13vw,74px); height:clamp(52px,13vw,74px); border-radius:16px; border:0; cursor:pointer;
+    font-family:var(--f); font-weight:800; font-size:clamp(26px,7vw,40px); background:#fff; color:var(--p); box-shadow:0 4px 0 rgba(0,0,0,.2); }
+  .lt.old{ background:rgba(255,255,255,.28); color:#fff; box-shadow:none; font-size:clamp(20px,5vw,30px); }
+  .lt.new{ outline:3px solid var(--honey); }
+  .lt.sel{ transform:translateY(-3px) scale(1.05); }
+  .digcue{ text-align:center; margin-top:16px; min-height:2.6em; }
+  .digcue .lc{ font-size:clamp(48px,16vw,96px); font-weight:800; color:#fff; line-height:1; }
+  .digcue .act{ font-size:clamp(15px,2.4vh,20px); font-weight:700; margin-top:8px; }
+  .digcue .kw{ opacity:.85; font-weight:600; }
+  .toggle{ display:flex; gap:8px; justify-content:center; margin-top:14px; }
+
+  /* capitals */
+  .caps{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .cap{ width:clamp(58px,15vw,84px); height:clamp(58px,15vw,84px); border-radius:16px; border:0; cursor:pointer; background:#fff; color:var(--p);
+    font-family:var(--f); font-weight:800; font-size:clamp(24px,6vw,36px); display:flex; align-items:center; justify-content:center; gap:2px; box-shadow:0 4px 0 rgba(0,0,0,.2); }
+  .cap .up{ color:var(--o,#e2542f); }
+
+  /* blending */
+  .blendbox{ text-align:center; }
+  .slots{ display:flex; gap:10px; justify-content:center; align-items:center; min-height:120px; margin:8px 0 4px; }
+  .snd{ font-size:clamp(40px,13vw,76px); font-weight:800; color:#fff; background:rgba(255,255,255,.16); border-radius:14px; padding:.05em .28em; transition:transform .5s cubic-bezier(.3,.8,.4,1), margin .5s, opacity .3s; }
+  .blendbox.merged .snd{ background:transparent; margin:0 -.06em; }
+  .blendpic{ font-size:clamp(40px,12vw,70px); min-height:1.2em; margin-top:4px; }
+  .wordlist{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px; }
+  .wl{ border:0; cursor:pointer; font-family:var(--f); font-weight:800; font-size:clamp(16px,2.4vh,20px); padding:8px 14px; border-radius:12px; background:#fff; color:var(--p); box-shadow:0 3px 0 rgba(0,0,0,.2); }
+  .wl.done{ opacity:.5; }
+
+  /* segmenting */
+  .segbox{ text-align:center; }
+  .segreveal{ font-size:clamp(40px,12vw,72px); font-weight:800; min-height:1.3em; letter-spacing:.05em; }
+  .segreveal .s{ color:var(--honey); }
+  .bigbtn{ border:0; cursor:pointer; font-family:var(--f); font-weight:800; color:#5a2ea6; font-size:clamp(18px,3vh,26px);
+    padding:.5em 1.3em; border-radius:16px; background:linear-gradient(180deg,#FFE58A,#F5C842); box-shadow:0 6px 0 #c9950f; margin:6px; }
+  .bigbtn:active{ transform:translateY(4px); box-shadow:0 2px 0 #c9950f; }
+  .bigbtn.p{ color:#fff; background:linear-gradient(180deg,#8A5FD8,#6C3FC5); box-shadow:0 6px 0 #4c2a90; }
+
+  /* tricky */
+  .tricky{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .tk{ min-width:clamp(96px,26vw,150px); height:clamp(80px,20vw,120px); border-radius:18px; border:0; cursor:pointer; background:#fff; color:var(--p);
+    font-family:var(--f); font-weight:800; font-size:clamp(22px,6vw,34px); display:flex; align-items:center; justify-content:center; box-shadow:0 5px 0 rgba(0,0,0,.2); position:relative; }
+  .tk .q{ opacity:.55; }
+  .tk.open{ background:var(--honey); color:#5a2ea6; }
+  .hintline{ text-align:center; opacity:.85; font-weight:600; margin-top:14px; font-size:13px; }
+</style>
+
+<div id="app">
+  <div class="topbar">
+    <button class="btn" id="back" style="display:none">← Уроки</button>
+    <div class="htitle" id="htitle">🔤 Phonics Hub · Jolly Phonics</div>
+    <button class="btn" id="home" style="margin-left:auto">☰ Игры</button>
+  </div>
+  <div class="wrap" id="wrap"></div>
+</div>
+
+<script>
+const SND={
+ s:{act:'🐍 Рука волной, «ссссс» (змея)'}, a:{act:'🐜 Пальцы у локтя, «а-а-а» (муравей)'},
+ t:{act:'🎾 Голова вправо-влево, «т-т-т» (теннис)'}, i:{act:'🐭 «и-и-и» (мышка пищит)'},
+ p:{act:'👏 Тихо «п-п-п», руки как крылья'}, n:{act:'✈️ Руки в стороны, «нннн» (самолёт)'},
+ c:{act:'🖐 Поднять руки, «к-к-к» (кастаньеты)'}, k:{act:'🖐 «к-к-к» (как c)'},
+ e:{act:'🥚 Стучим по яйцу, «э-э» (крак)'}, h:{act:'💨 Ладонь у рта, «х-х-х» (дышим)'},
+ r:{act:'🐶 «ррр» (собачка рычит)'}, m:{act:'😋 Гладим живот, «мммм» (вкусно)'},
+ d:{act:'🥁 Бьём в барабан, «д-д-д»'}, g:{act:'💧 «г-г-г» (глоток воды)'},
+ o:{act:'💡 Щёлк выключателем, «о-о» (короткий)'}, u:{act:'☂️ Зонт вверх-вниз, «а-а» (up)'},
+ l:{act:'🍭 Облизываем леденец, «ллл»'}, f:{act:'🐠 «ффф» (рыбка)'}, b:{act:'⚽ Отбиваем мяч, «б-б»'},
+ j:{act:'🍮 Трясём желе, «дж-дж»'}, v:{act:'🚐 «ввв» (мотор фургона)'}, w:{act:'🌊 Волны, «w-w» (уэ)'},
+ x:{act:'❌ «кс-кс» (рентген)'}, y:{act:'🪀 Йо-йо, «й-й»'}, z:{act:'🐝 «ззз» (пчела)'}, qu:{act:'🦆 «кв-кв» (утка quack)'},
+ sh:{act:'🤫 Палец к губам, «шшш»'}, ch:{act:'🚂 «ч-ч-ч» (паровозик)'}, th:{act:'👅 Язык между зубов, «θ/ð»'},
+ ng:{act:'💪 «нг» (штангист)'}, ai:{act:'🖐 Ладонь к уху, «эй»'}, ee:{act:'🫏 «и-и» (ослик)'},
+ igh:{act:'✈️ «ай» (летит высоко)'}, oa:{act:'😮 «оу» (удивление)'}, oo:{act:'🚂/📖 «у-у»/«у» (короткое/длинное)'},
+ ar:{act:'🦷 «а-а» (у доктора)'}, or:{act:'🥊 «о-о» (or!)'},
+};
+const GROUPS=[
+ {id:1,title:'Группа 1',letters:['s','a','t','i','p','n'],desc:'s a t i p n',
+  blend:[{w:'sat'},{w:'pin',e:'📌'},{w:'tap',e:'🚰'},{w:'pan',e:'🍳'},{w:'nap',e:'😴'},{w:'tin',e:'🥫'},{w:'sit'},{w:'tip'},{w:'nip'},{w:'sip'}],
+  tricky:['I','the','a','is','to']},
+ {id:2,title:'Группа 2',letters:['c','k','e','h','r','m','d'],desc:'c k e h r m d',
+  blend:[{w:'cat',e:'🐱'},{w:'hat',e:'🎩'},{w:'hen',e:'🐔'},{w:'red',e:'🔴'},{w:'rat',e:'🐀'},{w:'ham',e:'🍖'},{w:'pen',e:'🖊️'},{w:'net',e:'🥅'},{w:'ten',e:'🔟'},{w:'dad',e:'👨'},{w:'kit'},{w:'mad',e:'😠'}],
+  tricky:['he','we','me','be','was']},
+ {id:3,title:'Группа 3',letters:['g','o','u','l','f','b'],desc:'g o u l f b',
+  blend:[{w:'dog',e:'🐕'},{w:'sun',e:'☀️'},{w:'bus',e:'🚌'},{w:'bug',e:'🐛'},{w:'bed',e:'🛏️'},{w:'log',e:'🪵'},{w:'mug',e:'☕'},{w:'hug',e:'🤗'},{w:'run',e:'🏃'},{w:'big'},{w:'fog',e:'🌫️'},{w:'cup',e:'🥤'}],
+  tricky:['she','are','all','you','do']},
+ {id:4,title:'Группа 4',letters:['j','v','w','x'],desc:'j v w x',
+  blend:[{w:'jam',e:'🍓'},{w:'jet',e:'✈️'},{w:'van',e:'🚐'},{w:'web',e:'🕸️'},{w:'fox',e:'🦊'},{w:'box',e:'📦'},{w:'six',e:'6️⃣'},{w:'wig'},{w:'win',e:'🏆'},{w:'wax'}],
+  tricky:['your','come','some','said']},
+ {id:5,title:'Группа 5',letters:['y','z','qu'],desc:'y z qu',
+  blend:[{w:'yes',e:'✅'},{w:'zip',e:'🤐'},{w:'yak'},{w:'buzz',e:'🐝'},{w:'quiz',e:'❓'},{w:'zap',e:'⚡'},{w:'jazz',e:'🎷'}],
+  tricky:['my','by','one','only']},
+ {id:6,title:'Группа 6 · Диграфы',letters:['sh','ch','th','ng','ai','ee','oa','oo'],desc:'sh ch th ng · ai ee oa oo',
+  blend:[{w:'ship',e:'🚢'},{w:'fish',e:'🐟'},{w:'shop',e:'🛍️'},{w:'chip',e:'🍟'},{w:'thin'},{w:'king',e:'👑'},{w:'ring',e:'💍'},{w:'sing',e:'🎤'},{w:'rain',e:'🌧️'},{w:'feet',e:'🦶'},{w:'boat',e:'⛵'},{w:'moon',e:'🌙'}],
+  tricky:['go','no','so','here','there','they']},
+];
+const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендинг","✍️ Сегментинг","⭐ Tricky"];
+
+(function(){
+  "use strict";
+  const $=s=>document.querySelector(s), wrap=$("#wrap");
+  const cap=c=> c.length>1 ? c[0].toUpperCase()+c.slice(1) : c.toUpperCase();
+  // TTS — только целые слова
+  let voice=null;
+  function pv(){ const vs=speechSynthesis.getVoices(); voice=vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null; }
+  pv(); if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=pv;
+  function say(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
+
+  let gi=0, station=0;
+  function priorLetters(idx){ let a=[]; for(let k=0;k<idx;k++) a=a.concat(GROUPS[k].letters); return a; }
+
+  // ---------- HUB ----------
+  function renderHub(){
+    $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
+    let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics по группам звуков · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div><div class="grid">`;
+    GROUPS.forEach((g,i)=>{ h+=`<button class="tile" data-i="${i}"><div class="big">${g.letters.join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc} · ${g.tricky.length} tricky</div></button>`; });
+    h+=`<button class="tile" data-i="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">все буквы: строчная ↔ ЗАГЛАВНАЯ</div></button>`;
+    h+=`</div>`;
+    wrap.innerHTML=h;
+    wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ const v=t.dataset.i; if(v==="caps") openCaps(); else openLesson(+v); });
+  }
+
+  // ---------- LESSON ----------
+  function openLesson(i){ gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=GROUPS[i].title+" · "+GROUPS[i].desc; renderLesson(); }
+  function renderLesson(){
+    const g=GROUPS[gi];
+    let h=`<div class="tabs">`+STATIONS.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s}</button>`).join('')+`</div><div class="panel" id="panel"></div>`;
+    wrap.innerHTML=h;
+    wrap.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ station=+t.dataset.k; renderLesson(); });
+    [renderSounds,renderCaps,renderBlend,renderSeg,renderTricky][station]();
+  }
+
+  // Station 1: Звуки (повтор + новые)
+  let showCase="low";
+  function renderSounds(){
+    const g=GROUPS[gi], prior=priorLetters(gi), p=$("#panel");
+    p.innerHTML=`<div class="lead">Повтори <b>пройденные</b> звуки, потом назови <b>новые</b>. Тапни букву — покажу приём Jolly (звук говорим сами, не приложение).</div>
+      <div class="letters" id="lts"></div>
+      <div class="digcue" id="cue"></div>
+      <div class="toggle"><button class="btn" id="tgl">${showCase==='low'?'aA → показать ЗАГЛАВНЫЕ':'Aa → показать строчные'}</button></div>`;
+    const box=$("#lts");
+    prior.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt old" data-c="${c}">${showCase==='low'?c:cap(c)}</button>`));
+    g.letters.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt new" data-c="${c}">${showCase==='low'?c:cap(c)}</button>`));
+    box.querySelectorAll(".lt").forEach(b=>b.onclick=()=>{ box.querySelectorAll(".lt").forEach(x=>x.classList.remove("sel")); b.classList.add("sel");
+      const c=b.dataset.c; $("#cue").innerHTML=`<div class="lc">${c}&nbsp;${cap(c)}</div><div class="act">${(SND[c]||{}).act||''}</div>`; });
+    $("#tgl").onclick=()=>{ showCase=showCase==='low'?'up':'low'; renderSounds(); };
+  }
+
+  // Station 2: Заглавные (новые буквы пары)
+  function renderCaps(){
+    const g=GROUPS[gi], p=$("#panel");
+    p.innerHTML=`<div class="lead">Каждый звук — своя <b>заглавная</b> буква. Строчная и ЗАГЛАВНАЯ звучат одинаково. Тапни — увеличу.</div><div class="caps" id="cbox"></div><div class="digcue" id="cue2"></div>`;
+    const box=$("#cbox");
+    g.letters.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="cap" data-c="${c}"><span>${c}</span><span class="up">${cap(c)}</span></button>`));
+    box.querySelectorAll(".cap").forEach(b=>b.onclick=()=>{ const c=b.dataset.c; $("#cue2").innerHTML=`<div class="lc">${c} → <span style="color:var(--honey)">${cap(c)}</span></div><div class="act">${(SND[c]||{}).act||''}</div>`; });
+  }
+  function openCaps(){ // спец-урок: все A-Z
+    $("#back").style.display=""; $("#htitle").textContent="Заглавные буквы A–Z";
+    const all="abcdefghijklmnopqrstuvwxyz".split("");
+    let h=`<div class="panel"><div class="lead">Все буквы: строчная ↔ <b>ЗАГЛАВНАЯ</b>. Тапни пару.</div><div class="caps">`+
+      all.map(c=>`<button class="cap" data-c="${c}"><span>${c}</span><span class="up">${c.toUpperCase()}</span></button>`).join('')+`</div><div class="digcue" id="cue3"></div></div>`;
+    wrap.innerHTML=h;
+    wrap.querySelectorAll(".cap").forEach(b=>b.onclick=()=>{ const c=b.dataset.c; $("#cue3").innerHTML=`<div class="lc">${c} → <span style="color:var(--honey)">${c.toUpperCase()}</span></div>`; });
+  }
+
+  // Station 3: Блендинг
+  let bWord=null;
+  function renderBlend(){
+    const g=GROUPS[gi], p=$("#panel");
+    p.innerHTML=`<div class="lead">Звуки сливаются в <b>слово</b>. Тапни слово → звуки съедутся → послушай целиком 🔊.</div>
+      <div class="blendbox" id="bbox"><div class="slots" id="slots"><div style="opacity:.7;font-weight:700">Выбери слово ↓</div></div><div class="blendpic" id="bpic"></div></div>
+      <div class="wordlist" id="wl"></div>`;
+    const wl=$("#wl");
+    g.blend.forEach((it,k)=>wl.insertAdjacentHTML('beforeend',`<button class="wl" data-k="${k}">${it.w}</button>`));
+    wl.querySelectorAll(".wl").forEach(b=>b.onclick=()=>{ playBlend(g.blend[+b.dataset.k]); b.classList.add("done"); });
+  }
+  function splitSounds(w){ // разбить на JP-звуки (диграфы вместе)
+    const dig=['igh','qu','sh','ch','th','ng','ai','ee','oa','oo','ar','or']; const out=[]; let i=0;
+    while(i<w.length){ let m=null; for(const d of dig){ if(w.substr(i,d.length)===d){m=d;break;} } if(m){out.push(m);i+=m.length;} else {out.push(w[i]);i++;} }
+    return out;
+  }
+  function playBlend(it){
+    const box=$("#bbox"), slots=$("#slots"), pic=$("#bpic"); box.classList.remove("merged"); pic.textContent="";
+    const parts=splitSounds(it.w);
+    slots.innerHTML=parts.map(s=>`<span class="snd">${s}</span>`).join('');
+    setTimeout(()=>{ box.classList.add("merged"); }, 700);
+    setTimeout(()=>{ say(it.w); if(it.e) pic.textContent=it.e; }, 1250);
+  }
+
+  // Station 4: Сегментинг (диктант)
+  let segWord=null;
+  function renderSeg(){
+    const g=GROUPS[gi], p=$("#panel");
+    p.innerHTML=`<div class="lead">Диктант: нажми 🔊 — приложение <b>скажет слово</b>. Дети пишут в тетрадь. Потом «Проверить» — слово появится по звукам.</div>
+      <div class="segbox">
+        <button class="bigbtn p" id="sPlay">🔊 Сказать слово</button>
+        <div class="segreveal" id="sRev"></div>
+        <div><button class="bigbtn" id="sCheck">Проверить ✓</button><button class="bigbtn" id="sNext">Дальше →</button></div>
+      </div>`;
+    function pick(){ segWord=g.blend[Math.floor(Math.random()*g.blend.length)]; $("#sRev").textContent=""; }
+    pick();
+    $("#sPlay").onclick=()=>say(segWord.w);
+    $("#sCheck").onclick=()=>{ const parts=splitSounds(segWord.w); $("#sRev").innerHTML=parts.map(s=>`<span class="s">${s}</span>`).join('·')+' &nbsp;=&nbsp; <b>'+segWord.w+'</b>'+(segWord.e?' '+segWord.e:''); };
+    $("#sNext").onclick=()=>{ pick(); setTimeout(()=>say(segWord.w),150); };
+  }
+
+  // Station 5: Tricky words
+  function renderTricky(){
+    const g=GROUPS[gi], p=$("#panel");
+    p.innerHTML=`<div class="lead"><b>Tricky words</b> — читаем целиком, их не «сложить» по звукам. Тапни карточку → откроется, послушай 🔊.</div>
+      <div class="tricky" id="tk"></div><div class="hintline">Прочитали хором → перевернули → проверили.</div>`;
+    const box=$("#tk");
+    g.tricky.forEach(w=>box.insertAdjacentHTML('beforeend',`<button class="tk" data-w="${w}"><span class="q">?</span></button>`));
+    box.querySelectorAll(".tk").forEach(b=>b.onclick=()=>{ const w=b.dataset.w; if(!b.classList.contains("open")){ b.classList.add("open"); b.innerHTML=w; say(w); } });
+  }
+
+  $("#back").onclick=renderHub;
+  $("#home").onclick=()=>location.href="../games/index.html";
+  renderHub();
+})();
+</script>
