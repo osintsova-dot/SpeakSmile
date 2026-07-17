@@ -77,6 +77,30 @@
   .tk .q{ opacity:.55; }
   .tk.open{ background:var(--honey); color:#5a2ea6; }
   .hintline{ text-align:center; opacity:.85; font-weight:600; margin-top:14px; font-size:13px; }
+
+  /* balloons */
+  .bfield{ position:relative; height:min(58vh,470px); overflow:hidden; border-radius:16px; background:linear-gradient(#bfe0ff33,#ffffff10); touch-action:manipulation; }
+  .balloon{ position:absolute; width:clamp(58px,13vw,86px); cursor:pointer; will-change:top,transform; user-select:none; }
+  .balloon .body{ width:100%; aspect-ratio:.86; border-radius:50% 50% 48% 48% / 55% 55% 46% 46%;
+    display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; font-size:clamp(26px,6.5vw,42px);
+    box-shadow:inset -7px -9px 0 rgba(0,0,0,.13), 0 4px 10px rgba(0,0,0,.2); text-shadow:0 1px 2px rgba(0,0,0,.25); }
+  .balloon .str{ position:absolute; top:99%; left:50%; width:2px; height:28px; background:rgba(255,255,255,.55); transform:translateX(-50%); }
+  .balloon.pop{ animation:bpop .28s ease forwards; }
+  @keyframes bpop{ 40%{ transform:scale(1.35); } to{ transform:scale(1.6); opacity:0; } }
+  .bflash{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:clamp(70px,22vw,160px); font-weight:800; color:#fff; opacity:0; pointer-events:none; text-shadow:0 4px 12px rgba(0,0,0,.3); }
+  .bflash.on{ animation:bflash .55s ease; }
+  @keyframes bflash{ 0%{opacity:0;transform:scale(.5)} 25%{opacity:.95;transform:scale(1)} 100%{opacity:0;transform:scale(1.25)} }
+
+  /* capitals matching */
+  .matchwrap{ display:flex; gap:clamp(24px,10vw,90px); justify-content:center; margin-top:6px; }
+  .mcol{ display:flex; flex-direction:column; gap:clamp(8px,1.6vh,12px); }
+  .mbtn{ width:clamp(54px,14vw,82px); height:clamp(50px,11vw,72px); border-radius:14px; border:0; cursor:pointer; background:#fff; color:var(--p);
+    font-family:var(--f); font-weight:800; font-size:clamp(24px,6vw,38px); box-shadow:0 4px 0 rgba(0,0,0,.2); transition:transform .08s; }
+  .mbtn.up{ color:#e2542f; }
+  .mbtn.sel{ outline:4px solid var(--honey); transform:translateY(-2px); }
+  .mbtn.ok{ background:#57c98b; color:#fff; box-shadow:0 4px 0 #2ea866; pointer-events:none; }
+  .mbtn.wrong{ animation:shk .4s; }
+  @keyframes shk{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
 </style>
 
 <div id="app">
@@ -126,12 +150,13 @@ const GROUPS=[
   blend:[{w:'ship',e:'🚢'},{w:'fish',e:'🐟'},{w:'shop',e:'🛍️'},{w:'chip',e:'🍟'},{w:'thin'},{w:'king',e:'👑'},{w:'ring',e:'💍'},{w:'sing',e:'🎤'},{w:'rain',e:'🌧️'},{w:'feet',e:'🦶'},{w:'boat',e:'⛵'},{w:'moon',e:'🌙'}],
   tricky:['go','no','so','here','there','they']},
 ];
-const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендинг","✍️ Сегментинг","⭐ Tricky"];
+const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендинг","✍️ Сегментинг","⭐ Tricky","🎈 Шарики"];
 
 (function(){
   "use strict";
   const $=s=>document.querySelector(s), wrap=$("#wrap");
   const cap=c=> c.length>1 ? c[0].toUpperCase()+c.slice(1) : c.toUpperCase();
+  const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;};
   // TTS — только целые слова
   let voice=null;
   function pv(){ const vs=speechSynthesis.getVoices(); voice=vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null; }
@@ -156,11 +181,12 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
   // ---------- LESSON ----------
   function openLesson(i){ gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=GROUPS[i].title+" · "+GROUPS[i].desc; renderLesson(); }
   function renderLesson(){
+    stopBalloons();
     const g=GROUPS[gi];
     let h=`<div class="tabs">`+STATIONS.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s}</button>`).join('')+`</div><div class="panel" id="panel"></div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ station=+t.dataset.k; renderLesson(); });
-    [renderSounds,renderCaps,renderBlend,renderSeg,renderTricky][station]();
+    [renderSounds,renderCaps,renderBlend,renderSeg,renderTricky,renderBalloons][station]();
   }
 
   // Station 1: Звуки (повтор + новые)
@@ -179,13 +205,25 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
     $("#tgl").onclick=()=>{ showCase=showCase==='low'?'up':'low'; renderSounds(); };
   }
 
-  // Station 2: Заглавные (новые буквы пары)
+  // Station 2: Заглавные — matching (строчная ↔ ЗАГЛАВНАЯ)
   function renderCaps(){
     const g=GROUPS[gi], p=$("#panel");
-    p.innerHTML=`<div class="lead">Каждый звук — своя <b>заглавная</b> буква. Строчная и ЗАГЛАВНАЯ звучат одинаково. Тапни — увеличу.</div><div class="caps" id="cbox"></div><div class="digcue" id="cue2"></div>`;
-    const box=$("#cbox");
-    g.letters.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="cap" data-c="${c}"><span>${c}</span><span class="up">${cap(c)}</span></button>`));
-    box.querySelectorAll(".cap").forEach(b=>b.onclick=()=>{ const c=b.dataset.c; $("#cue2").innerHTML=`<div class="lc">${c} → <span style="color:var(--honey)">${cap(c)}</span></div><div class="act">${(SND[c]||{}).act||''}</div>`; });
+    let base=g.letters.filter(c=>c.length===1);
+    if(base.length<3) base=shuffle(priorLetters(gi).filter(c=>c.length===1)).slice(0,8); // диграфы → берём пройденные одиночные
+    base=base.slice(0,8);
+    const lows=shuffle(base), ups=shuffle(base);
+    p.innerHTML=`<div class="lead">Соедини <b>строчную</b> букву с её <b>ЗАГЛАВНОЙ</b>. Тапни маленькую → потом большую. Звучат одинаково!</div>
+      <div class="matchwrap"><div class="mcol" id="mLow"></div><div class="mcol" id="mUp"></div></div>
+      <div class="hintline" id="mHint">Пар собрано: 0 / ${base.length}</div>`;
+    const low=$("#mLow"), up=$("#mUp");
+    lows.forEach(c=>low.insertAdjacentHTML('beforeend',`<button class="mbtn" data-c="${c}">${c}</button>`));
+    ups.forEach(c=>up.insertAdjacentHTML('beforeend',`<button class="mbtn up" data-c="${c}">${cap(c)}</button>`));
+    let sel=null, done=0;
+    low.querySelectorAll(".mbtn").forEach(b=>b.onclick=()=>{ if(b.classList.contains("ok"))return; low.querySelectorAll(".mbtn").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); sel=b; });
+    up.querySelectorAll(".mbtn").forEach(b=>b.onclick=()=>{ if(!sel||b.classList.contains("ok"))return;
+      if(b.dataset.c===sel.dataset.c){ b.classList.add("ok"); sel.classList.add("ok"); sel.classList.remove("sel"); sel=null; done++;
+        $("#mHint").textContent=`Пар собрано: ${done} / ${base.length}`; if(done===base.length) $("#mHint").innerHTML="🎉 Все пары собраны!"; }
+      else { b.classList.add("wrong"); setTimeout(()=>b.classList.remove("wrong"),400); } });
   }
   function openCaps(){ // спец-урок: все A-Z
     $("#back").style.display=""; $("#htitle").textContent="Заглавные буквы A–Z";
@@ -247,7 +285,46 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
     box.querySelectorAll(".tk").forEach(b=>b.onclick=()=>{ const w=b.dataset.w; if(!b.classList.contains("open")){ b.classList.add("open"); b.innerHTML=w; say(w); } });
   }
 
-  $("#back").onclick=renderHub;
+  // Station 6: 🎈 Шарики (буквы взлетают, назови звук и лопни)
+  let bTimer=null, bRAF=null, balloons=[], bRun=false, actx=null;
+  const BCOL=["#FF6B6B","#4D96FF","#38C976","#FFB84D","#B15CFF","#F5C842","#FF7AC6","#37D0C0"];
+  function stopBalloons(){ if(bTimer)clearInterval(bTimer); if(bRAF)cancelAnimationFrame(bRAF); bTimer=null; bRAF=null; balloons=[]; bRun=false; }
+  function popSound(){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(),g=actx.createGain();
+    o.type="triangle"; o.frequency.setValueAtTime(700,actx.currentTime); o.frequency.exponentialRampToValueAtTime(130,actx.currentTime+.12);
+    g.gain.setValueAtTime(.35,actx.currentTime); g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+.16);
+    o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime+.17);}catch(e){} }
+  function renderBalloons(){
+    const g=GROUPS[gi]; const pool=priorLetters(gi).concat(g.letters);
+    const p=$("#panel"); balloons=[];
+    p.innerHTML=`<div class="lead">🎈 Буквы взлетают в шариках вперемешку. Пока летят — <b>назови звук</b> и <b>лопни</b> шарик (тап). Звук говорим сами!</div>
+      <div class="toggle" style="margin:0 0 10px"><button class="bigbtn p" id="bStart" style="font-size:18px;padding:.4em 1.1em">▶ Старт</button>
+        <button class="btn" id="bCase">${showCase==='low'?'Aa → ЗАГЛАВНЫЕ':'aA → строчные'}</button>
+        <span style="align-self:center;font-weight:800;font-size:18px">Лопнули: <span id="bScore">0</span></span></div>
+      <div class="bfield" id="bfield"><div class="bflash" id="bflash"></div></div>`;
+    const field=$("#bfield"); let score=0;
+    function spawn(){ if(!bRun) return; const W=field.clientWidth, H=field.clientHeight;
+      const c=pool[Math.floor(Math.random()*pool.length)], col=BCOL[Math.floor(Math.random()*BCOL.length)];
+      const el=document.createElement("div"); el.className="balloon";
+      el.innerHTML=`<div class="body" style="background:${col}">${showCase==='low'?c:cap(c)}</div><div class="str"></div>`;
+      const bw=Math.min(86,Math.max(58,W*0.13)); const base=Math.random()*(W-bw-10)+5;
+      el.style.left=base+"px"; el.style.top=(H+30)+"px";
+      const b={el, base, y:H+30, vy:0.55+Math.random()*0.9, ph:Math.random()*6.28, amp:6+Math.random()*20, sw:0.015+Math.random()*0.025, dead:false};
+      el.addEventListener("pointerdown",e=>{ e.preventDefault(); popB(b); });
+      field.appendChild(el); balloons.push(b);
+    }
+    function popB(b){ if(b.dead)return; b.dead=true; b.el.classList.add("pop"); popSound();
+      const fl=$("#bflash"); fl.textContent=b.el.querySelector('.body').textContent; fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
+      score++; $("#bScore").textContent=score; setTimeout(()=>b.el.remove(),280); }
+    function step(){ balloons.forEach(b=>{ if(b.dead)return; b.y-=b.vy; b.ph+=b.sw;
+        b.el.style.top=b.y+"px"; b.el.style.transform=`translateX(${Math.sin(b.ph)*b.amp}px)`;
+        if(b.y< -130){ b.el.remove(); b.dead=true; } });
+      balloons=balloons.filter(b=>!b.dead); if(bRun) bRAF=requestAnimationFrame(step); }
+    $("#bStart").onclick=()=>{ if(bRun){ bRun=false; if(bTimer)clearInterval(bTimer); if(bRAF)cancelAnimationFrame(bRAF); bTimer=bRAF=null; $("#bStart").textContent="▶ Старт"; }
+      else { bRun=true; $("#bStart").textContent="⏸ Пауза"; bTimer=setInterval(spawn,1000); spawn(); bRAF=requestAnimationFrame(step); } };
+    $("#bCase").onclick=()=>{ showCase=showCase==='low'?'up':'low'; const wasRun=bRun; stopBalloons(); renderBalloons(); if(wasRun) $("#bStart").click(); };
+  }
+
+  $("#back").onclick=()=>{ stopBalloons(); renderHub(); };
   $("#home").onclick=()=>location.href="../games/index.html";
   renderHub();
 })();
