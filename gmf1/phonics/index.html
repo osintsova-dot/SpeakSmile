@@ -21,6 +21,8 @@
   /* hub */
   h1{ font-size:clamp(24px,5vw,36px); margin:.1em 0; text-shadow:0 2px 6px rgba(0,0,0,.25); }
   .sub{ opacity:.92; font-weight:600; margin-bottom:16px; }
+  h2.sec{ color:var(--honey); font-size:clamp(17px,3.4vw,22px); margin:22px 0 6px; text-shadow:0 2px 4px rgba(0,0,0,.25); }
+  .subsec{ opacity:.85; font-weight:600; font-size:13px; margin-bottom:12px; }
   .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:13px; }
   .tile{ text-align:left; background:#fff; color:#2a2140; border:0; border-radius:20px; padding:16px 15px; cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,.22); transition:transform .1s; }
   .tile:active{ transform:translateY(2px); }
@@ -137,6 +139,7 @@ const SND={
  ng:{act:'💪 «нг» (штангист)'}, ai:{act:'🖐 Ладонь к уху, «эй»'}, ee:{act:'🫏 «и-и» (ослик)'},
  igh:{act:'✈️ «ай» (летит высоко)'}, oa:{act:'😮 «оу» (удивление)'}, oo:{act:'🚂/📖 «у-у»/«у» (короткое/длинное)'},
  ar:{act:'🦷 «а-а» (у доктора)'}, or:{act:'🥊 «о-о» (or!)'},
+ oi:{act:'🪙 «ой» (coin/boy)'}, ou:{act:'🦉 «ау» (out/owl)'}, ie:{act:'🥧 «ай» (pie/tie)'}, ue:{act:'💙 «ю/у» (blue/glue)'}, er:{act:'👩‍🏫 «ё» (her/sister)'},
 };
 const GROUPS=[
  {id:1,title:'Группа 1',letters:['s','a','t','i','p','n'],desc:'s a t i p n',
@@ -159,6 +162,30 @@ const GROUPS=[
   tricky:['go','no','so','here','there','they']},
 ];
 const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендинг","✍️ Сегментинг","⭐ Tricky","🎈 Шарики"];
+// Продолжающие · диграфы (Finger Phonics 4–7) — учим согласные и гласные сочетания
+const DIGRAPHS=[
+ {id:1,title:'ch · sh · th',letters:['ch','sh','th'],desc:'согласные диграфы',
+  blend:[{w:'ship',e:'🚢'},{w:'shop',e:'🛍️'},{w:'fish',e:'🐟'},{w:'dish',e:'🍽️'},{w:'chin'},{w:'chip',e:'🍟'},{w:'chop'},{w:'rich'},{w:'thin'},{w:'that'},{w:'this'},{w:'bath',e:'🛁'}],
+  tricky:['he','she','we','me']},
+ {id:2,title:'ng · qu',letters:['ng','qu'],desc:'king · queen',
+  blend:[{w:'king',e:'👑'},{w:'ring',e:'💍'},{w:'sing',e:'🎤'},{w:'song'},{w:'long'},{w:'wing'},{w:'quiz',e:'❓'},{w:'quick'},{w:'queen',e:'👸'},{w:'quack',e:'🦆'}],
+  tricky:['be','was','to','do']},
+ {id:3,title:'ai · ee',letters:['ai','ee'],desc:'rain · tree',
+  blend:[{w:'rain',e:'🌧️'},{w:'tail'},{w:'sail',e:'⛵'},{w:'wait'},{w:'train',e:'🚂'},{w:'tree',e:'🌳'},{w:'feet',e:'🦶'},{w:'green'},{w:'sheep',e:'🐑'},{w:'three'}],
+  tricky:['my','by','you','your']},
+ {id:4,title:'ie · oa',letters:['ie','oa'],desc:'pie · boat',
+  blend:[{w:'pie',e:'🥧'},{w:'tie'},{w:'lie'},{w:'die'},{w:'boat',e:'⛵'},{w:'coat',e:'🧥'},{w:'road'},{w:'soap',e:'🧼'},{w:'goat',e:'🐐'},{w:'toast',e:'🍞'}],
+  tricky:['all','are','come','some']},
+ {id:5,title:'oo · or',letters:['oo','or'],desc:'moon · fork',
+  blend:[{w:'moon',e:'🌙'},{w:'food',e:'🍔'},{w:'zoo',e:'🦁'},{w:'boot',e:'👢'},{w:'book',e:'📖'},{w:'foot',e:'🦶'},{w:'fork',e:'🍴'},{w:'corn',e:'🌽'},{w:'horn'},{w:'storm',e:'⛈️'}],
+  tricky:['said','here','there','they']},
+ {id:6,title:'oi · ou',letters:['oi','ou'],desc:'coin · out',
+  blend:[{w:'coin',e:'🪙'},{w:'boil'},{w:'join'},{w:'oil'},{w:'point'},{w:'out'},{w:'loud'},{w:'cloud',e:'☁️'},{w:'mouth',e:'👄'},{w:'round'}],
+  tricky:['go','no','so','like']},
+ {id:7,title:'ue · er · ar',letters:['ue','er','ar'],desc:'blue · her · star',
+  blend:[{w:'blue',e:'💙'},{w:'glue'},{w:'true'},{w:'her'},{w:'fern',e:'🌿'},{w:'car',e:'🚗'},{w:'star',e:'⭐'},{w:'farm',e:'🚜'},{w:'park',e:'🏞️'},{w:'arm',e:'💪'}],
+  tricky:['have','live','give','little']},
+];
 
 (function(){
   "use strict";
@@ -172,35 +199,41 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
   const SAY_AS={ "I":"eye", "a":"ay" };   // одиночные буквы читаются как буквы — говорим как слово
   function say(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(SAY_AS[t]||t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
 
-  let gi=0, station=0;
-  function priorLetters(idx){ let a=[]; for(let k=0;k<idx;k++) a=a.concat(GROUPS[k].letters); return a; }
+  let track='beg', gi=0, station=0;
+  const TRACKS={ beg:GROUPS, dig:DIGRAPHS };
+  function DATA(){ return TRACKS[track]; }
+  function LES(){ return DATA()[gi]; }
+  function priorLetters(){ let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); return a; }
+  const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["⭐ Tricky",renderTricky],["🎈 Шарики",renderBalloons]];
+  const ST_DIG=[["🔤 Звук",renderSounds],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["⭐ Tricky",renderTricky],["🎈 Шарики",renderBalloons]];
+  function stList(){ return track==='beg'?ST_BEG:ST_DIG; }
 
   // ---------- HUB ----------
   function renderHub(){
     $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
-    let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics по группам звуков · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div><div class="grid">`;
-    GROUPS.forEach((g,i)=>{ h+=`<button class="tile" data-i="${i}"><div class="big">${g.letters.join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc} · ${g.tricky.length} tricky</div></button>`; });
-    h+=`<button class="tile" data-i="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">все буквы: строчная ↔ ЗАГЛАВНАЯ</div></button>`;
-    h+=`</div>`;
+    const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc} · ${g.tricky.length} tricky</div></button>`;
+    let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
+    h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
+    h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Согласные и гласные сочетания (Finger Phonics 4–7) — «дифтонги»</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
-    wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ const v=t.dataset.i; if(v==="caps") openCaps(); else openLesson(+v); });
+    wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); });
   }
 
   // ---------- LESSON ----------
-  function openLesson(i){ gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=GROUPS[i].title+" · "+GROUPS[i].desc; renderLesson(); }
+  function openLesson(tr,i){ track=tr; gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=LES().title+" · "+LES().desc; renderLesson(); }
   function renderLesson(){
     stopBalloons();
-    const g=GROUPS[gi];
-    let h=`<div class="tabs">`+STATIONS.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s}</button>`).join('')+`</div><div class="panel" id="panel"></div>`;
+    const list=stList();
+    let h=`<div class="tabs">`+list.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s[0]}</button>`).join('')+`</div><div class="panel" id="panel"></div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ station=+t.dataset.k; renderLesson(); });
-    [renderSounds,renderCaps,renderBlend,renderSeg,renderTricky,renderBalloons][station]();
+    list[station][1]();
   }
 
   // Station 1: Звуки (повтор + новые)
   let showCase="low";
   function renderSounds(){
-    const g=GROUPS[gi], prior=priorLetters(gi), p=$("#panel");
+    const g=LES(), prior=priorLetters(), p=$("#panel");
     p.innerHTML=`<div class="lead">Повтори <b>пройденные</b> звуки, потом назови <b>новые</b>. Тапни букву — покажу приём Jolly (звук говорим сами, не приложение).</div>
       <div class="letters" id="lts"></div>
       <div class="digcue" id="cue"></div>
@@ -215,9 +248,9 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
 
   // Station 2: Заглавные — matching (строчная ↔ ЗАГЛАВНАЯ)
   function renderCaps(){
-    const g=GROUPS[gi], p=$("#panel");
+    const g=LES(), p=$("#panel");
     let base=g.letters.filter(c=>c.length===1);
-    if(base.length<3) base=shuffle(priorLetters(gi).filter(c=>c.length===1)).slice(0,8); // диграфы → берём пройденные одиночные
+    if(base.length<3) base=shuffle(priorLetters().filter(c=>c.length===1)).slice(0,8); // диграфы → берём пройденные одиночные
     base=base.slice(0,8);
     const lows=shuffle(base), ups=shuffle(base);
     p.innerHTML=`<div class="lead">Соедини <b>строчную</b> букву с её <b>ЗАГЛАВНОЙ</b>. Тапни маленькую → потом большую. Звучат одинаково!</div>
@@ -245,7 +278,7 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
   // Station 3: Блендинг
   let bWord=null;
   function renderBlend(){
-    const g=GROUPS[gi], p=$("#panel");
+    const g=LES(), p=$("#panel");
     p.innerHTML=`<div class="lead">Звуки сливаются в <b>слово</b>. Тапни слово → звуки съедутся → послушай целиком 🔊.</div>
       <div class="blendbox" id="bbox"><div class="slots" id="slots"><div style="opacity:.7;font-weight:700">Выбери слово ↓</div></div><div class="blendpic" id="bpic"></div></div>
       <div class="wordlist" id="wl"></div>`;
@@ -269,7 +302,7 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
   // Station 4: Сегментинг (диктант)
   let segWord=null;
   function renderSeg(){
-    const g=GROUPS[gi], p=$("#panel");
+    const g=LES(), p=$("#panel");
     p.innerHTML=`<div class="lead">Диктант: нажми 🔊 — приложение <b>скажет слово</b>. Дети пишут в тетрадь. Потом «Проверить» — слово появится по звукам.</div>
       <div class="segbox">
         <button class="bigbtn p" id="sPlay">🔊 Сказать слово</button>
@@ -285,7 +318,7 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
 
   // Station 5: Tricky words
   function renderTricky(){
-    const g=GROUPS[gi], p=$("#panel");
+    const g=LES(), p=$("#panel");
     p.innerHTML=`<div class="lead"><b>Tricky words</b> — читаем целиком, их не «сложить» по звукам. Тапни карточку → откроется, послушай 🔊.</div>
       <div class="tricky" id="tk"></div><div class="hintline">Прочитали хором → перевернули → проверили.</div>`;
     const box=$("#tk");
@@ -307,7 +340,7 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
   const NEED=5;
   let bMode="free";
   function renderBalloons(){
-    const g=GROUPS[gi]; const targets=g.letters; const pool=priorLetters(gi).concat(g.letters);
+    const g=LES(); const targets=g.letters; const pool=priorLetters().concat(g.letters);
     const p=$("#panel"); balloons=[];
     let roundIdx=0, target=null, targetLeft=0, mistakes=0, rounds=0, score=0;
     const isTask=bMode==="task";
