@@ -90,6 +90,10 @@
   .bflash{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:clamp(70px,22vw,160px); font-weight:800; color:#fff; opacity:0; pointer-events:none; text-shadow:0 4px 12px rgba(0,0,0,.3); }
   .bflash.on{ animation:bflash .55s ease; }
   @keyframes bflash{ 0%{opacity:0;transform:scale(.5)} 25%{opacity:.95;transform:scale(1)} 100%{opacity:0;transform:scale(1.25)} }
+  .btask{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:clamp(16px,2.5vh,23px); background:rgba(255,255,255,.15); border-radius:14px; padding:8px 14px; margin-bottom:8px; flex-wrap:wrap; }
+  .btask .bt{ display:inline-flex; align-items:center; justify-content:center; min-width:1.5em; height:1.5em; background:var(--honey); color:#5a2ea6; border-radius:10px; padding:0 .28em; }
+  .balloon.wrongb .body{ animation:wrongb .45s; }
+  @keyframes wrongb{ 0%,100%{filter:none} 30%,70%{filter:brightness(.55) saturate(2.2)} }
 
   /* capitals matching */
   .matchwrap{ display:flex; gap:clamp(24px,10vw,90px); justify-content:center; margin-top:6px; }
@@ -293,34 +297,56 @@ const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендин
     o.type="triangle"; o.frequency.setValueAtTime(700,actx.currentTime); o.frequency.exponentialRampToValueAtTime(130,actx.currentTime+.12);
     g.gain.setValueAtTime(.35,actx.currentTime); g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+.16);
     o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime+.17);}catch(e){} }
+  function wrongSound(){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(),g=actx.createGain();
+    o.type="sawtooth"; o.frequency.setValueAtTime(150,actx.currentTime); g.gain.setValueAtTime(.22,actx.currentTime); g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+.2);
+    o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime+.2);}catch(e){} }
+  const NEED=5;
+  let bMode="free";
   function renderBalloons(){
-    const g=GROUPS[gi]; const pool=priorLetters(gi).concat(g.letters);
+    const g=GROUPS[gi]; const targets=g.letters; const pool=priorLetters(gi).concat(g.letters);
     const p=$("#panel"); balloons=[];
-    p.innerHTML=`<div class="lead">🎈 Буквы взлетают в шариках вперемешку. Пока летят — <b>назови звук</b> и <b>лопни</b> шарик (тап). Звук говорим сами!</div>
-      <div class="toggle" style="margin:0 0 10px"><button class="bigbtn p" id="bStart" style="font-size:18px;padding:.4em 1.1em">▶ Старт</button>
-        <button class="btn" id="bCase">${showCase==='low'?'Aa → ЗАГЛАВНЫЕ':'aA → строчные'}</button>
-        <span style="align-self:center;font-weight:800;font-size:18px">Лопнули: <span id="bScore">0</span></span></div>
+    let roundIdx=0, target=null, targetLeft=0, mistakes=0, rounds=0, score=0;
+    const isTask=bMode==="task";
+    p.innerHTML=`<div class="lead">${isTask?'🎯 Задание: <b>лопни все нужные буквы</b>! Среди разных — '+NEED+' нужных, лопай только их.':'🎈 Лопай шарики и <b>называй звук</b>! Буквы летят вперемешку.'} Звук говорим сами!</div>
+      <div class="toggle" style="margin:0 0 10px;flex-wrap:wrap"><button class="bigbtn p" id="bStart" style="font-size:18px;padding:.4em 1.1em">▶ Старт</button>
+        <button class="btn" id="bMode">Режим: ${isTask?'🎯 Задание':'🎈 Свободно'}</button>
+        <button class="btn" id="bCase">${showCase==='low'?'Aa → ЗАГЛАВНЫЕ':'aA → строчные'}</button></div>
+      ${isTask
+        ?`<div class="btask" id="btask" style="display:none">Лопни все: <span class="bt" id="bTarget">s</span> <span style="opacity:.85">· осталось <span id="bLeft">5</span></span> <span style="margin-left:auto;font-size:15px">✅ раундов: <span id="bRounds">0</span> · ❌ <span id="bMiss">0</span></span></div>`
+        :`<div class="btask"><span>Лопнули: <span id="bScore">0</span></span></div>`}
       <div class="bfield" id="bfield"><div class="bflash" id="bflash"></div></div>`;
-    const field=$("#bfield"); let score=0;
+    const field=$("#bfield");
+    function setTarget(){ target=targets[roundIdx%targets.length]; targetLeft=NEED; $("#btask").style.display="flex";
+      $("#bTarget").textContent=showCase==='low'?target:cap(target); $("#bLeft").textContent=targetLeft; }
+    function flash(txt,ok){ const fl=$("#bflash"); fl.textContent=txt; fl.style.color=ok===false?"#ffd0c8":"#fff"; fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on"); }
     function spawn(){ if(!bRun) return; const W=field.clientWidth, H=field.clientHeight;
-      const c=pool[Math.floor(Math.random()*pool.length)], col=BCOL[Math.floor(Math.random()*BCOL.length)];
+      let c;
+      if(isTask){ const aliveT=balloons.filter(b=>!b.dead && b.c===target).length;
+        if(targetLeft>0 && aliveT<2) c=target; else { const others=pool.filter(x=>x!==target); c=others.length?others[Math.floor(Math.random()*others.length)]:target; } }
+      else c=pool[Math.floor(Math.random()*pool.length)];
+      const col=BCOL[Math.floor(Math.random()*BCOL.length)];
       const el=document.createElement("div"); el.className="balloon";
       el.innerHTML=`<div class="body" style="background:${col}">${showCase==='low'?c:cap(c)}</div><div class="str"></div>`;
       const bw=Math.min(86,Math.max(58,W*0.13)); const base=Math.random()*(W-bw-10)+5;
       el.style.left=base+"px"; el.style.top=(H+30)+"px";
-      const b={el, base, y:H+30, vy:0.55+Math.random()*0.9, ph:Math.random()*6.28, amp:6+Math.random()*20, sw:0.015+Math.random()*0.025, dead:false};
+      const b={el, c, base, y:H+30, vy:0.5+Math.random()*0.85, ph:Math.random()*6.28, amp:6+Math.random()*20, sw:0.015+Math.random()*0.025, dead:false};
       el.addEventListener("pointerdown",e=>{ e.preventDefault(); popB(b); });
       field.appendChild(el); balloons.push(b);
     }
-    function popB(b){ if(b.dead)return; b.dead=true; b.el.classList.add("pop"); popSound();
-      const fl=$("#bflash"); fl.textContent=b.el.querySelector('.body').textContent; fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on");
-      score++; $("#bScore").textContent=score; setTimeout(()=>b.el.remove(),280); }
+    function popB(b){ if(b.dead||!bRun)return;
+      if(!isTask){ b.dead=true; b.el.classList.add("pop"); popSound(); flash(b.el.querySelector('.body').textContent,true); score++; $("#bScore").textContent=score; setTimeout(()=>b.el.remove(),280); return; }
+      if(b.c===target){ b.dead=true; b.el.classList.add("pop"); popSound(); flash(b.el.querySelector('.body').textContent,true);
+        targetLeft--; $("#bLeft").textContent=targetLeft; setTimeout(()=>b.el.remove(),280);
+        if(targetLeft===0){ rounds++; $("#bRounds").textContent=rounds; flash("🎉 Готово!",true); roundIdx++; setTimeout(()=>{ if(bRun) setTarget(); },1100); } }
+      else { mistakes++; $("#bMiss").textContent=mistakes; wrongSound(); b.el.classList.add("wrongb"); setTimeout(()=>b.el.classList.remove("wrongb"),450); }
+    }
     function step(){ balloons.forEach(b=>{ if(b.dead)return; b.y-=b.vy; b.ph+=b.sw;
         b.el.style.top=b.y+"px"; b.el.style.transform=`translateX(${Math.sin(b.ph)*b.amp}px)`;
         if(b.y< -130){ b.el.remove(); b.dead=true; } });
       balloons=balloons.filter(b=>!b.dead); if(bRun) bRAF=requestAnimationFrame(step); }
     $("#bStart").onclick=()=>{ if(bRun){ bRun=false; if(bTimer)clearInterval(bTimer); if(bRAF)cancelAnimationFrame(bRAF); bTimer=bRAF=null; $("#bStart").textContent="▶ Старт"; }
-      else { bRun=true; $("#bStart").textContent="⏸ Пауза"; bTimer=setInterval(spawn,1000); spawn(); bRAF=requestAnimationFrame(step); } };
+      else { bRun=true; $("#bStart").textContent="⏸ Пауза"; if(isTask&&!target) setTarget(); bTimer=setInterval(spawn,950); spawn(); bRAF=requestAnimationFrame(step); } };
+    $("#bMode").onclick=()=>{ bMode=isTask?"free":"task"; stopBalloons(); renderBalloons(); };
     $("#bCase").onclick=()=>{ showCase=showCase==='low'?'up':'low'; const wasRun=bRun; stopBalloons(); renderBalloons(); if(wasRun) $("#bStart").click(); };
   }
 
