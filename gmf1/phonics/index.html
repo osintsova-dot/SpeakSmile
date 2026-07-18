@@ -237,8 +237,8 @@ const ADV=[
   function DATA(){ return TRACKS[track]; }
   function LES(){ return DATA()[gi]; }
   function priorLetters(){ let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); return a; }
-  const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["⭐ Tricky",renderTricky],["🎈 Шарики",renderBalloons]];
-  const ST_DIG=[["🔤 Звук",renderSounds],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["⭐ Tricky",renderTricky],["🎈 Шарики",renderBalloons]];
+  const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Чтение",renderRead],["🎈 Шарики",renderBalloons]];
+  const ST_DIG=[["🔤 Звук",renderSounds],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Чтение",renderRead],["🎈 Шарики",renderBalloons]];
   function stList(){ return track==='beg'?ST_BEG:ST_DIG; }
 
   // ---------- HUB ----------
@@ -256,7 +256,7 @@ const ADV=[
   // ---------- LESSON ----------
   function openLesson(tr,i){ track=tr; gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=LES().title+" · "+LES().desc; renderLesson(); }
   function renderLesson(){
-    stopBalloons();
+    stopBalloons(); stopSpeed();
     const list=stList();
     let h=`<div class="tabs">`+list.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s[0]}</button>`).join('')+`</div><div class="panel" id="panel"></div>`;
     wrap.innerHTML=h;
@@ -422,6 +422,32 @@ const ADV=[
   }
 
   $("#back").onclick=()=>{ stopBalloons(); renderHub(); };
+
+  // Station: ⚡ Speed reading (повтор tricky) + 📖 Чтение (слова)
+  let speedTimer=null;
+  function stopSpeed(){ if(speedTimer)clearInterval(speedTimer); speedTimer=null; }
+  function priorTricky(){ let a=[]; for(let k=0;k<=gi;k++) a=a.concat(DATA()[k].tricky||[]); return [...new Set(a)]; }
+  function renderSpeed(){ const words=priorTricky(); const p=$("#panel"); let idx=0, run=false;
+    p.innerHTML=`<div class="lead">⚡ <b>Speed reading:</b> читаем tricky-слова быстро, хором. Тап по слову — послушать 🔊.</div>
+      <div class="toggle" style="margin-bottom:12px"><button class="bigbtn p" id="spPlay" style="font-size:18px;padding:.4em 1.1em">▶ Старт</button><button class="btn" id="spPrev">←</button><button class="btn" id="spNext">→</button><span style="align-self:center;font-weight:800">${words.length} слов</span></div>
+      <div class="segreveal" id="spWord" style="cursor:pointer;font-size:clamp(50px,15vw,120px);color:var(--honey)"></div>`;
+    const show=()=>{ const el=$("#spWord"); if(el) el.textContent=words[((idx%words.length)+words.length)%words.length]; };
+    show();
+    $("#spWord").onclick=()=>say(words[((idx%words.length)+words.length)%words.length]);
+    $("#spNext").onclick=()=>{ idx++; show(); };
+    $("#spPrev").onclick=()=>{ idx--; show(); };
+    $("#spPlay").onclick=()=>{ run=!run; $("#spPlay").textContent=run?"⏸ Пауза":"▶ Старт"; stopSpeed(); if(run) speedTimer=setInterval(()=>{ idx++; show(); },1300); };
+  }
+  function renderRead(){ const L=LES(); const words=L.blend; const p=$("#panel"); let idx=0;
+    p.innerHTML=`<div class="lead">📖 <b>Читай слова</b> вслух! Тап по слову — послушать 🔊, «Дальше» — следующее.</div>
+      <div class="toggle" style="margin-bottom:12px"><button class="btn" id="rdPrev">←</button><button class="bigbtn p" id="rdNext" style="font-size:18px;padding:.4em 1.1em">Дальше →</button><span style="align-self:center;font-weight:800"><span id="rdN">1</span>/${words.length}</span></div>
+      <div class="segreveal" id="rdWord" style="cursor:pointer"></div><div class="blendpic" id="rdPic"></div>`;
+    const show=()=>{ const it=words[((idx%words.length)+words.length)%words.length]; $("#rdWord").textContent=it.w; $("#rdPic").textContent=it.e||""; $("#rdN").textContent=(((idx%words.length)+words.length)%words.length)+1; };
+    show();
+    $("#rdWord").onclick=()=>say(words[((idx%words.length)+words.length)%words.length].w);
+    $("#rdNext").onclick=()=>{ idx++; show(); };
+    $("#rdPrev").onclick=()=>{ idx--; show(); };
+  }
   $("#home").onclick=()=>location.href="../games/index.html";
   renderHub();
 })();
