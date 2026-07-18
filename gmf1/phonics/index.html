@@ -387,7 +387,6 @@ const ADV=[
   }
   function playBlend(it){
     const box=$("#bbox"), slots=$("#slots"), pic=$("#bpic"); box.classList.remove("merged"); pic.textContent="";
-    try{ if(window.speechSynthesis){ speechSynthesis.cancel(); const w=new SpeechSynthesisUtterance(' '); w.volume=0; speechSynthesis.speak(w); } }catch(e){} // разблокировать синтез на iOS в момент тапа
     const parts=splitSounds(it.w);
     slots.innerHTML=parts.map(s=>`<span class="snd">${s}</span>`).join('');
     const spans=slots.querySelectorAll('.snd');
@@ -396,10 +395,14 @@ const ADV=[
     const lit=(el,on)=>{ if(!el)return; el.style.transition='transform .12s'; el.style.transform=on?'scale(1.3)':'scale(1)'; el.style.color=on?'var(--honey,#F5C842)':''; el.style.fontWeight=on?'900':''; };
     (async()=>{
       for(let i=0;i<parts.length;i++){ lit(spans[i],true); const d=sndData(parts[i]); if(d) await playA(d); else await wait(480); lit(spans[i],false); await wait(110); }
-      box.classList.add("merged"); if(it.e) pic.textContent=it.e; await wait(350);
-      // слово ЦЕЛИКОМ — чистое английское произношение (синтез), с разблокировкой на iOS
-      spans.forEach(x=>lit(x,true)); try{ speechSynthesis.resume(); }catch(e){} say(it.w);
-      await wait(600); spans.forEach(x=>lit(x,false));
+      box.classList.add("merged"); if(it.e) pic.textContent=it.e; await wait(320);
+      // слово ЦЕЛИКОМ — твоим голосом: звуки подряд без пауз + чуть быстрее (playbackRate), сливаются в слово
+      const haveAll=parts.every(s=>sndData(s)); spans.forEach(x=>lit(x,true));
+      if(haveAll){
+        for(let i=0;i<parts.length;i++){ const d=sndData(parts[i]);
+          await new Promise(r=>{ try{ const au=new Audio(d); au.playbackRate=1.35; au.onended=r; au.onerror=r; au.play().catch(()=>r()); setTimeout(r,2000);}catch(e){r();} }); }
+      } else { say(it.w); } // не все звуки записаны — синтез (сработает на десктопе)
+      await wait(200); spans.forEach(x=>lit(x,false));
     })();
   }
 
@@ -413,7 +416,7 @@ const ADV=[
         <div class="segreveal" id="sRev"></div>
         <div><button class="bigbtn" id="sCheck">Проверить ✓</button><button class="bigbtn" id="sNext">Дальше →</button></div>
       </div>`;
-    function pick(){ segWord=g.blend[Math.floor(Math.random()*g.blend.length)]; $("#sRev").textContent=""; }
+    function pick(){ segWord=g.blend[Math.floor(Math.random()*g.blend.length)]; const r=$("#sRev"); r.innerHTML=""; r.style.visibility='hidden'; setTimeout(()=>{ r.style.visibility='visible'; },30); } // visibility+кадр стирает призрак на iOS Safari
     pick();
     $("#sPlay").onclick=()=>say(segWord.w);
     $("#sCheck").onclick=()=>{ const parts=splitSounds(segWord.w); $("#sRev").innerHTML=parts.map(s=>`<span class="s">${s}</span>`).join('·')+' &nbsp;=&nbsp; <b>'+segWord.w+'</b>'+(segWord.e?' '+segWord.e:''); };
