@@ -316,7 +316,7 @@ const ADV=[
     let idx=0;
     p.innerHTML=`<div class="lead">Назови звук буквы (приём Jolly), потом <b>тап по карточке</b> — услышишь его и появится следующая. 🎤 можно записать свой звук.</div>
       <div id="sndCard" style="cursor:pointer;text-align:center;margin:6px auto 0;max-width:340px;background:#fff;border-radius:28px;padding:22px 16px 18px;box-shadow:0 8px 0 rgba(0,0,0,.12)">
-        <div class="lc" id="scL" style="font-size:clamp(74px,26vw,150px);line-height:1;color:var(--p)"></div>
+        <div class="lc" id="scL" style="font-family:'AndikaJP',var(--f);font-size:clamp(74px,26vw,150px);line-height:1;color:var(--p)"></div>
         <div class="act" id="scAct" style="margin-top:8px;font-size:16px;color:#444;min-height:1.2em"></div>
       </div>
       <div style="text-align:center;margin-top:8px;font-weight:800;opacity:.75"><span id="scPos"></span> · тап по карточке → дальше</div>
@@ -336,7 +336,11 @@ const ADV=[
       const rb=$("#recS"); if(rb){ rb.textContent='🎤 '+(hasSnd(c)?'Перезаписать':'Записать'); rb.style.background=''; rb.style.color=''; }
       const ps=$("#playS"); if(ps) ps.disabled=!hasSnd(c); }
     show();
-    $("#sndCard").onclick=()=>{ playSnd(cur()); idx++; show(); }; // тап: проиграть текущий звук + следующая карточка
+    let busy=false;
+    $("#sndCard").onclick=()=>{ if(busy)return; busy=true; const c=cur(), d=sndData(c); // тап: проиграть звук ТЕКУЩЕЙ буквы, буква остаётся; следующая — когда звук доиграл
+      const go=()=>{ idx++; show(); busy=false; };
+      if(d){ try{ const au=new Audio(d); au.onended=go; au.onerror=go; au.play().catch(go); setTimeout(go,2200); }catch(e){ go(); } }
+      else { setTimeout(go,700); } };
     $("#scPrev").onclick=()=>{ idx--; show(); };
     $("#playS").onclick=()=>playSnd(cur());
     $("#recS").onclick=()=>{ const c=cur(), rb=$("#recS"); recSnd(c, st=>{
