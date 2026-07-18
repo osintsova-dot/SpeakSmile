@@ -333,7 +333,7 @@ const ADV=[
       </div>`;
     const norm=()=>((idx%letters.length)+letters.length)%letters.length;
     const cur=()=>letters[norm()];
-    function show(){ const c=cur(); $("#scL").textContent=showCase==='low'?c:cap(c); $("#scAct").textContent=(SND[c]||{}).act||''; $("#scPos").textContent=(norm()+1)+' / '+letters.length+(hasSnd(c)?' 🔊':'');
+    function show(){ const c=cur(); $("#scL").textContent=(showCase==='up' && c.length===1)?cap(c):c; $("#scAct").textContent=(SND[c]||{}).act||''; // диграфы всегда строчными $("#scPos").textContent=(norm()+1)+' / '+letters.length+(hasSnd(c)?' 🔊':'');
       const rb=$("#recS"); if(rb){ rb.textContent='🎤 '+(hasSnd(c)?'Перезаписать':'Записать'); rb.style.background=''; rb.style.color=''; }
       const ps=$("#playS"); if(ps) ps.disabled=!hasSnd(c); }
     show();
@@ -483,7 +483,7 @@ const ADV=[
     const field=$("#bfield");
     { const bs=$("#bSay"); if(bs) bs.onclick=()=>playSnd(target); }
     function setTarget(){ target=targets[roundIdx%targets.length]; targetLeft=NEED; $("#btask").style.display="flex";
-      $("#bTarget").textContent=showCase==='low'?target:cap(target); $("#bLeft").textContent=targetLeft; setTimeout(()=>playSnd(target),150); }
+      $("#bTarget").textContent=(showCase==='up'&&target.length===1)?cap(target):target; $("#bLeft").textContent=targetLeft; setTimeout(()=>playSnd(target),150); }
     function flash(txt,ok){ const fl=$("#bflash"); fl.textContent=txt; fl.style.color=ok===false?"#ffd0c8":"#fff"; fl.classList.remove("on"); void fl.offsetWidth; fl.classList.add("on"); }
     function spawn(){ if(!bRun) return; const W=field.clientWidth, H=field.clientHeight;
       let c;
@@ -492,7 +492,7 @@ const ADV=[
       else c=pool[Math.floor(Math.random()*pool.length)];
       const col=BCOL[Math.floor(Math.random()*BCOL.length)];
       const el=document.createElement("div"); el.className="balloon";
-      el.innerHTML=`<div class="body" style="background:${col}">${showCase==='low'?c:cap(c)}</div><div class="str"></div>`;
+      el.innerHTML=`<div class="body" style="background:${col}">${(showCase==='up'&&c.length===1)?cap(c):c}</div><div class="str"></div>`;
       const bw=Math.min(86,Math.max(58,W*0.13)); const base=Math.random()*(W-bw-10)+5;
       el.style.left=base+"px"; el.style.top=(H+30)+"px";
       const b={el, c, base, y:H+30, vy:0.5+Math.random()*0.85, ph:Math.random()*6.28, amp:6+Math.random()*20, sw:0.015+Math.random()*0.025, dead:false};
