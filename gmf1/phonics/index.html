@@ -387,6 +387,7 @@ const ADV=[
   }
   function playBlend(it){
     const box=$("#bbox"), slots=$("#slots"), pic=$("#bpic"); box.classList.remove("merged"); pic.textContent="";
+    try{ if(window.speechSynthesis){ speechSynthesis.cancel(); const w=new SpeechSynthesisUtterance(' '); w.volume=0; speechSynthesis.speak(w); } }catch(e){} // разблокировать синтез на iOS в момент тапа
     const parts=splitSounds(it.w);
     slots.innerHTML=parts.map(s=>`<span class="snd">${s}</span>`).join('');
     const spans=slots.querySelectorAll('.snd');
@@ -396,11 +397,9 @@ const ADV=[
     (async()=>{
       for(let i=0;i<parts.length;i++){ lit(spans[i],true); const d=sndData(parts[i]); if(d) await playA(d); else await wait(480); lit(spans[i],false); await wait(110); }
       box.classList.add("merged"); if(it.e) pic.textContent=it.e; await wait(350);
-      // слово ЦЕЛИКОМ — твоим голосом: звуки подряд, сливаются в слово
-      const haveAll=parts.every(s=>sndData(s)); spans.forEach(x=>lit(x,true));
-      if(haveAll){ for(let i=0;i<parts.length;i++){ const d=sndData(parts[i]); try{ new Audio(d).play().catch(()=>{}); }catch(e){} await wait(300); } }
-      else { say(it.w); }
-      await wait(300); spans.forEach(x=>lit(x,false));
+      // слово ЦЕЛИКОМ — чистое английское произношение (синтез), с разблокировкой на iOS
+      spans.forEach(x=>lit(x,true)); try{ speechSynthesis.resume(); }catch(e){} say(it.w);
+      await wait(600); spans.forEach(x=>lit(x,false));
     })();
   }
 
