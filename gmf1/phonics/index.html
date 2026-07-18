@@ -373,7 +373,7 @@ const ADV=[
   let bWord=null;
   function renderBlend(){
     const g=LES(), p=$("#panel");
-    p.innerHTML=`<div class="lead">Звуки сливаются в <b>слово</b>. Тапни слово → звуки съедутся → послушай целиком 🔊.</div>
+    p.innerHTML=`<div class="lead">Звуки сливаются в <b>слово</b>. Тапни слово → звуки прозвучат по одному (твоим голосом, где записан) → съедутся → слово целиком 🔊.</div>
       <div class="blendbox" id="bbox"><div class="slots" id="slots"><div style="opacity:.7;font-weight:700">Выбери слово ↓</div></div><div class="blendpic" id="bpic"></div></div>
       <div class="wordlist" id="wl"></div>`;
     const wl=$("#wl");
@@ -389,8 +389,14 @@ const ADV=[
     const box=$("#bbox"), slots=$("#slots"), pic=$("#bpic"); box.classList.remove("merged"); pic.textContent="";
     const parts=splitSounds(it.w);
     slots.innerHTML=parts.map(s=>`<span class="snd">${s}</span>`).join('');
-    setTimeout(()=>{ box.classList.add("merged"); }, 700);
-    setTimeout(()=>{ say(it.w); if(it.e) pic.textContent=it.e; }, 1250);
+    const spans=slots.querySelectorAll('.snd');
+    const wait=ms=>new Promise(r=>setTimeout(r,ms));
+    const playA=d=>new Promise(r=>{ try{ const au=new Audio(d); au.onended=r; au.onerror=r; au.play().catch(()=>r()); setTimeout(r,2500);}catch(e){r();} });
+    const lit=(el,on)=>{ if(!el)return; el.style.transition='transform .12s'; el.style.transform=on?'scale(1.3)':'scale(1)'; el.style.color=on?'var(--honey,#F5C842)':''; el.style.fontWeight=on?'900':''; };
+    (async()=>{
+      for(let i=0;i<parts.length;i++){ lit(spans[i],true); const d=sndData(parts[i]); if(d) await playA(d); else await wait(480); lit(spans[i],false); await wait(110); }
+      box.classList.add("merged"); await wait(400); say(it.w); if(it.e) pic.textContent=it.e;
+    })();
   }
 
   // Station 4: Сегментинг (диктант)
