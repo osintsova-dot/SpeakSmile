@@ -277,28 +277,65 @@ const ADV=[
 
   // Station 1: Звуки (повтор + новые)
   let showCase="low";
-  const JOLLY_BASE="https://jollylearning.com/us/resources/audio-and-video-resources/";
-  const JOLLY_ALL=JOLLY_BASE+"42-letter-sounds-video";
-  function jollyUrl(){
-    const grp={satipn:1,ckehrmd:2,goulfb:3,ai:4,oaie:4,eeor:4,ue:7,
-      digoa:4,digee:4,digoo:5,digsh:6,digqu:7,digoi:7,diger:7}[LES().id];
-    return grp?JOLLY_BASE+"letter-sounds-group-"+grp+"-video":JOLLY_ALL;
+  // Озвучка звуков ГОЛОСОМ УЧИТЕЛЯ (свои записи, localStorage, офлайн; без копирайта)
+  let mediaRec=null, recChunks=[];
+  const PHSND={}; // сюда вошью записи учителя для ВСЕХ детей (base64); пока пусто — играют локальные записи
+  function sndData(c){ if(PHSND[c]) return PHSND[c]; try{ return localStorage.getItem('phsnd_'+c); }catch(e){ return null; } }
+  function hasSnd(c){ return !!sndData(c); }
+  function playSnd(c){ const d=sndData(c); if(d){ try{ new Audio(d).play().catch(()=>{}); }catch(e){} } }
+  function exportSnds(){
+    const o={}; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k.indexOf('phsnd_')===0) o[k.slice(6)]=localStorage.getItem(k); }
+    if(!Object.keys(o).length){ alert('Пока нет записей. Сначала запиши звуки кнопкой 🎤.'); return; }
+    const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));
+    a.download='phonics-sounds.json'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  }
+  function recCount(){ let n=0; try{ for(let i=0;i<localStorage.length;i++){ if(localStorage.key(i).indexOf('phsnd_')===0) n++; } }catch(e){} return n; }
+  function recSnd(c, cb){
+    if(mediaRec && mediaRec.state==='recording'){ mediaRec.stop(); return; }
+    if(!navigator.mediaDevices || !window.MediaRecorder){ alert('Запись не поддерживается в этом браузере.'); return; }
+    navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+      recChunks=[]; mediaRec=new MediaRecorder(stream);
+      mediaRec.ondataavailable=e=>{ if(e.data && e.data.size) recChunks.push(e.data); };
+      mediaRec.onstop=()=>{ stream.getTracks().forEach(t=>t.stop());
+        const blob=new Blob(recChunks,{type:(mediaRec&&mediaRec.mimeType)||'audio/webm'});
+        const fr=new FileReader();
+        fr.onload=()=>{ try{ localStorage.setItem('phsnd_'+c, fr.result); }catch(e){ alert('Память браузера переполнена — удали часть записей.'); } cb&&cb('saved'); };
+        fr.readAsDataURL(blob);
+      };
+      mediaRec.start(); cb&&cb('recording');
+    }).catch(e=>alert('Нет доступа к микрофону. Разреши микрофон для сайта в браузере.'));
   }
   function renderSounds(){
     const g=LES(), prior=priorLetters(), p=$("#panel");
-    p.innerHTML=`<div class="lead">Повтори <b>пройденные</b> звуки, потом назови <b>новые</b>. Тапни букву — покажу приём Jolly (звук говорим сами, не приложение).</div>
+    p.innerHTML=`<div class="lead">Повтори <b>пройденные</b> звуки, потом назови <b>новые</b>. Тапни букву — приём Jolly. Можешь записать <b>свой</b> звук 🎤 и потом играть 🔊 (твой голос, офлайн).</div>
       <div class="letters" id="lts"></div>
       <div class="digcue" id="cue"></div>
       <div class="toggle"><button class="btn" id="tgl">${showCase==='low'?'aA → показать ЗАГЛАВНЫЕ':'Aa → показать строчные'}</button></div>
-      <div style="margin-top:16px;text-align:center">
-        <a class="btn" href="${jollyUrl()}" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">🔊 Официальная озвучка Jolly Phonics ▶</a>
-        <div style="font-size:12px;opacity:.6;margin-top:6px">Британское произношение · откроется на сайте правообладателя · © Jolly Learning</div>
+      <div style="margin-top:14px;text-align:center;font-size:13px;opacity:.75">
+        <button class="btn" id="expS" style="font-size:13px;padding:6px 12px">💾 Скачать записи (отдать в сайт)</button>
+        <div style="margin-top:6px">Записано твоих звуков: <b id="rcnt">${recCount()}</b></div>
       </div>`;
+    $("#expS").onclick=exportSnds;
     const box=$("#lts");
-    prior.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt old" data-c="${c}">${showCase==='low'?c:cap(c)}</button>`));
-    g.letters.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt new" data-c="${c}">${showCase==='low'?c:cap(c)}</button>`));
-    box.querySelectorAll(".lt").forEach(b=>b.onclick=()=>{ box.querySelectorAll(".lt").forEach(x=>x.classList.remove("sel")); b.classList.add("sel");
-      const c=b.dataset.c; $("#cue").innerHTML=`<div class="lc">${c}&nbsp;${cap(c)}</div><div class="act">${(SND[c]||{}).act||''}</div>`; });
+    const disp=c=>(showCase==='low'?c:cap(c))+(hasSnd(c)?' <sup style="font-size:.4em">🔊</sup>':'');
+    prior.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt old" data-c="${c}">${disp(c)}</button>`));
+    g.letters.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt new" data-c="${c}">${disp(c)}</button>`));
+    function showCue(c){
+      box.querySelectorAll(".lt").forEach(x=>x.classList.toggle("sel", x.dataset.c===c));
+      $("#cue").innerHTML=`<div class="lc">${c}&nbsp;${cap(c)}</div><div class="act">${(SND[c]||{}).act||''}</div>
+        <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <button class="btn" id="playS" ${hasSnd(c)?'':'disabled'}>🔊 Играть</button>
+          <button class="btn" id="recS">🎤 ${hasSnd(c)?'Перезаписать':'Записать звук'}</button>
+        </div>`;
+      $("#playS").onclick=()=>playSnd(c);
+      const rb=$("#recS");
+      rb.onclick=()=>recSnd(c, st=>{
+        if(st==='recording'){ rb.textContent='⏺ Стоп — говори звук'; rb.style.background='#e5484d'; rb.style.color='#fff'; }
+        else { showCue(c); const t=box.querySelector('.lt[data-c="'+c+'"]'); if(t && !/🔊/.test(t.innerHTML)) t.innerHTML=disp(c); const rc=$("#rcnt"); if(rc) rc.textContent=recCount(); }
+      });
+    }
+    box.querySelectorAll(".lt").forEach(b=>b.onclick=()=>showCue(b.dataset.c));
     $("#tgl").onclick=()=>{ showCase=showCase==='low'?'up':'low'; renderSounds(); };
   }
 
