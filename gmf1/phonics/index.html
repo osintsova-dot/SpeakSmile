@@ -356,7 +356,7 @@ const ADV=[
     let sel=null, done=0;
     low.querySelectorAll(".mbtn").forEach(b=>b.onclick=()=>{ if(b.classList.contains("ok"))return; low.querySelectorAll(".mbtn").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); sel=b; });
     up.querySelectorAll(".mbtn").forEach(b=>b.onclick=()=>{ if(!sel||b.classList.contains("ok"))return;
-      if(b.dataset.c===sel.dataset.c){ b.classList.add("ok"); sel.classList.add("ok"); sel.classList.remove("sel"); sel=null; done++;
+      if(b.dataset.c===sel.dataset.c){ b.classList.add("ok"); sel.classList.add("ok"); sel.classList.remove("sel"); playSnd(b.dataset.c); sel=null; done++;
         $("#mHint").textContent=`Пар собрано: ${done} / ${base.length}`; if(done===base.length) $("#mHint").innerHTML="🎉 Все пары собраны!"; }
       else { b.classList.add("wrong"); setTimeout(()=>b.classList.remove("wrong"),400); } });
   }
@@ -366,7 +366,7 @@ const ADV=[
     let h=`<div class="panel"><div class="lead">Все буквы: строчная ↔ <b>ЗАГЛАВНАЯ</b>. Тапни пару.</div><div class="caps">`+
       all.map(c=>`<button class="cap" data-c="${c}"><span>${c}</span><span class="up">${c.toUpperCase()}</span></button>`).join('')+`</div><div class="digcue" id="cue3"></div></div>`;
     wrap.innerHTML=h;
-    wrap.querySelectorAll(".cap").forEach(b=>b.onclick=()=>{ const c=b.dataset.c; $("#cue3").innerHTML=`<div class="lc">${c} → <span style="color:var(--honey)">${c.toUpperCase()}</span></div>`; });
+    wrap.querySelectorAll(".cap").forEach(b=>b.onclick=()=>{ const c=b.dataset.c; playSnd(c); $("#cue3").innerHTML=`<div class="lc">${c} → <span style="color:var(--honey)">${c.toUpperCase()}</span></div>`; });
   }
 
   // Station 3: Блендинг
