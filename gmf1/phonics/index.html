@@ -312,37 +312,39 @@ const ADV=[
     }).catch(e=>alert('Нет доступа к микрофону. Разреши микрофон для сайта в браузере.'));
   }
   function renderSounds(){
-    const g=LES(), prior=priorLetters(), p=$("#panel");
-    p.innerHTML=`<div class="lead">Повтори <b>пройденные</b> звуки, потом назови <b>новые</b>. Тапни букву — приём Jolly. Можешь записать <b>свой</b> звук 🎤 и потом играть 🔊 (твой голос, офлайн).</div>
-      <div class="letters" id="lts"></div>
-      <div class="digcue" id="cue"></div>
-      <div class="toggle"><button class="btn" id="tgl">${showCase==='low'?'aA → показать ЗАГЛАВНЫЕ':'Aa → показать строчные'}</button></div>
+    const g=LES(), letters=priorLetters().concat(g.letters), p=$("#panel");
+    let idx=0;
+    p.innerHTML=`<div class="lead">Назови звук буквы (приём Jolly), потом <b>тап по карточке</b> — услышишь его и появится следующая. 🎤 можно записать свой звук.</div>
+      <div id="sndCard" style="cursor:pointer;text-align:center;margin:6px auto 0;max-width:340px;background:#fff;border-radius:28px;padding:22px 16px 18px;box-shadow:0 8px 0 rgba(0,0,0,.12)">
+        <div class="lc" id="scL" style="font-size:clamp(74px,26vw,150px);line-height:1;color:var(--p)"></div>
+        <div class="act" id="scAct" style="margin-top:8px;font-size:16px;color:#444;min-height:1.2em"></div>
+      </div>
+      <div style="text-align:center;margin-top:8px;font-weight:800;opacity:.75"><span id="scPos"></span> · тап по карточке → дальше</div>
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="btn" id="scPrev">← назад</button>
+        <button class="btn" id="playS">🔊 Играть</button>
+        <button class="btn" id="recS">🎤 Записать</button>
+        <button class="btn" id="tgl">${showCase==='low'?'aA → ЗАГЛАВНЫЕ':'Aa → строчные'}</button>
+      </div>
       <div style="margin-top:14px;text-align:center;font-size:13px;opacity:.75">
         <button class="btn" id="expS" style="font-size:13px;padding:6px 12px">💾 Скачать записи (отдать в сайт)</button>
         <div style="margin-top:6px">Записано твоих звуков: <b id="rcnt">${recCount()}</b></div>
       </div>`;
-    $("#expS").onclick=exportSnds;
-    const box=$("#lts");
-    const disp=c=>(showCase==='low'?c:cap(c))+(hasSnd(c)?' <sup style="font-size:.4em">🔊</sup>':'');
-    prior.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt old" data-c="${c}">${disp(c)}</button>`));
-    g.letters.forEach(c=>box.insertAdjacentHTML('beforeend',`<button class="lt new" data-c="${c}">${disp(c)}</button>`));
-    function showCue(c){
-      box.querySelectorAll(".lt").forEach(x=>x.classList.toggle("sel", x.dataset.c===c));
-      playSnd(c); // тап по букве сразу озвучивает (где записан звук)
-      $("#cue").innerHTML=`<div class="lc">${c}&nbsp;${cap(c)}</div><div class="act">${(SND[c]||{}).act||''}</div>
-        <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-          <button class="btn" id="playS" ${hasSnd(c)?'':'disabled'}>🔊 Играть</button>
-          <button class="btn" id="recS">🎤 ${hasSnd(c)?'Перезаписать':'Записать звук'}</button>
-        </div>`;
-      $("#playS").onclick=()=>playSnd(c);
-      const rb=$("#recS");
-      rb.onclick=()=>recSnd(c, st=>{
+    const norm=()=>((idx%letters.length)+letters.length)%letters.length;
+    const cur=()=>letters[norm()];
+    function show(){ const c=cur(); $("#scL").textContent=showCase==='low'?c:cap(c); $("#scAct").textContent=(SND[c]||{}).act||''; $("#scPos").textContent=(norm()+1)+' / '+letters.length+(hasSnd(c)?' 🔊':'');
+      const rb=$("#recS"); if(rb){ rb.textContent='🎤 '+(hasSnd(c)?'Перезаписать':'Записать'); rb.style.background=''; rb.style.color=''; }
+      const ps=$("#playS"); if(ps) ps.disabled=!hasSnd(c); }
+    show();
+    $("#sndCard").onclick=()=>{ playSnd(cur()); idx++; show(); }; // тап: проиграть текущий звук + следующая карточка
+    $("#scPrev").onclick=()=>{ idx--; show(); };
+    $("#playS").onclick=()=>playSnd(cur());
+    $("#recS").onclick=()=>{ const c=cur(), rb=$("#recS"); recSnd(c, st=>{
         if(st==='recording'){ rb.textContent='⏺ Стоп — говори звук'; rb.style.background='#e5484d'; rb.style.color='#fff'; }
-        else { showCue(c); const t=box.querySelector('.lt[data-c="'+c+'"]'); if(t && !/🔊/.test(t.innerHTML)) t.innerHTML=disp(c); const rc=$("#rcnt"); if(rc) rc.textContent=recCount(); }
-      });
-    }
-    box.querySelectorAll(".lt").forEach(b=>b.onclick=()=>showCue(b.dataset.c));
-    $("#tgl").onclick=()=>{ showCase=showCase==='low'?'up':'low'; renderSounds(); };
+        else { const rc=$("#rcnt"); if(rc) rc.textContent=recCount(); show(); }
+      }); };
+    $("#tgl").onclick=()=>{ showCase=showCase==='low'?'up':'low'; show(); };
+    $("#expS").onclick=exportSnds;
   }
 
   // Station 2: Заглавные — matching (строчная ↔ ЗАГЛАВНАЯ)
