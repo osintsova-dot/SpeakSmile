@@ -290,13 +290,16 @@ const ADV=[
   function renderAnagram(){ // 🔀 картинка + звуки вразброс → собери слово
     const p=$("#panel"); let q=shuffle(imgWords()); let qi=0;
     if(!q.length){ p.innerHTML='<div class="lead">Для этого урока пока нет слов с картинками.</div>'; return; }
-    p.innerHTML=`<div class="lead">🔀 <b>Анаграмма:</b> смотри на картинку и собери слово — тапай звуки по порядку.</div>
+    p.innerHTML=`<div class="lead">🔀 <b>Анаграмма:</b> посмотри на картинку и <b>назови слово</b> (🔊 — подсказка). Потом собери его — тапай звуки по порядку.</div>
       <div style="text-align:center"><img id="anImg" style="width:clamp(110px,32vw,160px);border-radius:18px;box-shadow:0 5px 16px rgba(108,63,197,.25)">
-      <div id="anSlots" style="display:flex;gap:8px;justify-content:center;margin:14px 0"></div>
+      <div style="margin:6px 0"><button class="btn" id="anSay">🔊 Назвать слово</button></div>
+      <div id="anSlots" style="display:flex;gap:8px;justify-content:center;margin:12px 0"></div>
       <div id="anTiles" style="display:flex;gap:9px;justify-content:center;flex-wrap:wrap"></div>
       <div style="margin-top:14px"><button class="bigbtn" id="anNext">Дальше →</button></div></div>`;
     function load(){ const it=q[qi%q.length]; const parts=splitSounds(it.w); let fill=0;
       $("#anImg").src=it.img;
+      $("#anSay").onclick=()=>say(it.w);
+      setTimeout(()=>say(it.w),400); // сначала слово звучит — дети повторяют, потом собирают
       $("#anSlots").innerHTML=parts.map(()=>'<span class="mbtn" style="width:52px;height:52px;pointer-events:none;background:rgba(255,255,255,.55)"></span>').join('');
       const tiles=shuffle(parts.map((s,i)=>({s,i})));
       $("#anTiles").innerHTML=tiles.map((t,k)=>`<button class="mbtn" data-s="${t.s}" data-k="${k}" style="width:auto;min-width:52px;height:52px;padding:0 10px;font-size:24px">${t.s}</button>`).join('');
