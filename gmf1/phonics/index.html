@@ -285,7 +285,7 @@ const ADV=[
   let mediaRec=null, recChunks=[];
   const SND_FILES=["s","a","t","i","p","n"]; // озвучено учителем → внешний файл sounds/<g>.m4a (для ВСЕХ детей)
   const PHSND={}; SND_FILES.forEach(g=>PHSND[g]='sounds/'+g+'.m4a');
-  function sndData(c){ try{ const l=localStorage.getItem('phsnd_'+c); if(l) return l; }catch(e){} return PHSND[c]||null; } // локальная запись учителя в приоритете, иначе вшитый файл
+  function sndData(c){ if(PHSND[c]) return PHSND[c]; try{ return localStorage.getItem('phsnd_'+c); }catch(e){ return null; } } // вшитый ЧИСТЫЙ файл в приоритете; локальная запись — только для ещё не вшитых звуков
   function hasSnd(c){ return !!sndData(c); }
   function playSnd(c){ const d=sndData(c); if(d){ try{ new Audio(d).play().catch(()=>{}); }catch(e){} } }
   function exportSnds(){
