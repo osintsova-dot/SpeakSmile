@@ -362,7 +362,7 @@ const ADV=[
       else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } });
   }
   // Порядок = методика (Оксана): 1) ввели звуки → 2) поиграли/отработали звуки → 3) читаем → 4) диктант → 5) tricky → 6) книжка
-  const ST_BEG=[["🔤 Звуки",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔠 Заглавные",renderCaps],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
+  const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
   const ST_DIG=[["🔤 Звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
   function stList(){ return track==='beg'?ST_BEG:ST_DIG; }
 
