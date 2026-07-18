@@ -71,6 +71,10 @@
   .segbox{ text-align:center; }
   .segreveal{ font-size:clamp(40px,12vw,72px); font-weight:800; min-height:1.3em; letter-spacing:.05em; }
   .segreveal .s{ color:var(--honey); }
+  .seglist{ text-align:left; max-width:320px; margin:16px auto 0; font-size:clamp(22px,6vw,30px); font-weight:800; line-height:1.55; padding-left:1.6em; }
+  .seglist li{ margin:3px 0; }
+  .seglist .masked{ opacity:.32; letter-spacing:.12em; }
+  .seglist b{ color:var(--honey); }
   .bigbtn{ border:0; cursor:pointer; font-family:var(--f); font-weight:800; color:#5a2ea6; font-size:clamp(18px,3vh,26px);
     padding:.5em 1.3em; border-radius:16px; background:linear-gradient(180deg,#FFE58A,#F5C842); box-shadow:0 6px 0 #c9950f; margin:6px; }
   .bigbtn:active{ transform:translateY(4px); box-shadow:0 2px 0 #c9950f; }
@@ -407,19 +411,20 @@ const ADV=[
   let segWord=null;
   function renderSeg(){
     const g=LES(), p=$("#panel");
-    p.innerHTML=`<div class="lead">Диктант: нажми 🔊 — приложение <b>скажет слово</b>. Дети пишут в тетрадь. Потом «Проверить» — слово появится по звукам.</div>
+    p.innerHTML=`<div class="lead">Диктант: 🔊 — приложение <b>скажет слово</b>, дети пишут в тетрадь. «Дальше» — новое слово. В конце «Проверить ✓» — открыть список для самопроверки.</div>
       <div class="segbox">
-        <button class="bigbtn p" id="sPlay">🔊 Сказать слово</button>
-        <div class="segreveal" id="sRev"></div>
-        <div><button class="bigbtn" id="sCheck">Проверить ✓</button><button class="bigbtn" id="sNext">Дальше →</button></div>
+        <button class="bigbtn p" id="sPlay">🔊 Сказать слово №<span id="sNum">1</span></button>
+        <div style="margin:10px 0"><button class="bigbtn" id="sNext">Дальше →</button> <button class="bigbtn" id="sCheck">Проверить ✓</button></div>
+        <ol class="seglist" id="sList"></ol>
       </div>`;
     let order=shuffle(g.blend.map((_,i)=>i)), op=0, lastIdx=-1;
-    function pick(){ if(op>=order.length){ order=shuffle(order); if(order.length>1 && order[0]===lastIdx){ const t=order[0]; order[0]=order[1]; order[1]=t; } op=0; } // прошли все слова → перемешать заново (без повтора на стыке)
-      lastIdx=order[op]; segWord=g.blend[order[op]]; op++;
-      const r=$("#sRev"); r.innerHTML=""; r.style.visibility='hidden'; setTimeout(()=>{ r.style.visibility='visible'; },30); } // visibility+кадр стирает призрак на iOS Safari
+    const written=[]; let revealed=false;
+    function renderList(){ const ol=$("#sList"); if(!ol)return; ol.innerHTML=written.map(it=>'<li>'+(revealed?('<b>'+it.w+'</b>'+(it.e?' '+it.e:'')):'<span class="masked">— — —</span>')+'</li>').join(''); }
+    function pick(){ if(op>=order.length){ order=shuffle(order); if(order.length>1 && order[0]===lastIdx){ const t=order[0]; order[0]=order[1]; order[1]=t; } op=0; } // все слова прошли → перемешать (без повтора на стыке)
+      lastIdx=order[op]; segWord=g.blend[order[op]]; op++; written.push(segWord); revealed=false; renderList(); $("#sNum").textContent=written.length; }
     pick();
     $("#sPlay").onclick=()=>say(segWord.w);
-    $("#sCheck").onclick=()=>{ const parts=splitSounds(segWord.w); $("#sRev").innerHTML=parts.map(s=>`<span class="s">${s}</span>`).join('·')+' &nbsp;=&nbsp; <b>'+segWord.w+'</b>'+(segWord.e?' '+segWord.e:''); };
+    $("#sCheck").onclick=()=>{ revealed=true; renderList(); };
     $("#sNext").onclick=()=>{ pick(); setTimeout(()=>say(segWord.w),150); };
   }
 
