@@ -338,7 +338,7 @@ const ADV=[
     show();
     let busy=false;
     $("#sndCard").onclick=()=>{ if(busy)return; busy=true; const c=cur(), d=sndData(c); // тап: проиграть звук ТЕКУЩЕЙ буквы, буква остаётся; следующая — когда звук доиграл
-      const go=()=>{ idx++; show(); busy=false; };
+      let ran=false; const go=()=>{ if(ran)return; ran=true; idx++; show(); busy=false; }; // сработать РОВНО один раз (звук ИЛИ таймер, не оба)
       if(d){ try{ const au=new Audio(d); au.onended=go; au.onerror=go; au.play().catch(go); setTimeout(go,2200); }catch(e){ go(); } }
       else { setTimeout(go,700); } };
     $("#scPrev").onclick=()=>{ idx--; show(); };
