@@ -284,7 +284,7 @@ const ADV=[
   let showCase="low";
   // Озвучка звуков ГОЛОСОМ УЧИТЕЛЯ (свои записи, localStorage, офлайн; без копирайта)
   let mediaRec=null, recChunks=[];
-  const SND_FILES=["s","a","t","i","p","n"]; // озвучено учителем → внешний файл sounds/<g>.m4a (для ВСЕХ детей)
+  const SND_FILES=["s","a","t","i","p","n","ai","b","c","d","e","ee","g","h","ie","j","k","l","m","o","oa","or","qu","r","u","ue","v","w","x","y","z"]; // озвучено учителем → внешний файл sounds/<g>.m4a (для ВСЕХ детей); f ждёт перезаписи (тихо)
   const PHSND={}; SND_FILES.forEach(g=>PHSND[g]='sounds/'+g+'.m4a');
   function sndData(c){ if(PHSND[c]) return PHSND[c]; try{ return localStorage.getItem('phsnd_'+c); }catch(e){ return null; } } // вшитый ЧИСТЫЙ файл в приоритете; локальная запись — только для ещё не вшитых звуков
   function hasSnd(c){ return !!sndData(c); }
