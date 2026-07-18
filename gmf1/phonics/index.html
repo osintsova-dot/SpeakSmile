@@ -382,6 +382,7 @@ const ADV=[
   function openLesson(tr,i){ track=tr; gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=LES().title+" · "+LES().desc; renderLesson(); }
   function renderLesson(){
     stopBalloons(); stopSpeed();
+    preloadSnds(priorLetters().concat(LES().letters)); // предзагрузка звуков урока — играют мгновенно
     const list=stList();
     let h=`<div class="tabs">`+list.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s[0]}</button>`).join('')+`</div><div class="panel" id="panel"></div>`;
     wrap.innerHTML=h;
@@ -413,7 +414,14 @@ const ADV=[
   const PHSND={}; SND_FILES.forEach(g=>PHSND[g]='sounds/'+g+'.m4a');
   function sndData(c){ if(PHSND[c]) return PHSND[c]; try{ return localStorage.getItem('phsnd_'+c); }catch(e){ return null; } } // вшитый ЧИСТЫЙ файл в приоритете; локальная запись — только для ещё не вшитых звуков
   function hasSnd(c){ return !!sndData(c); }
-  function playSnd(c){ const d=sndData(c); if(d){ try{ new Audio(d).play().catch(()=>{}); }catch(e){} } }
+  // Кэш+предзагрузка: звук готов заранее (без сетевой задержки), новый тап обрывает предыдущий (быстрое тыканье)
+  const sndCache={}; let nowPlaying=null;
+  function getAudio(c){ const d=sndData(c); if(!d) return null;
+    if(!sndCache[c] || sndCache[c].__src!==d){ try{ const a=new Audio(d); a.preload='auto'; a.__src=d; sndCache[c]=a; }catch(e){ return null; } }
+    return sndCache[c]; }
+  function preloadSnds(list){ (list||[]).forEach(c=>getAudio(c)); }
+  function playSnd(c){ const a=getAudio(c); if(!a) return;
+    try{ if(nowPlaying && nowPlaying!==a){ nowPlaying.pause(); nowPlaying.currentTime=0; } a.currentTime=0; nowPlaying=a; a.play().catch(()=>{}); }catch(e){} }
   function exportSnds(){
     const o={}; for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k.indexOf('phsnd_')===0) o[k.slice(6)]=localStorage.getItem(k); }
     if(!Object.keys(o).length){ alert('Пока нет записей. Сначала запиши звуки кнопкой 🎤.'); return; }
@@ -480,7 +488,7 @@ const ADV=[
       let ran=false; const go=()=>{ if(ran)return; ran=true;
         if(lastOfRound){ sparkBurst(card,'🎉',16); setTimeout(()=>sparkBurst(card,'⭐',12),250); } // прошли ВСЕ звуки урока → салют!
         setTimeout(()=>{ idx++; show(); busy=false; }, lastOfRound?800:120); };
-      if(d){ try{ const au=new Audio(d); au.onended=go; au.onerror=go; au.play().catch(go); setTimeout(go,2200); }catch(e){ go(); } }
+      if(d){ try{ const au=getAudio(c); if(!au){go();return;} au.onended=go; if(nowPlaying&&nowPlaying!==au) nowPlaying.pause(); au.currentTime=0; nowPlaying=au; au.play().catch(go); setTimeout(go,2200); }catch(e){ go(); } }
       else { setTimeout(go,900); } };
     $("#scPrev").onclick=()=>{ idx--; show(); };
     $("#playS").onclick=()=>playSnd(cur());
@@ -552,10 +560,11 @@ const ADV=[
     slots.innerHTML=parts.map(s=>`<span class="snd">${s}</span>`).join('');
     const spans=slots.querySelectorAll('.snd');
     const wait=ms=>new Promise(r=>setTimeout(r,ms));
-    const playA=d=>new Promise(r=>{ try{ const au=new Audio(d); au.onended=r; au.onerror=r; au.play().catch(()=>r()); setTimeout(r,2500);}catch(e){r();} });
+    const playA=c=>new Promise(r=>{ try{ const au=getAudio(c); if(!au){r();return;} let done=false; const fin=()=>{ if(done)return; done=true; au.onended=null; r(); };
+      au.onended=fin; if(nowPlaying&&nowPlaying!==au){ nowPlaying.pause(); } au.currentTime=0; nowPlaying=au; au.play().catch(fin); setTimeout(fin,2500);}catch(e){r();} });
     const lit=(el,on)=>{ if(!el)return; el.style.transition='transform .12s'; el.style.transform=on?'scale(1.3)':'scale(1)'; el.style.color=on?'var(--honey,#F5C842)':''; el.style.fontWeight=on?'900':''; };
     (async()=>{
-      for(let i=0;i<parts.length;i++){ lit(spans[i],true); const d=sndData(parts[i]); if(d) await playA(d); else await wait(480); lit(spans[i],false); await wait(110); }
+      for(let i=0;i<parts.length;i++){ lit(spans[i],true); if(hasSnd(parts[i])) await playA(parts[i]); else await wait(480); lit(spans[i],false); await wait(110); }
       box.classList.add("merged"); if(it.img){ pic.innerHTML='<img class="popin" src="'+it.img+'" alt="" style="max-width:130px;max-height:130px;object-fit:contain;border-radius:16px;box-shadow:0 4px 14px rgba(108,63,197,.22)">'; sparkBurst(box,'🎉',10); } else if(it.e){ pic.textContent=it.e; pic.classList.remove('popin'); void pic.offsetWidth; pic.classList.add('popin'); } await wait(350);
       // слово ЦЕЛИКОМ — чистый английский синтез (с разблокировкой на iOS)
       spans.forEach(x=>lit(x,true)); try{ speechSynthesis.resume(); }catch(e){} say(it.w);
