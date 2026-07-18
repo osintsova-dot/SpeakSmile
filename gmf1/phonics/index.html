@@ -413,7 +413,10 @@ const ADV=[
         <div class="segreveal" id="sRev"></div>
         <div><button class="bigbtn" id="sCheck">Проверить ✓</button><button class="bigbtn" id="sNext">Дальше →</button></div>
       </div>`;
-    function pick(){ segWord=g.blend[Math.floor(Math.random()*g.blend.length)]; const r=$("#sRev"); r.innerHTML=""; r.style.visibility='hidden'; setTimeout(()=>{ r.style.visibility='visible'; },30); } // visibility+кадр стирает призрак на iOS Safari
+    let order=shuffle(g.blend.map((_,i)=>i)), op=0, lastIdx=-1;
+    function pick(){ if(op>=order.length){ order=shuffle(order); if(order.length>1 && order[0]===lastIdx){ const t=order[0]; order[0]=order[1]; order[1]=t; } op=0; } // прошли все слова → перемешать заново (без повтора на стыке)
+      lastIdx=order[op]; segWord=g.blend[order[op]]; op++;
+      const r=$("#sRev"); r.innerHTML=""; r.style.visibility='hidden'; setTimeout(()=>{ r.style.visibility='visible'; },30); } // visibility+кадр стирает призрак на iOS Safari
     pick();
     $("#sPlay").onclick=()=>say(segWord.w);
     $("#sCheck").onclick=()=>{ const parts=splitSounds(segWord.w); $("#sRev").innerHTML=parts.map(s=>`<span class="s">${s}</span>`).join('·')+' &nbsp;=&nbsp; <b>'+segWord.w+'</b>'+(segWord.e?' '+segWord.e:''); };
