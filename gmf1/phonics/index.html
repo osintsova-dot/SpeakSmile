@@ -373,12 +373,12 @@ const ADV=[
   let bWord=null;
   function renderBlend(){
     const g=LES(), p=$("#panel");
-    p.innerHTML=`<div class="lead">Звуки сливаются в <b>слово</b>. Тапни слово → звуки прозвучат по одному (твоим голосом, где записан) → съедутся → слово целиком 🔊.</div>
-      <div class="blendbox" id="bbox"><div class="slots" id="slots"><div style="opacity:.7;font-weight:700">Выбери слово ↓</div></div><div class="blendpic" id="bpic"></div></div>
-      <div class="wordlist" id="wl"></div>`;
-    const wl=$("#wl");
-    g.blend.forEach((it,k)=>wl.insertAdjacentHTML('beforeend',`<button class="wl" data-k="${k}">${it.w}</button>`));
-    wl.querySelectorAll(".wl").forEach(b=>b.onclick=()=>{ playBlend(g.blend[+b.dataset.k]); b.classList.add("done"); });
+    p.innerHTML=`<div class="lead">Звуки сливаются в <b>слово</b>: прозвучат по одному (твоим голосом, где записан) → съедутся → слово целиком 🔊.</div>
+      <div class="blendbox" id="bbox"><div class="slots" id="slots"><div style="opacity:.7;font-weight:700">Нажми «Далее» ↓</div></div><div class="blendpic" id="bpic"></div></div>
+      <div style="text-align:center;margin-top:16px"><button class="bigbtn p" id="blNext" style="font-size:20px;padding:.45em 1.4em">▶ Далее</button>
+        <span style="margin-left:12px;opacity:.7;font-size:15px"><span id="blPos">0</span> / ${g.blend.length}</span></div>`;
+    let bi=-1;
+    $("#blNext").onclick=()=>{ bi=(bi+1)%g.blend.length; $("#blPos").textContent=bi+1; $("#blNext").textContent="Далее →"; playBlend(g.blend[bi]); };
   }
   function splitSounds(w){ // разбить на JP-звуки (диграфы вместе)
     const dig=['igh','qu','sh','ch','th','ng','ck','ph','ai','ay','ea','ee','ie','oa','oo','oi','oy','ou','ow','ar','or','er','ir','ur','ue','ew','aw','au','ll','ss','ff','zz']; const out=[]; let i=0;
