@@ -76,6 +76,10 @@
   .seglist .masked{ opacity:.32; letter-spacing:.12em; }
   .seglist .s{ color:#fff; }
   .seglist b{ color:var(--honey); }
+  #sndStage{ position:relative; padding-top:4px; }
+  #sndStage::before{ content:''; position:absolute; left:50%; top:-2px; transform:translateX(-50%); width:min(380px,94%); height:100%; z-index:0; pointer-events:none; border-radius:34px;
+    background:radial-gradient(70% 55% at 26% 16%, rgba(245,200,66,.34), transparent 55%), radial-gradient(75% 60% at 82% 86%, rgba(108,63,197,.22), transparent 55%); }
+  #scPic{ box-shadow:0 4px 14px rgba(108,63,197,.18); background:#fff; }
   .bigbtn{ border:0; cursor:pointer; font-family:var(--f); font-weight:800; color:#5a2ea6; font-size:clamp(18px,3vh,26px);
     padding:.5em 1.3em; border-radius:16px; background:linear-gradient(180deg,#FFE58A,#F5C842); box-shadow:0 6px 0 #c9950f; margin:6px; }
   .bigbtn:active{ transform:translateY(4px); box-shadow:0 2px 0 #c9950f; }
@@ -159,7 +163,7 @@ const SND={
 // Начинающие · по тетради «Phonics Hero» (26 звуков → заглавные → гласные сочетания)
 const GROUPS=[
  {id:1,title:'s a t i p n',letters:['s','a','t','i','p','n'],desc:'Урок 1 · satipn',
-  blend:[{w:'sat'},{w:'pin',e:'📌'},{w:'tap',e:'🚰'},{w:'pan',e:'🍳'},{w:'nap',e:'😴'},{w:'tin',e:'🥫'},{w:'sit'},{w:'tip'},{w:'ant',e:'🐜'},{w:'spin'}],
+  blend:[{w:'sat'},{w:'pin',e:'📌',img:'pics/w_pin.jpg'},{w:'tap',e:'🚰',img:'pics/w_tap.jpg'},{w:'pan',e:'🍳',img:'pics/w_pan.jpg'},{w:'nap',e:'😴',img:'pics/w_nap.jpg'},{w:'tin',e:'🥫',img:'pics/w_tin.jpg'},{w:'sit'},{w:'tip'},{w:'ant',e:'🐜',img:'pics/w_ant.jpg'},{w:'spin'}],
   tricky:['the','a','I','is'],
   story:[{t:'A pan.',img:'stories/satipn_1.jpg'},{t:'An ant is in the pan.',img:'stories/satipn_2.jpg'},{t:'The ant naps.',img:'stories/satipn_3.jpg'},{t:'Pat taps the ant.',img:'stories/satipn_4.jpg'},{t:'The ant sits!',img:'stories/satipn_5.jpg'}]},
  {id:2,title:'c k e h r m d',letters:['c','k','e','h','r','m','d'],desc:'Урок 2',
@@ -282,6 +286,7 @@ const ADV=[
 
   // Station 1: Звуки (повтор + новые)
   let showCase="low";
+  const SND_PICS=new Set(["s","a","t","i","p","n"]); // мнемо-картинки Jolly есть → pics/snd_<g>.jpg (пилот satipn)
   // Озвучка звуков ГОЛОСОМ УЧИТЕЛЯ (свои записи, localStorage, офлайн; без копирайта)
   let mediaRec=null, recChunks=[];
   const SND_FILES=["s","a","t","i","p","n","ai","b","c","d","e","ee","g","h","ie","j","k","l","m","o","oa","or","qu","r","u","ue","v","w","x","y","z","f","ng","oo","ch","sh","th","ou","oi","er","ar"]; // озвучено учителем → внешний файл sounds/<g>.m4a (для ВСЕХ детей); полный комплект: 26 звуков + 16 диграфов
@@ -316,9 +321,12 @@ const ADV=[
     const g=LES(), letters=priorLetters().concat(g.letters), p=$("#panel");
     let idx=0;
     p.innerHTML=`<div class="lead">Назови звук буквы (приём Jolly), потом <b>тап по карточке</b> — услышишь его и появится следующая. 🎤 можно записать свой звук.</div>
-      <div id="sndCard" style="cursor:pointer;text-align:center;margin:6px auto 0;max-width:340px;background:#fff;border-radius:28px;padding:22px 16px 18px;box-shadow:0 8px 0 rgba(0,0,0,.12)">
-        <div class="lc" id="scL" style="font-family:'AndikaJP',var(--f);font-size:clamp(74px,26vw,150px);line-height:1;color:var(--p)"></div>
-        <div class="act" id="scAct" style="margin-top:8px;font-size:16px;color:#444;min-height:1.2em"></div>
+      <div id="sndStage">
+      <div id="sndCard" style="cursor:pointer;text-align:center;margin:6px auto 0;max-width:340px;border-radius:30px;padding:20px 16px 18px;position:relative;z-index:1;background:linear-gradient(180deg,#ffffff,#fdf6ff);box-shadow:0 10px 0 rgba(108,63,197,.18),0 14px 30px rgba(108,63,197,.25);border:3px solid rgba(255,255,255,.9)">
+        <img id="scPic" alt="" style="display:none;width:clamp(120px,34vw,168px);height:clamp(120px,34vw,168px);object-fit:contain;margin:0 auto 2px;border-radius:18px">
+        <div class="lc" id="scL" style="font-family:'AndikaJP',var(--f);font-size:clamp(64px,22vw,128px);line-height:1;color:var(--p)"></div>
+        <div class="act" id="scAct" style="margin-top:6px;font-size:16px;color:#444;min-height:1.2em"></div>
+      </div>
       </div>
       <div style="text-align:center;margin-top:8px;font-weight:800;opacity:.75"><span id="scPos"></span> · тап по карточке → дальше</div>
       <div style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
@@ -333,7 +341,8 @@ const ADV=[
       </div>`;
     const norm=()=>((idx%letters.length)+letters.length)%letters.length;
     const cur=()=>letters[norm()];
-    function show(){ const c=cur(); $("#scL").textContent=(showCase==='up' && c.length===1)?cap(c):c; $("#scAct").textContent=(SND[c]||{}).act||''; // диграфы всегда строчными $("#scPos").textContent=(norm()+1)+' / '+letters.length+(hasSnd(c)?' 🔊':'');
+    function show(){ const c=cur(); $("#scL").textContent=(showCase==='up' && c.length===1)?cap(c):c; $("#scAct").textContent=(SND[c]||{}).act||''; // диграфы всегда строчными
+      const pic=$("#scPic"); if(pic){ if(SND_PICS.has(c)){ pic.src='pics/snd_'+c+'.jpg'; pic.style.display='block'; } else { pic.style.display='none'; pic.removeAttribute('src'); } } $("#scPos").textContent=(norm()+1)+' / '+letters.length+(hasSnd(c)?' 🔊':'');
       const rb=$("#recS"); if(rb){ rb.textContent='🎤 '+(hasSnd(c)?'Перезаписать':'Записать'); rb.style.background=''; rb.style.color=''; }
       const ps=$("#playS"); if(ps) ps.disabled=!hasSnd(c); }
     show();
@@ -416,7 +425,7 @@ const ADV=[
     const lit=(el,on)=>{ if(!el)return; el.style.transition='transform .12s'; el.style.transform=on?'scale(1.3)':'scale(1)'; el.style.color=on?'var(--honey,#F5C842)':''; el.style.fontWeight=on?'900':''; };
     (async()=>{
       for(let i=0;i<parts.length;i++){ lit(spans[i],true); const d=sndData(parts[i]); if(d) await playA(d); else await wait(480); lit(spans[i],false); await wait(110); }
-      box.classList.add("merged"); if(it.e) pic.textContent=it.e; await wait(350);
+      box.classList.add("merged"); if(it.img){ pic.innerHTML='<img src="'+it.img+'" alt="" style="max-width:130px;max-height:130px;object-fit:contain;border-radius:16px;box-shadow:0 4px 14px rgba(108,63,197,.22)">'; } else if(it.e){ pic.textContent=it.e; } await wait(350);
       // слово ЦЕЛИКОМ — чистый английский синтез (с разблокировкой на iOS)
       spans.forEach(x=>lit(x,true)); try{ speechSynthesis.resume(); }catch(e){} say(it.w);
       await wait(600); spans.forEach(x=>lit(x,false));
