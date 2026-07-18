@@ -353,15 +353,23 @@ const ADV=[
     base=base.slice(0,8);
     const lows=shuffle(base), ups=shuffle(base);
     p.innerHTML=`<div class="lead">Соедини <b>строчную</b> букву с её <b>ЗАГЛАВНОЙ</b>. Тапни маленькую → потом большую. Звучат одинаково!</div>
-      <div class="matchwrap"><div class="mcol" id="mLow"></div><div class="mcol" id="mUp"></div></div>
+      <div class="matchwrap" id="mWrap" style="position:relative"><svg id="mLines" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible"></svg><div class="mcol" id="mLow"></div><div class="mcol" id="mUp"></div></div>
       <div class="hintline" id="mHint">Пар собрано: 0 / ${base.length}</div>`;
     const low=$("#mLow"), up=$("#mUp");
     lows.forEach(c=>low.insertAdjacentHTML('beforeend',`<button class="mbtn" data-c="${c}">${c}</button>`));
     ups.forEach(c=>up.insertAdjacentHTML('beforeend',`<button class="mbtn up" data-c="${c}">${cap(c)}</button>`));
+    const PAIRC=['#e2542f','#6C3FC5','#f5a623','#2ea866','#3aa0e0','#d94f9a','#8e44ad','#00a3a3'];
+    function drawPairLine(a,bEl,color){ const svg=$("#mLines"), wrap=$("#mWrap"); if(!svg||!wrap)return; const wr=wrap.getBoundingClientRect(), ar=a.getBoundingClientRect(), br=bEl.getBoundingClientRect();
+      const ns='http://www.w3.org/2000/svg', pts=[[ar.right-wr.left,ar.top+ar.height/2-wr.top],[br.left-wr.left,br.top+br.height/2-wr.top]];
+      const ln=document.createElementNS(ns,'line'); ln.setAttribute('x1',pts[0][0]);ln.setAttribute('y1',pts[0][1]);ln.setAttribute('x2',pts[1][0]);ln.setAttribute('y2',pts[1][1]);
+      ln.setAttribute('stroke',color); ln.setAttribute('stroke-width','5'); ln.setAttribute('stroke-linecap','round'); svg.appendChild(ln);
+      pts.forEach(([cx,cy])=>{ const c=document.createElementNS(ns,'circle'); c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r','5');c.setAttribute('fill',color); svg.appendChild(c); }); }
     let sel=null, done=0;
     low.querySelectorAll(".mbtn").forEach(b=>b.onclick=()=>{ if(b.classList.contains("ok"))return; low.querySelectorAll(".mbtn").forEach(x=>x.classList.remove("sel")); b.classList.add("sel"); sel=b; });
     up.querySelectorAll(".mbtn").forEach(b=>b.onclick=()=>{ if(!sel||b.classList.contains("ok"))return;
-      if(b.dataset.c===sel.dataset.c){ b.classList.add("ok"); sel.classList.add("ok"); sel.classList.remove("sel"); playSnd(b.dataset.c); sel=null; done++;
+      if(b.dataset.c===sel.dataset.c){ const lo=sel; lo.classList.add("ok"); b.classList.add("ok"); lo.classList.remove("sel");
+        const color=PAIRC[done%PAIRC.length]; [lo,b].forEach(x=>{ x.style.background=color; x.style.color='#fff'; x.style.boxShadow='0 4px 0 rgba(0,0,0,.22)'; }); drawPairLine(lo,b,color);
+        playSnd(b.dataset.c); sel=null; done++;
         $("#mHint").textContent=`Пар собрано: ${done} / ${base.length}`; if(done===base.length) $("#mHint").innerHTML="🎉 Все пары собраны!"; }
       else { b.classList.add("wrong"); setTimeout(()=>b.classList.remove("wrong"),400); } });
   }
