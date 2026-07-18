@@ -320,7 +320,8 @@ const ADV=[
         <div id="rvGrid" style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)"></div></div>
       <div style="text-align:center;margin-top:10px"><button class="bigbtn" id="rvSay" style="display:none">🔊 Слово</button> <button class="bigbtn" id="rvNext">Ещё →</button></div>`;
     function load(){ it=pool[Math.floor(Math.random()*pool.length)]; $("#rvImg").src=it.img; $("#rvSay").style.display='none';
-      const snds=shuffle(priorLetters().concat(LES().letters)).slice(0,9); const g=$("#rvGrid"); let left=9;
+      const base=priorLetters().concat(LES().letters); let snds=[]; while(snds.length<9) snds=snds.concat(shuffle(base)); snds=snds.slice(0,9); // всегда 9 пузырей — картинка закрыта полностью
+      const g=$("#rvGrid"); let left=9;
       g.innerHTML=snds.map((c,k)=>`<button data-c="${c}" style="border:1px solid rgba(255,255,255,.5);background:linear-gradient(160deg,#8b5cf6,#6C3FC5);color:#fff;font-family:'AndikaJP',var(--f);font-size:26px;font-weight:800;cursor:pointer">${c}</button>`).join('');
       g.querySelectorAll('button').forEach(b=>b.onclick=()=>{ playSnd(b.dataset.c); b.style.transition='opacity .4s, transform .4s'; b.style.opacity=0; b.style.transform='scale(1.4)'; b.style.pointerEvents='none';
         if(--left===0){ sparkBurst($("#rvBox"),'🎉',14); $("#rvSay").style.display=''; } }); }
@@ -328,30 +329,41 @@ const ADV=[
     $("#rvSay").onclick=()=>say(it.w);
     $("#rvNext").onclick=load;
   }
-  function renderBees(){ // 🐝 пчёлка летит на цветок с услышанным звуком
+  function renderBees(){ // 🐝 рой: каждая пчела остаётся на своём цветке; посадил всех — праздник
     const p=$("#panel"); const pool=priorLetters().concat(LES().letters);
-    let target=null, score=0;
-    p.innerHTML=`<div class="lead">🐝 <b>Пчёлка:</b> нажми 🔊 — услышь звук (голос учителя) → тапни <b>цветок</b> с этим звуком. Пчёлка прилетит!</div>
-      <div style="text-align:center;margin-bottom:8px"><button class="bigbtn p" id="beePlay">🔊 Звук</button> <span style="font-weight:800;margin-left:8px">🍯 <span id="beeSc">0</span></span></div>
-      <div id="beeField" style="position:relative;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;min-height:220px;padding:8px 0">
-        <div id="bee" style="position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:40px;transition:all .9s cubic-bezier(.3,1.2,.4,1);z-index:3">🐝</div></div>`;
+    p.innerHTML=`<div class="lead">🐝 <b>Пчёлки:</b> нажми 🔊 — услышь звук → тапни <b>цветок</b> с этим звуком. Пчёлка сядет на него. Посади всех пчёлок!</div>
+      <div style="text-align:center;margin-bottom:8px"><button class="bigbtn p" id="beePlay">🔊 Звук</button> <span style="font-weight:800;margin-left:8px">🐝 <span id="beeSc">0</span> / <span id="beeTot"></span></span></div>
+      <div id="beeField" style="position:relative;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;min-height:230px;padding:8px 0 34px"></div>
+      <div style="text-align:center"><button class="bigbtn" id="beeAgain" style="display:none">Ещё раз 🔄</button></div>`;
     const field=$("#beeField");
     const opts=shuffle(pool).slice(0,Math.min(6,pool.length));
+    let doneSet=new Set(), target=null, busyB=false;
+    $("#beeTot").textContent=opts.length;
     opts.forEach(c=>field.insertAdjacentHTML('beforeend',`<button class="flw" data-c="${c}" style="width:92px;height:92px;border:0;background:none;cursor:pointer;position:relative">
       <span style="position:absolute;inset:0;font-size:84px;line-height:92px">🌸</span>
       <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'AndikaJP',var(--f);font-size:24px;font-weight:900;color:#6C3FC5">${c}</span></button>`));
-    function pick(){ target=opts[Math.floor(Math.random()*opts.length)]; }
+    field.insertAdjacentHTML('beforeend',`<div id="bee" style="position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);font-size:40px;transition:all .9s cubic-bezier(.3,1.2,.4,1);z-index:3">🐝</div>`);
+    function speak(){ if(!target)return; if(sndData(target)) playSnd(target); else say(target); }
+    function pick(){ const rest=opts.filter(c=>!doneSet.has(c)); target=rest.length?rest[Math.floor(Math.random()*rest.length)]:null; }
     pick();
-    $("#beePlay").onclick=()=>{ if(sndData(target)) playSnd(target); else say(target); };
-    field.querySelectorAll('.flw').forEach(b=>b.onclick=()=>{ if(!target)return;
-      if(b.dataset.c===target){ const r=b.getBoundingClientRect(), f=field.getBoundingClientRect(), bee=$("#bee");
-        bee.style.left=(r.left-f.left+r.width/2)+'px'; bee.style.transform='translateX(-50%)'; bee.style.bottom=(f.bottom-r.bottom+r.height*0.55)+'px';
-        playSnd(target); sparkBurst(field,'✨',8); score++; $("#beeSc").textContent=score;
-        setTimeout(()=>{ pick(); setTimeout(()=>{ if(sndData(target)) playSnd(target); else say(target); },500); },1200); }
-      else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); wrongSound&&wrongSound(); } });
+    $("#beePlay").onclick=speak;
+    $("#beeAgain").onclick=renderBees;
+    field.querySelectorAll('.flw').forEach(b=>b.onclick=()=>{ if(!target||busyB||doneSet.has(b.dataset.c))return;
+      if(b.dataset.c===target){ busyB=true; const r=b.getBoundingClientRect(), f=field.getBoundingClientRect(), bee=$("#bee");
+        bee.style.left=(r.left-f.left+r.width/2)+'px'; bee.style.transform='translateX(-50%)'; bee.style.bottom=(f.offsetHeight-(r.top-f.top)-r.height*0.32)+'px';
+        playSnd(b.dataset.c); sparkBurst(field,'✨',8); doneSet.add(b.dataset.c); $("#beeSc").textContent=doneSet.size;
+        setTimeout(()=>{ // пчела ОСТАЁТСЯ на цветке: печатаем её на цветок, спавним новую снизу
+          const mark=document.createElement('span'); mark.textContent='🐝'; mark.style.cssText='position:absolute;top:-12px;right:-6px;font-size:34px;z-index:2';
+          b.appendChild(mark);
+          if(doneSet.size===opts.length){ bee.remove(); sparkBurst(field,'🎉',16); setTimeout(()=>sparkBurst(field,'🍯',10),300); $("#beeAgain").style.display=''; target=null; }
+          else { bee.style.transition='none'; bee.style.left='50%'; bee.style.bottom='-2px'; bee.style.transform='translateX(-50%)'; void bee.offsetWidth; bee.style.transition='all .9s cubic-bezier(.3,1.2,.4,1)';
+            pick(); setTimeout(speak,450); }
+          busyB=false; },1000); }
+      else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } });
   }
-  const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["🔀 Анаграмма",renderAnagram],["🧩 Пазл",renderJigsaw],["🥚 Сюрприз",renderReveal],["🐝 Пчёлка",renderBees],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Чтение",renderRead],["🎈 Шарики",renderBalloons]];
-  const ST_DIG=[["🔤 Звук",renderSounds],["🔗 Блендинг",renderBlend],["✍️ Сегментинг",renderSeg],["🔀 Анаграмма",renderAnagram],["🧩 Пазл",renderJigsaw],["🥚 Сюрприз",renderReveal],["🐝 Пчёлка",renderBees],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Чтение",renderRead],["🎈 Шарики",renderBalloons]];
+  // Порядок = методика (Оксана): 1) ввели звуки → 2) поиграли/отработали звуки → 3) читаем → 4) диктант → 5) tricky → 6) книжка
+  const ST_BEG=[["🔤 Звуки",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔠 Заглавные",renderCaps],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
+  const ST_DIG=[["🔤 Звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
   function stList(){ return track==='beg'?ST_BEG:ST_DIG; }
 
   // ---------- HUB ----------
