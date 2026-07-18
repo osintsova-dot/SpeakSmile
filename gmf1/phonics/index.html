@@ -140,6 +140,8 @@ const SND={
  igh:{act:'✈️ «ай» (летит высоко)'}, oa:{act:'😮 «оу» (удивление)'}, oo:{act:'🚂/📖 «у-у»/«у» (короткое/длинное)'},
  ar:{act:'🦷 «а-а» (у доктора)'}, or:{act:'🥊 «о-о» (or!)'},
  oi:{act:'🪙 «ой» (coin/boy)'}, ou:{act:'🦉 «ау» (out/owl)'}, ie:{act:'🥧 «ай» (pie/tie)'}, ue:{act:'💙 «ю/у» (blue/glue)'}, er:{act:'👩‍🏫 «ё» (her/sister)'},
+ ay:{act:'🖐 «эй» (play/day)'}, oy:{act:'🧒 «ой» (boy/toy)'}, ea:{act:'🌊 «и» (sea/meat)'}, ow:{act:'🐄 «оу/ау» (grow/cow)'}, ew:{act:'💙 «ю/у» (new/chew)'}, aw:{act:'🐾 «о» (saw/paw)'}, au:{act:'🍂 «о» (sauce/autumn)'}, ph:{act:'📱 «ф» (phone)'}, y:{act:'🪀 «й/и/ай» (yes/happy/sky)'},
+ 'a-e':{act:'✨ e в конце → a звучит «эй» (game)'}, 'i-e':{act:'✨ i→«ай» (bike)'}, 'o-e':{act:'✨ o→«оу» (nose)'}, 'u-e':{act:'✨ u→«ю» (cube)'}, 'al':{act:'⚽ «ол» (ball/tall)'},
 };
 // Начинающие · по тетради «Phonics Hero» (26 звуков → заглавные → гласные сочетания)
 const GROUPS=[
@@ -200,6 +202,24 @@ const DIGRAPHS=[
   tricky:['go','no','so']},
 ];
 
+// Продвинутые · Шаг 4 (magic-e) + Шаг 5 (альт. написания) — по TCRW (Sue Lloyd)
+const ADV=[
+ {id:1,title:'y = /и/',letters:['y'],desc:'Шаг 4 · happy',blend:[{w:'happy'},{w:'funny'},{w:'sunny'},{w:'muddy'},{w:'jelly'},{w:'puppy'},{w:'baby'},{w:'story'},{w:'lucky'},{w:'silly'}],tricky:['made','their']},
+ {id:2,title:'a-e',letters:['a-e'],desc:'Шаг 4 · game',blend:[{w:'game'},{w:'made'},{w:'cake'},{w:'wave'},{w:'plate'},{w:'skate'},{w:'name'},{w:'snake'},{w:'whale'},{w:'late'}],tricky:['does','put']},
+ {id:3,title:'i-e',letters:['i-e'],desc:'Шаг 4 · bike',blend:[{w:'bike'},{w:'kite'},{w:'five'},{w:'time'},{w:'nice'},{w:'ride'},{w:'smile'},{w:'slide'},{w:'shine'},{w:'life'}],tricky:['saw','two']},
+ {id:4,title:'o-e · u-e',letters:['o-e','u-e'],desc:'Шаг 4 · nose · cube',blend:[{w:'nose'},{w:'bone'},{w:'rope'},{w:'home'},{w:'note'},{w:'joke'},{w:'cube'},{w:'mule'},{w:'tune'},{w:'cute'},{w:'flute'}],tricky:['four','goes']},
+ {id:5,title:'ay · oy',letters:['ay','oy'],desc:'Шаг 5 · play · boy',blend:[{w:'play'},{w:'day'},{w:'may'},{w:'tray'},{w:'stay'},{w:'way'},{w:'boy'},{w:'toy'},{w:'joy'},{w:'enjoy'},{w:'annoy'}],tricky:['once','upon']},
+ {id:6,title:'y = /ай/ · ea',letters:['y','ea'],desc:'Шаг 5 · sky · sea',blend:[{w:'my'},{w:'sky'},{w:'fly'},{w:'cry'},{w:'try'},{w:'why'},{w:'sea'},{w:'meat'},{w:'leaf'},{w:'seat'},{w:'beach'},{w:'read'}],tricky:['always','who']},
+ {id:7,title:'igh',letters:['igh'],desc:'Шаг 5 · night',blend:[{w:'night'},{w:'light'},{w:'high'},{w:'right'},{w:'sight'},{w:'bright'},{w:'might'},{w:'flight'}],tricky:['work','water']},
+ {id:8,title:'ow (оу) · ow (ау)',letters:['ow'],desc:'Шаг 5 · grow · cow',blend:[{w:'grow'},{w:'snow'},{w:'slow'},{w:'yellow'},{w:'window'},{w:'cow'},{w:'brown'},{w:'owl'},{w:'town'},{w:'down'},{w:'flower'}],tricky:['many','people']},
+ {id:9,title:'ir · ur',letters:['ir','ur'],desc:'Шаг 5 · girl · church',blend:[{w:'girl'},{w:'bird'},{w:'shirt'},{w:'third'},{w:'first'},{w:'church'},{w:'burn'},{w:'purple'},{w:'turn'},{w:'hurt'},{w:'nurse'}],tricky:['other','were']},
+ {id:10,title:'ew · aw · au',letters:['ew','aw','au'],desc:'Шаг 5 · new · saw · sauce',blend:[{w:'new'},{w:'few'},{w:'chew'},{w:'stew'},{w:'drew'},{w:'saw'},{w:'paw'},{w:'draw'},{w:'claw'},{w:'yawn'},{w:'sauce'},{w:'autumn'}],tricky:['school','friend']},
+ {id:11,title:'soft c · soft g',letters:['c','g'],desc:'Шаг 5 · face · giant (c/g перед e i y)',blend:[{w:'face'},{w:'ice'},{w:'city'},{w:'circle'},{w:'pencil'},{w:'giant'},{w:'gym'},{w:'giraffe'},{w:'magic'},{w:'orange'},{w:'large'}],tricky:['because','every']},
+ {id:12,title:'ph = /ф/',letters:['ph'],desc:'Шаг 5 · phone',blend:[{w:'phone'},{w:'dolphin'},{w:'graph'},{w:'photo'},{w:'alphabet'},{w:'elephant'},{w:'phonics'}],tricky:['mother','father']},
+ {id:13,title:'al = /ол/',letters:['al'],desc:'Шаг 5 · ball',blend:[{w:'ball'},{w:'call'},{w:'tall'},{w:'wall'},{w:'small'},{w:'fall'},{w:'salt'},{w:'always'}],tricky:['any','more']},
+];
+
+
 (function(){
   "use strict";
   const $=s=>document.querySelector(s), wrap=$("#wrap");
@@ -213,7 +233,7 @@ const DIGRAPHS=[
   function say(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(SAY_AS[t]||t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
 
   let track='beg', gi=0, station=0;
-  const TRACKS={ beg:GROUPS, dig:DIGRAPHS };
+  const TRACKS={ beg:GROUPS, dig:DIGRAPHS, adv:ADV };
   function DATA(){ return TRACKS[track]; }
   function LES(){ return DATA()[gi]; }
   function priorLetters(){ let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); return a; }
@@ -228,6 +248,7 @@ const DIGRAPHS=[
     let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
     h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
     h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Согласные и гласные сочетания (Finger Phonics 4–7) — «дифтонги»</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
+    h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Шаг 4–5 по TCRW (Sue Lloyd): magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); });
   }
@@ -300,7 +321,7 @@ const DIGRAPHS=[
     wl.querySelectorAll(".wl").forEach(b=>b.onclick=()=>{ playBlend(g.blend[+b.dataset.k]); b.classList.add("done"); });
   }
   function splitSounds(w){ // разбить на JP-звуки (диграфы вместе)
-    const dig=['igh','qu','sh','ch','th','ng','ai','ee','oa','oo','ar','or']; const out=[]; let i=0;
+    const dig=['igh','qu','sh','ch','th','ng','ck','ph','ai','ay','ea','ee','ie','oa','oo','oi','oy','ou','ow','ar','or','er','ir','ur','ue','ew','aw','au','ll','ss','ff','zz']; const out=[]; let i=0;
     while(i<w.length){ let m=null; for(const d of dig){ if(w.substr(i,d.length)===d){m=d;break;} } if(m){out.push(m);i+=m.length;} else {out.push(w[i]);i++;} }
     return out;
   }
