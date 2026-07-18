@@ -275,11 +275,11 @@ const ADV=[
   function renderJigsaw(){ // 🧩 картинка ↔ слово
     const ws=shuffle(imgWords()).slice(0,4), p=$("#panel");
     if(ws.length<2){ p.innerHTML='<div class="lead">Для этого урока пазл пока не собран.</div>'; return; }
-    p.innerHTML=`<div class="lead">🧩 Собери пары: тапни <b>картинку</b> → потом <b>слово</b>.</div>
+    p.innerHTML=`<div class="lead">🧩 Собери пары: тапни <b>слово</b> → прочитай вслух → потом тапни его <b>картинку</b>.</div>
       <div class="matchwrap" style="position:relative"><div class="mcol" id="jgL"></div><div class="mcol" id="jgR"></div></div><div class="hintline" id="jgH">Пар: 0 / ${ws.length}</div>`;
     const L=$("#jgL"), R=$("#jgR"), order=shuffle(ws.slice());
-    ws.forEach((w,k)=>L.insertAdjacentHTML('beforeend',`<button class="mbtn" data-w="${w.w}" style="width:clamp(70px,20vw,104px);height:clamp(66px,18vw,96px);padding:4px"><img src="${w.img}" style="max-width:100%;max-height:100%;border-radius:10px"></button>`));
-    order.forEach(w=>R.insertAdjacentHTML('beforeend',`<button class="mbtn up" data-w="${w.w}" style="width:auto;min-width:90px;padding:0 12px;font-size:clamp(20px,5vw,28px)">${w.w}</button>`));
+    ws.forEach(w=>L.insertAdjacentHTML('beforeend',`<button class="mbtn" data-w="${w.w}" style="width:auto;min-width:90px;padding:0 12px;font-size:clamp(20px,5vw,28px)">${w.w}</button>`));
+    order.forEach(w=>R.insertAdjacentHTML('beforeend',`<button class="mbtn up" data-w="${w.w}" style="width:clamp(70px,20vw,104px);height:clamp(66px,18vw,96px);padding:4px"><img src="${w.img}" style="max-width:100%;max-height:100%;border-radius:10px"></button>`));
     let sel=null, done=0; const PAIRC=['#e2542f','#6C3FC5','#f5a623','#2ea866'];
     L.querySelectorAll('.mbtn').forEach(b=>b.onclick=()=>{ if(b.classList.contains('ok'))return; L.querySelectorAll('.mbtn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); sel=b; });
     R.querySelectorAll('.mbtn').forEach(b=>b.onclick=()=>{ if(!sel||b.classList.contains('ok'))return;
