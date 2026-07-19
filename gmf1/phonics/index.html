@@ -460,7 +460,8 @@ const VOW=[
     h+=`<h2 class="sec">🎮 Игры на чтение слов</h2><div class="subsec">Командные игры: читаем слова — играем! Уровни: CVC · диграфы · продвинутые</div><div class="grid">
       <a class="tile" href="read-memo.html" style="text-decoration:none"><div class="big">🃏</div><div class="t">Мемо-чтение</div><div class="d">пары: слово ↔ картинка</div></a>
       <a class="tile" href="read-ttt.html" style="text-decoration:none"><div class="big">⭕✖️</div><div class="t">Крестики-нолики</div><div class="d">прочитай слово — займи клетку</div></a>
-      <a class="tile" href="read-race.html" style="text-decoration:none"><div class="big">🚀🐝</div><div class="t">Гонка чтения</div><div class="d">2 команды · кто первый к финишу</div></a></div>`;
+      <a class="tile" href="read-race.html" style="text-decoration:none"><div class="big">🚀🐝</div><div class="t">Гонка чтения</div><div class="d">2 команды · кто первый к финишу</div></a>
+      <a class="tile" href="read-quiz.html" style="text-decoration:none"><div class="big">🎳🏀</div><div class="t">Боулинг · Баскетбол</div><div class="d">прочитай слово — сбей кегли / забрось мяч</div></a></div>`;
     h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">По Pupil Book 3: «ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); });
