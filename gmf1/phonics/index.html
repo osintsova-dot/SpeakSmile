@@ -282,10 +282,37 @@ const ADV=[
   function say(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(SAY_AS[t]||t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
 
   let track='beg', gi=0, station=0;
-  const TRACKS={ beg:GROUPS, dig:DIGRAPHS, adv:ADV };
+// Гласные · по Jolly Pupil Book 3: «ладошка» (краткий/долгий) + сортировка альтернативных написаний
+const VOW=[
+ {id:1,title:'Краткий или долгий? 🖐',letters:['a','ai','e','ee','i','ie','o','oa','u','ue'],desc:'ладошка · ran/rain · PB3 стр.4',tricky:[],
+  palm:[['ran','rain'],['cot','coat'],['bat','bait'],['net','neat'],['kit','kite'],['bed','bead'],['cub','cube'],['tap','tape'],['hop','hope'],['pin','pine']],
+  blend:[{w:'ran'},{w:'rain',img:'pics/w_rain.jpg'},{w:'cot'},{w:'coat',img:'pics/w_coat.jpg'},{w:'kit'},{w:'kite',img:'pics/w_kite.jpg'},{w:'net'},{w:'neat'},{w:'cub'},{w:'cube',img:'pics/w_cube.jpg'}]},
+ {id:2,title:'/эй/ · ai · ay · a-e',letters:['ai','ay','a-e'],desc:'rain · play · cake · PB3 стр.13',tricky:[],
+  sort:{groups:['ai','ay','a-e'],words:[['rain','ai'],['snail','ai'],['paint','ai'],['train','ai'],['play','ay'],['may','ay'],['day','ay'],['hay','ay'],['name','a-e'],['cake','a-e'],['whale','a-e'],['game','a-e']]},
+  blend:[{w:'rain',img:'pics/w_rain.jpg'},{w:'snail',img:'pics/w_snail.jpg'},{w:'paint',img:'pics/w_paint.jpg'},{w:'train',img:'pics/w_train.jpg'},{w:'play',img:'pics/w_play.jpg'},{w:'day',img:'pics/w_day.jpg'},{w:'cake',img:'pics/w_cake.jpg'},{w:'whale',img:'pics/w_whale.jpg'},{w:'game',img:'pics/w_game.jpg'},{w:'may'}]},
+ {id:3,title:'/и/ · ee · ea · e-e',letters:['ee','ea','e-e'],desc:'tree · sea · these · PB3 стр.16',tricky:[],
+  sort:{groups:['ee','ea','e-e'],words:[['bee','ee'],['tree','ee'],['green','ee'],['three','ee'],['sea','ea'],['meat','ea'],['eat','ea'],['leaf','ea'],['these','e-e'],['theme','e-e'],['eve','e-e']]},
+  blend:[{w:'bee',img:'pics/w_bee.jpg'},{w:'tree',img:'pics/w_tree.jpg'},{w:'green',img:'pics/w_green.jpg'},{w:'three'},{w:'sea',img:'pics/w_sea.jpg'},{w:'meat',img:'pics/w_meat.jpg'},{w:'leaf',img:'pics/w_leaf.jpg'},{w:'eat'},{w:'these'},{w:'theme'}]},
+ {id:4,title:'/ай/ · ie · igh · y · i-e',letters:['ie','igh','y2','i-e'],alias:{y2:'ie'},acts:{y2:'🌌 «ай» на конце (sky, my)'},desc:'pie · light · sky · kite · PB3 стр.20',tricky:[],
+  sort:{groups:['ie','igh','y','i-e'],words:[['pie','ie'],['tie','ie'],['lie','ie'],['light','igh'],['night','igh'],['right','igh'],['high','igh'],['my','y'],['sky','y'],['fly','y'],['try','y'],['kite','i-e'],['time','i-e'],['five','i-e'],['like','i-e']]},
+  blend:[{w:'pie',img:'pics/w_pie.jpg'},{w:'tie',img:'pics/w_tie.jpg'},{w:'light',img:'pics/w_light.jpg'},{w:'night',img:'pics/w_night.jpg'},{w:'high',img:'pics/w_high.jpg'},{w:'sky',img:'pics/w_sky.jpg'},{w:'fly',img:'pics/w_fly.jpg'},{w:'kite',img:'pics/w_kite.jpg'},{w:'time',img:'pics/w_time.jpg'},{w:'five',img:'pics/w_five.jpg'}]},
+ {id:5,title:'/оу/ · oa · ow · o-e',letters:['oa','ow','o-e'],alias:{ow:'oa'},desc:'goat · snow · home · PB3 стр.23',tricky:[],
+  sort:{groups:['oa','ow','o-e'],words:[['goat','oa'],['boat','oa'],['coat','oa'],['toast','oa'],['snow','ow'],['show','ow'],['slow','ow'],['window','ow'],['home','o-e'],['nose','o-e'],['rose','o-e'],['bone','o-e']]},
+  blend:[{w:'goat',img:'pics/w_goat.jpg'},{w:'boat',img:'pics/w_boat.jpg'},{w:'coat',img:'pics/w_coat.jpg'},{w:'toast',img:'pics/w_toast.jpg'},{w:'snow',img:'pics/w_snow.jpg'},{w:'window',img:'pics/w_window.jpg'},{w:'home',img:'pics/w_home.jpg'},{w:'nose',img:'pics/w_nose.jpg'},{w:'rose'},{w:'bone',img:'pics/w_bone.jpg'}]},
+ {id:6,title:'/ю/ · ue · ew · u-e',letters:['ue','ew','u-e'],desc:'blue · new · cube · PB3 стр.27',tricky:[],
+  sort:{groups:['ue','ew','u-e'],words:[['blue','ue'],['glue','ue'],['true','ue'],['statue','ue'],['new','ew'],['chew','ew'],['stew','ew'],['blew','ew'],['cube','u-e'],['cute','u-e'],['mule','u-e'],['tune','u-e']]},
+  blend:[{w:'blue',img:'pics/w_blue.jpg'},{w:'glue',img:'pics/w_glue.jpg'},{w:'statue',img:'pics/w_statue.jpg'},{w:'true'},{w:'new',img:'pics/w_new.jpg'},{w:'stew',img:'pics/w_stew.jpg'},{w:'chew'},{w:'cube',img:'pics/w_cube.jpg'},{w:'cute',img:'pics/w_cute.jpg'},{w:'mule',img:'pics/w_mule.jpg'}]},
+ {id:7,title:'/ау/ · ou · ow',letters:['ou','ow2'],alias:{ow2:'ou'},acts:{ow2:'🐄 «ау» (cow, owl) — как ou'},desc:'house · cow · PB3 стр.31',tricky:[],
+  sort:{groups:['ou','ow'],words:[['out','ou'],['house','ou'],['mouse','ou'],['cloud','ou'],['sound','ou'],['mouth','ou'],['cow','ow'],['owl','ow'],['town','ow'],['brown','ow'],['down','ow'],['flower','ow']]},
+  blend:[{w:'out',img:'pics/w_out.jpg'},{w:'cloud',img:'pics/w_cloud.jpg'},{w:'mouth',img:'pics/w_mouth.jpg'},{w:'house'},{w:'mouse'},{w:'cow',img:'pics/w_cow.jpg'},{w:'owl',img:'pics/w_owl.jpg'},{w:'town',img:'pics/w_town.jpg'},{w:'brown',img:'pics/w_brown.jpg'},{w:'flower',img:'pics/w_flower.jpg'}]},
+ {id:8,title:'/ой/ · oi · oy',letters:['oi','oy'],desc:'coin · boy · PB3 стр.35',tricky:[],
+  sort:{groups:['oi','oy'],words:[['oil','oi'],['coin','oi'],['join','oi'],['point','oi'],['soil','oi'],['boil','oi'],['boy','oy'],['toy','oy'],['joy','oy'],['enjoy','oy'],['annoy','oy'],['royal','oy']]},
+  blend:[{w:'oil',img:'pics/w_oil.jpg'},{w:'coin',img:'pics/w_coin.jpg'},{w:'soil',img:'pics/w_soil.jpg'},{w:'join'},{w:'point'},{w:'boy',img:'pics/w_boy.jpg'},{w:'toy',img:'pics/w_toy.jpg'},{w:'joy',img:'pics/w_joy.jpg'},{w:'enjoy'},{w:'royal'}]},
+];
+  const TRACKS={ beg:GROUPS, dig:DIGRAPHS, adv:ADV, vow:VOW };
   function DATA(){ return TRACKS[track]; }
   function LES(){ return DATA()[gi]; }
-  function priorLetters(){ let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); return a; }
+  function priorLetters(){ if(track==='vow') return []; let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); return a; } // у Гласных уроки автономные
   // ===== Новые игры (идеи Оксаны: jigsaw / anagram / read&reveal / пчёлки) =====
   function imgWords(){ return LES().blend.filter(x=>x.img); }
   function renderJigsaw(){ // 🧩 картинка ↔ слово
@@ -377,19 +404,53 @@ const ADV=[
           busyB=false; },1000); }
       else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } });
   }
+  // ===== Дорожка «Гласные» (PB3): Ладошка (краткий/долгий) + Сортировка написаний =====
+  function renderPalm(){ // 🖐 краткий (✊) или долгий (🖐)? Долгий гласный «называет своё имя»
+    const P=LES().palm, p=$("#panel"); if(!P){ p.innerHTML='<div class="lead">Нет данных.</div>'; return; }
+    const items=shuffle(P.flatMap(([s,l])=>[{w:s,long:false},{w:l,long:true}]));
+    let qi=0, score=0;
+    p.innerHTML=`<div class="lead">🖐 Прочитай слово. Гласный <b>краткий</b> (✊) или <b>долгий</b> (🖐 — буква «называет своё имя»)?</div>
+      <div class="segreveal" id="pmW" style="text-align:center;font-size:clamp(46px,14vw,90px)"></div>
+      <div style="display:flex;gap:14px;justify-content:center;margin-top:10px">
+        <button class="bigbtn" id="pmS" style="font-size:26px">✊ краткий</button>
+        <button class="bigbtn p" id="pmL" style="font-size:26px">🖐 долгий</button></div>
+      <div class="hintline" style="margin-top:10px">✅ <span id="pmSc">0</span> / ${items.length}</div>`;
+    const show=()=>{ if(qi>=items.length){ $("#pmW").textContent='🎉'; sparkBurst(p,'🎉',14); return; } $("#pmW").textContent=items[qi].w; };
+    const ans=isLong=>{ if(qi>=items.length)return; const it=items[qi];
+      if(it.long===isLong){ say(it.w); sparkBurst(p, isLong?'🖐':'✊',6); score++; $("#pmSc").textContent=score; qi++; setTimeout(show,600); }
+      else { const b=isLong?$("#pmL"):$("#pmS"); b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } };
+    $("#pmS").onclick=()=>ans(false); $("#pmL").onclick=()=>ans(true); show();
+  }
+  function renderSort(){ // 🏠 сортировка: слово → домик с его написанием (как колонки в PB3)
+    const S=LES().sort, p=$("#panel"); if(!S){ p.innerHTML='<div class="lead">Нет данных.</div>'; return; }
+    const queue=shuffle(S.words.slice()); let qi=0;
+    p.innerHTML=`<div class="lead">🏠 Прочитай слово и тапни <b>домик</b> с его написанием звука.</div>
+      <div id="srtH" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px"></div>
+      <div class="segreveal" id="srtW" style="text-align:center;font-size:clamp(40px,12vw,80px)"></div>
+      <div class="hintline" style="margin-top:8px">Слов: <span id="srtSc">0</span> / ${queue.length}</div>`;
+    const hh=$("#srtH");
+    S.groups.forEach(g=>hh.insertAdjacentHTML('beforeend',`<div style="text-align:center"><button class="mbtn" data-g="${g}" style="width:auto;min-width:86px;height:64px;padding:0 14px;font-size:26px;border-radius:16px 16px 8px 8px;border-top:14px solid var(--honey)">${dispG(g)}</button><div class="srtList" data-g="${g}" style="font-size:15px;font-weight:800;color:#fff;min-height:1.2em;max-width:110px;margin:6px auto 0;line-height:1.45"></div></div>`));
+    const show=()=>{ if(qi>=queue.length){ $("#srtW").textContent='🎉'; sparkBurst(p,'🎉',14); return; } $("#srtW").textContent=queue[qi][0]; };
+    hh.querySelectorAll('.mbtn').forEach(b=>b.onclick=()=>{ if(qi>=queue.length)return; const [w,g]=queue[qi];
+      if(b.dataset.g===g){ say(w); sparkBurst(hh,'✨',6); p.querySelector('.srtList[data-g="'+g+'"]').insertAdjacentHTML('beforeend',w+'<br>'); qi++; $("#srtSc").textContent=qi; show(); }
+      else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } });
+    show();
+  }
+  const ST_VOW=[["🔤 Звук",renderSounds],["🖐 Ладошка",renderPalm],["🏠 Сортировка",renderSort],["🔗 Блендинг",renderBlend],["✍️ Диктант",renderSeg]];
   // Порядок = методика (Оксана): 1) ввели звуки → 2) поиграли/отработали звуки → 3) читаем → 4) диктант → 5) tricky → 6) книжка
   const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
   const ST_DIG=[["🔤 Звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
-  function stList(){ return track==='beg'?ST_BEG:ST_DIG; }
+  function stList(){ if(track==='vow'){ const L=LES(); return ST_VOW.filter(s=> s[0].includes('Ладошка')?!!L.palm : s[0].includes('Сортировка')?!!L.sort : true); } return track==='beg'?ST_BEG:ST_DIG; }
 
   // ---------- HUB ----------
   function renderHub(){
     $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
-    const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc} · ${g.tricky.length} tricky</div></button>`;
+    const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.map(dispG).join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc}${g.tricky.length?' · '+g.tricky.length+' tricky':''}</div></button>`;
     let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
     h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
     h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Согласные и гласные сочетания (Finger Phonics 4–7) — «дифтонги»</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
     h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Шаг 4–5 по TCRW (Sue Lloyd): magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
+    h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">По Pupil Book 3: «ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); });
   }
@@ -442,7 +503,7 @@ const ADV=[
   function hasSnd(c){ return !!sndData(c); }
   // Кэш+предзагрузка: звук готов заранее (без сетевой задержки), новый тап обрывает предыдущий (быстрое тыканье)
   // Альтернативные написания = ТЕ ЖЕ звуки (правило Оксаны): играем её записи по алиасу
-  const SND_ALIAS={'a-e':'ai','i-e':'ie','o-e':'oa','u-e':'ue',ay:'ai',oy:'oi',ea:'ee',igh:'ie',ir:'er',ur:'er',ew:'ue',aw:'or',au:'or',al:'or',ph:'f'};
+  const SND_ALIAS={'a-e':'ai','e-e':'ee','i-e':'ie','o-e':'oa','u-e':'ue',ay:'ai',oy:'oi',ea:'ee',igh:'ie',ir:'er',ur:'er',ew:'ue',aw:'or',au:'or',al:'or',ph:'f'};
   function skey(c){ try{ for(const L of DATA()){ if(L.alias&&L.alias[c]) return L.alias[c]; } }catch(e){} return SND_ALIAS[c]||c; } // алиас ищем по ВСЕЙ дорожке — карточка помнит свой звук (y=«и» из ур.1, y2=«ай» из ур.6)
   function dispG(c){ return String(c).replace(/\d+$/,''); } // ow2/y2 → «ow»/«y» (два звука одного написания)
   function actOf(c){ try{ const L0=LES(); if(L0&&L0.acts&&L0.acts[c]) return L0.acts[c]; for(const L of DATA()){ if(L.acts&&L.acts[c]) return L.acts[c]; } }catch(e){} return (SND[c]||{}).act||''; }
