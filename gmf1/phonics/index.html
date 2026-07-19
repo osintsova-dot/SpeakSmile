@@ -454,14 +454,14 @@ const VOW=[
     $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
     const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.map(dispG).join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc}${g.tricky.length?' · '+g.tricky.length+' tricky':''}</div></button>`;
     let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
-    h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
-    h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Согласные и гласные сочетания (Finger Phonics 4–7) — «дифтонги»</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
-    h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Шаг 4–5 по TCRW (Sue Lloyd): magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
     h+=`<h2 class="sec">🎮 Игры на чтение слов</h2><div class="subsec">Командные игры: читаем слова — играем! Уровни: CVC · диграфы · продвинутые</div><div class="grid">
       <a class="tile" href="read-memo.html" style="text-decoration:none"><div class="big">🃏</div><div class="t">Мемо-чтение</div><div class="d">пары: слово ↔ картинка</div></a>
       <a class="tile" href="read-ttt.html" style="text-decoration:none"><div class="big">⭕✖️</div><div class="t">Крестики-нолики</div><div class="d">прочитай слово — займи клетку</div></a>
       <a class="tile" href="read-race.html" style="text-decoration:none"><div class="big">🚀🐝</div><div class="t">Гонка чтения</div><div class="d">2 команды · кто первый к финишу</div></a>
       <a class="tile" href="read-quiz.html" style="text-decoration:none"><div class="big">🎳🏀</div><div class="t">Боулинг · Баскетбол</div><div class="d">прочитай слово — сбей кегли / забрось мяч</div></a></div>`;
+    h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
+    h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Согласные и гласные сочетания (Finger Phonics 4–7) — «дифтонги»</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
+    h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Шаг 4–5 по TCRW (Sue Lloyd): magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
     h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">По Pupil Book 3: «ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); });
