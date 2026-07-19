@@ -464,7 +464,7 @@ const VOW=[
     h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Шаг 4–5 по TCRW (Sue Lloyd): magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
     h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">По Pupil Book 3: «ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
-    wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); });
+    wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(!t.dataset.t) return; if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); }); // <a>-плитки игр не трогаем
   }
 
   // ---------- LESSON ----------
