@@ -111,6 +111,7 @@
   <div class="mascot">📖🦝</div>
   <h1>Читай крестики-нолики!</h1>
   <div style="color:#6d6584;font-weight:600;font-size:14px">Выбери клетку → <b>прочитай слово</b> → твой значок прибежит на клетку, а картинка подтвердит ответ! Собери 3 в ряд — победа раунда. <b style="color:var(--x)">✗ Крестики</b> против <b style="color:var(--o)">◯ Ноликов</b>.</div>
+  <div class="grp"><div class="lab">Режим</div><div class="opts" id="modeOpts"></div></div>
   <div class="grp"><div class="lab">Уровень</div><div class="lvls" id="lvlOpts"></div></div>
   <div class="grp"><div class="lab">Играем до скольких побед?</div><div class="opts" id="targetOpts"></div></div>
   <div class="cbtns"><button class="cbtn ok" id="startBtn">Играть! ▶</button></div>
@@ -136,6 +137,10 @@
   const NAMES=["Крестики","Нолики"], COL=["var(--x)","var(--o)"], KIND=["X","O"];
   function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
+  let vsCPU=false, cpuT1=null, cpuT2=null;
+  function teamName(i){ return vsCPU ? (i===0?"Ты":"🤖 Компьютер") : NAMES[i]; }
+  function clearCpu(){ if(cpuT1){clearTimeout(cpuT1);cpuT1=null;} if(cpuT2){clearTimeout(cpuT2);cpuT2=null;} }
+
   let LVL=0, deck=[], di=0;
   function nextWord(){ if(di>=deck.length){ deck=shuffle(LEVELS[LVL].words); di=0; } return deck[di++]; }
 
@@ -154,18 +159,41 @@
   function buildBoard(){ boardEl.innerHTML=""; board=Array(9).fill(null);
     for(let i=0;i<9;i++){ const b=document.createElement("button"); b.className="cell"; b.innerHTML='<span class="num">'+(i+1)+'</span>'; b.onclick=()=>pickCell(i); boardEl.appendChild(b); } }
   function cellEl(i){ return boardEl.children[i]; }
-  function pickCell(i){ if(busy||board[i]) return; claimIdx=i; askWord(); }
+  function pickCell(i){ if(busy||board[i]) return; if(vsCPU&&cur===1) return; claimIdx=i; askWord(); }
 
   // word modal
   const modal=$("#modal"), mPic=$("#mPic"), mWord=$("#mWord"), mHint=$("#mHint"), claim=$("#claim");
   const okBtn=$("#okBtn"), noBtn=$("#noBtn");
+  const mBtns=modal.querySelector(".cbtns"), mHint2=modal.querySelector(".hint2");
   let curWord="";
   function askWord(){ busy=true; curWord=nextWord();
-    claim.innerHTML=`<span style="color:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${NAMES[cur]}</span> — клетка ${claimIdx+1}`;
+    claim.innerHTML=`<span style="color:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${teamName(cur)}</span> — клетка ${claimIdx+1}`;
     mWord.textContent=curWord;
     mPic.src="pics/w_"+curWord+".jpg"; mPic.classList.remove("show"); mHint.style.display="";
+    mBtns.style.display=""; mHint2.style.display="";
     okBtn.disabled=false; noBtn.disabled=false;
     modal.classList.add("on"); }
+
+  // --- computer opponent (plays O) ---
+  function cpuPick(){ const empty=board.map((v,i)=>v?null:i).filter(v=>v!==null);
+    if(!empty.length) return null;
+    const findWin=k=>{ for(const L of LINES){ const vals=L.map(j=>board[j]);
+      if(vals.filter(v=>v===k).length===2 && vals.indexOf(null)>=0) return L[vals.indexOf(null)]; } return null; };
+    let i=findWin("O"); if(i!==null) return i;          // 1. win if possible
+    i=findWin("X"); if(i!==null) return i;               // 2. block player's win
+    return empty[Math.floor(Math.random()*empty.length)]; // 3. random
+  }
+  function cpuMove(){ busy=true;
+    cpuT1=setTimeout(()=>{ cpuT1=null;
+      const i=cpuPick(); if(i===null){ busy=false; return; }
+      const w=nextWord(); curWord=w;
+      claim.innerHTML=`<span style="color:${COL[1]}">◯ 🤖 Компьютер</span> — клетка ${i+1}`;
+      mWord.textContent=w; mPic.src="pics/w_"+w+".jpg"; mPic.classList.remove("show");
+      mHint.style.display="none"; mBtns.style.display="none"; mHint2.style.display="none";
+      modal.classList.add("on"); speak(w);
+      setTimeout(()=>mPic.classList.add("show"),350);
+      cpuT2=setTimeout(()=>{ cpuT2=null; modal.classList.remove("on"); place(i,1); },1700);
+    },800); }
   okBtn.onclick=()=>{ okBtn.disabled=true; noBtn.disabled=true;
     mHint.style.display="none"; mPic.classList.add("show"); speak(curWord);
     setTimeout(()=>{ modal.classList.remove("on"); place(claimIdx,cur); }, 1500); };
@@ -178,19 +206,29 @@
     if(board.every(Boolean)){ setTimeout(()=>{ toast("🤝 Ничья!"); newRound(); },700); return; }
     busy=false; nextTurn(); }
   function winLine(who){ const k=KIND[who]; for(const L of LINES){ if(L.every(j=>board[j]===k)) return L; } return null; }
-  function nextTurn(){ cur=1-cur; setTurn(); }
+  function nextTurn(){ cur=1-cur; setTurn(); if(vsCPU&&cur===1) cpuMove(); }
 
   // rounds / score
   let rscore=[0,0], TARGET=3, starter=0;
   function renderScore(){ $("#score").innerHTML=`<span class="xs">✗ ${rscore[0]}</span><span class="sep">:</span><span class="os">${rscore[1]} ◯</span>`; }
-  function setTurn(){ $("#turn").innerHTML=`Ход: <span class="who" style="background:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${NAMES[cur]}</span>`; }
-  function roundWin(who,line){ busy=true; line.forEach(j=>cellEl(j).classList.add("win")); burst();
-    rscore[who]++; renderScore(); toast(`🎉 ${NAMES[who]} — 3 в ряд!`);
+  function setTurn(){ const lbl = vsCPU ? (cur===0?"✗ Ты":"🤖 Компьютер думает…") : (KIND[cur]==="X"?"✗ ":"◯ ")+NAMES[cur];
+    $("#turn").innerHTML=`Ход: <span class="who" style="background:${COL[cur]}">${lbl}</span>`; }
+  function roundWin(who,line){ busy=true; line.forEach(j=>cellEl(j).classList.add("win"));
+    const cpuWon = vsCPU && who===1; if(!cpuWon) burst();
+    rscore[who]++; renderScore();
+    toast(cpuWon ? "🤖 Компьютер — 3 в ряд!" : `🎉 ${vsCPU?"Ты":NAMES[who]} — 3 в ряд!`);
     if(rscore[who]>=TARGET){ setTimeout(()=>gameOver(who),1400); return; }
     setTimeout(newRound,1700); }
-  function newRound(){ starter=1-starter; cur=starter; buildBoard(); busy=false; setTurn(); }
-  function startGame(){ deck=shuffle(LEVELS[LVL].words); di=0; rscore=[0,0]; starter=0; cur=0; renderScore(); buildBoard(); busy=false; setTurn(); }
-  function gameOver(who){ burst(); $("#winTxt").textContent=`🏆 ${NAMES[who]} победили!`;
+  function newRound(){ starter=1-starter; cur=starter; buildBoard(); busy=false; setTurn(); if(vsCPU&&cur===1) cpuMove(); }
+  function startGame(){ clearCpu(); modal.classList.remove("on");
+    deck=shuffle(LEVELS[LVL].words); di=0; rscore=[0,0]; starter=0; cur=0; renderScore(); buildBoard(); busy=false; setTurn(); }
+  function gameOver(who){
+    if(vsCPU){ if(who===0){ burst(); $("#winTxt").textContent="🏆 Ты победил!"; }
+      else { $("#winTxt").textContent="🤖 Компьютер выиграл! Ещё раз?"; } }
+    else { burst(); $("#winTxt").textContent=`🏆 ${NAMES[who]} победили!`; }
+    $("#winPts").innerHTML=`Счёт раундов: <span style="color:var(--x)">✗ ${rscore[0]}</span> : <span style="color:var(--o)">${rscore[1]} ◯</span>`;
+    $("#winov").classList.add("on"); }
+  function drawOver(){ $("#winTxt").textContent="🤝 Ничья!";
     $("#winPts").innerHTML=`Счёт раундов: <span style="color:var(--x)">✗ ${rscore[0]}</span> : <span style="color:var(--o)">${rscore[1]} ◯</span>`;
     $("#winov").classList.add("on"); }
 
@@ -203,8 +241,14 @@
 
   // buttons
   $("#home").onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
-  $("#fin").onclick=()=>{ if(rscore[0]||rscore[1]){ const w=rscore[0]===rscore[1]?-1:(rscore[0]>rscore[1]?0:1); if(w<0){ toast("🤝 Пока ничья!"); } else gameOver(w); } };
+  $("#fin").onclick=()=>{ if(rscore[0]||rscore[1]){ const w=rscore[0]===rscore[1]?-1:(rscore[0]>rscore[1]?0:1);
+    if(w<0){ if(vsCPU) drawOver(); else toast("🤝 Пока ничья!"); } else gameOver(w); } };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); startGame(); };
+  const modeOpts=$("#modeOpts");
+  [{t:"👥 Две команды",v:false},{t:"🤖 Против компьютера",v:true}].forEach((m,i)=>{
+    const b=document.createElement("button"); b.className="opt"+(i===0?" sel":""); b.style.fontSize="15px"; b.textContent=m.t;
+    b.onclick=()=>{ vsCPU=m.v; [...modeOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); };
+    modeOpts.appendChild(b); });
   const lvlOpts=$("#lvlOpts");
   LEVELS.forEach((L,i)=>{ const b=document.createElement("button"); b.className="lvl"+(i===0?" sel":"");
     b.innerHTML='<span class="em">'+L.em+'</span><span><span class="nm">'+L.name+'</span><br><span class="sub">'+L.words.slice(0,4).join(" · ")+' …</span></span>';
