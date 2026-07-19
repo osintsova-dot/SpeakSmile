@@ -101,6 +101,7 @@
   <img class="speaky" id="spImg" alt="Speaky">
   <h1 id="setupTitle">Крестики-нолики!</h1>
   <div style="color:#6d6584;font-weight:600;font-size:14px">Выбери клетку → ответь на вопрос верно → твой значок прибежит на клетку! Собери 3 в ряд — победа раунда. <b style="color:var(--x)">✗ Крестики</b> против <b style="color:var(--o)">◯ Ноликов</b>.</div>
+  <div class="grp"><div class="lab">Режим</div><div class="opts" id="modeOpts"></div></div>
   <div class="grp"><div class="lab">Играем до скольких побед?</div><div class="opts" id="targetOpts"></div></div>
   <div class="cbtns"><button class="cbtn ok" id="startBtn">Играть! ▶</button></div>
   <div style="margin-top:10px"><a href="index.html" style="color:#8a83a0;font-weight:700;font-size:14px;text-decoration:none">← выбрать другую тему</a></div>
@@ -125,6 +126,9 @@ const ASSETS = {"title": "Одежда", "emoji": "👕", "bg": "data:image/jpeg
   document.title=ASSETS.title+" — крестики-нолики";
   if(ASSETS.speaky) $("#spImg").src=ASSETS.speaky;
   const NAMES=["Крестики","Нолики"], COL=["var(--x)","var(--o)"], KIND=["X","O"];
+  let vsCPU=false, cpuT1=null, cpuT2=null;
+  function teamName(i){ return vsCPU ? (i===0?"Ты":"🤖 Компьютер") : NAMES[i]; }
+  function clearCpu(){ if(cpuT1){clearTimeout(cpuT1);cpuT1=null;} if(cpuT2){clearTimeout(cpuT2);cpuT2=null;} }
 
   // questions: round-robin by theme
   function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -149,16 +153,39 @@ const ASSETS = {"title": "Одежда", "emoji": "👕", "bg": "data:image/jpeg
   function buildBoard(){ boardEl.innerHTML=""; board=Array(9).fill(null);
     for(let i=0;i<9;i++){ const b=document.createElement("button"); b.className="cell"; b.innerHTML='<span class="num">'+(i+1)+'</span>'; b.onclick=()=>pickCell(i); boardEl.appendChild(b); } }
   function cellEl(i){ return boardEl.children[i]; }
-  function pickCell(i){ if(busy||board[i]) return; claimIdx=i; askQuestion(); }
+  function pickCell(i){ if(busy||board[i]) return; if(vsCPU&&cur===1) return; claimIdx=i; askQuestion(); }
 
   // question
   const modal=$("#modal"), mPic=$("#mPic"), mAsk=$("#mAsk"), mAns=$("#mAns"), claim=$("#claim");
+  const mBtns=modal.querySelector(".cbtns"), mHint2=modal.querySelector(".hint2");
   let curSay="";
   function askQuestion(){ busy=true; const q=nextQuestion();
-    claim.innerHTML=`<span style="color:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${NAMES[cur]}</span> — клетка ${claimIdx+1}`;
+    claim.innerHTML=`<span style="color:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${teamName(cur)}</span> — клетка ${claimIdx+1}`;
     if(q.pic){ mPic.src=q.pic; mPic.style.display=""; } else mPic.style.display="none";
     mAsk.textContent=q.ask; mAns.textContent=q.ans; curSay=q.say; mAns.classList.remove("show");
+    mBtns.style.display=""; mHint2.style.display="";
     modal.classList.add("on"); setTimeout(()=>speak(q.ask),350); }
+
+  // --- computer opponent (plays O) ---
+  function cpuPick(){ const empty=board.map((v,i)=>v?null:i).filter(v=>v!==null);
+    if(!empty.length) return null;
+    const findWin=k=>{ for(const L of LINES){ const vals=L.map(j=>board[j]);
+      if(vals.filter(v=>v===k).length===2 && vals.indexOf(null)>=0) return L[vals.indexOf(null)]; } return null; };
+    let i=findWin("O"); if(i!==null) return i;          // 1. win if possible
+    i=findWin("X"); if(i!==null) return i;               // 2. block player's win
+    return empty[Math.floor(Math.random()*empty.length)]; // 3. random
+  }
+  function cpuMove(){ busy=true;
+    cpuT1=setTimeout(()=>{ cpuT1=null;
+      const i=cpuPick(); if(i===null){ busy=false; return; }
+      const q=nextQuestion();
+      claim.innerHTML=`<span style="color:${COL[1]}">◯ 🤖 Компьютер</span> — клетка ${i+1}`;
+      if(q.pic){ mPic.src=q.pic; mPic.style.display=""; } else mPic.style.display="none";
+      mAsk.textContent=q.ask; mAns.textContent=q.ans; mAns.classList.add("show");
+      mBtns.style.display="none"; mHint2.style.display="none";
+      modal.classList.add("on"); speak(q.say);
+      cpuT2=setTimeout(()=>{ cpuT2=null; modal.classList.remove("on"); place(i,1); },1700);
+    },800); }
   $("#sayBtn").onclick=()=>{ speak(curSay); mAns.classList.add("show"); };
   $("#okBtn").onclick=()=>{ modal.classList.remove("on"); place(claimIdx,cur); };
   $("#noBtn").onclick=()=>{ modal.classList.remove("on"); busy=false; toast("❌ Мимо! Ход переходит"); nextTurn(); };
@@ -170,19 +197,29 @@ const ASSETS = {"title": "Одежда", "emoji": "👕", "bg": "data:image/jpeg
     if(board.every(Boolean)){ setTimeout(()=>{ toast("🤝 Ничья!"); newRound(); },700); return; }
     busy=false; nextTurn(); }
   function winLine(who){ const k=KIND[who]; for(const L of LINES){ if(L.every(j=>board[j]===k)) return L; } return null; }
-  function nextTurn(){ cur=1-cur; setTurn(); }
+  function nextTurn(){ cur=1-cur; setTurn(); if(vsCPU&&cur===1) cpuMove(); }
 
   // rounds / score
   let rscore=[0,0], TARGET=3, starter=0;
   function renderScore(){ $("#score").innerHTML=`<span class="xs">✗ ${rscore[0]}</span><span class="sep">:</span><span class="os">${rscore[1]} ◯</span>`; }
-  function setTurn(){ $("#turn").innerHTML=`Ход: <span class="who" style="background:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${NAMES[cur]}</span>`; }
-  function roundWin(who,line){ busy=true; line.forEach(j=>cellEl(j).classList.add("win")); burst();
-    rscore[who]++; renderScore(); toast(`🎉 ${NAMES[who]} — 3 в ряд!`);
+  function setTurn(){ const lbl = vsCPU ? (cur===0?"✗ Ты":"🤖 Компьютер думает…") : (KIND[cur]==="X"?"✗ ":"◯ ")+NAMES[cur];
+    $("#turn").innerHTML=`Ход: <span class="who" style="background:${COL[cur]}">${lbl}</span>`; }
+  function roundWin(who,line){ busy=true; line.forEach(j=>cellEl(j).classList.add("win"));
+    const cpuWon = vsCPU && who===1; if(!cpuWon) burst();
+    rscore[who]++; renderScore();
+    toast(cpuWon ? "🤖 Компьютер — 3 в ряд!" : `🎉 ${vsCPU?"Ты":NAMES[who]} — 3 в ряд!`);
     if(rscore[who]>=TARGET){ setTimeout(()=>gameOver(who),1400); return; }
     setTimeout(newRound,1700); }
-  function newRound(){ starter=1-starter; cur=starter; buildBoard(); busy=false; setTurn(); }
-  function startGame(){ rscore=[0,0]; starter=0; cur=0; renderScore(); buildBoard(); busy=false; setTurn(); }
-  function gameOver(who){ burst(); $("#winTxt").textContent=`🏆 ${NAMES[who]} победили!`;
+  function newRound(){ starter=1-starter; cur=starter; buildBoard(); busy=false; setTurn(); if(vsCPU&&cur===1) cpuMove(); }
+  function startGame(){ clearCpu(); modal.classList.remove("on");
+    rscore=[0,0]; starter=0; cur=0; renderScore(); buildBoard(); busy=false; setTurn(); }
+  function gameOver(who){
+    if(vsCPU){ if(who===0){ burst(); $("#winTxt").textContent="🏆 Ты победил!"; }
+      else { $("#winTxt").textContent="🤖 Компьютер выиграл! Ещё раз?"; } }
+    else { burst(); $("#winTxt").textContent=`🏆 ${NAMES[who]} победили!`; }
+    $("#winPts").innerHTML=`Счёт раундов: <span style="color:var(--x)">✗ ${rscore[0]}</span> : <span style="color:var(--o)">${rscore[1]} ◯</span>`;
+    if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; $("#winov").classList.add("on"); }
+  function drawOver(){ $("#winTxt").textContent="🤝 Ничья!";
     $("#winPts").innerHTML=`Счёт раундов: <span style="color:var(--x)">✗ ${rscore[0]}</span> : <span style="color:var(--o)">${rscore[1]} ◯</span>`;
     if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; $("#winov").classList.add("on"); }
 
@@ -195,8 +232,14 @@ const ASSETS = {"title": "Одежда", "emoji": "👕", "bg": "data:image/jpeg
 
   // buttons
   $("#home").onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
-  $("#fin").onclick=()=>{ if(rscore[0]||rscore[1]){ const w=rscore[0]===rscore[1]?-1:(rscore[0]>rscore[1]?0:1); if(w<0){ toast("🤝 Пока ничья!"); } else gameOver(w); } };
+  $("#fin").onclick=()=>{ if(rscore[0]||rscore[1]){ const w=rscore[0]===rscore[1]?-1:(rscore[0]>rscore[1]?0:1);
+    if(w<0){ if(vsCPU) drawOver(); else toast("🤝 Пока ничья!"); } else gameOver(w); } };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); startGame(); };
+  const modeOpts=$("#modeOpts");
+  [{t:"👥 Две команды",v:false},{t:"🤖 Против компьютера",v:true}].forEach((m,i)=>{
+    const b=document.createElement("button"); b.className="opt"+(i===0?" sel":""); b.style.fontSize="15px"; b.textContent=m.t;
+    b.onclick=()=>{ vsCPU=m.v; [...modeOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); };
+    modeOpts.appendChild(b); });
   const targetOpts=$("#targetOpts");
   [2,3,5].forEach((v,i)=>{ const b=document.createElement("button"); b.className="opt"+(i===1?" sel":""); b.textContent=v; b.onclick=()=>{ TARGET=v; [...targetOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; targetOpts.appendChild(b); });
   $("#startBtn").onclick=()=>{ $("#setup").classList.remove("on"); startGame(); speak(""); };
