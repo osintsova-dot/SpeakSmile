@@ -151,7 +151,8 @@
   <h1 id="setupTitle">Квиз-боулинг!</h1>
   <div style="color:#6d6584;font-weight:600;font-size:14px">Возьми (или нет) трики-подарок → выбери дорожку 1–5 → катни шар! Сколько кеглей собьёшь — столько очков на кону (все 10 = 🔥 СТРАЙК +5!). Ответь верно — очки твои! Кто наберёт больше за все вопросы — победил! 🏆</div>
   <div class="grp"><div class="lab">Режим</div><div class="opts" id="modeOpts"><button class="opt sel" data-m="bowl">🎳 Боулинг</button><button class="opt" data-m="basket">🏀 Баскетбол</button></div></div>
-  <div class="grp"><div class="lab">Сколько команд?</div><div class="opts" id="teamOpts"></div></div>
+  <div class="grp"><div class="lab">С кем играем?</div><div class="opts" id="vsOpts"><button class="opt sel" data-v="team">👥 Команды</button><button class="opt" data-v="cpu">🤖 Дома · против компьютера</button></div></div>
+  <div class="grp" id="teamsGrp"><div class="lab">Сколько команд?</div><div class="opts" id="teamOpts"></div></div>
   <div class="grp"><div class="lab">Сколько вопросов?</div><div class="opts" id="targetOpts"></div></div>
   <div class="grp"><div class="lab">Персонаж команды 🙂 (тап — сменить)</div><div class="ballrow" id="teamChars"></div></div>
   <div class="grp" id="ballGrp"><div class="lab">Шар команды 🎨 (тап — сменить)</div><div class="ballrow" id="teamBalls"></div></div>
@@ -190,6 +191,11 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
   let teamSkin=[0,1,8,3];
   let teamChar=[0,5,6,9];
   let MODE="bowl";
+  // ---- computer opponent state + cancellable timers ----
+  let vsCPU=false, cpuTimers=[];
+  function QT(fn,ms){ const id=setTimeout(()=>{ cpuTimers=cpuTimers.filter(x=>x!==id); fn(); },ms); cpuTimers.push(id); return id; }
+  function clearCpu(){ cpuTimers.forEach(clearTimeout); cpuTimers=[]; }
+  function tName(i){ return vsCPU ? (i===0?"Ты":"🤖 Компьютер") : NAMES[i]; }
   const EMOJI_CHARS=[
     {e:"👾",n:"Монстрик"},{e:"👹",n:"Чудик"},{e:"👻",n:"Привидение"},{e:"🤖",n:"Робот"},
     {e:"👽",n:"Пришелец"},{e:"🚦",n:"Светофор",eyes:1},{e:"🗑️",n:"Бак",eyes:1},{e:"🥤",n:"Стакан",eyes:1},
@@ -367,7 +373,11 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
   function resetShot(){ phase="idle"; busy=false; ball={lx:0.5,ly:0.9,vx:0,vy:0,ax:0,rolling:false}; bball.fly=false; shooterSpot=2;
     armed=null; trickBtn.classList.remove("hide","armed"); trickBtn.disabled=false; trickBtn.innerHTML='<span class="g">🎁</span><span>ТРИКИ</span>';
     showTiles(true); turnHint(); }
-  function turnHint(){ const act=MODE==="basket"?"трики? → бросок 1–3":"трики? → дорожка 1–5"; turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${charHTML(teamChar[cur],1.3)} ${NAMES[cur]}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">${act}</span>`; }
+  function turnHint(){
+    if(vsCPU){ const who = cur===0 ? (charHTML(teamChar[0],1.3)+" Ты") : "🤖 Компьютер";
+      const act = cur===0 ? (MODE==="basket"?"трики? → бросок 1–3":"трики? → дорожка 1–5") : "думает…";
+      turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${who}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">${act}</span>`; return; }
+    const act=MODE==="basket"?"трики? → бросок 1–3":"трики? → дорожка 1–5"; turnEl.innerHTML=`Ход: <span class="who" style="background:${COLORS[cur]}">${charHTML(teamChar[cur],1.3)} ${NAMES[cur]}</span> &nbsp;·&nbsp; <span style="opacity:.9;font-size:.85em">${act}</span>`; }
 
   function launch(tileIdx){
     if(phase!=="idle"||busy) return; phase="rolling"; busy=true; showTiles(false); trickBtn.disabled=true;
@@ -448,6 +458,7 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
 
   // ---------- question ----------
   const modal=$("#modal"), mPic=$("#mPic"), mAsk=$("#mAsk"), mAns=$("#mAns"), stake=$("#stake");
+  const qBtns=modal.querySelector(".cbtns"), qHint=modal.querySelector(".hint2");
   let curStake=0, curSay="", curMult=1, curGive=false;
   function askQuestion(knocked,strike){
     const base=knocked+(strike?5:0)+(armed?armed.bonus:0);
@@ -456,12 +467,18 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
     stake.textContent="🎯 На кону: "+won+" очк."+(curGive?" (сопернику!)":"");
     if(q.pic){ mPic.src=q.pic; mPic.style.display=""; } else mPic.style.display="none";
     mAsk.textContent=q.ask; mAns.textContent=q.ans; curSay=q.say; mAns.classList.remove("show");
-    modal.classList.add("on"); setTimeout(()=>speak(q.ask),350);
+    modal.classList.add("on");
+    if(vsCPU&&cur===1){ // computer «reads» its word and always answers — beatability comes from the shot physics
+      mAns.classList.add("show"); qBtns.style.display="none"; qHint.style.display="none"; speak(q.say); QT(cpuAnswer,1600); }
+    else { qBtns.style.display=""; qHint.style.display=""; setTimeout(()=>speak(q.ask),350); }
   }
+  function cpuAnswer(){ modal.classList.remove("on"); const won=curStake*curMult;
+    const tgt=curGive?(cur+1)%nTeams:cur; addScore(tgt,won); if(won>0)burst();
+    toast("🤖 Компьютер: +"+won+" очк."); endTurn(); }
   $("#sayBtn").onclick=()=>{ speak(curSay); mAns.classList.add("show"); };
   $("#okBtn").onclick=()=>{ modal.classList.remove("on"); const won=curStake*curMult;
     const tgt=curGive?(cur+1)%nTeams:cur; addScore(tgt,won); burst();
-    toast(curGive?("🔄 +"+won+" → "+NAMES[tgt]+"!"):("✅ +"+won+" очк. — "+NAMES[cur])); endTurn(); };
+    toast(curGive?("🔄 +"+won+" → "+tName(tgt)+"!"):("✅ +"+won+" очк. — "+tName(cur))); endTurn(); };
   $("#noBtn").onclick=()=>{ modal.classList.remove("on"); toast("❌ Сгорело! Ход переходит"); endTurn(); };
 
   // ---------- teams / turns ----------
@@ -471,11 +488,21 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
   function setTurn(){ turnHint(); renderScores(); }
   function addScore(t,n){ score[t]+=n; renderScores(); }
   function updateQ(){ const el=$("#qcount"); if(el) el.textContent="❓ "+Math.max(0,TOTALQ-qUsed); }
+  function maybeCpu(){ if(vsCPU&&cur===1){ showTiles(false); trickBtn.disabled=true; QT(cpuShoot,900); } }
+  function cpuShoot(){ if(MODE==="basket") shoot(Math.floor(Math.random()*BSPOT.length)); else launch(Math.floor(Math.random()*TILELX.length)); }
   function endTurn(){ qUsed++; updateQ(); if(qUsed>=TOTALQ){ win(); return; }
-    cur=(cur+1)%nTeams; buildPins(); resetShot(); renderScores(); }
-  function startGame(){ score=Array(nTeams).fill(0); cur=0; qUsed=0; updateQ(); buildPins(); buildControls(); resetShot(); renderScores(); }
+    cur=(cur+1)%nTeams; buildPins(); resetShot(); renderScores(); maybeCpu(); }
+  function startGame(){ clearCpu(); $("#okBtn").textContent=vsCPU?"✅ Я знаю":"✅ Верно"; $("#noBtn").textContent="❌ Мимо";
+    score=Array(nTeams).fill(0); cur=0; qUsed=0; updateQ(); buildPins(); buildControls(); resetShot(); renderScores(); maybeCpu(); }
 
-  function win(){ burst(); const ranked=score.map((s,i)=>({i,s})).sort((a,b)=>b.s-a.s); const top=ranked[0];
+  function win(){ clearCpu();
+    if(vsCPU){ const you=score[0]||0, comp=score[1]||0;
+      if(you>comp){ burst(); $("#winTxt").innerHTML="🏆 Ты выиграл!"; }
+      else if(comp>you){ $("#winTxt").innerHTML="🤖 Компьютер выиграл! Ещё раз?"; }
+      else { $("#winTxt").innerHTML="🤝 Ничья!"; }
+      $("#winPts").innerHTML=`Очки: Ты — ${you} · 🤖 Компьютер — ${comp}`;
+      if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; $("#winov").classList.add("on"); return; }
+    burst(); const ranked=score.map((s,i)=>({i,s})).sort((a,b)=>b.s-a.s); const top=ranked[0];
     const tie=ranked.filter(r=>r.s===top.s).length>1 && top.s>0;
     $("#winTxt").innerHTML = tie ? "🤝 Ничья!" : `🏆 ${charHTML(teamChar[top.i],1.4)} ${NAMES[top.i]} победили!`;
     $("#winPts").innerHTML="Очки: "+ranked.map(r=>`${NAMES[r.i]} — ${r.s}`).join(" · ");
@@ -489,11 +516,14 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
   function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1500); }
 
   // ---------- buttons / setup ----------
-  $("#home").onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
+  $("#home").onclick=()=>{ clearCpu(); try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
   $("#fin").onclick=()=>{ if(score.some(s=>s>0)) win(); };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); startGame(); };
   const modeOpts=$("#modeOpts");
   [...modeOpts.children].forEach(b=>b.onclick=()=>{ MODE=b.dataset.m; [...modeOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); $("#ballGrp").style.display=(MODE==="basket"?"none":""); });
+  const vsOpts=$("#vsOpts"), teamsGrp=$("#teamsGrp");
+  [...vsOpts.children].forEach(b=>b.onclick=()=>{ vsCPU=(b.dataset.v==="cpu"); [...vsOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel");
+    if(vsCPU){ nTeams=2; teamsGrp.style.display="none"; } else { teamsGrp.style.display=""; } rebuildTeam(); });
   const teamOpts=$("#teamOpts");
   [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); rebuildTeam(); }; teamOpts.appendChild(b); });
 
@@ -503,9 +533,9 @@ const ASSETS = {"title": "Еда", "emoji": "🍎", "bg": "data:image/jpeg;base6
     if(kind==="ball"){ const r=sz*0.4; g.fillStyle="rgba(0,0,0,.12)"; g.beginPath(); g.ellipse(0,r*0.5,r*0.85,r*0.28,0,0,7); g.fill(); SKINS[id%SKINS.length].draw(g,r); if(teamCol){ g.lineWidth=r*0.1; g.strokeStyle=teamCol; g.beginPath(); g.arc(0,0,r*0.98,0,7); g.stroke(); } }
     else { const im=charImg[id%CHARS.length]; if(im&&!(im.complete&&im.naturalWidth)) im.addEventListener("load",()=>drawSwatch(canvas,kind,id,teamCol),{once:true}); drawChar(g,sz*0.86,id); }
     g.restore(); }
-  function mkSlot(wrap,i,kind,id){ const slot=document.createElement("div"); slot.className="ballslot"; const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.style.color=COLORS[i]; nm.textContent=NAMES[i]; slot.appendChild(c); slot.appendChild(nm); slot.onclick=()=>openPicker(kind,i); wrap.appendChild(slot); drawSwatch(c,kind,id,COLORS[i]); }
+  function mkSlot(wrap,i,kind,id){ const slot=document.createElement("div"); slot.className="ballslot"; const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.style.color=COLORS[i]; nm.textContent=tName(i); slot.appendChild(c); slot.appendChild(nm); slot.onclick=()=>openPicker(kind,i); wrap.appendChild(slot); drawSwatch(c,kind,id,COLORS[i]); }
   function rebuildTeam(){ teamCharsWrap.innerHTML=""; teamBallsWrap.innerHTML=""; for(let i=0;i<nTeams;i++){ mkSlot(teamCharsWrap,i,"char",teamChar[i]); mkSlot(teamBallsWrap,i,"ball",teamSkin[i]); } }
-  function openPicker(kind,i){ const arr=kind==="ball"?SKINS:CHARS; $("#ballpickTitle").textContent=(kind==="ball"?"Шар: ":"Персонаж: ")+NAMES[i]; $("#ballpickTitle").style.color=COLORS[i]; ballgrid.innerHTML="";
+  function openPicker(kind,i){ const arr=kind==="ball"?SKINS:CHARS; $("#ballpickTitle").textContent=(kind==="ball"?"Шар: ":"Персонаж: ")+tName(i); $("#ballpickTitle").style.color=COLORS[i]; ballgrid.innerHTML="";
     arr.forEach((it,idx)=>{ const cur2=kind==="ball"?teamSkin[i]:teamChar[i]; const opt=document.createElement("div"); opt.className="ballopt"+(cur2===idx?" sel":""); const c=document.createElement("canvas"); const nm=document.createElement("div"); nm.className="nm"; nm.textContent=(kind==="ball"?it.name:it.n); opt.appendChild(c); opt.appendChild(nm); opt.onclick=()=>{ if(kind==="ball")teamSkin[i]=idx; else teamChar[i]=idx; [...ballgrid.children].forEach(x=>x.classList.remove("sel")); opt.classList.add("sel"); rebuildTeam(); }; ballgrid.appendChild(opt); drawSwatch(c,kind,idx,COLORS[i]); });
     ballpick.classList.add("on"); }
   $("#ballpickClose").onclick=()=>ballpick.classList.remove("on");

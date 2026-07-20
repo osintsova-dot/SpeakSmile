@@ -154,9 +154,13 @@
   <img class="speaky" id="spImg" alt="Speaky">
   <h1 id="setupTitle">Бродилка!</h1>
   <div style="color:#6d6584;font-weight:600">Кинь кубик, ходи, называй картинки по-английски. Кто первый дойдёт до домика Спики — победил! 🏠</div>
-  <div style="margin-top:14px;font-weight:800;color:var(--p)">Сколько игроков?</div>
-  <div class="pcount" id="pcount"></div>
-  <div style="margin-top:10px;font-weight:800;color:var(--p)">Персонаж игрока 🙂 (тап — сменить)</div>
+  <div style="margin-top:14px;font-weight:800;color:var(--p)">Режим</div>
+  <div class="pcount" id="modeRow"></div>
+  <div id="playersBlock">
+    <div style="margin-top:10px;font-weight:800;color:var(--p)">Сколько игроков?</div>
+    <div class="pcount" id="pcount"></div>
+  </div>
+  <div style="margin-top:10px;font-weight:800;color:var(--p)" id="charLbl">Персонаж игрока 🙂 (тап — сменить)</div>
   <div class="charrow" id="pchars"></div>
   <div class="cbtns"><button class="cbtn next" id="startBtn">Играть! ▶</button></div>
   <div style="margin-top:12px"><a href="index.html" style="color:#8a83a0;font-weight:700;font-size:14px;text-decoration:none">← выбрать другую тему</a></div>
@@ -192,6 +196,10 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
   document.title=ASSETS.title+" — бродилка · Speak & Smile";
   const COLORS = ["#FF6B6B","#4D96FF","#38C976","#B15CFF"];
   const NAMES = ["Красный","Синий","Зелёный","Фиолетовый"];
+  // ---- computer opponent state + cancellable timers ----
+  let vsCPU=false, timers=[], spinIv=null;
+  function ST(fn,ms){ const id=setTimeout(()=>{ const k=timers.indexOf(id); if(k>=0)timers.splice(k,1); fn(); },ms); timers.push(id); return id; }
+  function clearTimers(){ timers.forEach(clearTimeout); timers=[]; if(spinIv){ clearInterval(spinIv); spinIv=null; } }
 
   // ---------- build path (boustrophedon) ----------
   const rowsY = [24,42,60,78], perRow = 5;
@@ -251,6 +259,10 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
   function charInner(idx){ const c=CHARS[idx%CHARS.length]; return c.img?`<span class="tokchar"><img src="${c.img}" alt=""></span>`:`<span class="tokchar" style="font-size:44px;line-height:1">${c.e}</span>`; }
   let nPlayers=2, pos=[], points=[], tokens=[], cur=0, busy=false;
   function makeTokens(){
+    clearTimers();
+    if(vsCPU){ nPlayers=2; let cc=(playerChar[0]+6)%CHARS.length; if(cc===playerChar[0]) cc=(cc+1)%CHARS.length; playerChar[1]=cc;
+      $("#okBtn").textContent="✅ Я знаю"; $("#missBtn").textContent="❌ Не знаю"; }
+    else { $("#okBtn").textContent="✅ Верно"; $("#missBtn").textContent="❌ Мимо"; }
     tokens.forEach(t=>t.remove()); tokens=[]; pos=[]; points=[];
     for(let p=0;p<nPlayers;p++){
       pos.push(0); points.push(0);
@@ -278,6 +290,8 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
     });
   }
   function setTurn(){
+    if(vsCPU){ const lbl = cur===0 ? "🙂 Ты" : "🤖 Компьютер думает…";
+      TURN.innerHTML=`<span class="dot" style="background:${COLORS[cur]}"></span> ${lbl}`; return; }
     TURN.innerHTML=`<span class="dot" style="background:${COLORS[cur]}"></span> Ход: игрок ${cur+1}`;
   }
 
@@ -291,14 +305,14 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
     if(busy) return; busy=true; rollBtn.disabled=true;
     startPos=pos[cur];
     die.classList.add("roll");
-    let ticks=0; const spin=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*3)]; if(++ticks>8){ clearInterval(spin); const n=1+Math.floor(Math.random()*3); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
+    let ticks=0; spinIv=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*3)]; if(++ticks>8){ clearInterval(spinIv); spinIv=null; const n=1+Math.floor(Math.random()*3); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
   }
   function step(n){
     let target=Math.min(pos[cur]+n, N-1);
     hop(pos[cur], target);
   }
   function hop(from,to){
-    if(from<to){ pos[cur]=from+1; placeAll(); const tk=tokens[cur]; if(tk){ tk.classList.remove("hop"); void tk.offsetWidth; tk.classList.add("hop"); } setTimeout(()=>hop(from+1,to),300); return; }
+    if(from<to){ pos[cur]=from+1; placeAll(); const tk=tokens[cur]; if(tk){ tk.classList.remove("hop"); void tk.offsetWidth; tk.classList.add("hop"); } ST(()=>hop(from+1,to),300); return; }
     landed();
   }
   function landed(){
@@ -306,23 +320,34 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
     if(i===N-1){ win(cur); return; }
     if(c.type==="animal"){ showItem(c.item); return; }
     if(c.type==="grammar"){ showGrammar(c.gitem); return; }
-    if(c.type==="sp_fwd"){ toast("➡️ +2 шага вперёд!"); setTimeout(()=>animateTo(Math.min(i+2,N-1),afterSpecial),700); return; }
-    if(c.type==="sp_back"){ toast("🕳️ −1 шаг назад"); setTimeout(()=>animateTo(Math.max(i-1,0),afterSpecial),700); return; }
-    if(c.type==="sp_bonus"){ addPoints(cur,3); toast("⭐ +3 очка!"); setTimeout(()=>endTurn(false),1000); return; }
-    if(c.type==="sp_gem"){ addPoints(cur,5); toast("💎 +5 очков!"); burst(); setTimeout(()=>endTurn(false),1000); return; }
-    if(c.type==="sp_oops"){ addPoints(cur,-3); toast("❌ −3 очка"); setTimeout(()=>endTurn(false),1000); return; }
-    if(c.type==="sp_again"){ toast("🔁 Ходи ещё раз!"); setTimeout(()=>endTurn(true),1000); return; }
+    if(c.type==="sp_fwd"){ toast("➡️ +2 шага вперёд!"); ST(()=>animateTo(Math.min(i+2,N-1),afterSpecial),700); return; }
+    if(c.type==="sp_back"){ toast("🕳️ −1 шаг назад"); ST(()=>animateTo(Math.max(i-1,0),afterSpecial),700); return; }
+    if(c.type==="sp_bonus"){ addPoints(cur,3); toast("⭐ +3 очка!"); ST(()=>endTurn(false),1000); return; }
+    if(c.type==="sp_gem"){ addPoints(cur,5); toast("💎 +5 очков!"); burst(); ST(()=>endTurn(false),1000); return; }
+    if(c.type==="sp_oops"){ addPoints(cur,-3); toast("❌ −3 очка"); ST(()=>endTurn(false),1000); return; }
+    if(c.type==="sp_again"){ toast("🔁 Ходи ещё раз!"); ST(()=>endTurn(true),1000); return; }
     endTurn(false);
   }
-  function animateTo(to,cb){ function h(f){ if(f<to){pos[cur]=f+1;placeAll();setTimeout(()=>h(f+1),260);} else if(f>to){pos[cur]=f-1;placeAll();setTimeout(()=>h(f-1),260);} else cb(); } h(pos[cur]); }
+  function animateTo(to,cb){ function h(f){ if(f<to){pos[cur]=f+1;placeAll();ST(()=>h(f+1),260);} else if(f>to){pos[cur]=f-1;placeAll();ST(()=>h(f-1),260);} else cb(); } h(pos[cur]); }
   function afterSpecial(){ if(pos[cur]===N-1){ win(cur); return;} const c=cells[pos[cur]]; if(c.type==="animal"){ showItem(c.item);} else if(c.type==="grammar"){ showGrammar(c.gitem);} else endTurn(false); }
 
   // ---------- animal modal ----------
   const modal=$("#modal"), mPic=$("#mPic"), mAns=$("#mAns");
   const mAsk=$("#mAsk"); let curSay="";
-  function showCard(ask, picSrc, ansText, sayText){ mAsk.textContent=ask; if(picSrc){ mPic.src=picSrc; mPic.style.display=""; } else { mPic.style.display="none"; } mAns.textContent=ansText; curSay=sayText; mAns.classList.remove("show"); modal.classList.add("on"); setTimeout(()=>speak(ask),350); }
-  function showItem(item){ showCard(item.ask||"What's this?", item.img, item.say+"!", item.say); }
-  function showGrammar(g){ showCard(g.q, imgByWord[g.word]||"", g.a, g.say||g.a); }
+  const mBtns=modal.querySelector(".cbtns"), mHint=modal.querySelector(".hint");
+  function showCard(ask, picSrc, ansText, sayText){ mAsk.textContent=ask; if(picSrc){ mPic.src=picSrc; mPic.style.display=""; } else { mPic.style.display="none"; } mAns.textContent=ansText; curSay=sayText; mAns.classList.remove("show"); mBtns.style.display=""; mHint.style.display=""; modal.classList.add("on"); ST(()=>speak(ask),350); }
+  // computer «reads» the answer aloud, then knows (~75%) or doesn't (~25% → back to pre-roll cell) — beatable
+  function cpuCard(ask, picSrc, ansText, sayText){ busy=true;
+    mAsk.textContent=ask; if(picSrc){ mPic.src=picSrc; mPic.style.display=""; } else { mPic.style.display="none"; }
+    mAns.textContent=ansText; curSay=sayText; mAns.classList.add("show");
+    mBtns.style.display="none"; mHint.style.display="none"; modal.classList.add("on");
+    ST(()=>speak(sayText),300);
+    ST(()=>{ modal.classList.remove("on");
+      if(Math.random()<0.75){ addPoints(cur,1); toast("🤖 Компьютер знает! +1"); if(pos[cur]===N-1){ win(cur); return; } endTurn(false); }
+      else { toast("🤖 Компьютер не знает — назад"); animateTo(startPos, ()=>endTurn(false)); }
+    },1500); }
+  function showItem(item){ const ask=item.ask||"What's this?"; if(vsCPU&&cur===1){ cpuCard(ask,item.img,item.say+"!",item.say); return; } showCard(ask, item.img, item.say+"!", item.say); }
+  function showGrammar(g){ const pic=imgByWord[g.word]||""; if(vsCPU&&cur===1){ cpuCard(g.q,pic,g.a,g.say||g.a); return; } showCard(g.q, pic, g.a, g.say||g.a); }
   $("#sayBtn").onclick=()=>{ speak(curSay); mAns.classList.add("show"); };
   // ✅ Верно — остаётся на клетке + очко; ❌ Мимо — возвращается на клетку до броска, без очка
   $("#okBtn").onclick=()=>{ modal.classList.remove("on"); addPoints(cur,1); toast("✅ Верно! +1"); if(pos[cur]===N-1){ win(cur); return; } endTurn(false); };
@@ -335,17 +360,20 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
   function speak(text){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.9; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
 
   // ---------- turns ----------
-  function endTurn(again){ busy=false; rollBtn.disabled=false; if(!again){ cur=(cur+1)%nPlayers; } setTurn(); }
+  function endTurn(again){ busy=false; rollBtn.disabled=false; if(!again){ cur=(cur+1)%nPlayers; } setTurn();
+    if(vsCPU&&cur===1){ rollBtn.disabled=true; ST(()=>roll(),700); } }
 
   // ---------- win ----------
-  function win(p){ burst(); const w=$("#winov"); $("#winTxt").textContent=`🏆 Игрок ${p+1} дошёл первым!`;
+  function win(p){ clearTimers(); const cpuWon=vsCPU&&p===1; if(!cpuWon) burst(); const w=$("#winov");
+    $("#winTxt").textContent = vsCPU ? (p===0?"🏆 Ты дошёл первым!":"🤖 Компьютер дошёл! Ещё раз?") : `🏆 Игрок ${p+1} дошёл первым!`;
     const rank=points.map((pt,i)=>({i,pt})).sort((a,b)=>b.pt-a.pt);
-    $("#winPts").innerHTML="Очки: "+rank.map(r=>`игрок ${r.i+1} — ${r.pt}⭐`).join(" · ");
+    const nm=i=> vsCPU?(i===0?"Ты":"🤖 Компьютер"):("игрок "+(i+1));
+    $("#winPts").innerHTML="Очки: "+rank.map(r=>`${nm(r.i)} — ${r.pt}⭐`).join(" · ");
     if(ASSETS.speaky)$("#winSp").src=ASSETS.speaky; w.classList.add("on"); }
 
   rollBtn.onclick=roll;
   $("#reset").onclick=()=>{ cur=0; makeTokens(); };
-  $("#home").onclick=()=>{ try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
+  $("#home").onclick=()=>{ clearTimers(); try{speechSynthesis.cancel();}catch(e){} location.href="index.html"; };
   $("#againBtn").onclick=()=>{ $("#winov").classList.remove("on"); cur=0; makeTokens(); };
 
   // ---------- setup screen ----------
@@ -353,8 +381,16 @@ const ASSETS = {"title": "Ревью 1 (Старт+Класс+Игрушки+Т�
   const pcw=$("#pcount");
   [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="pc"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nPlayers=k; [...pcw.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); rebuildChars(); }; pcw.appendChild(b); });
   const pchars=$("#pchars"), charpick=$("#charpick"), cgrid=$("#cgrid");
+  const modeRow=$("#modeRow"), playersBlock=$("#playersBlock"), charLbl=$("#charLbl");
+  [{t:"👥 Команды",v:false},{t:"🤖 Дома · против компьютера",v:true}].forEach((m,i)=>{
+    const b=document.createElement("button"); b.className="pc"+(i===0?" sel":""); b.style.width="auto"; b.style.padding="0 12px"; b.style.fontSize="14px"; b.textContent=m.t;
+    b.onclick=()=>{ vsCPU=m.v; [...modeRow.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel");
+      if(vsCPU){ nPlayers=2; playersBlock.style.display="none"; charLbl.textContent="Твой персонаж 🙂 (тап — сменить)"; }
+      else { playersBlock.style.display=""; charLbl.textContent="Персонаж игрока 🙂 (тап — сменить)"; }
+      rebuildChars(); };
+    modeRow.appendChild(b); });
   function charImgHTML(idx){ const c=CHARS[idx%CHARS.length]; return c.img?`<img src="${c.img}" alt="">`:`<span style="font-size:44px">${c.e}</span>`; }
-  function rebuildChars(){ pchars.innerHTML=""; for(let p=0;p<nPlayers;p++){ const s=document.createElement("div"); s.className="cslot"; s.innerHTML=charImgHTML(playerChar[p])+`<div class="nm" style="color:${COLORS[p]}">Игрок ${p+1}</div>`; s.onclick=()=>openCharPick(p); pchars.appendChild(s); } }
+  function rebuildChars(){ pchars.innerHTML=""; const n=vsCPU?1:nPlayers; for(let p=0;p<n;p++){ const s=document.createElement("div"); s.className="cslot"; s.innerHTML=charImgHTML(playerChar[p])+`<div class="nm" style="color:${COLORS[p]}">${vsCPU?"Ты":("Игрок "+(p+1))}</div>`; s.onclick=()=>openCharPick(p); pchars.appendChild(s); } }
   function openCharPick(p){ $("#charpickTitle").textContent="Персонаж · Игрок "+(p+1); $("#charpickTitle").style.color=COLORS[p]; cgrid.innerHTML="";
     CHARS.forEach((c,idx)=>{ const o=document.createElement("div"); o.className="copt"+(playerChar[p]===idx?" sel":""); o.innerHTML=charImgHTML(idx)+`<div class="nm">${c.n||''}</div>`; o.onclick=()=>{ playerChar[p]=idx; [...cgrid.children].forEach(x=>x.classList.remove("sel")); o.classList.add("sel"); rebuildChars(); }; cgrid.appendChild(o); }); charpick.classList.add("on"); }
   $("#charpickClose").onclick=()=>charpick.classList.remove("on");
