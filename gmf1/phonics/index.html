@@ -163,7 +163,7 @@
   <div class="topbar">
     <button class="btn" id="back" style="display:none">← Уроки</button>
     <div class="htitle" id="htitle">🔤 Phonics Hub · Jolly Phonics</div>
-    <button class="btn" id="home" style="margin-left:auto">☰ Игры</button>
+    <button class="btn" id="home" style="margin-left:auto">🏠 Домой</button>
   </div>
   <div class="wrap" id="wrap"></div>
 </div>
@@ -799,7 +799,8 @@ const VOW=[
     $("#rdNext").onclick=()=>{ idx++; show(); };
     $("#rdPrev").onclick=()=>{ idx--; show(); };
   }
-  $("#home").onclick=()=>location.href="../games/index.html";
+  try{const _f=new URLSearchParams(location.search).get("from"); if(_f) sessionStorage.setItem("ph_from",_f);}catch(e){}
+  $("#home").onclick=()=>{ let f="gmf1"; try{ f=new URLSearchParams(location.search).get("from")||sessionStorage.getItem("ph_from")||"gmf1"; }catch(e){} location.href = f==="gmf2" ? "../../gmf2/" : "../"; };
   renderHub();
 })();
 </script>
