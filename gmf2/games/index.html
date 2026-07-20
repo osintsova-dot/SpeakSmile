@@ -10,6 +10,13 @@ h2{font-size:clamp(16px,3.4vw,22px);margin:22px 0 10px;color:var(--honey)}
 a.card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:#2a2140;background:#fff;border-radius:18px;padding:16px 10px;box-shadow:0 6px 16px rgba(0,0,0,.22);font-weight:800;text-align:center;transition:transform .1s}
 a.card:active{transform:translateY(2px)}a.card .em{font-size:36px;line-height:1}a.card .t{font-size:15px}a.card .d{font-size:11px;color:#6d6584;font-weight:600}
 .foot{margin-top:26px;opacity:.8;font-size:12px;text-align:center}
+details.wbsec{margin:0 0 10px}
+details.wbsec>summary{list-style:none;cursor:pointer;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:14px;padding:11px 14px;font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+details.wbsec>summary::-webkit-details-marker{display:none}
+details.wbsec>summary::before{content:"▸";color:var(--honey);font-size:14px;transition:transform .15s}
+details.wbsec[open]>summary::before{transform:rotate(90deg)}
+details.wbsec[open]>summary{background:rgba(255,255,255,.22);margin-bottom:10px}
+details.wbsec .grid{margin-bottom:6px}
 </style>
 <div class="wrap">
  <a href="../" style="display:inline-block;color:#fff;background:rgba(255,255,255,.18);border-radius:12px;padding:6px 12px;font-weight:800;font-size:13px;text-decoration:none;margin-bottom:8px">🏠 GMF2</a>
@@ -19,6 +26,82 @@ a.card:active{transform:translateY(2px)}a.card .em{font-size:36px;line-height:1}
  <div style="margin:6px 0 14px"><a href="../../gmf1/phonics/" style="display:inline-block;background:var(--honey);color:#5a2ea6;font-weight:800;text-decoration:none;padding:10px 16px;border-radius:14px">🔤 Phonics Hub — Jolly Phonics по группам →</a></div>
 
  <div style="margin:6px 0 14px"><a href="../#practice" style="display:inline-block;background:linear-gradient(135deg,#57c98b,#2ea866);color:#fff;font-weight:800;text-decoration:none;padding:10px 16px;border-radius:14px;box-shadow:0 6px 18px rgba(46,168,102,.35)">📝 Practice &amp; Booster со Спики — домашка по юнитам →</a></div>
+
+ <h2>📓 Тетрадь-интерактивы — по юнитам</h2>
+ <div class="sub" style="font-size:13px;margin:-4px 0 10px">Оцифровки заданий интерактивной тетради: Find it!, спиннер грамматики юнита, Speaky says (TPR), история по кадрам. Тапни юнит.</div>
+
+ <details class="wbsec"><summary>📓 Unit 1 «Move your body» · sports</summary>
+  <div class="grid">
+   <a class="card" href="u1-story-week.html"><span class="em">🖼</span><span class="t">The very busy week</span><span class="d">кадры 1–8 по порядку</span></a>
+   <a class="card" href="u1-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: do the sport!</span></a>
+   <a class="card" href="find-it-u1.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди спорт на сцене</span></a>
+   <a class="card" href="whats-this-spinner-u1.html"><span class="em">🌀</span><span class="t">Do you play…?</span><span class="d">спиннер I play / I go</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 2 «Let's go shopping!» · food</summary>
+  <div class="grid">
+   <a class="card" href="u2-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: at the shop!</span></a>
+   <a class="card" href="find-it-u2.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Can I have…? — найди еду</span></a>
+   <a class="card" href="whats-this-spinner-u2.html"><span class="em">🌀</span><span class="t">Can I have…?</span><span class="d">спиннер a / an / some</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 3 «At the zoo» · animals</summary>
+  <div class="grid">
+   <a class="card" href="u3-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: animal moves</span></a>
+   <a class="card" href="find-it-u3.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди зверя</span></a>
+   <a class="card" href="whats-this-spinner-u3.html"><span class="em">🌀</span><span class="t">Has it got…?</span><span class="d">спиннер It's got …</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 4 «The nature trail» · nature</summary>
+  <div class="grid">
+   <a class="card" href="u4-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: What are you doing?</span></a>
+   <a class="card" href="find-it-u4.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди на тропе</span></a>
+   <a class="card" href="whats-this-spinner-u4.html"><span class="em">🌀</span><span class="t">What's this?</span><span class="d">спиннер It's a…</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 5 «The frozen lake» · winter</summary>
+  <div class="grid">
+   <a class="card" href="u5-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: winter moves</span></a>
+   <a class="card" href="find-it-u5.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди зимнюю забаву</span></a>
+   <a class="card" href="whats-this-spinner-u5.html"><span class="em">🌀</span><span class="t">Are you…?</span><span class="d">спиннер Yes, we are!</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 6 «All year round» · seasons</summary>
+  <div class="grid">
+   <a class="card" href="u6-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: all year round</span></a>
+   <a class="card" href="find-it-u6.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди занятие сезона</span></a>
+   <a class="card" href="whats-this-spinner-u6.html"><span class="em">🌀</span><span class="t">What do you do…?</span><span class="d">спиннер сезоны</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 7 «My house» · rooms</summary>
+  <div class="grid">
+   <a class="card" href="u7-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: around the house</span></a>
+   <a class="card" href="find-it-u7.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди комнату</span></a>
+   <a class="card" href="whats-this-spinner-u7.html"><span class="em">🌀</span><span class="t">There's a…</span><span class="d">спиннер комнаты дома</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 8 «All around the town» · places</summary>
+  <div class="grid">
+   <a class="card" href="u8-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: find your way</span></a>
+   <a class="card" href="find-it-u8.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди в городе</span></a>
+   <a class="card" href="whats-this-spinner-u8.html"><span class="em">🌀</span><span class="t">Is there a…?</span><span class="d">спиннер There's a…</span></a>
+  </div>
+ </details>
+
+ <details class="wbsec"><summary>📓 Unit 9 «Holiday fun» · places</summary>
+  <div class="grid">
+   <a class="card" href="u9-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: holiday fun</span></a>
+   <a class="card" href="find-it-u9.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди место каникул</span></a>
+   <a class="card" href="whats-this-spinner-u9.html"><span class="em">🌀</span><span class="t">Where were you?</span><span class="d">спиннер I was at the…</span></a>
+  </div>
+ </details>
 
  <h2>🎳 Квиз-боулинг — командный (1–4 команды)</h2>
  <div class="sub" style="font-size:13px;margin:-4px 0 10px">🎳 Боулинг или 🏀 баскетбол на выбор · свой персонаж-чудик и шар у каждой команды · возьми (или нет) 🎁 трики-подарок → бросай → карточка-вопрос: верно — очки команде, ошибка — сгорают. Команд 1–4, игра на 10/16/24 вопроса.</div>
