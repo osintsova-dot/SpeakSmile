@@ -96,6 +96,8 @@
   .cbtn:active{ transform:translateY(3px); }
   .cbtn.say{ color:#fff; background:linear-gradient(180deg,#57c98b,#2ea866); box-shadow:0 5px 0 #1d7a48; }
   .cbtn.next{ color:#fff; background:linear-gradient(180deg,#8A5FD8,#6C3FC5); box-shadow:0 5px 0 #4c2a90; }
+  .cbtn.ok{ color:#fff; background:linear-gradient(180deg,#57c98b,#2ea866); box-shadow:0 5px 0 #1d7a48; }
+  .cbtn.miss{ color:#fff; background:linear-gradient(180deg,#f0736f,#e2542f); box-shadow:0 5px 0 #a83415; }
   .card .hint{ font-size:14px; color:#8a83a0; margin-top:10px; }
 
   /* setup + win reuse .card */
@@ -141,7 +143,8 @@
   <div class="ans" id="mAns"></div>
   <div class="cbtns">
     <button class="cbtn say" id="sayBtn">🔊 Скажи</button>
-    <button class="cbtn next" id="nextBtn">Дальше →</button>
+    <button class="cbtn ok" id="okBtn">✅ Верно</button>
+    <button class="cbtn miss" id="missBtn">❌ Мимо</button>
   </div>
   <div class="hint">Назови по-английски. Не помнишь — нажми 🔊</div>
 </div></div>
@@ -283,8 +286,10 @@ const ASSETS = {"title": "Одежда", "emoji": "👕", "bg": "data:image/jpeg
   const DFACE=["","⚀","⚁","⚂","⚃","⚄","⚅"];
   function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1400); }
 
+  let startPos=0; // клетка ДО броска — на неё возвращаемся при неверном ответе
   function roll(){
     if(busy) return; busy=true; rollBtn.disabled=true;
+    startPos=pos[cur];
     die.classList.add("roll");
     let ticks=0; const spin=setInterval(()=>{ die.textContent=DFACE[1+Math.floor(Math.random()*3)]; if(++ticks>8){ clearInterval(spin); const n=1+Math.floor(Math.random()*3); die.textContent=DFACE[n]; die.classList.remove("roll"); step(n); } },70);
   }
@@ -319,7 +324,9 @@ const ASSETS = {"title": "Одежда", "emoji": "👕", "bg": "data:image/jpeg
   function showItem(item){ showCard(item.ask||"What's this?", item.img, item.say+"!", item.say); }
   function showGrammar(g){ showCard(g.q, imgByWord[g.word]||"", g.a, g.say||g.a); }
   $("#sayBtn").onclick=()=>{ speak(curSay); mAns.classList.add("show"); };
-  $("#nextBtn").onclick=()=>{ modal.classList.remove("on"); addPoints(cur,1); endTurn(false); };
+  // ✅ Верно — остаётся на клетке + очко; ❌ Мимо — возвращается на клетку до броска, без очка
+  $("#okBtn").onclick=()=>{ modal.classList.remove("on"); addPoints(cur,1); toast("✅ Верно! +1"); if(pos[cur]===N-1){ win(cur); return; } endTurn(false); };
+  $("#missBtn").onclick=()=>{ modal.classList.remove("on"); toast("❌ Мимо — назад"); animateTo(startPos, ()=>endTurn(false)); };
 
   // ---------- TTS ----------
   let voice=null;
