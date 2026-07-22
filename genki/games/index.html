@@ -22,62 +22,89 @@ a.card:active{transform:translateY(2px)}a.card .em{font-size:36px;line-height:1}
  <a href="../" style="display:inline-block;color:#fff;background:rgba(255,255,255,.18);border-radius:12px;padding:6px 12px;font-weight:800;font-size:13px;text-decoration:none;margin-bottom:8px">🏠 Genki</a>
  <h1>🎲 Игры — GenkiEnglish</h1>
  <div class="sub" id="lead">Выбери тип игры → откроются темы. Всё работает без интернета.</div>
-
  <div class="catgrid" id="home">
   <button class="cat" data-go="memo"><span class="ce">🃏</span>Мемо<small>найди пару + озвучка</small></button>
   <button class="cat" data-go="ttt"><span class="ce">⭕</span>Крестики-нолики<small>2 команды / 🤖</small></button>
+  <button class="cat" data-go="quiz"><span class="ce">🎳</span>Квиз на раздел<small>боулинг-награда · вся лексика уровня</small></button>
  </div>
-
  <section class="catview" id="v-memo" hidden>
   <button class="back" data-back="home">← Назад</button>
   <h2>🃏 Мемо — найди пару</h2>
-  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Открой карточку → услышишь команду 🔊; собрал пару — ещё раз. 1–4 команды, играется и одному.</div>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Открой карточку → услышишь слово 🔊; собрал пару — ещё раз. Играется и одному.</div>
   <div class="grid">
-   <a class="card" href="u1-commands-memo.html"><span class="em">🤸</span><span class="t">Commands</span><span class="d">stand up · sit down · bow…</span></a>
+   <a class="card" href="commands-memo.html"><span class="em">🤸</span><span class="t">Commands</span><span class="d">stand up · sit down · bow…</span></a>
    <a class="card" href="feelings-memo.html"><span class="em">😊</span><span class="t">Feelings</span><span class="d">happy · sad · tired · hungry</span></a>
    <a class="card" href="actions-memo.html"><span class="em">🦸</span><span class="t">Actions</span><span class="d">jump · run · climb · swim · fly</span></a>
+   <a class="card" href="directions-memo.html"><span class="em">🧭</span><span class="t">Directions</span><span class="d">left · right · forward · stop</span></a>
+   <a class="card" href="numbers-memo.html"><span class="em">🔢</span><span class="t">Numbers</span><span class="d">one · two · three…</span></a>
    <a class="card" href="food-memo.html"><span class="em">🍎</span><span class="t">Food</span><span class="d">apple · fish · ice cream</span></a>
    <a class="card" href="animals-memo.html"><span class="em">🐘</span><span class="t">Zoo animals</span><span class="d">elephant · monkey · tiger</span></a>
    <a class="card" href="weather-memo.html"><span class="em">🌦️</span><span class="t">Weather</span><span class="d">sunny · rainy · windy · snowy</span></a>
-   <a class="card" href="sea-memo.html"><span class="em">🐳</span><span class="t">Under the sea</span><span class="d">whale · dolphin · shark · crab</span></a>
-   <a class="card" href="winter-memo.html"><span class="em">🧣</span><span class="t">Winter clothes</span><span class="d">hat · scarf · gloves · coat · boots</span></a>
-   <a class="card" href="summer-memo.html"><span class="em">👕</span><span class="t">Summer clothes</span><span class="d">t-shirt · shorts · sandals · cap</span></a>
    <a class="card" href="zoo2-memo.html"><span class="em">🦘</span><span class="t">Animals</span><span class="d">kangaroo · bear · giraffe · penguin</span></a>
    <a class="card" href="vegetables-memo.html"><span class="em">🥕</span><span class="t">Vegetables</span><span class="d">carrot · tomato · potato · peas</span></a>
    <a class="card" href="pets-memo.html"><span class="em">🐶</span><span class="t">Pets</span><span class="d">dog · cat · fish · rabbit</span></a>
+   <a class="card" href="sea-memo.html"><span class="em">🐳</span><span class="t">Under the sea</span><span class="d">whale · dolphin · shark · crab</span></a>
+   <a class="card" href="winter-memo.html"><span class="em">🧣</span><span class="t">Winter clothes</span><span class="d">hat · scarf · gloves · coat · boots</span></a>
+   <a class="card" href="summer-memo.html"><span class="em">👕</span><span class="t">Summer clothes</span><span class="d">t-shirt · shorts · sandals · cap</span></a>
+   <a class="card" href="shapes-memo.html"><span class="em">🔷</span><span class="t">Shapes</span><span class="d">circle · triangle · square · star</span></a>
    <a class="card" href="fruit-memo.html"><span class="em">🍓</span><span class="t">Fruit</span><span class="d">apple · banana · orange · grapes</span></a>
    <a class="card" href="instruments-memo.html"><span class="em">🎸</span><span class="t">Instruments</span><span class="d">piano · drum · guitar · violin</span></a>
+   <a class="card" href="countries-memo.html"><span class="em">🌍</span><span class="t">Countries</span><span class="d">Russia · England · Japan…</span></a>
    <a class="card" href="transport-memo.html"><span class="em">🚗</span><span class="t">Transport</span><span class="d">car · bus · train · plane · bike</span></a>
+   <a class="card" href="time-memo.html"><span class="em">🕒</span><span class="t">What time?</span><span class="d">3 · 6 · 9 · 12 o'clock</span></a>
    <a class="card" href="sports-memo.html"><span class="em">⚽</span><span class="t">Sports</span><span class="d">swimming · cycling · running · skiing</span></a>
+   <a class="card" href="colours-memo.html"><span class="em">🌈</span><span class="t">Colours</span><span class="d">red · blue · green · yellow</span></a>
+   <a class="card" href="flavours-memo.html"><span class="em">🍦</span><span class="t">Flavours</span><span class="d">chocolate · strawberry · vanilla · mint</span></a>
    <a class="card" href="christmas-memo.html"><span class="em">🎄</span><span class="t">Christmas</span><span class="d">snowman · Santa · tree · present</span></a>
   </div>
  </section>
-
  <section class="catview" id="v-ttt" hidden>
   <button class="back" data-back="home">← Назад</button>
   <h2>⭕ Крестики-нолики</h2>
-  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Поза Спики → скажи команду → займи клетку, собери 3 в ряд. 2 команды или против компьютера.</div>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Картинка → скажи слово → займи клетку, собери 3 в ряд. 2 команды или против компьютера.</div>
   <div class="grid">
-   <a class="card" href="u1-commands-ttt.html"><span class="em">🤸</span><span class="t">Commands</span><span class="d">stand up · sit down · bow…</span></a>
+   <a class="card" href="commands-ttt.html"><span class="em">🤸</span><span class="t">Commands</span><span class="d">stand up · sit down · bow…</span></a>
    <a class="card" href="feelings-ttt.html"><span class="em">😊</span><span class="t">Feelings</span><span class="d">happy · sad · tired · hungry</span></a>
    <a class="card" href="actions-ttt.html"><span class="em">🦸</span><span class="t">Actions</span><span class="d">jump · run · climb · swim · fly</span></a>
+   <a class="card" href="directions-ttt.html"><span class="em">🧭</span><span class="t">Directions</span><span class="d">left · right · forward · stop</span></a>
+   <a class="card" href="numbers-ttt.html"><span class="em">🔢</span><span class="t">Numbers</span><span class="d">one · two · three…</span></a>
    <a class="card" href="food-ttt.html"><span class="em">🍎</span><span class="t">Food</span><span class="d">apple · fish · ice cream</span></a>
    <a class="card" href="animals-ttt.html"><span class="em">🐘</span><span class="t">Zoo animals</span><span class="d">elephant · monkey · tiger</span></a>
    <a class="card" href="weather-ttt.html"><span class="em">🌦️</span><span class="t">Weather</span><span class="d">sunny · rainy · windy · snowy</span></a>
-   <a class="card" href="sea-ttt.html"><span class="em">🐳</span><span class="t">Under the sea</span><span class="d">whale · dolphin · shark · crab</span></a>
-   <a class="card" href="winter-ttt.html"><span class="em">🧣</span><span class="t">Winter clothes</span><span class="d">hat · scarf · gloves · coat · boots</span></a>
-   <a class="card" href="summer-ttt.html"><span class="em">👕</span><span class="t">Summer clothes</span><span class="d">t-shirt · shorts · sandals · cap</span></a>
    <a class="card" href="zoo2-ttt.html"><span class="em">🦘</span><span class="t">Animals</span><span class="d">kangaroo · bear · giraffe · penguin</span></a>
    <a class="card" href="vegetables-ttt.html"><span class="em">🥕</span><span class="t">Vegetables</span><span class="d">carrot · tomato · potato · peas</span></a>
    <a class="card" href="pets-ttt.html"><span class="em">🐶</span><span class="t">Pets</span><span class="d">dog · cat · fish · rabbit</span></a>
+   <a class="card" href="sea-ttt.html"><span class="em">🐳</span><span class="t">Under the sea</span><span class="d">whale · dolphin · shark · crab</span></a>
+   <a class="card" href="winter-ttt.html"><span class="em">🧣</span><span class="t">Winter clothes</span><span class="d">hat · scarf · gloves · coat · boots</span></a>
+   <a class="card" href="summer-ttt.html"><span class="em">👕</span><span class="t">Summer clothes</span><span class="d">t-shirt · shorts · sandals · cap</span></a>
+   <a class="card" href="shapes-ttt.html"><span class="em">🔷</span><span class="t">Shapes</span><span class="d">circle · triangle · square · star</span></a>
    <a class="card" href="fruit-ttt.html"><span class="em">🍓</span><span class="t">Fruit</span><span class="d">apple · banana · orange · grapes</span></a>
    <a class="card" href="instruments-ttt.html"><span class="em">🎸</span><span class="t">Instruments</span><span class="d">piano · drum · guitar · violin</span></a>
+   <a class="card" href="countries-ttt.html"><span class="em">🌍</span><span class="t">Countries</span><span class="d">Russia · England · Japan…</span></a>
    <a class="card" href="transport-ttt.html"><span class="em">🚗</span><span class="t">Transport</span><span class="d">car · bus · train · plane · bike</span></a>
+   <a class="card" href="time-ttt.html"><span class="em">🕒</span><span class="t">What time?</span><span class="d">3 · 6 · 9 · 12 o'clock</span></a>
    <a class="card" href="sports-ttt.html"><span class="em">⚽</span><span class="t">Sports</span><span class="d">swimming · cycling · running · skiing</span></a>
+   <a class="card" href="colours-ttt.html"><span class="em">🌈</span><span class="t">Colours</span><span class="d">red · blue · green · yellow</span></a>
+   <a class="card" href="flavours-ttt.html"><span class="em">🍦</span><span class="t">Flavours</span><span class="d">chocolate · strawberry · vanilla · mint</span></a>
    <a class="card" href="christmas-ttt.html"><span class="em">🎄</span><span class="t">Christmas</span><span class="d">snowman · Santa · tree · present</span></a>
   </div>
  </section>
-
+ <section class="catview" id="v-quiz" hidden>
+  <button class="back" data-back="home">← Назад</button>
+  <h2>🎳 Квиз на раздел — командная викторина</h2>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Вся лексика уровня. 2 команды выбирают плитку → отвечают → анимированная награда. Для повторения в конце раздела.</div>
+  <div class="grid">
+   <a class="card" href="adventure-review-quiz.html"><span class="em">🗺️</span><span class="t">Adventure</span><span class="d">команды · чувства · действия · направления</span></a>
+   <a class="card" href="brainy-review-quiz.html"><span class="em">🧠</span><span class="t">Brainy</span><span class="d">числа · еда · животные · погода</span></a>
+   <a class="card" href="challenge-review-quiz.html"><span class="em">🏆</span><span class="t">Challenge</span><span class="d">животные · овощи · питомцы</span></a>
+   <a class="card" href="danger-review-quiz.html"><span class="em">🌊</span><span class="t">Danger</span><span class="d">море · зимняя · летняя одежда</span></a>
+   <a class="card" href="experts-review-quiz.html"><span class="em">🧮</span><span class="t">Experts</span><span class="d">числа · фигуры</span></a>
+   <a class="card" href="fantastic-review-quiz.html"><span class="em">🎪</span><span class="t">Fantastic</span><span class="d">фрукты · инструменты · страны</span></a>
+   <a class="card" href="giant-review-quiz.html"><span class="em">🤖</span><span class="t">Giant</span><span class="d">транспорт · время · спорт</span></a>
+   <a class="card" href="high-review-quiz.html"><span class="em">🎨</span><span class="t">High</span><span class="d">цвета · вкусы · спорт · транспорт</span></a>
+   <a class="card" href="christmas-review-quiz.html"><span class="em">🎄</span><span class="t">Christmas</span><span class="d">Рождество</span></a>
+  </div>
+ </section>
  <div class="foot">Speak &amp; Smile · GenkiEnglish · без интернета работает после загрузки</div>
 </div>
 <script>
