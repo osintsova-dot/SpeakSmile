@@ -8,11 +8,14 @@
 body{background:radial-gradient(1200px 420px at 50% -80px,color-mix(in srgb,var(--p) 24%,transparent),transparent),var(--paper);color:var(--ink);font-family:var(--f);line-height:1.5;-webkit-font-smoothing:antialiased}
 .wrap{max-width:560px;margin:0 auto;padding:20px 16px 60px}
 .hd{background:linear-gradient(135deg,#6C3FC5,#9a6ff0);color:#fff;border-radius:22px;padding:18px;text-align:center;box-shadow:0 8px 26px rgba(76,39,143,.16)}
-.hd img{height:120px;margin:0 auto -4px;display:block;filter:drop-shadow(0 5px 7px rgba(0,0,0,.3))}
 .hd .t{font-size:1.4rem;font-weight:800}.hd .s{opacity:.92;font-size:.9rem}
 .grid{display:flex;flex-direction:column;gap:11px;margin-top:16px}
+.sec{display:flex;align-items:center;gap:10px;margin:18px 2px 2px;font-weight:800;color:var(--p2);font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
+.sec::after{content:"";flex:1;height:2px;background:var(--line);border-radius:2px}
+.sec .n{background:var(--honey);color:#5a2ea6;border-radius:20px;padding:1px 9px;font-size:.72rem}
 .card{display:flex;align-items:center;gap:13px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;text-decoration:none;color:inherit;box-shadow:0 8px 26px rgba(76,39,143,.09);transition:.12s}
 .card:active{transform:scale(.98)}
+.card .num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--p);color:#fff;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
 .card .e{font-size:1.9rem}
 .card .tx{display:flex;flex-direction:column}.card .tx b{color:var(--p);font-weight:800}.card .tx span{font-size:.82rem;color:var(--muted)}
 .back{display:inline-block;color:var(--p);font-weight:800;font-size:.85rem;text-decoration:none;margin-bottom:10px}
@@ -20,43 +23,52 @@ body{background:radial-gradient(1200px 420px at 50% -80px,color-mix(in srgb,var(
 </style></head><body>
 <div class="wrap">
   <a class="back" href="../">← Genki</a>
-  <div class="hd"><div class="t">📖 Story time</div><div class="s">Книжки Спики — читаем хором</div></div>
+  <div class="hd"><div class="t">📖 Story time</div><div class="s">Книжки Спики — 35 историй по порядку курса</div></div>
   <div class="grid">
-    <a class="card" href="u1-name.html"><span class="e">👋</span><span class="tx"><b>What's your name?</b><span>знакомство: My name is… Nice to meet you</span></span></a>
-    <a class="card" href="u1-dogshow.html"><span class="e">🎪</span><span class="tx"><b>Speaky's Dog Show</b><span>команды: stand up · sit down · bow…</span></span></a>
-    <a class="card" href="u1-feelings.html"><span class="e">😊</span><span class="tx"><b>Unit 1 · How are you, Speaky?</b><span>чувства: happy · sad · tired · hungry…</span></span></a>
-    <a class="card" href="u1-superspeaky.html"><span class="e">🦸</span><span class="tx"><b>Super Speaky!</b><span>actions: jump · run · climb · swim · fly</span></span></a>
-    <a class="card" href="u1-pronouns.html"><span class="e">🎉</span><span class="tx"><b>Everybody is Happy!</b><span>pronouns: I · he · she · we + is happy</span></span></a>
-    <a class="card" href="adv-leftright.html"><span class="e">🗺️</span><span class="tx"><b>Left and Right!</b><span>directions: left · right · forward · stop</span></span></a>
-    <a class="card" href="brainy-food.html"><span class="e">🍎</span><span class="tx"><b>Do you like food?</b><span>food: apples · fish · ice cream · yum/yuck</span></span></a>
-    <a class="card" href="brainy-animals.html"><span class="e">🐘</span><span class="tx"><b>Do you like animals?</b><span>zoo: elephant · monkey · tiger</span></span></a>
-    <a class="card" href="brainy-numbers.html"><span class="e">🔢</span><span class="tx"><b>Count with Speaky!</b><span>numbers 1–12 · count with me</span></span></a>
-    <a class="card" href="brainy-weather.html"><span class="e">🌦️</span><span class="tx"><b>What's the weather?</b><span>sunny · rainy · windy · snowy</span></span></a>
-    <a class="card" href="christmas-santa.html"><span class="e">🎅</span><span class="tx"><b>Dear Santa!</b><span>wishes: robot · bear · doll · bike · book</span></span></a>
-
-    <a class="card" href="christmas-newyear.html"><span class="e">🎆</span><span class="tx"><b>Happy New Year!</b><span>countdown: 10-9-8… party · fireworks</span></span></a>    <a class="card" href="christmas-snowman.html"><span class="e">⛄</span><span class="tx"><b>Let's Build a Snowman!</b><span>Christmas: snowman · hat · nose · scarf</span></span></a>
-    <a class="card" href="danger-sea.html"><span class="e">🐳</span><span class="tx"><b>Under the Sea!</b><span>sea: whale · dolphin · shark · crab</span></span></a>
-    <a class="card" href="danger-monster.html"><span class="e">👾</span><span class="tx"><b>Let's Make a Monster!</b><span>body parts: eyes · nose · mouth · ears · arms</span></span></a>
-    <a class="card" href="fantastic-band.html"><span class="e">🎸</span><span class="tx"><b>Speaky's Band!</b><span>instruments: piano · drum · guitar · trumpet</span></span></a>
-    <a class="card" href="advty.html"><span class="e">🙏</span><span class="tx"><b>Thank You, Speaky!</b><span>polite: thank you · please · you're welcome</span></span></a>
-    <a class="card" href="brbday.html"><span class="e">🎂</span><span class="tx"><b>Happy Birthday!</b><span>how old: How old are you? I'm five!</span></span></a>
-    <a class="card" href="brgm.html"><span class="e">🌅</span><span class="tx"><b>Good Morning, Speaky!</b><span>routine: wash · brush · get dressed · breakfast</span></span></a>
-    <a class="card" href="brsorry.html"><span class="e">💛</span><span class="tx"><b>I'm Sorry!</b><span>sorry: I'm sorry! · That's OK! · Are you OK?</span></span></a>
-    <a class="card" href="chveg.html"><span class="e">🥕</span><span class="tx"><b>Speaky's Garden</b><span>vegetables: carrot · tomato · potato · peas</span></span></a>
-    <a class="card" href="chfarm.html"><span class="e">🐄</span><span class="tx"><b>Speaky's Noisy Farm</b><span>animal sounds: moo · quack · oink · baa · neigh</span></span></a>
-    <a class="card" href="chpet.html"><span class="e">🐾</span><span class="tx"><b>Speaky's Pets</b><span>pets: dog · cat · fish · rabbit</span></span></a>
-    <a class="card" href="chfam.html"><span class="e">👪</span><span class="tx"><b>Speaky's Family</b><span>family: mummy · daddy · brother · sister · baby</span></span></a>
-    <a class="card" href="dgdoc.html"><span class="e">🩹</span><span class="tx"><b>Doctor, Doctor!</b><span>body: My arm hurts! Get well soon!</span></span></a>
-    <a class="card" href="dgcl.html"><span class="e">🧥</span><span class="tx"><b>What Shall I Wear?</b><span>clothes: hat · coat · t-shirt · It's hot/cold!</span></span></a>
-    <a class="card" href="extr.html"><span class="e">🗺️</span><span class="tx"><b>Speaky's Treasure Hunt</b><span>directions: go left · right · forward · find the treasure!</span></span></a>
-    <a class="card" href="exrk.html"><span class="e">🚀</span><span class="tx"><b>Blast Off, Speaky!</b><span>numbers: ten, nine… blast off!</span></span></a>
-    <a class="card" href="exsh.html"><span class="e">🔷</span><span class="tx"><b>Speaky's Shapes</b><span>shapes: circle · triangle · square · star · heart</span></span></a>
-    <a class="card" href="fnfr.html"><span class="e">🍓</span><span class="tx"><b>At the Fruit Market</b><span>fruit: What would you like? An apple, please!</span></span></a>
-    <a class="card" href="fnwd.html"><span class="e">🌍</span><span class="tx"><b>Around the World</b><span>countries: Where are you from? I'm from Russia!</span></span></a>
-    <a class="card" href="gtrb.html"><span class="e">🤖</span><span class="tx"><b>I Am a Robot!</b><span>robot: Turn on! Move! Left! Right! Stop!</span></span></a>
-    <a class="card" href="gtoc.html"><span class="e">🐙</span><span class="tx"><b>Mr Octopus</b><span>counting: How many arms? Eight!</span></span></a>
-    <a class="card" href="gttr.html"><span class="e">🚗</span><span class="tx"><b>Let's Go, Speaky!</b><span>transport: by car · bus · train · plane · bike</span></span></a>
-    <a class="card" href="hirb.html"><span class="e">🌈</span><span class="tx"><b>Speaky's Rainbow</b><span>colours: What colour? It's red, yellow, green, blue!</span></span></a>
+    <div class="sec"><span class="n">Раздел 1</span>Adventure</div>
+    <a class="card" href="u1-name.html"><span class="num">1</span><span class="e">👋</span><span class="tx"><b>What's your name?</b><span>знакомство: My name is… Nice to meet you</span></span></a>
+    <a class="card" href="u1-dogshow.html"><span class="num">2</span><span class="e">🎪</span><span class="tx"><b>Speaky's Dog Show</b><span>команды: stand up · sit down · bow…</span></span></a>
+    <a class="card" href="u1-feelings.html"><span class="num">3</span><span class="e">😊</span><span class="tx"><b>How are you, Speaky?</b><span>чувства: happy · sad · tired · hungry</span></span></a>
+    <a class="card" href="u1-superspeaky.html"><span class="num">4</span><span class="e">🦸</span><span class="tx"><b>Super Speaky!</b><span>actions: jump · run · climb · swim · fly</span></span></a>
+    <a class="card" href="adv-leftright.html"><span class="num">5</span><span class="e">🗺️</span><span class="tx"><b>Left and Right!</b><span>directions: left · right · forward · stop</span></span></a>
+    <a class="card" href="u1-pronouns.html"><span class="num">6</span><span class="e">🎉</span><span class="tx"><b>Everybody is Happy!</b><span>pronouns: I · he · she · we + is happy</span></span></a>
+    <a class="card" href="advty.html"><span class="num">7</span><span class="e">🙏</span><span class="tx"><b>Thank You, Speaky!</b><span>polite: thank you · please · you're welcome</span></span></a>
+    <div class="sec"><span class="n">Раздел 2</span>Brainy</div>
+    <a class="card" href="brainy-numbers.html"><span class="num">8</span><span class="e">🔢</span><span class="tx"><b>Count with Speaky!</b><span>numbers 1–12 · count with me</span></span></a>
+    <a class="card" href="brbday.html"><span class="num">9</span><span class="e">🎂</span><span class="tx"><b>Happy Birthday!</b><span>how old: How old are you? I'm five!</span></span></a>
+    <a class="card" href="brainy-weather.html"><span class="num">10</span><span class="e">🌦️</span><span class="tx"><b>What's the weather?</b><span>sunny · rainy · windy · snowy</span></span></a>
+    <a class="card" href="brgm.html"><span class="num">11</span><span class="e">🌅</span><span class="tx"><b>Good Morning, Speaky!</b><span>routine: wash · brush · get dressed</span></span></a>
+    <a class="card" href="brainy-food.html"><span class="num">12</span><span class="e">🍎</span><span class="tx"><b>Do you like food?</b><span>food: apples · fish · ice cream · yum/yuck</span></span></a>
+    <a class="card" href="brainy-animals.html"><span class="num">13</span><span class="e">🐘</span><span class="tx"><b>Do you like animals?</b><span>zoo: elephant · monkey · tiger</span></span></a>
+    <a class="card" href="brsorry.html"><span class="num">14</span><span class="e">💛</span><span class="tx"><b>I'm Sorry!</b><span>sorry: I'm sorry! · That's OK!</span></span></a>
+    <div class="sec"><span class="n">Раздел 3</span>Challenge</div>
+    <a class="card" href="chveg.html"><span class="num">15</span><span class="e">🥕</span><span class="tx"><b>Speaky's Garden</b><span>vegetables: carrot · tomato · potato · peas</span></span></a>
+    <a class="card" href="chfarm.html"><span class="num">16</span><span class="e">🐄</span><span class="tx"><b>Speaky's Noisy Farm</b><span>animal sounds: moo · quack · oink · baa</span></span></a>
+    <a class="card" href="chpet.html"><span class="num">17</span><span class="e">🐾</span><span class="tx"><b>Speaky's Pets</b><span>pets: dog · cat · fish · rabbit</span></span></a>
+    <a class="card" href="chfam.html"><span class="num">18</span><span class="e">👪</span><span class="tx"><b>Speaky's Family</b><span>family: mummy · daddy · brother · sister</span></span></a>
+    <div class="sec"><span class="n">Раздел 4</span>Danger</div>
+    <a class="card" href="danger-sea.html"><span class="num">19</span><span class="e">🐳</span><span class="tx"><b>Under the Sea!</b><span>sea: whale · dolphin · shark · crab</span></span></a>
+    <a class="card" href="danger-monster.html"><span class="num">20</span><span class="e">👾</span><span class="tx"><b>Let's Make a Monster!</b><span>body parts: eyes · nose · mouth · ears · arms</span></span></a>
+    <a class="card" href="dgdoc.html"><span class="num">21</span><span class="e">🩹</span><span class="tx"><b>Doctor, Doctor!</b><span>body: My arm hurts! Get well soon!</span></span></a>
+    <a class="card" href="dgcl.html"><span class="num">22</span><span class="e">🧥</span><span class="tx"><b>What Shall I Wear?</b><span>clothes: hat · coat · t-shirt · It's hot/cold!</span></span></a>
+    <div class="sec"><span class="n">Раздел 5</span>Experts</div>
+    <a class="card" href="extr.html"><span class="num">23</span><span class="e">🗺️</span><span class="tx"><b>Speaky's Treasure Hunt</b><span>directions: go left · right · forward</span></span></a>
+    <a class="card" href="exrk.html"><span class="num">24</span><span class="e">🚀</span><span class="tx"><b>Blast Off, Speaky!</b><span>numbers: ten, nine… blast off!</span></span></a>
+    <a class="card" href="exsh.html"><span class="num">25</span><span class="e">🔷</span><span class="tx"><b>Speaky's Shapes</b><span>shapes: circle · triangle · square · star</span></span></a>
+    <div class="sec"><span class="n">Раздел 6</span>Fantastic</div>
+    <a class="card" href="fnfr.html"><span class="num">26</span><span class="e">🍓</span><span class="tx"><b>At the Fruit Market</b><span>fruit: What would you like? An apple, please</span></span></a>
+    <a class="card" href="fantastic-band.html"><span class="num">27</span><span class="e">🎸</span><span class="tx"><b>Speaky's Band!</b><span>instruments: piano · drum · guitar · trumpet</span></span></a>
+    <a class="card" href="fnwd.html"><span class="num">28</span><span class="e">🌍</span><span class="tx"><b>Around the World</b><span>countries: Where are you from?</span></span></a>
+    <div class="sec"><span class="n">Раздел 7</span>Giant</div>
+    <a class="card" href="gtrb.html"><span class="num">29</span><span class="e">🤖</span><span class="tx"><b>I Am a Robot!</b><span>robot: Turn on! Move! Left! Right! Stop!</span></span></a>
+    <a class="card" href="gtoc.html"><span class="num">30</span><span class="e">🐙</span><span class="tx"><b>Mr Octopus</b><span>counting: How many arms? Eight!</span></span></a>
+    <a class="card" href="gttr.html"><span class="num">31</span><span class="e">🚗</span><span class="tx"><b>Let's Go, Speaky!</b><span>transport: by car · bus · train · plane</span></span></a>
+    <div class="sec"><span class="n">Раздел 8</span>High</div>
+    <a class="card" href="hirb.html"><span class="num">32</span><span class="e">🌈</span><span class="tx"><b>Speaky's Rainbow</b><span>colours: red · yellow · green · blue</span></span></a>
+    <div class="sec"><span class="n">Раздел 9</span>Christmas · декабрь</div>
+    <a class="card" href="christmas-snowman.html"><span class="num">33</span><span class="e">⛄</span><span class="tx"><b>Let's Build a Snowman!</b><span>snowman · hat · nose · scarf</span></span></a>
+    <a class="card" href="christmas-santa.html"><span class="num">34</span><span class="e">🎅</span><span class="tx"><b>Dear Santa!</b><span>wishes: robot · bear · doll · bike · book</span></span></a>
+    <a class="card" href="christmas-newyear.html"><span class="num">35</span><span class="e">🎆</span><span class="tx"><b>Happy New Year!</b><span>countdown: 10-9-8… party · fireworks</span></span></a>
   </div>
-  <div class="foot">листается тапом/стрелками · работает без интернета</div>
+  <div class="foot">Speak &amp; Smile · GenkiEnglish · читаем хором, тапни книжку</div>
 </div></body></html>
