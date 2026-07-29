@@ -100,9 +100,17 @@ function speak(t){try{window.speechSynthesis.cancel();var u=new SpeechSynthesisU
 function showToast(t){toast.textContent=t;toast.classList.add("show");clearTimeout(showToast._t);showToast._t=setTimeout(function(){toast.classList.remove("show")},1600)}
 function rnd(){rnd._s=(rnd._s*9301+49297)%233280;return rnd._s/233280} rnd._s=Math.floor((performance.now()*13)%233280)+1;
 function ask(t){ return DATA.mode==="num" ? "Where's number "+t.label+"?" : "Where's the "+t.label+"?"; }
+// очередь: спрашиваем ВСЕ слова юнита по разу, потом перемешиваем заново (без повтора подряд)
+var queue=[];
+function refill(){
+  queue=DATA.pods.slice();
+  for(var i=queue.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var t=queue[i];queue[i]=queue[j];queue[j]=t;}
+  if(target && queue.length>1 && queue[queue.length-1]===target){ var a=queue[0];queue[0]=queue[queue.length-1];queue[queue.length-1]=a; }
+}
 function newQ(){
   locked=false; document.querySelectorAll(".pod").forEach(function(p){p.classList.remove("correct","wrong")});
-  target=DATA.pods[Math.floor(rnd()*DATA.pods.length)];
+  if(!queue.length) refill();
+  target=queue.pop();
   if(DATA.mode==="num"){ qbox.textContent=target.label; qword.textContent=""; }
   else { qbox.innerHTML='<img src="'+target.img+'" alt="">'; qword.textContent=target.label; }
   setTimeout(function(){speak(ask(target))},250);
