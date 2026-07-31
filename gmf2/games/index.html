@@ -1,0 +1,243 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Игры · Give Me Five! 2 · Speak &amp; Smile</title>
+<style>
+:root{--p:#6C3FC5;--honey:#F5C842;--f:"Baloo 2","Trebuchet MS","Segoe UI",ui-rounded,system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;font-family:var(--f);background:linear-gradient(160deg,#7C4DE0,#5B8DEF);color:#fff;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:22px 16px 50px}
+h1{font-size:clamp(22px,5vw,34px);margin:.2em 0}.sub{opacity:.9;font-weight:600;margin-bottom:8px}
+h2{font-size:clamp(16px,3.4vw,22px);margin:22px 0 10px;color:var(--honey)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+a.card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-decoration:none;color:#2a2140;background:#fff;border-radius:18px;padding:16px 10px;box-shadow:0 6px 16px rgba(0,0,0,.22);font-weight:800;text-align:center;transition:transform .1s}
+a.card:active{transform:translateY(2px)}a.card .em{font-size:36px;line-height:1}a.card .t{font-size:15px}a.card .d{font-size:11px;color:#6d6584;font-weight:600}
+/* квадратные плашки-категории */
+.catgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.cat{aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;text-decoration:none;color:#2a2140;background:#fff;border-radius:24px;padding:14px;box-shadow:0 6px 16px rgba(0,0,0,.22);font-family:inherit;font-weight:800;font-size:17px;line-height:1.15;text-align:center;transition:transform .1s}
+.cat:active{transform:translateY(2px)}
+.cat .ce{font-size:46px;line-height:1}
+.cat small{font-size:12px;color:#6d6584;font-weight:700;display:block;margin-top:2px}
+.catview .sub{color:#fff}
+.back{display:inline-flex;align-items:center;gap:6px;color:#fff;background:rgba(255,255,255,.18);border:none;cursor:pointer;font-family:inherit;border-radius:12px;padding:9px 15px;font-weight:800;font-size:14px;margin-bottom:14px}
+.back:active{transform:translateY(2px)}
+.foot{margin-top:26px;opacity:.8;font-size:12px;text-align:center}
+</style>
+<div class="wrap">
+ <a href="../" style="display:inline-block;color:#fff;background:rgba(255,255,255,.18);border-radius:12px;padding:6px 12px;font-weight:800;font-size:13px;text-decoration:none;margin-bottom:8px">🏠 GMF2</a>
+ <h1>🎲 Игры — Give Me Five! 2</h1>
+ <div class="sub" id="lead">Выбери тип игры → откроются темы. Всё работает без интернета.</div>
+
+ <!-- ЭКРАН 1: квадратные плашки -->
+ <div class="catgrid" id="home">
+  <button class="cat" data-go="wb"><span class="ce">📓</span>Тетрадь<small>интерактивы по юнитам</small></button>
+  <a class="cat" href="../#practice"><span class="ce">📝</span>Practice<small>домашка со Спики</small></a>
+  <button class="cat" data-go="quiz"><span class="ce">🎳</span>Боулинг / Баскетбол<small>командный квиз</small></button>
+  <button class="cat" data-go="ttt"><span class="ce">⭕</span>Крестики-нолики<small>2 команды / 🤖</small></button>
+  <button class="cat" data-go="memo"><span class="ce">🃏</span>Мемо<small>найди пару</small></button>
+  <button class="cat" data-go="board"><span class="ce">🎲</span>Бродилки<small>по темам + ревью</small></button>
+ </div>
+
+ <!-- ТЕТРАДЬ: юнит-плашки -->
+ <section class="catview" id="v-wb" hidden>
+  <button class="back" data-back="home">← Назад</button>
+  <h2>📓 Тетрадь — интерактивы по юнитам</h2>
+  <div class="catgrid">
+   <button class="cat" data-go="wb1"><span class="ce">⚽</span>Unit 1<small>Move your body</small></button>
+   <button class="cat" data-go="wb2"><span class="ce">🛒</span>Unit 2<small>Let's go shopping</small></button>
+   <button class="cat" data-go="wb3"><span class="ce">🦁</span>Unit 3<small>At the zoo</small></button>
+   <button class="cat" data-go="wb4"><span class="ce">🏞️</span>Unit 4<small>The nature trail</small></button>
+   <button class="cat" data-go="wb5"><span class="ce">⛸️</span>Unit 5<small>The frozen lake</small></button>
+   <button class="cat" data-go="wb6"><span class="ce">🍂</span>Unit 6<small>All year round</small></button>
+   <button class="cat" data-go="wb7"><span class="ce">🏠</span>Unit 7<small>My house</small></button>
+   <button class="cat" data-go="wb8"><span class="ce">🏙️</span>Unit 8<small>Around the town</small></button>
+   <button class="cat" data-go="wb9"><span class="ce">🏖️</span>Unit 9<small>Holiday fun</small></button>
+  </div>
+ </section>
+ <section class="catview" id="v-wb1" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 1 «Move your body» · sports</h2>
+  <div class="grid">
+   <a class="card" href="u1-story-week.html"><span class="em">🖼</span><span class="t">The very busy week</span><span class="d">кадры 1–8 по порядку</span></a>
+   <a class="card" href="u1-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: do the sport!</span></a>
+   <a class="card" href="find-it-u1.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди спорт на сцене</span></a>
+   <a class="card" href="whats-this-spinner-u1.html"><span class="em">🌀</span><span class="t">Do you play…?</span><span class="d">спиннер I play / I go</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb2" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 2 «Let's go shopping!» · food</h2>
+  <div class="grid">
+   <a class="card" href="u2-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: at the shop!</span></a>
+   <a class="card" href="find-it-u2.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Can I have…? — найди еду</span></a>
+   <a class="card" href="whats-this-spinner-u2.html"><span class="em">🌀</span><span class="t">Can I have…?</span><span class="d">спиннер a / an / some</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb3" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 3 «At the zoo» · animals</h2>
+  <div class="grid">
+   <a class="card" href="u3-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: animal moves</span></a>
+   <a class="card" href="find-it-u3.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди зверя</span></a>
+   <a class="card" href="whats-this-spinner-u3.html"><span class="em">🌀</span><span class="t">Has it got…?</span><span class="d">спиннер It's got …</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb4" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 4 «The nature trail» · nature</h2>
+  <div class="grid">
+   <a class="card" href="u4-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: What are you doing?</span></a>
+   <a class="card" href="find-it-u4.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди на тропе</span></a>
+   <a class="card" href="whats-this-spinner-u4.html"><span class="em">🌀</span><span class="t">What's this?</span><span class="d">спиннер It's a…</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb5" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 5 «The frozen lake» · winter</h2>
+  <div class="grid">
+   <a class="card" href="u5-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: winter moves</span></a>
+   <a class="card" href="find-it-u5.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди зимнюю забаву</span></a>
+   <a class="card" href="whats-this-spinner-u5.html"><span class="em">🌀</span><span class="t">Are you…?</span><span class="d">спиннер Yes, we are!</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb6" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 6 «All year round» · seasons</h2>
+  <div class="grid">
+   <a class="card" href="u6-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: all year round</span></a>
+   <a class="card" href="find-it-u6.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди занятие сезона</span></a>
+   <a class="card" href="whats-this-spinner-u6.html"><span class="em">🌀</span><span class="t">What do you do…?</span><span class="d">спиннер сезоны</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb7" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 7 «My house» · rooms</h2>
+  <div class="grid">
+   <a class="card" href="u7-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: around the house</span></a>
+   <a class="card" href="find-it-u7.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди комнату</span></a>
+   <a class="card" href="whats-this-spinner-u7.html"><span class="em">🌀</span><span class="t">There's a…</span><span class="d">спиннер комнаты дома</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb8" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 8 «All around the town» · places</h2>
+  <div class="grid">
+   <a class="card" href="u8-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: find your way</span></a>
+   <a class="card" href="find-it-u8.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">Where's the…? — найди в городе</span></a>
+   <a class="card" href="whats-this-spinner-u8.html"><span class="em">🌀</span><span class="t">Is there a…?</span><span class="d">спиннер There's a…</span></a>
+  </div>
+ </section>
+ <section class="catview" id="v-wb9" hidden>
+  <button class="back" data-back="wb">← Юниты</button>
+  <h2>📓 Unit 9 «Holiday fun» · places</h2>
+  <div class="grid">
+   <a class="card" href="u9-speaky-says.html"><span class="em">🐾</span><span class="t">Speaky says</span><span class="d">TPR: holiday fun</span></a>
+   <a class="card" href="find-it-u9.html"><span class="em">🔎</span><span class="t">Find it!</span><span class="d">найди место каникул</span></a>
+   <a class="card" href="whats-this-spinner-u9.html"><span class="em">🌀</span><span class="t">Where were you?</span><span class="d">спиннер I was at the…</span></a>
+  </div>
+ </section>
+
+ <!-- КВИЗ-БОУЛИНГ -->
+ <section class="catview" id="v-quiz" hidden>
+  <button class="back" data-back="home">← Назад</button>
+  <h2>🎳 Квиз-боулинг — командный (1–4 команды)</h2>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">🎳 Боулинг или 🏀 баскетбол на выбор · свой персонаж-чудик и шар у каждой команды · возьми (или нет) 🎁 трики-подарок → бросай → карточка-вопрос: верно — очки команде, ошибка — сгорают. Команд 1–4, игра на 10/16/24 вопроса. Дома — против компьютера.</div>
+  <div class="grid">
+   <a class="card" href="starter-quiz.html"><span class="em">🎒</span><span class="t">Школа</span><span class="d">subjects + weather</span></a>
+   <a class="card" href="sports-quiz.html"><span class="em">⚽</span><span class="t">Спорт</span><span class="d">sports · he plays</span></a>
+   <a class="card" href="shopping-quiz.html"><span class="em">🛒</span><span class="t">Покупки</span><span class="d">food · Can I have…?</span></a>
+   <a class="card" href="zoo-quiz.html"><span class="em">🦁</span><span class="t">Зоопарк</span><span class="d">animals · has got</span></a>
+   <a class="card" href="nature-quiz.html"><span class="em">🏞️</span><span class="t">Природа</span><span class="d">nature · up/across/through</span></a>
+   <a class="card" href="winter-quiz.html"><span class="em">⛸️</span><span class="t">Зима</span><span class="d">actions · adjectives</span></a>
+   <a class="card" href="seasons-quiz.html"><span class="em">🍂</span><span class="t">Времена года</span><span class="d">seasons · ordinals</span></a>
+   <a class="card" href="house-quiz.html"><span class="em">🏠</span><span class="t">Дом</span><span class="d">rooms · There's / mine</span></a>
+   <a class="card" href="town-quiz.html"><span class="em">🏙️</span><span class="t">Город</span><span class="d">places · Is there a…?</span></a>
+   <a class="card" href="holiday-quiz.html"><span class="em">🏖️</span><span class="t">Каникулы</span><span class="d">holiday · was/were</span></a>
+   <a class="card" href="review1-quiz.html"><span class="em">⭐</span><span class="t">Ревью 1</span><span class="d">школа+спорт+покупки+зоопарк</span></a>
+   <a class="card" href="review2-quiz.html"><span class="em">⭐</span><span class="t">Ревью 2</span><span class="d">природа+зима+времена года</span></a>
+   <a class="card" href="review3-quiz.html"><span class="em">⭐</span><span class="t">Ревью 3</span><span class="d">дом+город+каникулы</span></a>
+  </div>
+ </section>
+
+ <!-- КРЕСТИКИ -->
+ <section class="catview" id="v-ttt" hidden>
+  <button class="back" data-back="home">← Назад</button>
+  <h2>⭕ Крестики-нолики — 2 команды или против 🤖</h2>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Выбери клетку → ответь верно → значок ✗/◯ прибегает на клетку (с ножками!) → собери 3 в ряд. Есть режим «Против компьютера» — можно играть одному.</div>
+  <div class="grid">
+   <a class="card" href="starter-ttt.html"><span class="em">🎒</span><span class="t">Школа</span><span class="d">subjects + weather</span></a>
+   <a class="card" href="sports-ttt.html"><span class="em">⚽</span><span class="t">Спорт</span><span class="d">sports · he plays</span></a>
+   <a class="card" href="shopping-ttt.html"><span class="em">🛒</span><span class="t">Покупки</span><span class="d">food · Can I have…?</span></a>
+   <a class="card" href="zoo-ttt.html"><span class="em">🦁</span><span class="t">Зоопарк</span><span class="d">animals · has got</span></a>
+   <a class="card" href="nature-ttt.html"><span class="em">🏞️</span><span class="t">Природа</span><span class="d">nature · up/across/through</span></a>
+   <a class="card" href="winter-ttt.html"><span class="em">⛸️</span><span class="t">Зима</span><span class="d">actions · adjectives</span></a>
+   <a class="card" href="seasons-ttt.html"><span class="em">🍂</span><span class="t">Времена года</span><span class="d">seasons · ordinals</span></a>
+   <a class="card" href="house-ttt.html"><span class="em">🏠</span><span class="t">Дом</span><span class="d">rooms · There's / mine</span></a>
+   <a class="card" href="town-ttt.html"><span class="em">🏙️</span><span class="t">Город</span><span class="d">places · Is there a…?</span></a>
+   <a class="card" href="holiday-ttt.html"><span class="em">🏖️</span><span class="t">Каникулы</span><span class="d">holiday · was/were</span></a>
+   <a class="card" href="review1-ttt.html"><span class="em">⭐</span><span class="t">Ревью 1</span><span class="d">школа+спорт+покупки+зоопарк</span></a>
+   <a class="card" href="review2-ttt.html"><span class="em">⭐</span><span class="t">Ревью 2</span><span class="d">природа+зима+времена года</span></a>
+   <a class="card" href="review3-ttt.html"><span class="em">⭐</span><span class="t">Ревью 3</span><span class="d">дом+город+каникулы</span></a>
+  </div>
+ </section>
+
+ <!-- МЕМО -->
+ <section class="catview" id="v-memo" hidden>
+  <button class="back" data-back="home">← Назад</button>
+  <h2>🃏 Мемо — найди пару (1–4 команды)</h2>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Открой две карточки → совпали = пара твоя + слушай слово 🔊, ходишь снова; не совпали — ход переходит. Кто больше пар — победил. 8/12/16 карточек. Играется и одному.</div>
+  <div class="grid">
+   <a class="card" href="starter-memo.html"><span class="em">🎒</span><span class="t">Школа</span><span class="d">subjects + weather</span></a>
+   <a class="card" href="sports-memo.html"><span class="em">⚽</span><span class="t">Спорт</span><span class="d">sports · he plays</span></a>
+   <a class="card" href="shopping-memo.html"><span class="em">🛒</span><span class="t">Покупки</span><span class="d">food · Can I have…?</span></a>
+   <a class="card" href="zoo-memo.html"><span class="em">🦁</span><span class="t">Зоопарк</span><span class="d">animals · has got</span></a>
+   <a class="card" href="nature-memo.html"><span class="em">🏞️</span><span class="t">Природа</span><span class="d">nature · up/across/through</span></a>
+   <a class="card" href="winter-memo.html"><span class="em">⛸️</span><span class="t">Зима</span><span class="d">actions · adjectives</span></a>
+   <a class="card" href="seasons-memo.html"><span class="em">🍂</span><span class="t">Времена года</span><span class="d">seasons · ordinals</span></a>
+   <a class="card" href="house-memo.html"><span class="em">🏠</span><span class="t">Дом</span><span class="d">rooms · There's / mine</span></a>
+   <a class="card" href="town-memo.html"><span class="em">🏙️</span><span class="t">Город</span><span class="d">places · Is there a…?</span></a>
+   <a class="card" href="holiday-memo.html"><span class="em">🏖️</span><span class="t">Каникулы</span><span class="d">holiday · was/were</span></a>
+   <a class="card" href="review1-memo.html"><span class="em">⭐</span><span class="t">Ревью 1</span><span class="d">школа+спорт+покупки+зоопарк</span></a>
+   <a class="card" href="review2-memo.html"><span class="em">⭐</span><span class="t">Ревью 2</span><span class="d">природа+зима+времена года</span></a>
+   <a class="card" href="review3-memo.html"><span class="em">⭐</span><span class="t">Ревью 3</span><span class="d">дом+город+каникулы</span></a>
+  </div>
+ </section>
+
+ <!-- БРОДИЛКИ -->
+ <section class="catview" id="v-board" hidden>
+  <button class="back" data-back="home">← Назад</button>
+  <h2>🎲 Бродилки — по темам</h2>
+  <div class="sub" style="font-size:13px;margin:-4px 0 10px">Кинь кубик · ходи · назови картинку и ответь на вопрос · ✅ верно — стой, ❌ мимо — назад · не помнишь — 🔊. Дома — против компьютера.</div>
+  <div class="grid">
+   <a class="card" href="starter-board.html"><span class="em">🎒</span><span class="t">Школа</span><span class="d">subjects + weather</span></a>
+   <a class="card" href="sports-board.html"><span class="em">⚽</span><span class="t">Спорт</span><span class="d">sports · he plays</span></a>
+   <a class="card" href="shopping-board.html"><span class="em">🛒</span><span class="t">Покупки</span><span class="d">food · Can I have…?</span></a>
+   <a class="card" href="zoo-board.html"><span class="em">🦁</span><span class="t">Зоопарк</span><span class="d">animals · has got</span></a>
+   <a class="card" href="nature-board.html"><span class="em">🏞️</span><span class="t">Природа</span><span class="d">nature · up/across/through</span></a>
+   <a class="card" href="winter-board.html"><span class="em">⛸️</span><span class="t">Зима</span><span class="d">actions · adjectives</span></a>
+   <a class="card" href="seasons-board.html"><span class="em">🍂</span><span class="t">Времена года</span><span class="d">seasons · ordinals</span></a>
+   <a class="card" href="house-board.html"><span class="em">🏠</span><span class="t">Дом</span><span class="d">rooms · There's / mine</span></a>
+   <a class="card" href="town-board.html"><span class="em">🏙️</span><span class="t">Город</span><span class="d">places · Is there a…?</span></a>
+   <a class="card" href="holiday-board.html"><span class="em">🏖️</span><span class="t">Каникулы</span><span class="d">holiday · was/were</span></a>
+  </div>
+  <h2>Ревью (несколько тем + грамматика)</h2>
+  <div class="grid">
+   <a class="card" href="review1-board.html"><span class="em">⭐</span><span class="t">Ревью 1</span><span class="d">школа+спорт+покупки+зоопарк</span></a>
+   <a class="card" href="review2-board.html"><span class="em">⭐</span><span class="t">Ревью 2</span><span class="d">природа+зима+времена года</span></a>
+   <a class="card" href="review3-board.html"><span class="em">⭐</span><span class="t">Ревью 3</span><span class="d">дом+город+каникулы</span></a>
+  </div>
+ </section>
+
+ <div class="foot">Speak &amp; Smile · Give Me Five! 2 · без интернета работает после загрузки</div>
+</div>
+<script>
+var lead=document.getElementById('lead');
+function show(go){
+ document.getElementById('home').hidden = go!=='home';
+ lead.hidden = go!=='home';
+ var vs=document.querySelectorAll('.catview');
+ for(var i=0;i<vs.length;i++) vs[i].hidden = vs[i].id!=='v-'+go;
+ window.scrollTo(0,0);
+}
+var cats=document.querySelectorAll('button.cat');
+for(var i=0;i<cats.length;i++) cats[i].addEventListener('click',function(){show(this.dataset.go)});
+var backs=document.querySelectorAll('.back');
+for(var j=0;j<backs.length;j++) backs[j].addEventListener('click',function(){show(this.dataset.back||'home')});
+</script>
