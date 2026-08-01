@@ -114,7 +114,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="blitz"><span class="em">💥</span>Word Blitz<div class="d">5 seconds · say it!</div></div>
       <div class="gcard" data-g="mistake"><span class="em">🕵️</span>Spot the Mistake<div class="d">find & fix</div></div>
       <div class="gcard" data-g="race"><span class="em">🏁</span>Sentence Race<div class="d">unscramble fast</div></div>
-      <div class="gcard" data-g="taboo"><span class="em">🚫</span>Taboo<div class="d">explain the word</div></div>
+      <div class="gcard" data-g="taboo"><span class="em">🪑</span>Hot Seat + Taboo<div class="d">back to the screen!</div></div>
     </div>
     <div class="arena" id="classArena" style="display:none"></div>
     <div class="teams" id="teams"></div>
@@ -405,8 +405,8 @@ function raceGame(){
 function tabooGame(){
   var deck=shuffle(TABOO),i=-1;
   var h=el("div");cArena.appendChild(h);
-  h.appendChild(el("div","hintline","Explain the word in English. DON'T say the taboo words! 60 seconds per team."));
-  var big=el("div","big","🚫 Taboo");
+  h.appendChild(el("div","hintline","One player sits with their BACK to the screen. The team explains the word in English — DON'T say the taboo words! Other crews watch for taboo slips (🚩 = point to them). 60 seconds."));
+  var big=el("div","big","🪑 Hot Seat + Taboo");
   var tab=el("div","reveal","");tab.style.color="var(--bad)";
   var tm=mkTimer(60);
   var next=el("button","btn","Next word →");
