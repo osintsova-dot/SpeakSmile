@@ -394,8 +394,9 @@ function spellGame(){
     function check(){
       var v=inp.value.trim().toLowerCase().replace(/^a /,"");
       var target=c[1].toLowerCase().replace(/^a /,"");
-      if(v===target){res.textContent="✓ "+c[1];score++;}
-      else{res.innerHTML="";var s1=el("span","strike",inp.value||"—");res.appendChild(s1);res.appendChild(document.createTextNode(" → "+c[1]));}
+      if(v===target){res.replaceChildren();res.appendChild(document.createTextNode("✓ "+c[1]));res.appendChild(sayBtn(c[1]));score++;}
+      else{res.replaceChildren();var s1=el("span","strike",inp.value||"—");res.appendChild(s1);res.appendChild(document.createTextNode(" → "+c[1]));res.appendChild(sayBtn(c[1]));}
+      say(c[1]);
       b.textContent="Next →";
       b.removeEventListener("click",check);b.addEventListener("click",function(){i++;draw()});
     }
