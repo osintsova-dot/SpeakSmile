@@ -102,6 +102,9 @@ section{display:none}section.on{display:block}
  animation:markfly .55s cubic-bezier(.2,1.4,.4,1) both}
 .tc .mark.ma{color:var(--pink);text-shadow:0 0 22px rgba(255,46,147,.85)}
 .tc .mark.mb{color:var(--cyan);text-shadow:0 0 22px rgba(46,230,255,.85)}
+.tc.winline{border-color:var(--y)!important;background:rgba(245,200,66,.22)!important;
+ box-shadow:0 0 26px rgba(245,200,66,.75);animation:winglow .7s ease infinite alternate}
+@keyframes winglow{to{box-shadow:0 0 40px rgba(245,200,66,1)}}
 @keyframes markfly{0%{transform:scale(3.2) rotate(-30deg);opacity:0}55%{transform:scale(.85) rotate(6deg);opacity:1}75%{transform:scale(1.12) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 .tttmodal{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:16px;
  padding:14px;max-width:640px;margin:10px auto;backdrop-filter:blur(8px)}
@@ -159,7 +162,7 @@ section{display:none}section.on{display:block}
       <span class="stat">🏆 Best quiz: <b id="pbest">0</b>/10</span>
     </div>
     <div class="grid" id="homeMenu">
-      <div class="gcard" data-g="flash"><span class="em">🃏</span>Flashcards<div class="d">country → nationality</div></div>
+      <div class="gcard" data-g="flash"><span class="em">🃏</span>Flashcards<div class="d">word → match</div></div>
       <div class="gcard" data-g="quiz"><span class="em">⚡</span>Quiz 10<div class="d">mixed · beat your best</div></div>
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
@@ -187,26 +190,42 @@ section{display:none}section.on{display:block}
 
 <script>
 // ============ ДАННЫЕ UNIT 1 (из контент-слоя) ============
-var COUNTRIES=[["Australia","Australian"],["Brazil","Brazilian"],["China","Chinese"],["India","Indian"],
- ["Japan","Japanese"],["Mexico","Mexican"],["New Zealand","a New Zealander"],["Russia","Russian"],
- ["Spain","Spanish"],["Turkey","Turkish"],["the UK","British"],["the USA","American"],["the Netherlands","Dutch"]];
-var ADJ=[["beautiful","ugly"],["clean","dirty"],["empty","crowded"],["hot","cold"],
- ["interesting","boring"],["modern","old"],["quiet","noisy"],["safe","dangerous"]];
-var MISTAKES=[ // [предложение с ошибкой, правильное]
- ["He are from Spain.","He is from Spain."],
- ["I amn't 12 years old.","I'm not 12 years old."],
- ["She no is from Japan.","She isn't from Japan."],
- ["They is Brazilian.","They are Brazilian."],
- ["he's from china.","He's from China."],
- ["We're from the mexico.","We're from Mexico."],
- ["Is they from Russia?","Are they from Russia?"],
- ["Yes, I is.","Yes, I am."],
- ["She's Mexico.","She's Mexican."],
- ["Are you Turkish? — Yes, I are.","Are you Turkish? — Yes, I am."],
- ["My city are quiet and safe.","My city is quiet and safe."],
- ["Its a beautiful country.","It's a beautiful country."]];
-var SENTENCES=["I'm from Brazil","She isn't from Japan","Are you from Mexico","We're British","Is he from Spain",
- "They aren't from Russia","My city is very noisy","Where are you from","He's from the Netherlands","It's a modern city"];
+var COUNTRIES=[
+ ["Я люблю сыр и хлеб.","I like cheese and bread."],
+ ["В моём городе есть кинотеатр.","There's a cinema in my town / city."],
+ ["Там есть несколько кафе.","There are some cafés."],
+ ["У меня нет молока.","I haven't got any milk."],
+ ["Где булочная?","Where's the baker's?"],
+ ["В соке много сахара.","There's a lot of sugar in juice."],
+ ["Здесь есть булочная? — Да.","Is there a baker's here? — Yes, there is."],
+ ["У меня есть вода, но нет помидоров.","I've got some water, but I haven't got any tomatoes."],
+ ["Рядом со школой нет магазинов.","There aren't any shops near the school."],
+ ["Можно мне вегги-бургер, пожалуйста?","Can I have a veggie burger, please?"],
+ ["Сколько это стоит? — Девять долларов.","How much is that / it? — (It's) nine dollars."],
+ ["В нашей пицце есть курица и горошек.","Our pizza has got chicken and peas."],
+ ["Ты ешь это с рисом.","You eat it with rice."],
+ ["Какое твоё любимое место для покупок?","What's your favourite place to go shopping?"]];
+var ADJ=[
+ ["I","I like cheese and bread."],
+ ["There's","There's a cinema in my town / city."],
+ ["There","There are some cafés."],
+ ["I","I haven't got any milk."],
+ ["Where's","Where's the baker's?"],
+ ["There's","There's a lot of sugar in juice."],
+ ["Is","Is there a baker's here? — Yes, there is."],
+ ["I've","I've got some water, but I haven't got any tomatoes."]];
+var MISTAKES=[
+ ["There are a cinema in my town / city.","There's a cinema in my town / city."],
+ ["There is some cafés.","There are some cafés."],
+ ["I hasn't got any milk.","I haven't got any milk."],
+ ["There are a lot of sugar in juice.","There's a lot of sugar in juice."],
+ ["I has got some water, but I haven't got any tomatoes.","I've got some water, but I haven't got any tomatoes."],
+ ["There not are any shops near the school.","There aren't any shops near the school."],
+ ["How much is that / it? — (It are) nine dollars.","How much is that / it? — (It's) nine dollars."],
+ ["There are soup in our ideal meal, and there isn't any meat.","There's soup in our ideal meal, and there isn't any meat."],
+ ["It are delicious, but it takes 24 hours to cook.","It's delicious, but it takes 24 hours to cook."],
+ ["It are the best soup I've ever eaten.","It's the best soup I've ever eaten."]];
+var SENTENCES=["I like cheese and bread","There's a cinema in my town / city","There are some cafés","I haven't got any milk","Where's the baker's","There's a lot of sugar in juice","Is there a baker's here? — Yes, there is","I've got some water, but I haven't got any tomatoes","There aren't any shops near the school","Can I have a veggie burger, please","How much is that / it? — (It's) nine dollars","Our pizza has got chicken and peas"];
 
 var TRANSLATE=[
  ["Я люблю сыр и хлеб.","I like cheese and bread."],
@@ -225,9 +244,15 @@ var TRANSLATE=[
  ["Какое твоё любимое место для покупок?","What's your favourite place to go shopping?"],
  ["В нашем идеальном обеде есть суп, и там нет мяса.","There's soup in our ideal meal, and there isn't any meat."],
  ["Там есть какие-нибудь яблоки? Купи шесть.","Are there any apples? Buy six."]];
-var TABOO=[["beach","sea · sand · swim"],["mountain","high · climb · snow"],["crowded","people · many · city"],
- ["capital","city · main · country"],["currency","money · euro · pay"],["nationality","country · from · person"],
- ["modern","new · old · now"],["dangerous","safe · careful · risk"],["island","water · around · sea"],["desert","sand · hot · dry"]];
+var TABOO=[
+ ["bread","translate · spell · first letter"],
+ ["city","translate · spell · first letter"],
+ ["cafés","translate · spell · first letter"],
+ ["milk","translate · spell · first letter"],
+ ["baker's","translate · spell · first letter"],
+ ["juice","translate · spell · first letter"],
+ ["is","translate · spell · first letter"],
+ ["tomatoes","translate · spell · first letter"]];
 
 
 // озвучка английского (браузерный синтез, en-GB)
@@ -331,7 +356,7 @@ function quizGame(){
   var qs=[];
   shuffle(COUNTRIES).slice(0,4).forEach(function(c){
     var wrong=shuffle(COUNTRIES.filter(function(x){return x[1]!==c[1]})).slice(0,3).map(function(x){return x[1]});
-    qs.push({q:"People from "+c[0]+" are…",a:c[1],opts:shuffle([c[1]].concat(wrong))});
+    qs.push({q:""+c[0]+"",a:c[1],opts:shuffle([c[1]].concat(wrong))});
   });
   shuffle(ADJ).slice(0,3).forEach(function(p){
     var wrong=shuffle(ADJ.filter(function(x){return x[1]!==p[1]})).slice(0,3).map(function(x){return x[1]});
@@ -388,7 +413,7 @@ function spellGame(){
     }
     var c=deck[i];
     h.appendChild(el("div","hintline","Type the nationality · spelling counts! · "+(i+1)+"/"+deck.length));
-    h.appendChild(el("div","big","People from "+c[0]+" are…"));
+    h.appendChild(el("div","big",""+c[0]+""));
     var inp=el("input","opt");inp.style.width="min(400px,90%)";inp.style.textAlign="center";inp.autocapitalize="off";
     inp.placeholder="type here…";h.appendChild(inp);
     var res=el("div","reveal","");h.appendChild(res);
@@ -539,7 +564,10 @@ function tttCompGame(){
   function winner(){
     for(var k=0;k<LINES.length;k++){
       var m=LINES[k].map(function(x){return cells[x].own});
-      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2]){
+        LINES[k].forEach(function(x){cells[x].el.classList.add("winline")});
+        return m[0];
+      }
     }
     return cells.every(function(c){return c.own})?"draw":null;
   }
@@ -639,7 +667,10 @@ function tttxGame(){
     var L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     for(var k=0;k<L.length;k++){
       var m=L[k].map(function(x){return cells[x].own});
-      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2]){
+        L[k].forEach(function(x){cells[x].el.classList.add("winline")});
+        return m[0];
+      }
     }
     return null;
   }
