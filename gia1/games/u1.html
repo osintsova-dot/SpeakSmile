@@ -87,8 +87,13 @@ section{display:none}section.on{display:block}
  font-weight:700;font-size:13px;line-height:1.25;cursor:pointer;position:relative}
 .tc.taken-a{background:rgba(255,46,147,.22);border-color:var(--pink)}
 .tc.taken-b{background:rgba(46,230,255,.2);border-color:var(--cyan)}
-.tc.taken-a::after{content:"✕";position:absolute;right:6px;top:2px;color:var(--pink);font-weight:800}
-.tc.taken-b::after{content:"◯";position:absolute;right:6px;top:4px;color:var(--cyan);font-weight:800;font-size:12px}
+.tc.taken-a,.tc.taken-b{color:rgba(255,255,255,.26)}
+.tc .mark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+ font-size:clamp(40px,8vw,64px);font-weight:800;pointer-events:none;
+ animation:markfly .55s cubic-bezier(.2,1.4,.4,1) both}
+.tc .mark.ma{color:var(--pink);text-shadow:0 0 22px rgba(255,46,147,.85)}
+.tc .mark.mb{color:var(--cyan);text-shadow:0 0 22px rgba(46,230,255,.85)}
+@keyframes markfly{0%{transform:scale(3.2) rotate(-30deg);opacity:0}55%{transform:scale(.85) rotate(6deg);opacity:1}75%{transform:scale(1.12) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 .tttmodal{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:16px;
  padding:14px;max-width:640px;margin:10px auto;backdrop-filter:blur(8px)}
 .tttwho{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
@@ -110,13 +115,15 @@ section{display:none}section.on{display:block}
 .j-per{background:var(--ok);color:#06331d}.j-ok{background:var(--y);color:#3d2f05}.j-miss{background:rgba(255,255,255,.15);color:#fff}
 /* мемо */
 .memo{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:720px;margin:12px auto}
-@media(max-width:560px){.memo{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.memo{gap:5px}.mc{min-height:72px}.mcf{font-size:10.5px;padding:4px}.mcback{font-size:15px}}
 .mc{position:relative;min-height:86px;border-radius:12px;cursor:pointer;perspective:600px}
 .mcin{position:absolute;inset:0;transition:transform .3s;transform-style:preserve-3d}
 .mc.open .mcin,.mc.done .mcin{transform:rotateY(180deg)}
 .mcf{position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;
  padding:6px;text-align:center;backface-visibility:hidden;font-weight:700;font-size:13px;line-height:1.25}
-.mcback{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);font-size:22px}
+.mcback{font-size:18px;font-weight:800;letter-spacing:.08em}
+.mc.lru .mcback{background:linear-gradient(160deg,rgba(255,46,147,.32),rgba(255,46,147,.12));border:1.5px solid var(--pink);color:#ffb7dc}
+.mc.len .mcback{background:linear-gradient(160deg,rgba(46,230,255,.28),rgba(46,230,255,.1));border:1.5px solid var(--cyan);color:#aef2ff}
 .mcfront{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);transform:rotateY(180deg)}
 .mc.done .mcfront{background:rgba(46,255,158,.16);border-color:var(--ok)}
 .memoinfo{font-weight:800;margin-top:6px}
@@ -472,6 +479,12 @@ function raceGame(){
 
 
 
+
+function landMark(cellEl, side){
+  var m=el("div","mark "+(side==="a"?"ma":"mb"), side==="a"?"\u2715":"\u25EF");
+  cellEl.appendChild(m);
+  try{beep()}catch(e){}
+}
 // --- Tic-Tac vs Computer (дом): перевёл — забрал клетку, иначе ходит компьютер ---
 function tttCompGame(){
   hArena.style.display="block";hArena.replaceChildren();
@@ -516,7 +529,7 @@ function tttCompGame(){
     if(mv<0)mv=findLine("a");        // заблокировать
     if(mv<0&&!cells[4].own)mv=4;     // центр
     if(mv<0)mv=free[Math.floor(rnd()*free.length)];
-    cells[mv].own="b";cells[mv].el.classList.add("taken-b");
+    cells[mv].own="b";cells[mv].el.classList.add("taken-b");landMark(cells[mv].el,"b");
     if(!endCheck())status.textContent="Your turn ✕";
   }
   function build(){
@@ -539,6 +552,7 @@ function tttCompGame(){
   got.addEventListener("click",function(){
     if(!active)return;
     active.c.own="a";active.d.classList.add("taken-a");
+    landMark(active.d,"a");
     active=null;panel.style.display="none";
     if(!endCheck()){status.textContent="Computer ◯ is thinking…";setTimeout(compMove,600);}
   });
@@ -597,6 +611,7 @@ function tttxGame(){
       if(!active)return;
       if(cfg[1]!=="no"){
         active.c.own=cfg[1];active.d.classList.add("taken-"+cfg[1]);
+        landMark(active.d,cfg[1]);
         var w=winCheck();
         if(w){status.textContent=(w==="a"?"✕":"◯")+" WINS! 🎉";beep();}
         else{cur=(cfg[1]==="a")?"b":"a";status.textContent="Turn: "+(cur==="a"?"✕":"◯");}
@@ -658,16 +673,16 @@ function memoGame(arena,solo){
   arena.style.display="block";arena.replaceChildren();
   var pairs=shuffle(TRANSLATE).slice(0,8);
   var cards=[];
-  pairs.forEach(function(p,idx){cards.push({id:idx,txt:p[0]});cards.push({id:idx,txt:p[1]});});
+  pairs.forEach(function(p,idx){cards.push({id:idx,txt:p[0],lang:"ru"});cards.push({id:idx,txt:p[1],lang:"en"});});
   cards=shuffle(cards);
   var open=null,lock=false,found=0,flips=0;
   var h=el("div");arena.appendChild(h);
-  h.appendChild(el("div","hintline",solo?"Match the Russian sentence with its English translation. Fewest flips wins!":"Teams take turns. Match RU ↔ EN — a match = +1 point to your crew (add it on the leaderboard)."));
+  h.appendChild(el("div","hintline",solo?"Pink backs = Russian, blue backs = English. Open one of each and match the pair! Fewest flips wins!":"Pink backs = Russian, blue backs = English. Teams take turns: open one pink + one blue. A match = +1 point to your crew (leaderboard below)."));
   var info=el("div","memoinfo","Pairs: 0/8 · Flips: 0");
   var grid=el("div","memo");
   cards.forEach(function(c){
-    var mc=el("div","mc");var mcin=el("div","mcin");
-    var back=el("div","mcf mcback","🌍");var front=el("div","mcf mcfront",c.txt);
+    var mc=el("div","mc l"+c.lang);var mcin=el("div","mcin");
+    var back=el("div","mcf mcback",c.lang==="ru"?"RU":"EN");var front=el("div","mcf mcfront",c.txt);
     mcin.appendChild(back);mcin.appendChild(front);mc.appendChild(mcin);
     mc.addEventListener("click",function(){
       if(lock||mc.classList.contains("done")||mc===open?.mc)return;
