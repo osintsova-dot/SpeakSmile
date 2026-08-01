@@ -473,7 +473,7 @@ const ASSETS = {"title": "Unit 1 · Our world — перевод", "emoji": "�
     modal.classList.add("on");
     if(vsCPU&&cur===1){ // computer «reads» its word and always answers — beatability comes from the shot physics
       mAns.classList.add("show"); qBtns.style.display="none"; qHint.style.display="none"; speak(q.say); QT(cpuAnswer,1600); }
-    else { qBtns.style.display=""; qHint.style.display=""; setTimeout(()=>speak(q.ask),350); }
+    else { qBtns.style.display=""; qHint.style.display=""; } // русский вопрос не озвучиваем
   }
   function cpuAnswer(){ modal.classList.remove("on"); const won=curStake*curMult;
     const tgt=curGive?(cur+1)%nTeams:cur; addScore(tgt,won); if(won>0)burst();
