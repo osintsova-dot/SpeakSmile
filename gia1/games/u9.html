@@ -102,6 +102,9 @@ section{display:none}section.on{display:block}
  animation:markfly .55s cubic-bezier(.2,1.4,.4,1) both}
 .tc .mark.ma{color:var(--pink);text-shadow:0 0 22px rgba(255,46,147,.85)}
 .tc .mark.mb{color:var(--cyan);text-shadow:0 0 22px rgba(46,230,255,.85)}
+.tc.winline{border-color:var(--y)!important;background:rgba(245,200,66,.22)!important;
+ box-shadow:0 0 26px rgba(245,200,66,.75);animation:winglow .7s ease infinite alternate}
+@keyframes winglow{to{box-shadow:0 0 40px rgba(245,200,66,1)}}
 @keyframes markfly{0%{transform:scale(3.2) rotate(-30deg);opacity:0}55%{transform:scale(.85) rotate(6deg);opacity:1}75%{transform:scale(1.12) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 .tttmodal{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:16px;
  padding:14px;max-width:640px;margin:10px auto;backdrop-filter:blur(8px)}
@@ -159,7 +162,7 @@ section{display:none}section.on{display:block}
       <span class="stat">🏆 Best quiz: <b id="pbest">0</b>/10</span>
     </div>
     <div class="grid" id="homeMenu">
-      <div class="gcard" data-g="flash"><span class="em">🃏</span>Flashcards<div class="d">country → nationality</div></div>
+      <div class="gcard" data-g="flash"><span class="em">🃏</span>Flashcards<div class="d">word → match</div></div>
       <div class="gcard" data-g="quiz"><span class="em">⚡</span>Quiz 10<div class="d">mixed · beat your best</div></div>
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
@@ -187,26 +190,41 @@ section{display:none}section.on{display:block}
 
 <script>
 // ============ ДАННЫЕ UNIT 1 (из контент-слоя) ============
-var COUNTRIES=[["Australia","Australian"],["Brazil","Brazilian"],["China","Chinese"],["India","Indian"],
- ["Japan","Japanese"],["Mexico","Mexican"],["New Zealand","a New Zealander"],["Russia","Russian"],
- ["Spain","Spanish"],["Turkey","Turkish"],["the UK","British"],["the USA","American"],["the Netherlands","Dutch"]];
-var ADJ=[["beautiful","ugly"],["clean","dirty"],["empty","crowded"],["hot","cold"],
- ["interesting","boring"],["modern","old"],["quiet","noisy"],["safe","dangerous"]];
-var MISTAKES=[ // [предложение с ошибкой, правильное]
- ["He are from Spain.","He is from Spain."],
- ["I amn't 12 years old.","I'm not 12 years old."],
- ["She no is from Japan.","She isn't from Japan."],
- ["They is Brazilian.","They are Brazilian."],
- ["he's from china.","He's from China."],
- ["We're from the mexico.","We're from Mexico."],
- ["Is they from Russia?","Are they from Russia?"],
- ["Yes, I is.","Yes, I am."],
- ["She's Mexico.","She's Mexican."],
- ["Are you Turkish? — Yes, I are.","Are you Turkish? — Yes, I am."],
- ["My city are quiet and safe.","My city is quiet and safe."],
- ["Its a beautiful country.","It's a beautiful country."]];
-var SENTENCES=["I'm from Brazil","She isn't from Japan","Are you from Mexico","We're British","Is he from Spain",
- "They aren't from Russia","My city is very noisy","Where are you from","He's from the Netherlands","It's a modern city"];
+var COUNTRIES=[
+ ["Обычно я хожу за покупками в торговый центр.","I normally go shopping at the shopping centre. / I normally go to the shopping centre."],
+ ["Ты умеешь играть на гитаре?","Can you play the guitar?"],
+ ["У него нет двоюродных братьев.","He hasn't got any cousins."],
+ ["В моём городе есть несколько кафе.","There are some cafés in my town / city."],
+ ["Она встаёт в семь и идёт в школу.","She gets up at seven and goes to school."],
+ ["Сколько раз в неделю ты играешь в видеоигры?","How many times a week do you play video games?"],
+ ["Что ты делаешь в данный момент?","What are you doing at the moment?"],
+ ["Они не ходили в кино вчера вечером.","They didn't go to the cinema last night."],
+ ["Планшет легче, чем ноутбук.","The tablet is lighter than the laptop."],
+ ["Это самый быстрый способ добраться до фестиваля.","It's the fastest way to get to the festival."],
+ ["Люди бросают помидоры на Ла Томатине.","People throw tomatoes at La Tomatina."],
+ ["Никто не знает, почему это началось.","No one / Nobody knows why it started."],
+ ["Как прошли выходные? — Отлично. Мы с Джо ходили в парк.","How was your weekend? — It was great. Jo and I went to the park."],
+ ["На фестивале посетители могут участвовать в конкурсе.","At the festival, visitors can enter a competition."]];
+var ADJ=[
+ ["I","I normally go shopping at the shopping centre. / I normally go to the shopping centre."],
+ ["Can","Can you play the guitar?"],
+ ["He","He hasn't got any cousins."],
+ ["There","There are some cafés in my town / city."],
+ ["She","She gets up at seven and goes to school."],
+ ["How","How many times a week do you play video games?"],
+ ["What","What are you doing at the moment?"],
+ ["They","They didn't go to the cinema last night."]];
+var MISTAKES=[
+ ["He haven't got any cousins.","He hasn't got any cousins."],
+ ["There is some cafés in my town / city.","There are some cafés in my town / city."],
+ ["They didn't goed to the cinema last night.","They didn't go to the cinema last night."],
+ ["It are the fastest way to get to the festival.","It's the fastest way to get to the festival."],
+ ["How were your weekend? — It was great. Jo and I went to the park.","How was your weekend? — It was great. Jo and I went to the park."],
+ ["At the festival, visitors can to enter a competition.","At the festival, visitors can enter a competition."],
+ ["I do sport, but I doesn't do it every day.","I do sport, but I don't do it every day."],
+ ["Look! She are wearing a red dress and she's dancing.","Look! She's wearing a red dress and she's dancing."],
+ ["How can to I get to the balloon festival? — Take the special bus.","How can I get to the balloon festival? — Take the special bus."]];
+var SENTENCES=["I normally go shopping at the shopping centre. / I normally go to the shopping centre","Can you play the guitar","He hasn't got any cousins","There are some cafés in my town / city","She gets up at seven and goes to school","How many times a week do you play video games","What are you doing at the moment","They didn't go to the cinema last night","The tablet is lighter than the laptop","It's the fastest way to get to the festival","People throw tomatoes at La Tomatina","No one / Nobody knows why it started"];
 
 var TRANSLATE=[
  ["Обычно я хожу за покупками в торговый центр.","I normally go shopping at the shopping centre. / I normally go to the shopping centre."],
@@ -225,9 +243,15 @@ var TRANSLATE=[
  ["На фестивале посетители могут участвовать в конкурсе.","At the festival, visitors can enter a competition."],
  ["Я занимаюсь спортом, но не каждый день.","I do sport, but I don't do it every day."],
  ["Смотри! Она в красном платье, и она танцует.","Look! She's wearing a red dress and she's dancing."]];
-var TABOO=[["beach","sea · sand · swim"],["mountain","high · climb · snow"],["crowded","people · many · city"],
- ["capital","city · main · country"],["currency","money · euro · pay"],["nationality","country · from · person"],
- ["modern","new · old · now"],["dangerous","safe · careful · risk"],["island","water · around · sea"],["desert","sand · hot · dry"]];
+var TABOO=[
+ ["centre","translate · spell · first letter"],
+ ["guitar","translate · spell · first letter"],
+ ["cousins","translate · spell · first letter"],
+ ["city","translate · spell · first letter"],
+ ["school","translate · spell · first letter"],
+ ["games","translate · spell · first letter"],
+ ["moment","translate · spell · first letter"],
+ ["night","translate · spell · first letter"]];
 
 
 // озвучка английского (браузерный синтез, en-GB)
@@ -331,7 +355,7 @@ function quizGame(){
   var qs=[];
   shuffle(COUNTRIES).slice(0,4).forEach(function(c){
     var wrong=shuffle(COUNTRIES.filter(function(x){return x[1]!==c[1]})).slice(0,3).map(function(x){return x[1]});
-    qs.push({q:"People from "+c[0]+" are…",a:c[1],opts:shuffle([c[1]].concat(wrong))});
+    qs.push({q:""+c[0]+"",a:c[1],opts:shuffle([c[1]].concat(wrong))});
   });
   shuffle(ADJ).slice(0,3).forEach(function(p){
     var wrong=shuffle(ADJ.filter(function(x){return x[1]!==p[1]})).slice(0,3).map(function(x){return x[1]});
@@ -388,7 +412,7 @@ function spellGame(){
     }
     var c=deck[i];
     h.appendChild(el("div","hintline","Type the nationality · spelling counts! · "+(i+1)+"/"+deck.length));
-    h.appendChild(el("div","big","People from "+c[0]+" are…"));
+    h.appendChild(el("div","big",""+c[0]+""));
     var inp=el("input","opt");inp.style.width="min(400px,90%)";inp.style.textAlign="center";inp.autocapitalize="off";
     inp.placeholder="type here…";h.appendChild(inp);
     var res=el("div","reveal","");h.appendChild(res);
@@ -539,7 +563,10 @@ function tttCompGame(){
   function winner(){
     for(var k=0;k<LINES.length;k++){
       var m=LINES[k].map(function(x){return cells[x].own});
-      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2]){
+        LINES[k].forEach(function(x){cells[x].el.classList.add("winline")});
+        return m[0];
+      }
     }
     return cells.every(function(c){return c.own})?"draw":null;
   }
@@ -639,7 +666,10 @@ function tttxGame(){
     var L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     for(var k=0;k<L.length;k++){
       var m=L[k].map(function(x){return cells[x].own});
-      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2]){
+        L[k].forEach(function(x){cells[x].el.classList.add("winline")});
+        return m[0];
+      }
     }
     return null;
   }
