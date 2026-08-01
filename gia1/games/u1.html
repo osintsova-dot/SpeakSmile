@@ -79,6 +79,21 @@ section{display:none}section.on{display:block}
 .reveal{font-size:clamp(20px,4.5vw,34px);font-weight:800;color:var(--ok);min-height:1.3em;text-shadow:0 0 14px rgba(46,255,158,.5)}
 .strike{text-decoration:line-through;color:var(--bad)}
 .streakfire{font-size:13px;color:var(--y);font-weight:800}
+
+/* крестики на перевод */
+.tttg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:640px;margin:12px auto}
+.tc{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.22);border-radius:14px;
+ min-height:92px;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;
+ font-weight:700;font-size:13px;line-height:1.25;cursor:pointer;position:relative}
+.tc.taken-a{background:rgba(255,46,147,.22);border-color:var(--pink)}
+.tc.taken-b{background:rgba(46,230,255,.2);border-color:var(--cyan)}
+.tc.taken-a::after{content:"✕";position:absolute;right:6px;top:2px;color:var(--pink);font-weight:800}
+.tc.taken-b::after{content:"◯";position:absolute;right:6px;top:4px;color:var(--cyan);font-weight:800;font-size:12px}
+.tttmodal{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:16px;
+ padding:14px;max-width:640px;margin:10px auto;backdrop-filter:blur(8px)}
+.tttwho{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.tttwho button{font-family:inherit;font-weight:800;border:none;border-radius:12px;padding:10px 16px;font-size:15px;cursor:pointer}
+.w-a{background:var(--pink);color:#fff}.w-b{background:var(--cyan);color:#083038}.w-no{background:rgba(255,255,255,.15);color:#fff}
 /* боулинг */
 .lane{position:relative;height:150px;background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.12));
  border-radius:14px;margin:12px auto;max-width:640px;overflow:hidden;border:1px solid rgba(255,255,255,.15)}
@@ -142,6 +157,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="blitz"><span class="em">💥</span>Word Blitz<div class="d">5 seconds · say it!</div></div>
       <div class="gcard" data-g="mistake"><span class="em">🕵️</span>Spot the Mistake<div class="d">find & fix</div></div>
       <div class="gcard" data-g="race"><span class="em">🏁</span>Sentence Race<div class="d">unscramble fast</div></div>
+      <div class="gcard" data-g="tttx"><span class="em">⭕</span>Tic-Tac-Translate<div class="d">translate → take the square</div></div>
       <div class="gcard" data-g="bowl"><span class="em">🎳</span>Bowling Translate<div class="d">translate → strike!</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match the sentence</div></div>
       <div class="gcard" data-g="taboo"><span class="em">🪑</span>Hot Seat + Taboo<div class="d">back to the screen!</div></div>
@@ -402,6 +418,7 @@ function startClass(g){
   if(g==="race")return raceGame();
   if(g==="taboo")return tabooGame();
   if(g==="bowl")return bowlGame();
+  if(g==="tttx")return tttxGame();
   if(g==="memo")return memoGame(cArena);
 }
 // --- Word Blitz: страна → 5 сек на национальность ---
@@ -451,6 +468,63 @@ function raceGame(){
   h.appendChild(big);h.appendChild(rev);h.appendChild(tm);h.appendChild(el("div"));h.appendChild(next);h.appendChild(document.createTextNode(" "));h.appendChild(back);
 }
 
+
+// --- Tic-Tac-Translate: 3x3 русских предложений, перевёл чисто — забрал клетку ---
+function tttxGame(){
+  var h=el("div");cArena.appendChild(h);
+  h.appendChild(el("div","hintline","Crew ✕ vs Crew ◯. Pick a square → translate the sentence aloud → clean translation takes the square. Three in a row wins! Tap the sentence in the panel for the answer."));
+  var board=el("div","tttg");
+  var panel=el("div","tttmodal");panel.style.display="none";
+  var pTxt=el("div","big","");pTxt.style.fontSize="clamp(18px,4vw,30px)";
+  var pRev=el("div","reveal","");
+  var who=el("div","tttwho");
+  var status=el("div","memoinfo","Turn: ✕");
+  var cur="a",cells=[],active=null;
+  function winCheck(){
+    var L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for(var k=0;k<L.length;k++){
+      var m=L[k].map(function(x){return cells[x].own});
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+    }
+    return null;
+  }
+  function build(){
+    board.replaceChildren();cells=[];cur="a";status.textContent="Turn: ✕";
+    panel.style.display="none";
+    shuffle(TRANSLATE).slice(0,9).forEach(function(p,i){
+      var c={ru:p[0],en:p[1],own:null};
+      var d=el("div","tc",p[0]);
+      d.addEventListener("click",function(){
+        if(c.own||active)return;
+        active={c:c,d:d};
+        pTxt.textContent=c.ru;pRev.textContent="";panel.style.display="block";
+        panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+      });
+      c.el=d;cells.push(c);board.appendChild(d);
+    });
+  }
+  pTxt.addEventListener("click",function(){if(active)pRev.textContent=active.c.en});
+  [["✕ takes it","a","w-a"],["◯ takes it","b","w-b"],["Nobody ✗","no","w-no"]].forEach(function(cfg){
+    var b=el("button",cfg[2],cfg[0]);
+    b.addEventListener("click",function(){
+      if(!active)return;
+      if(cfg[1]!=="no"){
+        active.c.own=cfg[1];active.d.classList.add("taken-"+cfg[1]);
+        var w=winCheck();
+        if(w){status.textContent=(w==="a"?"✕":"◯")+" WINS! 🎉";beep();}
+        else{cur=(cfg[1]==="a")?"b":"a";status.textContent="Turn: "+(cur==="a"?"✕":"◯");}
+      }
+      active=null;panel.style.display="none";
+    });
+    who.appendChild(b);
+  });
+  panel.appendChild(pTxt);panel.appendChild(pRev);panel.appendChild(who);
+  var again=el("button","btn","New board 🔄");again.addEventListener("click",build);
+  var back=el("button","btn ghost","✕ Close");back.addEventListener("click",classBack);
+  h.appendChild(status);h.appendChild(board);h.appendChild(panel);
+  h.appendChild(again);h.appendChild(document.createTextNode(" "));h.appendChild(back);
+  build();
+}
 // --- Bowling Translate: RU-предложение → команда переводит → судейство = сила броска ---
 function bowlGame(){
   var deck=shuffle(TRANSLATE),i=-1,rolling=false;
