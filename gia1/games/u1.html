@@ -147,6 +147,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="quiz"><span class="em">⚡</span>Quiz 10<div class="d">mixed · beat your best</div></div>
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
+      <div class="gcard" data-g="tttc"><span class="em">🤖</span>Tic-Tac vs Computer<div class="d">translate to take a square</div></div>
     </div>
     <div class="arena" id="homeArena" style="display:none"></div>
   </section>
@@ -260,6 +261,7 @@ function startHome(g){
   if(g==="quiz")return quizGame();
   if(g==="spell")return spellGame();
   if(g==="memo")return memoGame(hArena,true);
+  if(g==="tttc")return tttCompGame();
 }
 function flashGame(){
   var deck=shuffle(COUNTRIES),i=0,known=0;
@@ -469,6 +471,91 @@ function raceGame(){
 }
 
 
+
+// --- Tic-Tac vs Computer (дом): перевёл — забрал клетку, иначе ходит компьютер ---
+function tttCompGame(){
+  hArena.style.display="block";hArena.replaceChildren();
+  var h=el("div");hArena.appendChild(h);
+  h.appendChild(el("div","hintline","You are ✕. Pick a square, translate the sentence ALOUD, then check yourself honestly. Got it → your square. Not yet → the computer ◯ moves!"));
+  var status=el("div","memoinfo","Your turn ✕");
+  var board=el("div","tttg");
+  var panel=el("div","tttmodal");panel.style.display="none";
+  var pTxt=el("div","big","");pTxt.style.fontSize="clamp(17px,4vw,26px)";
+  var pRev=el("div","reveal","");
+  var btns=el("div","tttwho");
+  var cells=[],active=null,over=false;
+  var LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  function winner(){
+    for(var k=0;k<LINES.length;k++){
+      var m=LINES[k].map(function(x){return cells[x].own});
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+    }
+    return cells.every(function(c){return c.own})?"draw":null;
+  }
+  function endCheck(){
+    var w=winner();
+    if(!w)return false;
+    over=true;
+    status.textContent = w==="a" ? "🎉 YOU WIN!" : (w==="b" ? "🤖 Computer wins — rematch?" : "🤝 Draw!");
+    if(w==="a"){beep();bumpStreak();}
+    return true;
+  }
+  function compMove(){
+    if(over)return;
+    var free=cells.map(function(c,i){return c.own?null:i}).filter(function(x){return x!==null});
+    if(!free.length)return;
+    function findLine(ownWho){
+      for(var k=0;k<LINES.length;k++){
+        var L=LINES[k],vals=L.map(function(x){return cells[x].own});
+        if(vals.filter(function(v){return v===ownWho}).length===2 && vals.indexOf(null)>=0)
+          return L[vals.indexOf(null)];
+      }
+      return -1;
+    }
+    var mv=findLine("b");            // выиграть
+    if(mv<0)mv=findLine("a");        // заблокировать
+    if(mv<0&&!cells[4].own)mv=4;     // центр
+    if(mv<0)mv=free[Math.floor(rnd()*free.length)];
+    cells[mv].own="b";cells[mv].el.classList.add("taken-b");
+    if(!endCheck())status.textContent="Your turn ✕";
+  }
+  function build(){
+    board.replaceChildren();cells=[];over=false;active=null;panel.style.display="none";
+    status.textContent="Your turn ✕";
+    shuffle(TRANSLATE).slice(0,9).forEach(function(p){
+      var c={ru:p[0],en:p[1],own:null};
+      var d=el("div","tc",p[0]);
+      d.addEventListener("click",function(){
+        if(c.own||active||over)return;
+        active={c:c,d:d};
+        pTxt.textContent=c.ru;pRev.textContent="";panel.style.display="block";
+      });
+      c.el=d;cells.push(c);board.appendChild(d);
+    });
+  }
+  var show=el("button","w-no","Show answer");
+  show.addEventListener("click",function(){if(active)pRev.textContent=active.c.en});
+  var got=el("button","w-a","I got it ✓");
+  got.addEventListener("click",function(){
+    if(!active)return;
+    active.c.own="a";active.d.classList.add("taken-a");
+    active=null;panel.style.display="none";
+    if(!endCheck()){status.textContent="Computer ◯ is thinking…";setTimeout(compMove,600);}
+  });
+  var not=el("button","w-b","Not yet ✗");
+  not.addEventListener("click",function(){
+    if(!active)return;
+    active=null;panel.style.display="none";
+    status.textContent="Computer ◯ is thinking…";setTimeout(compMove,600);
+  });
+  btns.appendChild(show);btns.appendChild(got);btns.appendChild(not);
+  panel.appendChild(pTxt);panel.appendChild(pRev);panel.appendChild(btns);
+  var again=el("button","btn","New game 🔄");again.addEventListener("click",build);
+  var back=el("button","btn ghost","Menu");back.addEventListener("click",homeBack);
+  h.appendChild(status);h.appendChild(board);h.appendChild(panel);
+  h.appendChild(again);h.appendChild(document.createTextNode(" "));h.appendChild(back);
+  build();
+}
 // --- Tic-Tac-Translate: 3x3 русских предложений, перевёл чисто — забрал клетку ---
 function tttxGame(){
   var h=el("div");cArena.appendChild(h);
