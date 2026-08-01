@@ -231,6 +231,7 @@ var TABOO=[["beach","sea · sand · swim"],["mountain","high · climb · snow"],
 // озвучка английского (браузерный синтез, en-GB)
 function say(txt){
   try{
+    if(!txt||/[\u0400-\u04FF]/.test(txt))return; // русский не озвучиваем
     window.speechSynthesis.cancel();
     var u=new SpeechSynthesisUtterance(txt);
     u.lang="en-GB"; u.rate=.9;
