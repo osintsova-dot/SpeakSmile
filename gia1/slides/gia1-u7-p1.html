@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>U7 · Pair 1 · Mission «Biography Files» · Get Involved A1+</title>
+<style>
+:root{--p:#6C3FC5;--y:#F5C842;--pink:#FF2E93;--cyan:#2EE6FF;--lime:#B8FF2E;--orange:#FF7A2E;
+ --bg:#0b0817;--card:rgba(255,255,255,.06);--text:#ffffff;--mut:#b3a8dd;
+ --ok:#2EFF9E;--bad:#FF3D5A;--f:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ --grad:linear-gradient(93deg,#FF2E93 0%,#FF7A2E 30%,#F5C842 55%,#2EE6FF 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--f);background:var(--bg);color:var(--text);overflow:hidden}
+/* неоновые пятна фона */
+body::before,body::after{content:"";position:fixed;border-radius:50%;filter:blur(90px);opacity:.5;z-index:0;pointer-events:none}
+body::before{width:56vw;height:56vw;left:-18vw;top:-18vw;background:radial-gradient(circle,#6C3FC5,transparent 70%)}
+body::after{width:50vw;height:50vw;right:-15vw;bottom:-18vw;background:radial-gradient(circle,#FF2E93,transparent 70%)}
+/* stories progress */
+.stories{position:fixed;top:10px;left:14px;right:14px;display:flex;gap:5px;z-index:60}
+.stories i{flex:1;height:4px;border-radius:99px;background:rgba(255,255,255,.18)}
+.stories i.done{background:var(--grad)}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+ padding:6vh 6vw 8vh;text-align:center;gap:2.6vh;z-index:1}
+.slide.on{display:flex}
+.kicker{display:inline-block;font-size:clamp(12px,1.5vw,17px);font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font-size:clamp(34px,7vw,86px);line-height:1.04;font-weight:800;letter-spacing:-.02em}
+h1 .gr,h2 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(24px,4vw,50px);line-height:1.1;font-weight:800;letter-spacing:-.01em}
+.sub{font-size:clamp(15px,2vw,24px);color:var(--mut);max-width:900px;line-height:1.4}
+.sub b{color:#fff}
+.big{font-size:clamp(40px,9vw,120px);font-weight:800}
+.sticker{display:inline-block;background:var(--y);color:#1a1205;font-weight:800;border-radius:14px;
+ padding:.5em 1.1em;font-size:clamp(15px,2vw,23px);transform:rotate(-2deg);box-shadow:0 8px 30px rgba(245,200,66,.45)}
+.sticker.p{background:var(--pink);color:#fff;transform:rotate(1.5deg);box-shadow:0 8px 30px rgba(255,46,147,.5)}
+.pill{display:inline-block;background:var(--card);border:1.5px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);
+ border-radius:999px;padding:.55em 1.3em;font-size:clamp(14px,1.8vw,20px);font-weight:700}
+.rules{display:flex;flex-direction:column;gap:1.4vh;max-width:880px;text-align:left}
+.rule{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-left:5px solid var(--pink);
+ border-radius:16px;padding:1.5vh 1.5vw;font-size:clamp(15px,2.1vw,25px);font-weight:600}
+.rule:nth-child(2){border-left-color:var(--y)}
+.rule:nth-child(3){border-left-color:var(--cyan)}
+.rule b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* таймер — неон */
+.timer{font-variant-numeric:tabular-nums;font-size:clamp(64px,17vw,210px);font-weight:800;line-height:1;cursor:pointer;
+ user-select:none;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+ filter:drop-shadow(0 0 18px rgba(255,46,147,.55))}
+.timer.warn{filter:drop-shadow(0 0 26px rgba(245,200,66,.9))}
+.timer.end{animation:blink .5s steps(2) infinite;filter:drop-shadow(0 0 30px rgba(255,61,90,.9))}
+@keyframes blink{50%{opacity:.25}}
+.thint{font-size:clamp(12px,1.4vw,16px);color:var(--mut)}
+/* rewind */
+.qa{display:flex;flex-direction:column;gap:1.6vh;width:min(900px,92vw)}
+.q{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:18px;
+ padding:1.8vh 1.6vw;font-size:clamp(17px,2.4vw,28px);font-weight:700;cursor:pointer;text-align:left;
+ display:flex;justify-content:space-between;gap:1em;align-items:center;transition:transform .12s}
+.q:active{transform:scale(.985)}
+.q .a{color:var(--ok);opacity:0;transition:opacity .2s;font-weight:800;white-space:nowrap;text-shadow:0 0 14px rgba(46,255,158,.6)}
+.q.open .a{opacity:1}
+.q .hintdot{color:var(--mut);font-size:.65em}
+/* brain teaser */
+.bt{display:flex;flex-direction:column;gap:1.1vh;width:min(900px,94vw)}
+.btq{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:16px;
+ padding:1.3vh 1.4vw;font-size:clamp(15px,2vw,24px);display:flex;align-items:center;gap:1em;cursor:pointer;text-align:left}
+.btq .ltr{flex:0 0 auto;width:2em;height:2em;border-radius:12px;background:rgba(255,255,255,.08);display:flex;align-items:center;
+ justify-content:center;font-weight:800;font-size:1.2em;color:transparent;transition:all .25s}
+.btq.open .ltr{background:var(--grad);color:#140b06;box-shadow:0 0 18px rgba(255,122,46,.6)}
+.btword{font-size:clamp(32px,6.5vw,80px);font-weight:800;letter-spacing:.22em;min-height:1.2em;
+ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+ filter:drop-shadow(0 0 16px rgba(46,230,255,.5))}
+/* лидерборд */
+.lb{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2vw;width:min(1000px,94vw)}
+.team{background:var(--card);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:22px;
+ padding:2.4vh 1.4vw;display:flex;flex-direction:column;gap:1.2vh;align-items:center}
+.team input{background:transparent;border:none;border-bottom:2px dashed rgba(255,255,255,.3);color:var(--text);
+ font-family:inherit;font-size:clamp(16px,2vw,24px);font-weight:800;text-align:center;width:90%}
+.team .score{font-size:clamp(42px,7vw,92px);font-weight:800;background:var(--grad);
+ -webkit-background-clip:text;background-clip:text;color:transparent}
+.team .btns{display:flex;gap:.5em}
+.team button{font-family:inherit;font-weight:800;font-size:clamp(14px,1.6vw,20px);border:none;border-radius:12px;
+ padding:.45em .85em;cursor:pointer;background:var(--grad);color:#140b06}
+.team button.minus{background:rgba(255,255,255,.12);color:#fff}
+/* навигация */
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:10px 16px;z-index:50}
+.nav .prog{flex:1;font-size:12px;color:var(--mut)}
+.nav button{font-family:inherit;font-weight:800;border:none;border-radius:12px;padding:10px 18px;font-size:15px;
+ cursor:pointer;background:rgba(255,255,255,.1);color:var(--text)}
+.nav button.next{background:var(--grad);color:#140b06;box-shadow:0 6px 24px rgba(255,46,147,.4)}
+.stage-tag{position:fixed;top:24px;left:16px;font-size:11px;color:var(--mut);letter-spacing:.12em;z-index:50}
+.brand{position:fixed;top:24px;right:16px;font-size:12px;font-weight:800;z-index:50;
+ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.batt{display:flex;gap:3vw;align-items:flex-end}
+.batt .bar{width:clamp(30px,5vw,58px);border-radius:12px 12px 6px 6px;background:var(--card);border:1.5px solid rgba(255,255,255,.25);position:relative;overflow:hidden}
+.batt .bar i{position:absolute;left:0;right:0;bottom:0;border-radius:0}
+.batt .b1{height:clamp(60px,12vh,120px)}.batt .b1 i{height:22%;background:var(--bad)}
+.batt .b2{height:clamp(80px,16vh,160px)}.batt .b2 i{height:55%;background:var(--y)}
+.batt .b3{height:clamp(100px,20vh,200px)}.batt .b3 i{height:92%;background:var(--ok)}
+.onair{display:inline-flex;align-items:center;gap:.5em;background:rgba(255,61,90,.15);border:1.5px solid var(--bad);
+ color:#fff;border-radius:999px;padding:.5em 1.2em;font-weight:800;font-size:clamp(15px,2vw,22px)}
+.onair::before{content:"";width:.7em;height:.7em;border-radius:50%;background:var(--bad);
+ box-shadow:0 0 12px var(--bad);animation:blink 1s steps(2) infinite}
+</style>
+</head>
+<body>
+<div class="stories" id="stories"></div>
+<div class="stage-tag" id="stagetag">GET INVOLVED A1+ · U7 · PAIR 1</div>
+<div class="brand">Speak&amp;Smile</div>
+
+<section class="slide on" data-tag="START">
+  <div class="kicker">U7 · pair 1 of 5</div>
+  <h1>Mission «Biography <span class="gr">Files»</span></h1>
+  <div class="sticker">Ready? Let's go!</div>
+</section>
+
+<section class="slide" data-tag="AIMS">
+  <div class="kicker">By the end of today you can</div>
+  <h2>Today you <span class="gr">can</span></h2>
+  <div class="rules">
+    <div class="rule">name 10 jobs and say where each person works</div>
+    <div class="rule">say and WRITE 5+ dates in words (incl. the year)</div>
+    <div class="rule">read the article in two speeds — scan then check the line</div>
+    <div class="rule">deliver a 60-sec dossier to the bar</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="0–5′ · Opening · check-in + rewind">
+  <div class="kicker">0–5′</div>
+  <h2>Opening · <span class="gr">check-in + rewind</span></h2>
+  <div class="rules">
+    <div class="rule">What's new? One word!</div>
+    <div class="rule">Outside circle, rotate two steps!</div>
+    <div class="rule">Sixty seconds with your partner: What's she doing? What's she wearing?</div>
+  </div>
+  <div class="timer" data-sec="60">1:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="5–8′ · Mission brief · «Biography Files»">
+  <div class="kicker">5–8′</div>
+  <h2>Mission brief · <span class="gr">«Biography Files»</span></h2>
+  <div class="pill">mission slide · leaderboard · irregular wall</div>
+  <div class="rules">
+    <div class="rule">You are an agency. Every agent builds ONE file: job, two dates, one fact from the past. Sixty seconds on air at the end.</div>
+    <div class="rule">This unit is COMPRESSED — twelve book pages, five lessons. No slow parts. Timer on every block.</div>
+    <div class="rule">Every past verb we catch goes here. By pair five it's full — and it's your test cheat-sheet you built yourselves.</div>
+  </div>
+  <div class="timer" data-sec="60">1:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="8–14′ · GATE · dates-in-words blitz">
+  <div class="kicker">8–14′</div>
+  <h2>GATE · <span class="gr">dates-in-words blitz</span></h2>
+  <div class="pill">gate slide · timer</div>
+  <div class="rules">
+    <div class="rule">WRITE them in words — the date AND the year. ‘The third of February, eighteen twenty-one.’ Three minutes. GO.</div>
+    <div class="rule">Five out of five? Anyone? ‘Ninth’, ‘twelfth’, ‘twenty fifteen’ — THIS is our growth zone. Rematch in the test pair.</div>
+  </div>
+  <div class="timer" data-sec="180">3:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="14–22′ · Base sprint · jobs + ordinals + months">
+  <div class="kicker">14–22′</div>
+  <h2>Base sprint · <span class="gr">jobs + ordinals + months</span></h2>
+  <div class="pill">SB pp.84–85 · timer</div>
+  <div class="rules">
+    <div class="rule">Photos A–E, ninety seconds — which five jobs?</div>
+    <div class="rule">Who works in a hospital? in a kitchen? in the country?</div>
+    <div class="rule">And where do the OTHER two work? Astronaut — inventor —?</div>
+  </div>
+  <div class="timer" data-sec="90">1:30</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="22–30′ · Challenge · «On this day» date race">
+  <div class="kicker">22–30′</div>
+  <h2>Challenge · <span class="gr">«On this day» date race</span></h2>
+  <div class="pill">SB pp.84–85 · timer</div>
+  <div class="rules">
+    <div class="rule">Three people, three birthdays. In words — write them down. Go!</div>
+    <div class="rule">Match each date to the event on pp.84–85. Thirty seconds!</div>
+    <div class="rule">1969 — nineteen sixty-nine · 1906 — nineteen oh six · 2008 — two thousand and eight · 2015 — twenty fifteen.</div>
+  </div>
+  <div class="timer" data-sec="30">0:30</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="30–38′ · Video skills · «This day in history»">
+  <div class="kicker">30–38′</div>
+  <h2>Video skills · <span class="gr">«This day in history»</span></h2>
+  <div class="pill">video · TB p.142 backup</div>
+  <div class="rules">
+    <div class="rule">One: what date is the video about? Two: count the events — how many? Three: first to catch a YEAR — freeze!</div>
+    <div class="rule">Why did the vlogger make this video? Are the graphics funny or serious?</div>
+    <div class="rule">That's random! · I'd watch that. · No way!</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="38–45′ · Checkpoint · Biography File v1">
+  <div class="kicker">38–45′</div>
+  <h2>Checkpoint · <span class="gr">Biography File v1</span></h2>
+  <div class="rules">
+    <div class="rule">I travel in space → ? · I have ideas and make new things → ? · 12.03 in words → ? · 31.08 in words → ? · 1969 — say the year!</div>
+    <div class="rule">No peeking… Boards up!</div>
+    <div class="rule">Gate was five dates. Now count again — better? THAT's today's progress.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="45–47′ · Bridge → lesson B">
+  <div class="kicker">45–47′</div>
+  <h2>Bridge → lesson <span class="gr">B</span></h2>
+  <div class="pill">SB p.87</div>
+  <div class="rules">
+    <div class="rule">Millie, Shawn, Banksy — famous NOW. But was celebrity a new idea? Was there a celebrity two thousand years ago? A celebrity DOG?</div>
+    <div class="rule">The article on p.87 has the answer. Two speeds: fast eyes first, slow eyes after. That's today's subskill.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="47–55′ · Reading quest · fast eyes (subskill)">
+  <div class="kicker">47–55′</div>
+  <h2>Reading quest · <span class="gr">fast eyes (subskill)</span></h2>
+  <div class="pill">SB pp.86–87 · timer</div>
+  <div class="rules">
+    <div class="rule">Three most important things for a celebrity — choose and defend in one sentence: I think … is important because …</div>
+    <div class="rule">First — underline the KEY WORDS in the task. Then move your eyes fast and hunt those words. Only THEN read that line slowly.</div>
+    <div class="rule">Which categories are in the article?</div>
+  </div>
+  <div class="timer" data-sec="480">8:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="55–63′ · Challenge · prove it with a line">
+  <div class="kicker">55–63′</div>
+  <h2>Challenge · <span class="gr">prove it with a line</span></h2>
+  <div class="pill">SB pp.86–87</div>
+  <div class="rules">
+    <div class="rule">‘False’ alone = zero points. ‘False, because the text says: there WERE paintings’ = the point.</div>
+    <div class="rule">Rewrite the false ones so they're TRUE.</div>
+    <div class="rule">Hear it? ‘There WERE paintings’, ‘Laika WASN'T always a celebrity’. Tomorrow that's the whole lesson.</div>
+  </div>
+  <div class="timer" data-sec="480">8:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="63–70′ · Word work round">
+  <div class="kicker">63–70′</div>
+  <h2>Word work <span class="gr">round</span></h2>
+  <div class="rules">
+    <div class="rule">No dictionaries. Read the WHOLE sentence with the bold word and guess.</div>
+    <div class="rule">Stand up, hand up, pair up! Quiz your partner — praise — TRADE cards — find a new partner!</div>
+    <div class="rule">Stand up! Which national hero would YOU put on a stamp? One name, one reason — then sit down.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="70–77′ · Critical thinking">
+  <div class="kicker">70–77′</div>
+  <h2>Critical <span class="gr">thinking</span></h2>
+  <div class="rules">
+    <div class="rule">You can't have any secrets. · You have fans. · People want you to look perfect all the time. · You can get rich…</div>
+    <div class="rule">Why here?</div>
+    <div class="rule">One good thing celebrities do — go!</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="77–86′ · PRODUCT · Biography File on air">
+  <div class="kicker">77–86′</div>
+  <h2>PRODUCT · <span class="gr">Biography File on air</span></h2>
+  <div class="pill">stopwatch · rubric cards</div>
+  <div class="rules">
+    <div class="rule">Sixty seconds. Job + TWO dates in words + one fact about the PAST. Keywords only — no full script.</div>
+    <div class="rule">Full sentences on paper? — No. Two dates minimum? — Yes.</div>
+    <div class="rule">Accuracy 3 — ‘Laika WAS a street dog’, clean.</div>
+  </div>
+  <div class="timer" data-sec="60">1:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="86–90′ · Leaderboard + debrief">
+  <div class="kicker">86–90′</div>
+  <h2>Leaderboard + <span class="gr">debrief</span></h2>
+  <div class="pill">leaderboard · HW slide</div>
+  <div class="rules">
+    <div class="rule">Gate vs product — where's the growth? Spoiler: dates in words. Kill them in the Workbook tonight.</div>
+    <div class="rule">Next pair: forty-five minutes of pure grammar. WAS and WERE — you know them. Do you WRITE them clean? We'll see.</div>
+  </div>
+  <div class="timer" data-sec="300">5:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="SCORES">
+  <div class="kicker">U7 leaderboard</div>
+  <h2>🏆 Team <span class="gr">scores</span></h2>
+  <div class="lb" id="lb"></div>
+  <div class="thint">scores are saved on this computer</div>
+</section>
+
+<section class="slide" data-tag="WRAP-UP">
+  <div class="kicker">Check yourself · tap what you can do</div>
+  <h2>I <span class="gr">can</span>…</h2>
+  <div class="qa">
+    <div class="q"><span>name 10 jobs and say where each person works</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+    <div class="q"><span>say and WRITE 5+ dates in words (incl. the year)</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+    <div class="q"><span>read the article in two speeds — scan then check the line</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+    <div class="q"><span>deliver a 60-sec dossier to the bar</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+  </div>
+  <div class="sticker">Homework · Workbook p.52 · ex. 2–5</div>
+</section>
+
+<div class="nav">
+  <button id="prev">‹ Back</button>
+  <div class="prog" id="prog"></div>
+  <button class="next" id="next">Next ›</button>
+</div>
+<script>
+var DECK='GET INVOLVED A1+ · U7 · PAIR 1';
+var LBKEY_='gia1-u7-lb';
+
+// ---- слайды ----
+var slides=[].slice.call(document.querySelectorAll(".slide")), cur=0;
+var stories=document.getElementById("stories");
+slides.forEach(function(){ stories.appendChild(document.createElement("i")); });
+var tag=document.getElementById("stagetag"), prog=document.getElementById("prog");
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach(function(s,k){s.classList.toggle("on",k===cur)});
+  tag.textContent=DECK+" · "+(slides[cur].dataset.tag||"");
+  prog.textContent=(cur+1)+" / "+slides.length;
+  [].slice.call(stories.children).forEach(function(el,k){el.classList.toggle("done",k<=cur)});
+  try{ history.replaceState(null,"","#"+(cur+1)); }catch(e){}
+  stopAllTimers();
+}
+document.getElementById("prev").addEventListener("click",function(){show(cur-1)});
+document.getElementById("next").addEventListener("click",function(){show(cur+1)});
+document.addEventListener("keydown",function(e){
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();show(cur+1);}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(cur-1);}
+});
+// ---- таймеры ----
+var timers=[].slice.call(document.querySelectorAll(".timer"));
+function fmt(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+timers.forEach(function(el){
+  var total=parseInt(el.dataset.sec,10), left=total, iv=null, lastTap=0;
+  function draw(){
+    el.textContent=fmt(left);
+    el.classList.toggle("warn",left<=10&&left>0);
+    el.classList.toggle("end",left===0);
+  }
+  function tick(){ if(left>0){left--;draw(); if(left===0){stop(); beep();}} }
+  function start(){ if(iv)return; iv=setInterval(tick,1000); }
+  function stop(){ if(iv){clearInterval(iv);iv=null;} }
+  el._stop=stop;
+  el.addEventListener("click",function(){
+    var now=Date.now();
+    if(now-lastTap<350){ stop(); left=total; draw(); lastTap=0; return; } // двойной тап — сброс
+    lastTap=now;
+    if(iv) stop(); else start();
+  });
+  draw();
+});
+function stopAllTimers(){ timers.forEach(function(t){ if(t._stop) t._stop(); }); }
+function beep(){
+  try{
+    var ctx=new (window.AudioContext||window.webkitAudioContext)();
+    var o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value=880; g.gain.value=.15;
+    o.start(); setTimeout(function(){o.stop(); ctx.close();},450);
+  }catch(e){}
+}
+// ---- rewind: тап открывает ответ ----
+[].slice.call(document.querySelectorAll(".q")).forEach(function(q){
+  q.addEventListener("click",function(){q.classList.add("open")});
+});
+// ---- brain teaser ----
+var btWord="", btEl=document.getElementById("btword");
+[].slice.call(document.querySelectorAll(".btq")).forEach(function(q,i,arr){
+  q.addEventListener("click",function(){
+    if(q.classList.contains("open"))return;
+    q.classList.add("open");
+    btWord=arr.filter(function(x){return x.classList.contains("open")})
+              .map(function(x){return x.querySelector(".ltr").textContent}).join("");
+    if(btEl) btEl.textContent=btWord;
+  });
+});
+// ---- лидерборд (localStorage) ----
+var LBKEY=LBKEY_;
+function lbLoad(){
+  try{ return JSON.parse(localStorage.getItem(LBKEY)) || null; }catch(e){ return null; }
+}
+function lbSave(d){ try{ localStorage.setItem(LBKEY, JSON.stringify(d)); }catch(e){} }
+var lbData = lbLoad() || [{n:"Crew 1",s:0},{n:"Crew 2",s:0},{n:"Crew 3",s:0}];
+var lbBox=document.getElementById("lb");
+if(!lbBox){ lbRender=function(){}; }
+function lbRender(){
+  while(lbBox.firstChild) lbBox.removeChild(lbBox.firstChild);
+  lbData.forEach(function(t,i){
+    var d=document.createElement("div"); d.className="team";
+    var inp=document.createElement("input"); inp.value=t.n;
+    inp.addEventListener("change",function(){ t.n=inp.value; lbSave(lbData); });
+    var sc=document.createElement("div"); sc.className="score"; sc.textContent=t.s;
+    var btns=document.createElement("div"); btns.className="btns";
+    [["+1",1],["+3",3],["+5",5],["−1",-1]].forEach(function(pair){
+      var b=document.createElement("button"); b.textContent=pair[0];
+      if(pair[1]<0)b.className="minus";
+      b.addEventListener("click",function(){ t.s=Math.max(0,t.s+pair[1]); sc.textContent=t.s; lbSave(lbData); });
+      btns.appendChild(b);
+    });
+    d.appendChild(inp); d.appendChild(sc); d.appendChild(btns);
+    lbBox.appendChild(d);
+  });
+}
+lbRender();
+// открыть сразу нужный слайд: файл.html#7 (ссылка из плана/Хаба)
+var _st=parseInt((location.hash||"").replace("#",""),10);
+show(isNaN(_st)?0:_st-1);
+
+</script>
+<!-- линия: продолжающие 🚀 · собрано из каркаса плана GIA1-U7-P1 -->
+</body>
+</html>
