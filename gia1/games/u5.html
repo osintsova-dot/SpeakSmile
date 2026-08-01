@@ -102,6 +102,9 @@ section{display:none}section.on{display:block}
  animation:markfly .55s cubic-bezier(.2,1.4,.4,1) both}
 .tc .mark.ma{color:var(--pink);text-shadow:0 0 22px rgba(255,46,147,.85)}
 .tc .mark.mb{color:var(--cyan);text-shadow:0 0 22px rgba(46,230,255,.85)}
+.tc.winline{border-color:var(--y)!important;background:rgba(245,200,66,.22)!important;
+ box-shadow:0 0 26px rgba(245,200,66,.75);animation:winglow .7s ease infinite alternate}
+@keyframes winglow{to{box-shadow:0 0 40px rgba(245,200,66,1)}}
 @keyframes markfly{0%{transform:scale(3.2) rotate(-30deg);opacity:0}55%{transform:scale(.85) rotate(6deg);opacity:1}75%{transform:scale(1.12) rotate(-2deg)}100%{transform:scale(1) rotate(0)}}
 .tttmodal{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);border-radius:16px;
  padding:14px;max-width:640px;margin:10px auto;backdrop-filter:blur(8px)}
@@ -159,7 +162,7 @@ section{display:none}section.on{display:block}
       <span class="stat">🏆 Best quiz: <b id="pbest">0</b>/10</span>
     </div>
     <div class="grid" id="homeMenu">
-      <div class="gcard" data-g="flash"><span class="em">🃏</span>Flashcards<div class="d">country → nationality</div></div>
+      <div class="gcard" data-g="flash"><span class="em">🃏</span>Flashcards<div class="d">word → match</div></div>
       <div class="gcard" data-g="quiz"><span class="em">⚡</span>Quiz 10<div class="d">mixed · beat your best</div></div>
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
@@ -187,26 +190,37 @@ section{display:none}section.on{display:block}
 
 <script>
 // ============ ДАННЫЕ UNIT 1 (из контент-слоя) ============
-var COUNTRIES=[["Australia","Australian"],["Brazil","Brazilian"],["China","Chinese"],["India","Indian"],
- ["Japan","Japanese"],["Mexico","Mexican"],["New Zealand","a New Zealander"],["Russia","Russian"],
- ["Spain","Spanish"],["Turkey","Turkish"],["the UK","British"],["the USA","American"],["the Netherlands","Dutch"]];
-var ADJ=[["beautiful","ugly"],["clean","dirty"],["empty","crowded"],["hot","cold"],
- ["interesting","boring"],["modern","old"],["quiet","noisy"],["safe","dangerous"]];
-var MISTAKES=[ // [предложение с ошибкой, правильное]
- ["He are from Spain.","He is from Spain."],
- ["I amn't 12 years old.","I'm not 12 years old."],
- ["She no is from Japan.","She isn't from Japan."],
- ["They is Brazilian.","They are Brazilian."],
- ["he's from china.","He's from China."],
- ["We're from the mexico.","We're from Mexico."],
- ["Is they from Russia?","Are they from Russia?"],
- ["Yes, I is.","Yes, I am."],
- ["She's Mexico.","She's Mexican."],
- ["Are you Turkish? — Yes, I are.","Are you Turkish? — Yes, I am."],
- ["My city are quiet and safe.","My city is quiet and safe."],
- ["Its a beautiful country.","It's a beautiful country."]];
-var SENTENCES=["I'm from Brazil","She isn't from Japan","Are you from Mexico","We're British","Is he from Spain",
- "They aren't from Russia","My city is very noisy","Where are you from","He's from the Netherlands","It's a modern city"];
+var COUNTRIES=[
+ ["catch","a ball"],
+ ["send","an email, a text message"],
+ ["spell","your name, a word"],
+ ["add","numbers"],
+ ["clean","your room, your face (= wash)"],
+ ["climb","a mountain, stairs"],
+ ["fly","a plane"],
+ ["repair","a bike"],
+ ["jump","into a swimming pool"],
+ ["tell","stories to your little cousin"],
+ ["talk","to your friend (talk TO)"],
+ ["speak","a language (speak = languages!)"],
+ ["play","football, a musical instrument / the guitar"]];
+var ADJ=[
+ ["I","I can swim."],
+ ["He","He can't sing."],
+ ["Can","Can you play the guitar? — Yes, I can."],
+ ["This","This laptop is fast."],
+ ["It's","It's a charger. It's mine."],
+ ["The","The tablet is lighter than the laptop."],
+ ["This","This printer is more expensive than ours."],
+ ["My","My robot can climb mountains, but it can't swim."]];
+var MISTAKES=[
+ ["He can to play the piano.","He can play the piano."],
+ ["She cans dance. / He can sings.","She can dance. / He can sing."],
+ ["You don't can swim.","You can't swim."],
+ ["This tablet is more cheap than my laptop.","This tablet is cheaper than my laptop."],
+ ["My phone is bigger THEN yours.","My phone is bigger THAN yours."],
+ ["Is this your phone? — Yes, it's your.","Yes, it's yours."]];
+var SENTENCES=["I can swim","He can't sing","Can you play the guitar? — Yes, I can","This laptop is fast","It's a charger. It's mine","The tablet is lighter than the laptop","This printer is more expensive than ours","My robot can climb mountains, but it can't swim","The screen is bigger and better","How fast can you run 100 metres","Whose phone is this? — (It's) hers","The touchpad is easy to use"];
 
 var TRANSLATE=[
  ["Я умею плавать.","I can swim."],
@@ -225,9 +239,19 @@ var TRANSLATE=[
  ["Большинство роботов стоят тысячи долларов.","Most robots cost thousands of dollars."],
  ["Этот ноутбук идеален для учеников: можно использовать его, чтобы делать домашку.","This laptop is perfect for students: you can use it to do your homework."],
  ["Он меньше и легче, чем другие ноутбуки.","It's smaller and lighter than other laptops."]];
-var TABOO=[["beach","sea · sand · swim"],["mountain","high · climb · snow"],["crowded","people · many · city"],
- ["capital","city · main · country"],["currency","money · euro · pay"],["nationality","country · from · person"],
- ["modern","new · old · now"],["dangerous","safe · careful · risk"],["island","water · around · sea"],["desert","sand · hot · dry"]];
+var TABOO=[
+ ["add (numbers)","translate it · spell it · say the first letter"],
+ ["call a friend","translate it · spell it · say the first letter"],
+ ["carry","translate it · spell it · say the first letter"],
+ ["catch (a ball)","translate it · spell it · say the first letter"],
+ ["clean (your room)","translate it · spell it · say the first letter"],
+ ["climb (a mountain)","translate it · spell it · say the first letter"],
+ ["cook","translate it · spell it · say the first letter"],
+ ["dance","translate it · spell it · say the first letter"],
+ ["fly (a plane)","translate it · spell it · say the first letter"],
+ ["jump (into a pool)","translate it · spell it · say the first letter"],
+ ["play football","translate it · spell it · say the first letter"],
+ ["repair (a bike)","translate it · spell it · say the first letter"]];
 
 
 // озвучка английского (браузерный синтез, en-GB)
@@ -331,7 +355,7 @@ function quizGame(){
   var qs=[];
   shuffle(COUNTRIES).slice(0,4).forEach(function(c){
     var wrong=shuffle(COUNTRIES.filter(function(x){return x[1]!==c[1]})).slice(0,3).map(function(x){return x[1]});
-    qs.push({q:"People from "+c[0]+" are…",a:c[1],opts:shuffle([c[1]].concat(wrong))});
+    qs.push({q:""+c[0]+"",a:c[1],opts:shuffle([c[1]].concat(wrong))});
   });
   shuffle(ADJ).slice(0,3).forEach(function(p){
     var wrong=shuffle(ADJ.filter(function(x){return x[1]!==p[1]})).slice(0,3).map(function(x){return x[1]});
@@ -388,7 +412,7 @@ function spellGame(){
     }
     var c=deck[i];
     h.appendChild(el("div","hintline","Type the nationality · spelling counts! · "+(i+1)+"/"+deck.length));
-    h.appendChild(el("div","big","People from "+c[0]+" are…"));
+    h.appendChild(el("div","big",""+c[0]+""));
     var inp=el("input","opt");inp.style.width="min(400px,90%)";inp.style.textAlign="center";inp.autocapitalize="off";
     inp.placeholder="type here…";h.appendChild(inp);
     var res=el("div","reveal","");h.appendChild(res);
@@ -539,7 +563,10 @@ function tttCompGame(){
   function winner(){
     for(var k=0;k<LINES.length;k++){
       var m=LINES[k].map(function(x){return cells[x].own});
-      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2]){
+        LINES[k].forEach(function(x){cells[x].el.classList.add("winline")});
+        return m[0];
+      }
     }
     return cells.every(function(c){return c.own})?"draw":null;
   }
@@ -639,7 +666,10 @@ function tttxGame(){
     var L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     for(var k=0;k<L.length;k++){
       var m=L[k].map(function(x){return cells[x].own});
-      if(m[0]&&m[0]===m[1]&&m[1]===m[2])return m[0];
+      if(m[0]&&m[0]===m[1]&&m[1]===m[2]){
+        L[k].forEach(function(x){cells[x].el.classList.add("winline")});
+        return m[0];
+      }
     }
     return null;
   }
