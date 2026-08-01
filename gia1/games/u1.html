@@ -79,6 +79,15 @@ section{display:none}section.on{display:block}
 .reveal{font-size:clamp(20px,4.5vw,34px);font-weight:800;color:var(--ok);min-height:1.3em;text-shadow:0 0 14px rgba(46,255,158,.5)}
 .strike{text-decoration:line-through;color:var(--bad)}
 .streakfire{font-size:13px;color:var(--y);font-weight:800}
+.spk{background:rgba(255,255,255,.14);border:none;border-radius:10px;padding:5px 10px;margin-left:8px;
+ font-size:15px;cursor:pointer;color:#fff;font-family:inherit}
+.spk:active{transform:scale(.94)}
+.compsay{background:linear-gradient(160deg,rgba(46,230,255,.2),rgba(46,230,255,.07));border:1.5px solid var(--cyan);
+ border-radius:14px;padding:10px 14px;margin:10px auto;max-width:640px;font-weight:800;
+ font-size:clamp(15px,3.4vw,20px);color:#cdf6ff;display:flex;align-items:center;justify-content:center;gap:6px;
+ animation:markfly .45s cubic-bezier(.2,1.3,.4,1) both}
+.compsay small{display:block;font-weight:600;color:var(--mut);font-size:12px}
+
 
 /* крестики на перевод */
 .tttg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:640px;margin:12px auto}
@@ -217,6 +226,24 @@ var TABOO=[["beach","sea · sand · swim"],["mountain","high · climb · snow"],
  ["capital","city · main · country"],["currency","money · euro · pay"],["nationality","country · from · person"],
  ["modern","new · old · now"],["dangerous","safe · careful · risk"],["island","water · around · sea"],["desert","sand · hot · dry"]];
 
+
+// озвучка английского (браузерный синтез, en-GB)
+function say(txt){
+  try{
+    window.speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(txt);
+    u.lang="en-GB"; u.rate=.9;
+    var vs=window.speechSynthesis.getVoices();
+    var v=vs.find(function(x){return /en-GB/i.test(x.lang)})||vs.find(function(x){return /^en/i.test(x.lang)});
+    if(v)u.voice=v;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function sayBtn(txt){ // кнопка-динамик рядом с английским
+  var b=el("button","spk","🔊");
+  b.addEventListener("click",function(e){e.stopPropagation();say(txt)});
+  return b;
+}
 function rnd(){rnd._s=(rnd._s*9301+49297)%233280;return rnd._s/233280} rnd._s=Math.floor((performance.now()*17)%233280)+1;
 function pick(a){return a[Math.floor(rnd()*a.length)]}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
@@ -285,7 +312,7 @@ function flashGame(){
     var fl=el("div","flash");var fin=el("div","flin");
     var f1=el("div","fface ffront",c[0]);var f2=el("div","fface fback",c[1]);
     fin.appendChild(f1);fin.appendChild(f2);fl.appendChild(fin);
-    fl.addEventListener("click",function(){fl.classList.toggle("fl")});
+    fl.addEventListener("click",function(){fl.classList.toggle("fl");if(fl.classList.contains("fl"))say(c[1])});
     h.appendChild(el("div","hintline","Tap the card to flip · "+(i+1)+"/"+deck.length));
     h.appendChild(fl);
     var row=el("div","frow");
@@ -439,7 +466,12 @@ function blitz(){
   var rev=el("div","reveal","");
   var tm=mkTimer(5);
   var next=el("button","btn","Next word →");
-  big.addEventListener("click",function(){if(i>=0)rev.textContent=deck[i%deck.length][1]});
+  big.addEventListener("click",function(){
+    if(i<0)return;
+    var en=deck[i%deck.length][1];
+    rev.replaceChildren();rev.appendChild(document.createTextNode(en));rev.appendChild(sayBtn(en));
+    say(en);
+  });
   next.addEventListener("click",function(){i++;var c=deck[i%deck.length];big.textContent=c[0];rev.textContent="";});
   var back=el("button","btn ghost","✕");back.addEventListener("click",classBack);
   h.appendChild(hint);h.appendChild(big);h.appendChild(rev);h.appendChild(tm);
@@ -491,6 +523,7 @@ function tttCompGame(){
   var h=el("div");hArena.appendChild(h);
   h.appendChild(el("div","hintline","You are ✕. Pick a square, translate the sentence ALOUD, then check yourself honestly. Got it → your square. Not yet → the computer ◯ moves!"));
   var status=el("div","memoinfo","Your turn ✕");
+  var compBox=el("div");
   var board=el("div","tttg");
   var panel=el("div","tttmodal");panel.style.display="none";
   var pTxt=el("div","big","");pTxt.style.fontSize="clamp(17px,4vw,26px)";
@@ -530,10 +563,20 @@ function tttCompGame(){
     if(mv<0&&!cells[4].own)mv=4;     // центр
     if(mv<0)mv=free[Math.floor(rnd()*free.length)];
     cells[mv].own="b";cells[mv].el.classList.add("taken-b");landMark(cells[mv].el,"b");
+    // компьютер показывает и озвучивает свой перевод
+    compBox.replaceChildren();
+    var cs=el("div","compsay");
+    var t=el("div");
+    t.appendChild(el("small","","🤖 Computer says:"));
+    t.appendChild(document.createTextNode(cells[mv].en));
+    cs.appendChild(t); cs.appendChild(sayBtn(cells[mv].en));
+    compBox.appendChild(cs);
+    say(cells[mv].en);
     if(!endCheck())status.textContent="Your turn ✕";
   }
   function build(){
     board.replaceChildren();cells=[];over=false;active=null;panel.style.display="none";
+    compBox.replaceChildren();
     status.textContent="Your turn ✕";
     shuffle(TRANSLATE).slice(0,9).forEach(function(p){
       var c={ru:p[0],en:p[1],own:null};
@@ -547,7 +590,13 @@ function tttCompGame(){
     });
   }
   var show=el("button","w-no","Show answer");
-  show.addEventListener("click",function(){if(active)pRev.textContent=active.c.en});
+  show.addEventListener("click",function(){
+    if(!active)return;
+    pRev.replaceChildren();
+    pRev.appendChild(document.createTextNode(active.c.en));
+    pRev.appendChild(sayBtn(active.c.en));
+    say(active.c.en);
+  });
   var got=el("button","w-a","I got it ✓");
   got.addEventListener("click",function(){
     if(!active)return;
@@ -566,7 +615,7 @@ function tttCompGame(){
   panel.appendChild(pTxt);panel.appendChild(pRev);panel.appendChild(btns);
   var again=el("button","btn","New game 🔄");again.addEventListener("click",build);
   var back=el("button","btn ghost","Menu");back.addEventListener("click",homeBack);
-  h.appendChild(status);h.appendChild(board);h.appendChild(panel);
+  h.appendChild(status);h.appendChild(compBox);h.appendChild(board);h.appendChild(panel);
   h.appendChild(again);h.appendChild(document.createTextNode(" "));h.appendChild(back);
   build();
 }
@@ -604,7 +653,13 @@ function tttxGame(){
       c.el=d;cells.push(c);board.appendChild(d);
     });
   }
-  pTxt.addEventListener("click",function(){if(active)pRev.textContent=active.c.en});
+  pTxt.addEventListener("click",function(){
+    if(!active)return;
+    pRev.replaceChildren();
+    pRev.appendChild(document.createTextNode(active.c.en));
+    pRev.appendChild(sayBtn(active.c.en));
+    say(active.c.en);
+  });
   [["✕ takes it","a","w-a"],["◯ takes it","b","w-b"],["Nobody ✗","no","w-no"]].forEach(function(cfg){
     var b=el("button",cfg[2],cfg[0]);
     b.addEventListener("click",function(){
@@ -687,6 +742,7 @@ function memoGame(arena,solo){
     mc.addEventListener("click",function(){
       if(lock||mc.classList.contains("done")||mc===open?.mc)return;
       mc.classList.add("open");flips++;
+      if(c.lang==="en")say(c.txt);
       if(!open){open={mc:mc,c:c};info.textContent="Pairs: "+found+"/8 · Flips: "+flips;return;}
       lock=true;
       var a=open,b={mc:mc,c:c};
