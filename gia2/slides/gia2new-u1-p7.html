@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>U1 · Pair 7 · Choose subjects with reasons (two pluses each) · Get Involved A1+</title>
+<style>
+:root{--p:#6C3FC5;--y:#F5C842;--pink:#FF2E93;--cyan:#2EE6FF;--lime:#B8FF2E;--orange:#FF7A2E;
+ --bg:#0b0817;--card:rgba(255,255,255,.06);--text:#ffffff;--mut:#b3a8dd;
+ --ok:#2EFF9E;--bad:#FF3D5A;--f:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ --grad:linear-gradient(93deg,#FF2E93 0%,#FF7A2E 30%,#F5C842 55%,#2EE6FF 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--f);background:var(--bg);color:var(--text);overflow:hidden}
+/* неоновые пятна фона */
+body::before,body::after{content:"";position:fixed;border-radius:50%;filter:blur(90px);opacity:.5;z-index:0;pointer-events:none}
+body::before{width:56vw;height:56vw;left:-18vw;top:-18vw;background:radial-gradient(circle,#6C3FC5,transparent 70%)}
+body::after{width:50vw;height:50vw;right:-15vw;bottom:-18vw;background:radial-gradient(circle,#FF2E93,transparent 70%)}
+/* stories progress */
+.stories{position:fixed;top:10px;left:14px;right:14px;display:flex;gap:5px;z-index:60}
+.stories i{flex:1;height:4px;border-radius:99px;background:rgba(255,255,255,.18)}
+.stories i.done{background:var(--grad)}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+ padding:6vh 6vw 8vh;text-align:center;gap:2.6vh;z-index:1}
+.slide.on{display:flex}
+.kicker{display:inline-block;font-size:clamp(12px,1.5vw,17px);font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{font-size:clamp(34px,7vw,86px);line-height:1.04;font-weight:800;letter-spacing:-.02em}
+h1 .gr,h2 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(24px,4vw,50px);line-height:1.1;font-weight:800;letter-spacing:-.01em}
+.sub{font-size:clamp(15px,2vw,24px);color:var(--mut);max-width:900px;line-height:1.4}
+.sub b{color:#fff}
+.big{font-size:clamp(40px,9vw,120px);font-weight:800}
+.sticker{display:inline-block;background:var(--y);color:#1a1205;font-weight:800;border-radius:14px;
+ padding:.5em 1.1em;font-size:clamp(15px,2vw,23px);transform:rotate(-2deg);box-shadow:0 8px 30px rgba(245,200,66,.45)}
+.sticker.p{background:var(--pink);color:#fff;transform:rotate(1.5deg);box-shadow:0 8px 30px rgba(255,46,147,.5)}
+.pill{display:inline-block;background:var(--card);border:1.5px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);
+ border-radius:999px;padding:.55em 1.3em;font-size:clamp(14px,1.8vw,20px);font-weight:700}
+.rules{display:flex;flex-direction:column;gap:1.4vh;max-width:880px;text-align:left}
+.rule{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-left:5px solid var(--pink);
+ border-radius:16px;padding:1.5vh 1.5vw;font-size:clamp(15px,2.1vw,25px);font-weight:600}
+.rule:nth-child(2){border-left-color:var(--y)}
+.rule:nth-child(3){border-left-color:var(--cyan)}
+.rule b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* таймер — неон */
+.timer{font-variant-numeric:tabular-nums;font-size:clamp(64px,17vw,210px);font-weight:800;line-height:1;cursor:pointer;
+ user-select:none;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+ filter:drop-shadow(0 0 18px rgba(255,46,147,.55))}
+.timer.warn{filter:drop-shadow(0 0 26px rgba(245,200,66,.9))}
+.timer.end{animation:blink .5s steps(2) infinite;filter:drop-shadow(0 0 30px rgba(255,61,90,.9))}
+@keyframes blink{50%{opacity:.25}}
+.thint{font-size:clamp(12px,1.4vw,16px);color:var(--mut)}
+/* rewind */
+.qa{display:flex;flex-direction:column;gap:1.6vh;width:min(900px,92vw)}
+.q{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:18px;
+ padding:1.8vh 1.6vw;font-size:clamp(17px,2.4vw,28px);font-weight:700;cursor:pointer;text-align:left;
+ display:flex;justify-content:space-between;gap:1em;align-items:center;transition:transform .12s}
+.q:active{transform:scale(.985)}
+.q .a{color:var(--ok);opacity:0;transition:opacity .2s;font-weight:800;white-space:nowrap;text-shadow:0 0 14px rgba(46,255,158,.6)}
+.q.open .a{opacity:1}
+.q .hintdot{color:var(--mut);font-size:.65em}
+/* brain teaser */
+.bt{display:flex;flex-direction:column;gap:1.1vh;width:min(900px,94vw)}
+.btq{background:var(--card);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:16px;
+ padding:1.3vh 1.4vw;font-size:clamp(15px,2vw,24px);display:flex;align-items:center;gap:1em;cursor:pointer;text-align:left}
+.btq .ltr{flex:0 0 auto;width:2em;height:2em;border-radius:12px;background:rgba(255,255,255,.08);display:flex;align-items:center;
+ justify-content:center;font-weight:800;font-size:1.2em;color:transparent;transition:all .25s}
+.btq.open .ltr{background:var(--grad);color:#140b06;box-shadow:0 0 18px rgba(255,122,46,.6)}
+.btword{font-size:clamp(32px,6.5vw,80px);font-weight:800;letter-spacing:.22em;min-height:1.2em;
+ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+ filter:drop-shadow(0 0 16px rgba(46,230,255,.5))}
+/* лидерборд */
+.lb{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2vw;width:min(1000px,94vw)}
+.team{background:var(--card);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:22px;
+ padding:2.4vh 1.4vw;display:flex;flex-direction:column;gap:1.2vh;align-items:center}
+.team input{background:transparent;border:none;border-bottom:2px dashed rgba(255,255,255,.3);color:var(--text);
+ font-family:inherit;font-size:clamp(16px,2vw,24px);font-weight:800;text-align:center;width:90%}
+.team .score{font-size:clamp(42px,7vw,92px);font-weight:800;background:var(--grad);
+ -webkit-background-clip:text;background-clip:text;color:transparent}
+.team .btns{display:flex;gap:.5em}
+.team button{font-family:inherit;font-weight:800;font-size:clamp(14px,1.6vw,20px);border:none;border-radius:12px;
+ padding:.45em .85em;cursor:pointer;background:var(--grad);color:#140b06}
+.team button.minus{background:rgba(255,255,255,.12);color:#fff}
+/* навигация */
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:10px 16px;z-index:50}
+.nav .prog{flex:1;font-size:12px;color:var(--mut)}
+.nav button{font-family:inherit;font-weight:800;border:none;border-radius:12px;padding:10px 18px;font-size:15px;
+ cursor:pointer;background:rgba(255,255,255,.1);color:var(--text)}
+.nav button.next{background:var(--grad);color:#140b06;box-shadow:0 6px 24px rgba(255,46,147,.4)}
+.stage-tag{position:fixed;top:24px;left:16px;font-size:11px;color:var(--mut);letter-spacing:.12em;z-index:50}
+.brand{position:fixed;top:24px;right:16px;font-size:12px;font-weight:800;z-index:50;
+ background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.batt{display:flex;gap:3vw;align-items:flex-end}
+.batt .bar{width:clamp(30px,5vw,58px);border-radius:12px 12px 6px 6px;background:var(--card);border:1.5px solid rgba(255,255,255,.25);position:relative;overflow:hidden}
+.batt .bar i{position:absolute;left:0;right:0;bottom:0;border-radius:0}
+.batt .b1{height:clamp(60px,12vh,120px)}.batt .b1 i{height:22%;background:var(--bad)}
+.batt .b2{height:clamp(80px,16vh,160px)}.batt .b2 i{height:55%;background:var(--y)}
+.batt .b3{height:clamp(100px,20vh,200px)}.batt .b3 i{height:92%;background:var(--ok)}
+.onair{display:inline-flex;align-items:center;gap:.5em;background:rgba(255,61,90,.15);border:1.5px solid var(--bad);
+ color:#fff;border-radius:999px;padding:.5em 1.2em;font-weight:800;font-size:clamp(15px,2vw,22px)}
+.onair::before{content:"";width:.7em;height:.7em;border-radius:50%;background:var(--bad);
+ box-shadow:0 0 12px var(--bad);animation:blink 1s steps(2) infinite}
+</style>
+</head>
+<body>
+<div class="stories" id="stories"></div>
+<div class="stage-tag" id="stagetag">GET INVOLVED A2 · U1 · PAIR 7</div>
+<div class="brand">Speak&amp;Smile</div>
+
+<section class="slide on" data-tag="START">
+  <div class="kicker">U1 · pair 7 of 8</div>
+  <h1>Choose subjects with reasons (two pluses <span class="gr">each)</span></h1>
+  <div class="sticker">Ready? Let's go!</div>
+</section>
+
+<section class="slide" data-tag="AIMS">
+  <div class="kicker">By the end of today you can</div>
+  <h2>Today you <span class="gr">can</span></h2>
+  <div class="rules">
+    <div class="rule">choose subjects with reasons (two pluses each)</div>
+    <div class="rule">use project phrases in the crew</div>
+    <div class="rule">present a timetable with the crew (speaker with notes)</div>
+    <div class="rule">pass four revision stations</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="0–6′ · Opening">
+  <div class="kicker">0–6′</div>
+  <h2><span class="gr">Opening</span></h2>
+  <div class="rules">
+    <div class="rule">One line from YOUR post — from memory. Go around!</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="6–8′ · Mission brief">
+  <div class="kicker">6–8′</div>
+  <h2>Mission <span class="gr">brief</span></h2>
+  <div class="rules">
+    <div class="rule">Your school. Your timetable. Four checks before it opens. Then the class chooses.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="8–20′ · THINK">
+  <div class="kicker">8–20′</div>
+  <h2><span class="gr">THINK</span></h2>
+  <div class="rules">
+    <div class="rule">Six candidates. TWO pluses each — then choose four. Use the cards: I'd like to learn… Wait a moment…</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="20–40′ ·">
+  <div class="kicker">20–40′</div>
+  <h2><span class="gr"></span></h2>
+  <div class="rules">
+    <div class="rule">Four inspections. Five minutes each. Station cards help you!</div>
+  </div>
+  <div class="timer" data-sec="300">5:00</div>
+  <div class="thint">tap to start / pause · double-tap to reset</div>
+</section>
+
+<section class="slide" data-tag="40–45′ · PLAN">
+  <div class="kicker">40–45′</div>
+  <h2><span class="gr">PLAN</span></h2>
+  <div class="rules">
+    <div class="rule">The grid: subjects, times, and — the school NAME. Make it yours!</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="45–47′ ·">
+  <div class="kicker">45–47′</div>
+  <h2><span class="gr"></span></h2>
+  <div class="pill">—</div>
+  <div class="rules">
+    <div class="rule">School gym minute: stretch — PE! freeze — art! sing one note — music!</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="47–60′ · CREATE · +">
+  <div class="kicker">47–60′</div>
+  <h2>CREATE · <span class="gr">+</span></h2>
+  <div class="rules">
+    <div class="rule">Poster: name, grid, two reasons. Speaker practises ONCE with notes.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="60–76′ · PRESENT">
+  <div class="kicker">60–76′</div>
+  <h2><span class="gr">PRESENT</span></h2>
+  <div class="rules">
+    <div class="rule">Grand opening! Crew together, speaker with notes: name, timetable, two reasons.</div>
+    <div class="rule">thumbs up for your favourite subject; then vote — one dot, not your own school.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="76–84′ · +">
+  <div class="kicker">76–84′</div>
+  <h2><span class="gr">+</span></h2>
+  <div class="rules">
+    <div class="rule">Your power list = what to practise. Twenty minutes at home beats two hours!</div>
+    <div class="rule">Thursday we show what we know — with the official check.</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="84–90′ · Wrap-up + DZ">
+  <div class="kicker">84–90′</div>
+  <h2>Wrap-up + <span class="gr">DZ</span></h2>
+  <div class="rules">
+    <div class="rule">You built a school today. A test is smaller than a school. See you!</div>
+  </div>
+</section>
+
+<section class="slide" data-tag="SCORES">
+  <div class="kicker">U1 leaderboard</div>
+  <h2>🏆 Team <span class="gr">scores</span></h2>
+  <div class="lb" id="lb"></div>
+  <div class="thint">scores are saved on this computer</div>
+</section>
+
+<section class="slide" data-tag="WRAP-UP">
+  <div class="kicker">Check yourself · tap what you can do</div>
+  <h2>I <span class="gr">can</span>…</h2>
+  <div class="qa">
+    <div class="q"><span>choose subjects with reasons (two pluses each)</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+    <div class="q"><span>use project phrases in the crew</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+    <div class="q"><span>present a timetable with the crew (speaker with notes)</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+    <div class="q"><span>pass four revision stations</span><span class="a">✓</span><span class="hintdot">tap</span></div>
+  </div>
+  <div class="sticker">Homework · your task from the teacher</div>
+</section>
+
+<div class="nav">
+  <button id="prev">‹ Back</button>
+  <div class="prog" id="prog"></div>
+  <button class="next" id="next">Next ›</button>
+</div>
+<script>
+var DECK='GET INVOLVED A2 · U1 · PAIR 7';
+var LBKEY_='gia2new-u1-lb';
+
+// ---- слайды ----
+var slides=[].slice.call(document.querySelectorAll(".slide")), cur=0;
+var stories=document.getElementById("stories");
+slides.forEach(function(){ stories.appendChild(document.createElement("i")); });
+var tag=document.getElementById("stagetag"), prog=document.getElementById("prog");
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach(function(s,k){s.classList.toggle("on",k===cur)});
+  tag.textContent=DECK+" · "+(slides[cur].dataset.tag||"");
+  prog.textContent=(cur+1)+" / "+slides.length;
+  [].slice.call(stories.children).forEach(function(el,k){el.classList.toggle("done",k<=cur)});
+  try{ history.replaceState(null,"","#"+(cur+1)); }catch(e){}
+  stopAllTimers();
+}
+document.getElementById("prev").addEventListener("click",function(){show(cur-1)});
+document.getElementById("next").addEventListener("click",function(){show(cur+1)});
+document.addEventListener("keydown",function(e){
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();show(cur+1);}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(cur-1);}
+});
+// ---- таймеры ----
+var timers=[].slice.call(document.querySelectorAll(".timer"));
+function fmt(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+timers.forEach(function(el){
+  var total=parseInt(el.dataset.sec,10), left=total, iv=null, lastTap=0;
+  function draw(){
+    el.textContent=fmt(left);
+    el.classList.toggle("warn",left<=10&&left>0);
+    el.classList.toggle("end",left===0);
+  }
+  function tick(){ if(left>0){left--;draw(); if(left===0){stop(); beep();}} }
+  function start(){ if(iv)return; iv=setInterval(tick,1000); }
+  function stop(){ if(iv){clearInterval(iv);iv=null;} }
+  el._stop=stop;
+  el.addEventListener("click",function(){
+    var now=Date.now();
+    if(now-lastTap<350){ stop(); left=total; draw(); lastTap=0; return; } // двойной тап — сброс
+    lastTap=now;
+    if(iv) stop(); else start();
+  });
+  draw();
+});
+function stopAllTimers(){ timers.forEach(function(t){ if(t._stop) t._stop(); }); }
+function beep(){
+  try{
+    var ctx=new (window.AudioContext||window.webkitAudioContext)();
+    var o=ctx.createOscillator(), g=ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value=880; g.gain.value=.15;
+    o.start(); setTimeout(function(){o.stop(); ctx.close();},450);
+  }catch(e){}
+}
+// ---- rewind: тап открывает ответ ----
+[].slice.call(document.querySelectorAll(".q")).forEach(function(q){
+  q.addEventListener("click",function(){q.classList.add("open")});
+});
+// ---- brain teaser ----
+var btWord="", btEl=document.getElementById("btword");
+[].slice.call(document.querySelectorAll(".btq")).forEach(function(q,i,arr){
+  q.addEventListener("click",function(){
+    if(q.classList.contains("open"))return;
+    q.classList.add("open");
+    btWord=arr.filter(function(x){return x.classList.contains("open")})
+              .map(function(x){return x.querySelector(".ltr").textContent}).join("");
+    if(btEl) btEl.textContent=btWord;
+  });
+});
+// ---- лидерборд (localStorage) ----
+var LBKEY=LBKEY_;
+function lbLoad(){
+  try{ return JSON.parse(localStorage.getItem(LBKEY)) || null; }catch(e){ return null; }
+}
+function lbSave(d){ try{ localStorage.setItem(LBKEY, JSON.stringify(d)); }catch(e){} }
+var lbData = lbLoad() || [{n:"Crew 1",s:0},{n:"Crew 2",s:0},{n:"Crew 3",s:0}];
+var lbBox=document.getElementById("lb");
+if(!lbBox){ lbRender=function(){}; }
+function lbRender(){
+  while(lbBox.firstChild) lbBox.removeChild(lbBox.firstChild);
+  lbData.forEach(function(t,i){
+    var d=document.createElement("div"); d.className="team";
+    var inp=document.createElement("input"); inp.value=t.n;
+    inp.addEventListener("change",function(){ t.n=inp.value; lbSave(lbData); });
+    var sc=document.createElement("div"); sc.className="score"; sc.textContent=t.s;
+    var btns=document.createElement("div"); btns.className="btns";
+    [["+1",1],["+3",3],["+5",5],["−1",-1]].forEach(function(pair){
+      var b=document.createElement("button"); b.textContent=pair[0];
+      if(pair[1]<0)b.className="minus";
+      b.addEventListener("click",function(){ t.s=Math.max(0,t.s+pair[1]); sc.textContent=t.s; lbSave(lbData); });
+      btns.appendChild(b);
+    });
+    d.appendChild(inp); d.appendChild(sc); d.appendChild(btns);
+    lbBox.appendChild(d);
+  });
+}
+lbRender();
+// открыть сразу нужный слайд: файл.html#7 (ссылка из плана/Хаба)
+var _st=parseInt((location.hash||"").replace("#",""),10);
+show(isNaN(_st)?0:_st-1);
+
+</script>
+<!-- линия: новые 🌱 · собрано из каркаса плана GIA2new-U1-P7 -->
+</body>
+</html>
