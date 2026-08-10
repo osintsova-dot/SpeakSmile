@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>A2 · Unit 1 · School life · Games · Get Involved A2</title>
+<title>A2 · Unit 4 · Extremes · Games · Get Involved A2</title>
 <style>
 :root{--p:#6C3FC5;--y:#F5C842;--pink:#FF2E93;--cyan:#2EE6FF;--ok:#2EFF9E;--bad:#FF3D5A;
  --bg:#0b0817;--card:rgba(255,255,255,.07);--text:#fff;--mut:#b3a8dd;
@@ -145,7 +145,7 @@ section{display:none}section.on{display:block}
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>A2 · Unit 1 · <span class="gr">School life</span> — Games</h1>
+    <h1>A2 · Unit 4 · <span class="gr">Extremes</span> — Games</h1>
     <a href="index.html">← Units</a>
   </div>
 
@@ -167,7 +167,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
       <div class="gcard" data-g="tttc"><span class="em">🤖</span>Tic-Tac vs Computer<div class="d">translate to take a square</div></div>
-      <a class="gcard" href="u1-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling vs Computer<div class="d">translate → roll the ball!</div></a>
+      <a class="gcard" href="u4-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling vs Computer<div class="d">translate → roll the ball!</div></a>
     </div>
     <div class="arena" id="homeArena" style="display:none"></div>
   </section>
@@ -179,7 +179,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="mistake"><span class="em">🕵️</span>Spot the Mistake<div class="d">find & fix</div></div>
       <div class="gcard" data-g="race"><span class="em">🏁</span>Sentence Race<div class="d">unscramble fast</div></div>
       <div class="gcard" data-g="tttx"><span class="em">⭕</span>Tic-Tac-Translate<div class="d">translate → take the square</div></div>
-      <a class="gcard" href="u1-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling / Basketball<div class="d">translate → roll the ball!</div></a>
+      <a class="gcard" href="u4-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling / Basketball<div class="d">translate → roll the ball!</div></a>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match the sentence</div></div>
       <div class="gcard" data-g="taboo"><span class="em">🪑</span>Hot Seat + Taboo<div class="d">back to the screen!</div></div>
     </div>
@@ -189,74 +189,80 @@ section{display:none}section.on{display:block}
 </div>
 
 <script>
-// ============ ДАННЫЕ UNIT 1 (из контент-слоя) ============
+// ============ ДАННЫЕ UNIT 4 ============
 var COUNTRIES=[
- ["wake up","просыпаться"],
- ["get up","вставать"],
- ["get dressed","одеваться"],
- ["have breakfast","завтракать"],
- ["pack my bag","собирать рюкзак"],
- ["go to school","идти в школу"],
- ["have a break","быть на перемене"],
- ["have lunch","обедать"],
- ["finish school","заканчивать уроки"],
- ["do homework","делать домашку"],
- ["have dinner","ужинать"],
- ["go to bed","ложиться спать"],
- ["tidy my room","убирать комнату"],
- ["have a shower","принимать душ"]];
+ ["freezing","очень холодный"],
+ ["foggy","туманный"],
+ ["icy","обледенелый"],
+ ["frosty","морозный"],
+ ["cloudy","облачный"],
+ ["showers","кратковременные дожди"],
+ ["thunderstorms","грозы"],
+ ["wind","ветер"],
+ ["snow","снег"],
+ ["dry","сухой"],
+ ["wet","мокрый, сырой"],
+ ["backpack","рюкзак"],
+ ["suitcase","чемодан"],
+ ["toothpaste","зубная паста"],
+ ["water bottle","бутылка для воды"],
+ ["sun cream","крем от солнца"]];
 var ADJ=[
- ["biology","science"],
- ["chemistry","science"],
- ["physics","science"],
- ["art","creative"],
- ["drama","creative"],
- ["music","creative"],
- ["French","language"],
- ["German","language"],
- ["history","humanities"],
- ["maths","other"]];
+ ["spring","season"],
+ ["autumn","season"],
+ ["winter","season"],
+ ["fog","weather noun"],
+ ["ice","weather noun"],
+ ["frost","weather noun"],
+ ["foggy","weather adjective"],
+ ["icy","weather adjective"],
+ ["freezing","weather adjective"],
+ ["backpack","trip item"],
+ ["penknife","trip item"],
+ ["toothbrush","trip item"]];
 var MISTAKES=[
- ["He go to school at eight.","He goes to school at eight."],
- ["She don't like chemistry.","She doesn't like chemistry."],
- ["Does she likes PE?","Does she like PE?"],
- ["He studys English.","He studies English."],
- ["I like she.","I like her."],
- ["My school start at nine.","My school starts at nine."],
- ["They doesn't wear a uniform.","They don't wear a uniform."],
- ["Do you has breakfast?","Do you have breakfast?"],
- ["She haves lunch at school.","She has lunch at school."],
- ["i live in norilsk.","I live in Norilsk."]];
-var SENTENCES=["I get up at seven o'clock","He wakes up at six","We have breakfast before school","She doesn't go to an online school","Lessons start at nine","Do you do homework in the evening","He doesn't like chemistry","We have maths on Mondays","She studies French","What time does school finish","I pack my bag in the morning","They don't wear a uniform"];
+ ["Today is more cold than yesterday.","Today is colder than yesterday."],
+ ["It's the most hot day of the year.","It's the hottest day of the year."],
+ ["Siberia is colder that India.","Siberia is colder than India."],
+ ["This is the more difficult test.","This is the most difficult test."],
+ ["You must to wear a coat.","You must wear a coat."],
+ ["You don't must swim here.","You mustn't swim here."],
+ ["Can we to take photos?","Can we take photos?"],
+ ["The weather is gooder today.","The weather is better today."],
+ ["May is the wetest month.","May is the wettest month."],
+ ["It's more windy than yesterday.","It's windier than yesterday."]];
+var SENTENCES=["Today is colder than yesterday","This is the coldest town in the world","Winter is longer than summer","It's the windiest day of the year","You must wear a warm jacket","You mustn't make a fire here","You can take photos in the park","You can't leave food in your backpack","The weather is better than yesterday","It's the worst day for a walk","It's hotter in summer than in spring","Don't forget your toothbrush"];
 
 var TRANSLATE=[
- ["Я встаю в семь часов.","I get up at seven o'clock."],
- ["Он просыпается в шесть.","He wakes up at six."],
- ["Мы завтракаем перед школой.","We have breakfast before school."],
- ["Она не ходит в онлайн-школу.","She doesn't go to an online school."],
- ["Уроки начинаются в девять.","Lessons start at nine."],
- ["Ты делаешь домашку вечером?","Do you do homework in the evening?"],
- ["Он не любит химию.","He doesn't like chemistry."],
- ["У нас математика по понедельникам.","We have maths on Mondays."],
- ["Она изучает французский.","She studies French."],
- ["Во сколько заканчивается школа?","What time does school finish?"],
- ["Я собираю рюкзак утром.","I pack my bag in the morning."],
- ["Они не носят форму.","They don't wear a uniform."],
- ["Мой брат ложится спать в десять.","My brother goes to bed at ten."],
- ["Ты любишь физкультуру? — Да!","Do you like PE? — Yes, I do!"]];
+ ["Сегодня холоднее, чем вчера.","Today is colder than yesterday."],
+ ["Это самый холодный город в мире.","This is the coldest town in the world."],
+ ["Зима длиннее, чем лето.","Winter is longer than summer."],
+ ["Это самый ветреный день в году.","It's the windiest day of the year."],
+ ["Ты должен надеть тёплую куртку.","You must wear a warm jacket."],
+ ["Здесь нельзя разводить костёр.","You mustn't make a fire here."],
+ ["В парке можно фотографировать.","You can take photos in the park."],
+ ["Нельзя оставлять еду в рюкзаке.","You can't leave food in your backpack."],
+ ["Погода лучше, чем вчера.","The weather is better than yesterday."],
+ ["Это худший день для прогулки.","It's the worst day for a walk."],
+ ["Летом жарче, чем весной.","It's hotter in summer than in spring."],
+ ["Не забудь зубную щётку.","Don't forget your toothbrush."],
+ ["Возьми бутылку воды и крем от солнца.","Take a water bottle and some sun cream."],
+ ["Нам можно прийти в парк в марте?","Can we visit the park in March?"],
+ ["Сегодня туманно и сыро.","It's foggy and wet today."],
+ ["Ты должен идти со взрослым.","You must go with an adult."]];
 var TABOO=[
- ["do homework","translate it · spell it · mime it"],
- ["have breakfast","translate it · spell it · mime it"],
- ["go to bed","translate it · spell it · mime it"],
- ["wake up","translate it · spell it · mime it"],
- ["chemistry","translate it · spell it · mime it"],
- ["history","translate it · spell it · mime it"],
- ["PE","translate it · spell it · mime it"],
- ["library","translate it · spell it · mime it"],
- ["classmates","translate it · spell it · mime it"],
- ["grades","translate it · spell it · mime it"],
- ["pack my bag","translate it · spell it · mime it"],
- ["have a break","translate it · spell it · mime it"]];
+ ["thunderstorms","translate it · spell it · mime it"],
+ ["freezing","translate it · spell it · mime it"],
+ ["foggy","translate it · spell it · mime it"],
+ ["backpack","translate it · spell it · mime it"],
+ ["sun cream","translate it · spell it · mime it"],
+ ["toothbrush","translate it · spell it · mime it"],
+ ["penknife","translate it · spell it · mime it"],
+ ["suitcase","translate it · spell it · mime it"],
+ ["guidebook","translate it · spell it · mime it"],
+ ["phrase book","translate it · spell it · mime it"],
+ ["frost","translate it · spell it · mime it"],
+ ["autumn","translate it · spell it · mime it"]];
 
 
 // озвучка английского (браузерный синтез, en-GB)
@@ -293,7 +299,7 @@ mHome.addEventListener("click",function(){setMode("home")});
 mClass.addEventListener("click",function(){setMode("class");renderTeams()});
 
 // ============ ДОМ: игрок, стрики ============
-var PK="gia2-u1-player";
+var PK="gia2-u4-player";
 function pLoad(){try{return JSON.parse(localStorage.getItem(PK))||{}}catch(e){return{}}}
 function pSave(p){try{localStorage.setItem(PK,JSON.stringify(p))}catch(e){}}
 var P=pLoad();
@@ -440,7 +446,7 @@ function spellGame(){
 }
 
 // ============ КЛАСС: команды + игры ============
-var TK="gia2-u1-teams";
+var TK="gia2-u4-teams";
 var teams;try{teams=JSON.parse(localStorage.getItem(TK))||null}catch(e){teams=null}
 if(!teams)teams=[{n:"Crew 1",s:0},{n:"Crew 2",s:0},{n:"Crew 3",s:0}];
 function tSave(){try{localStorage.setItem(TK,JSON.stringify(teams))}catch(e){}}

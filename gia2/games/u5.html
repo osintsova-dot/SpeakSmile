@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>A2 · Unit 1 · School life · Games · Get Involved A2</title>
+<title>A2 · Unit 5 · Must try! · Games · Get Involved A2</title>
 <style>
 :root{--p:#6C3FC5;--y:#F5C842;--pink:#FF2E93;--cyan:#2EE6FF;--ok:#2EFF9E;--bad:#FF3D5A;
  --bg:#0b0817;--card:rgba(255,255,255,.07);--text:#fff;--mut:#b3a8dd;
@@ -145,7 +145,7 @@ section{display:none}section.on{display:block}
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>A2 · Unit 1 · <span class="gr">School life</span> — Games</h1>
+    <h1>A2 · Unit 5 · <span class="gr">Must try!</span> — Games</h1>
     <a href="index.html">← Units</a>
   </div>
 
@@ -167,7 +167,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
       <div class="gcard" data-g="tttc"><span class="em">🤖</span>Tic-Tac vs Computer<div class="d">translate to take a square</div></div>
-      <a class="gcard" href="u1-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling vs Computer<div class="d">translate → roll the ball!</div></a>
+      <a class="gcard" href="u5-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling vs Computer<div class="d">translate → roll the ball!</div></a>
     </div>
     <div class="arena" id="homeArena" style="display:none"></div>
   </section>
@@ -179,7 +179,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="mistake"><span class="em">🕵️</span>Spot the Mistake<div class="d">find & fix</div></div>
       <div class="gcard" data-g="race"><span class="em">🏁</span>Sentence Race<div class="d">unscramble fast</div></div>
       <div class="gcard" data-g="tttx"><span class="em">⭕</span>Tic-Tac-Translate<div class="d">translate → take the square</div></div>
-      <a class="gcard" href="u1-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling / Basketball<div class="d">translate → roll the ball!</div></a>
+      <a class="gcard" href="u5-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling / Basketball<div class="d">translate → roll the ball!</div></a>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match the sentence</div></div>
       <div class="gcard" data-g="taboo"><span class="em">🪑</span>Hot Seat + Taboo<div class="d">back to the screen!</div></div>
     </div>
@@ -189,74 +189,80 @@ section{display:none}section.on{display:block}
 </div>
 
 <script>
-// ============ ДАННЫЕ UNIT 1 (из контент-слоя) ============
+// ============ ДАННЫЕ UNIT 5 ============
 var COUNTRIES=[
- ["wake up","просыпаться"],
- ["get up","вставать"],
- ["get dressed","одеваться"],
- ["have breakfast","завтракать"],
- ["pack my bag","собирать рюкзак"],
- ["go to school","идти в школу"],
- ["have a break","быть на перемене"],
- ["have lunch","обедать"],
- ["finish school","заканчивать уроки"],
- ["do homework","делать домашку"],
- ["have dinner","ужинать"],
- ["go to bed","ложиться спать"],
- ["tidy my room","убирать комнату"],
- ["have a shower","принимать душ"]];
+ ["noodles","лапша"],
+ ["mushroom","гриб"],
+ ["onion","лук"],
+ ["grapes","виноград"],
+ ["melon","дыня"],
+ ["peas","горошек"],
+ ["herbs","зелень, травы"],
+ ["spices","специи"],
+ ["sauce","соус"],
+ ["yoghurt","йогурт"],
+ ["takeaway","еда навынос"],
+ ["food stalls","уличные лотки с едой"],
+ ["juice bar","сок-бар"],
+ ["department store","универмаг"],
+ ["music venue","концертная площадка"],
+ ["medical centre","поликлиника"]];
 var ADJ=[
- ["biology","science"],
- ["chemistry","science"],
- ["physics","science"],
- ["art","creative"],
- ["drama","creative"],
- ["music","creative"],
- ["French","language"],
- ["German","language"],
- ["history","humanities"],
- ["maths","other"]];
+ ["banana","fruit"],
+ ["grapes","fruit"],
+ ["melon","fruit"],
+ ["onion","vegetable"],
+ ["mushroom","vegetable"],
+ ["peas","vegetable"],
+ ["milk","dairy"],
+ ["butter","dairy"],
+ ["cheese","dairy"],
+ ["museum","place in town"],
+ ["juice bar","place in town"],
+ ["bus station","place in town"]];
 var MISTAKES=[
- ["He go to school at eight.","He goes to school at eight."],
- ["She don't like chemistry.","She doesn't like chemistry."],
- ["Does she likes PE?","Does she like PE?"],
- ["He studys English.","He studies English."],
- ["I like she.","I like her."],
- ["My school start at nine.","My school starts at nine."],
- ["They doesn't wear a uniform.","They don't wear a uniform."],
- ["Do you has breakfast?","Do you have breakfast?"],
- ["She haves lunch at school.","She has lunch at school."],
- ["i live in norilsk.","I live in Norilsk."]];
-var SENTENCES=["I get up at seven o'clock","He wakes up at six","We have breakfast before school","She doesn't go to an online school","Lessons start at nine","Do you do homework in the evening","He doesn't like chemistry","We have maths on Mondays","She studies French","What time does school finish","I pack my bag in the morning","They don't wear a uniform"];
+ ["There is some cafés in the street.","There are some cafés in the street."],
+ ["We haven't got some milk.","We haven't got any milk."],
+ ["How much libraries are there?","How many libraries are there?"],
+ ["How many bread do you need?","How much bread do you need?"],
+ ["There are a museum in my town.","There is a museum in my town."],
+ ["I'd like a rice, please.","I'd like some rice, please."],
+ ["Is there any cycle lanes?","Are there any cycle lanes?"],
+ ["We need a butter.","We need some butter."],
+ ["There isn't no food stalls here.","There aren't any food stalls here."],
+ ["Are there a bus stop near here?","Is there a bus stop near here?"]];
+var SENTENCES=["There is some milk in the fridge","We haven't got any eggs","Is there a museum in the town","Are there any bus stops near here","How much sugar do you need","How many restaurants are there in the city centre","I'd like some rice, please","There aren't any food stalls in the park","There is a cycle lane here","Add some oil and spices","This sauce is delicious","Is there an underground station near here"];
 
 var TRANSLATE=[
- ["Я встаю в семь часов.","I get up at seven o'clock."],
- ["Он просыпается в шесть.","He wakes up at six."],
- ["Мы завтракаем перед школой.","We have breakfast before school."],
- ["Она не ходит в онлайн-школу.","She doesn't go to an online school."],
- ["Уроки начинаются в девять.","Lessons start at nine."],
- ["Ты делаешь домашку вечером?","Do you do homework in the evening?"],
- ["Он не любит химию.","He doesn't like chemistry."],
- ["У нас математика по понедельникам.","We have maths on Mondays."],
- ["Она изучает французский.","She studies French."],
- ["Во сколько заканчивается школа?","What time does school finish?"],
- ["Я собираю рюкзак утром.","I pack my bag in the morning."],
- ["Они не носят форму.","They don't wear a uniform."],
- ["Мой брат ложится спать в десять.","My brother goes to bed at ten."],
- ["Ты любишь физкультуру? — Да!","Do you like PE? — Yes, I do!"]];
+ ["В холодильнике есть молоко.","There is some milk in the fridge."],
+ ["У нас нет яиц.","We haven't got any eggs."],
+ ["В городе есть музей?","Is there a museum in the town?"],
+ ["Рядом есть автобусные остановки?","Are there any bus stops near here?"],
+ ["Сколько сахара тебе нужно?","How much sugar do you need?"],
+ ["Сколько ресторанов в центре города?","How many restaurants are there in the city centre?"],
+ ["Я хотел бы немного риса, пожалуйста.","I'd like some rice, please."],
+ ["В парке нет уличной еды.","There aren't any food stalls in the park."],
+ ["Здесь есть велодорожка.","There is a cycle lane here."],
+ ["Добавь немного масла и специй.","Add some oil and spices."],
+ ["Этот соус очень вкусный.","This sauce is delicious."],
+ ["Рядом есть станция метро?","Is there an underground station near here?"],
+ ["Сколько у нас времени?","How much time have we got?"],
+ ["В нашем городе три библиотеки.","There are three libraries in our town."],
+ ["Хочешь мороженого?","Would you like some ice cream?"],
+ ["В центре города нет универмага.","There isn't a department store in the town centre."]];
 var TABOO=[
- ["do homework","translate it · spell it · mime it"],
- ["have breakfast","translate it · spell it · mime it"],
- ["go to bed","translate it · spell it · mime it"],
- ["wake up","translate it · spell it · mime it"],
- ["chemistry","translate it · spell it · mime it"],
- ["history","translate it · spell it · mime it"],
- ["PE","translate it · spell it · mime it"],
- ["library","translate it · spell it · mime it"],
- ["classmates","translate it · spell it · mime it"],
- ["grades","translate it · spell it · mime it"],
- ["pack my bag","translate it · spell it · mime it"],
- ["have a break","translate it · spell it · mime it"]];
+ ["noodles","translate it · spell it · mime it"],
+ ["mushroom","translate it · spell it · mime it"],
+ ["onion","translate it · spell it · mime it"],
+ ["grapes","translate it · spell it · mime it"],
+ ["yoghurt","translate it · spell it · mime it"],
+ ["spices","translate it · spell it · mime it"],
+ ["takeaway","translate it · spell it · mime it"],
+ ["museum","translate it · spell it · mime it"],
+ ["department store","translate it · spell it · mime it"],
+ ["juice bar","translate it · spell it · mime it"],
+ ["bus station","translate it · spell it · mime it"],
+ ["ice cream","translate it · spell it · mime it"]];
 
 
 // озвучка английского (браузерный синтез, en-GB)
@@ -293,7 +299,7 @@ mHome.addEventListener("click",function(){setMode("home")});
 mClass.addEventListener("click",function(){setMode("class");renderTeams()});
 
 // ============ ДОМ: игрок, стрики ============
-var PK="gia2-u1-player";
+var PK="gia2-u5-player";
 function pLoad(){try{return JSON.parse(localStorage.getItem(PK))||{}}catch(e){return{}}}
 function pSave(p){try{localStorage.setItem(PK,JSON.stringify(p))}catch(e){}}
 var P=pLoad();
@@ -440,7 +446,7 @@ function spellGame(){
 }
 
 // ============ КЛАСС: команды + игры ============
-var TK="gia2-u1-teams";
+var TK="gia2-u5-teams";
 var teams;try{teams=JSON.parse(localStorage.getItem(TK))||null}catch(e){teams=null}
 if(!teams)teams=[{n:"Crew 1",s:0},{n:"Crew 2",s:0},{n:"Crew 3",s:0}];
 function tSave(){try{localStorage.setItem(TK,JSON.stringify(teams))}catch(e){}}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>A2 · Unit 1 · School life · Games · Get Involved A2</title>
+<title>A2 · Unit 7 · Heroes · Games · Get Involved A2</title>
 <style>
 :root{--p:#6C3FC5;--y:#F5C842;--pink:#FF2E93;--cyan:#2EE6FF;--ok:#2EFF9E;--bad:#FF3D5A;
  --bg:#0b0817;--card:rgba(255,255,255,.07);--text:#fff;--mut:#b3a8dd;
@@ -145,7 +145,7 @@ section{display:none}section.on{display:block}
 <body>
 <div class="wrap">
   <div class="top">
-    <h1>A2 · Unit 1 · <span class="gr">School life</span> — Games</h1>
+    <h1>A2 · Unit 7 · <span class="gr">Heroes</span> — Games</h1>
     <a href="index.html">← Units</a>
   </div>
 
@@ -167,7 +167,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="spell"><span class="em">⌨️</span>Type it!<div class="d">spelling counts</div></div>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match · fewest flips</div></div>
       <div class="gcard" data-g="tttc"><span class="em">🤖</span>Tic-Tac vs Computer<div class="d">translate to take a square</div></div>
-      <a class="gcard" href="u1-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling vs Computer<div class="d">translate → roll the ball!</div></a>
+      <a class="gcard" href="u7-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling vs Computer<div class="d">translate → roll the ball!</div></a>
     </div>
     <div class="arena" id="homeArena" style="display:none"></div>
   </section>
@@ -179,7 +179,7 @@ section{display:none}section.on{display:block}
       <div class="gcard" data-g="mistake"><span class="em">🕵️</span>Spot the Mistake<div class="d">find & fix</div></div>
       <div class="gcard" data-g="race"><span class="em">🏁</span>Sentence Race<div class="d">unscramble fast</div></div>
       <div class="gcard" data-g="tttx"><span class="em">⭕</span>Tic-Tac-Translate<div class="d">translate → take the square</div></div>
-      <a class="gcard" href="u1-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling / Basketball<div class="d">translate → roll the ball!</div></a>
+      <a class="gcard" href="u7-bowling.html" style="text-decoration:none;color:inherit;display:block"><span class="em">🎳</span>Bowling / Basketball<div class="d">translate → roll the ball!</div></a>
       <div class="gcard" data-g="memo"><span class="em">🀄</span>Memo RU↔EN<div class="d">match the sentence</div></div>
       <div class="gcard" data-g="taboo"><span class="em">🪑</span>Hot Seat + Taboo<div class="d">back to the screen!</div></div>
     </div>
@@ -189,74 +189,80 @@ section{display:none}section.on{display:block}
 </div>
 
 <script>
-// ============ ДАННЫЕ UNIT 1 (из контент-слоя) ============
+// ============ ДАННЫЕ UNIT 7 ============
 var COUNTRIES=[
- ["wake up","просыпаться"],
- ["get up","вставать"],
- ["get dressed","одеваться"],
- ["have breakfast","завтракать"],
- ["pack my bag","собирать рюкзак"],
- ["go to school","идти в школу"],
- ["have a break","быть на перемене"],
- ["have lunch","обедать"],
- ["finish school","заканчивать уроки"],
- ["do homework","делать домашку"],
- ["have dinner","ужинать"],
- ["go to bed","ложиться спать"],
- ["tidy my room","убирать комнату"],
- ["have a shower","принимать душ"]];
+ ["accountant","бухгалтер"],
+ ["engineer","инженер"],
+ ["lawyer","юрист"],
+ ["mechanic","механик"],
+ ["receptionist","администратор"],
+ ["sales assistant","продавец-консультант"],
+ ["web designer","веб-дизайнер"],
+ ["journalist","журналист"],
+ ["chef","шеф-повар"],
+ ["nurse","медсестра"],
+ ["brave","храбрый"],
+ ["generous","щедрый"],
+ ["careless","невнимательный"],
+ ["polite","вежливый"],
+ ["rude","грубый"],
+ ["talented","талантливый"]];
 var ADJ=[
- ["biology","science"],
- ["chemistry","science"],
- ["physics","science"],
- ["art","creative"],
- ["drama","creative"],
- ["music","creative"],
- ["French","language"],
- ["German","language"],
- ["history","humanities"],
- ["maths","other"]];
+ ["doctor","in a hospital"],
+ ["nurse","in a hospital"],
+ ["dentist","in a hospital"],
+ ["chef","in a restaurant"],
+ ["waiter","in a restaurant"],
+ ["accountant","in an office"],
+ ["lawyer","in an office"],
+ ["receptionist","in an office"],
+ ["taxi driver","in the street"],
+ ["police officer","in the street"],
+ ["mechanic","in the street"],
+ ["teacher","in a school"]];
 var MISTAKES=[
- ["He go to school at eight.","He goes to school at eight."],
- ["She don't like chemistry.","She doesn't like chemistry."],
- ["Does she likes PE?","Does she like PE?"],
- ["He studys English.","He studies English."],
- ["I like she.","I like her."],
- ["My school start at nine.","My school starts at nine."],
- ["They doesn't wear a uniform.","They don't wear a uniform."],
- ["Do you has breakfast?","Do you have breakfast?"],
- ["She haves lunch at school.","She has lunch at school."],
- ["i live in norilsk.","I live in Norilsk."]];
-var SENTENCES=["I get up at seven o'clock","He wakes up at six","We have breakfast before school","She doesn't go to an online school","Lessons start at nine","Do you do homework in the evening","He doesn't like chemistry","We have maths on Mondays","She studies French","What time does school finish","I pack my bag in the morning","They don't wear a uniform"];
+ ["I goed to the park.","I went to the park."],
+ ["He didn't took his phone.","He didn't take his phone."],
+ ["Did you saw the film?","Did you see the film?"],
+ ["She become a doctor in 2010.","She became a doctor in 2010."],
+ ["Where you went yesterday?","Where did you go yesterday?"],
+ ["It was ten years before.","It was ten years ago."],
+ ["We buyed a new bike.","We bought a new bike."],
+ ["He teached us English.","He taught us English."],
+ ["Did she went home?","Did she go home?"],
+ ["They was heroes.","They were heroes."]];
+var SENTENCES=["I woke up early yesterday","He saw houses under water","They had a small boat","We didn't go to school","She rang a friend","Did you see it yesterday","Where were you two hours ago","When did she become a doctor","He didn't take his phone","We spent all the money","She came to our house","It was ten years ago"];
 
 var TRANSLATE=[
- ["Я встаю в семь часов.","I get up at seven o'clock."],
- ["Он просыпается в шесть.","He wakes up at six."],
- ["Мы завтракаем перед школой.","We have breakfast before school."],
- ["Она не ходит в онлайн-школу.","She doesn't go to an online school."],
- ["Уроки начинаются в девять.","Lessons start at nine."],
- ["Ты делаешь домашку вечером?","Do you do homework in the evening?"],
- ["Он не любит химию.","He doesn't like chemistry."],
- ["У нас математика по понедельникам.","We have maths on Mondays."],
- ["Она изучает французский.","She studies French."],
- ["Во сколько заканчивается школа?","What time does school finish?"],
- ["Я собираю рюкзак утром.","I pack my bag in the morning."],
- ["Они не носят форму.","They don't wear a uniform."],
- ["Мой брат ложится спать в десять.","My brother goes to bed at ten."],
- ["Ты любишь физкультуру? — Да!","Do you like PE? — Yes, I do!"]];
+ ["Вчера я проснулся рано.","I woke up early yesterday."],
+ ["Он увидел дома под водой.","He saw houses under water."],
+ ["У них была маленькая лодка.","They had a small boat."],
+ ["Мы не пошли в школу.","We didn't go to school."],
+ ["Она позвонила другу.","She rang a friend."],
+ ["Ты видел это вчера?","Did you see it yesterday?"],
+ ["Где ты был два часа назад?","Where were you two hours ago?"],
+ ["Когда она стала врачом?","When did she become a doctor?"],
+ ["Он не взял телефон.","He didn't take his phone."],
+ ["Мы потратили все деньги.","We spent all the money."],
+ ["Она пришла к нам домой.","She came to our house."],
+ ["Это было десять лет назад.","It was ten years ago."],
+ ["Что он сделал?","What did he do?"],
+ ["Они дали нам еду.","They gave us some food."],
+ ["Мой дедушка был инженером.","My grandfather was an engineer."],
+ ["Сколько это стоило?","How much did it cost?"]];
 var TABOO=[
- ["do homework","translate it · spell it · mime it"],
- ["have breakfast","translate it · spell it · mime it"],
- ["go to bed","translate it · spell it · mime it"],
- ["wake up","translate it · spell it · mime it"],
- ["chemistry","translate it · spell it · mime it"],
- ["history","translate it · spell it · mime it"],
- ["PE","translate it · spell it · mime it"],
- ["library","translate it · spell it · mime it"],
- ["classmates","translate it · spell it · mime it"],
- ["grades","translate it · spell it · mime it"],
- ["pack my bag","translate it · spell it · mime it"],
- ["have a break","translate it · spell it · mime it"]];
+ ["engineer","translate it · spell it · mime it"],
+ ["accountant","translate it · spell it · mime it"],
+ ["mechanic","translate it · spell it · mime it"],
+ ["receptionist","translate it · spell it · mime it"],
+ ["journalist","translate it · spell it · mime it"],
+ ["chef","translate it · spell it · mime it"],
+ ["lawyer","translate it · spell it · mime it"],
+ ["brave","translate it · spell it · mime it"],
+ ["generous","translate it · spell it · mime it"],
+ ["polite","translate it · spell it · mime it"],
+ ["rescue services","translate it · spell it · mime it"],
+ ["web designer","translate it · spell it · mime it"]];
 
 
 // озвучка английского (браузерный синтез, en-GB)
@@ -293,7 +299,7 @@ mHome.addEventListener("click",function(){setMode("home")});
 mClass.addEventListener("click",function(){setMode("class");renderTeams()});
 
 // ============ ДОМ: игрок, стрики ============
-var PK="gia2-u1-player";
+var PK="gia2-u7-player";
 function pLoad(){try{return JSON.parse(localStorage.getItem(PK))||{}}catch(e){return{}}}
 function pSave(p){try{localStorage.setItem(PK,JSON.stringify(p))}catch(e){}}
 var P=pLoad();
@@ -364,7 +370,7 @@ function quizGame(){
   });
   shuffle(ADJ).slice(0,3).forEach(function(p){
     var wrong=shuffle(ADJ.filter(function(x){return x[1]!==p[1]})).slice(0,3).map(function(x){return x[1]});
-    qs.push({q:"Which group? “"+p[0]+"”",a:p[1],opts:shuffle([p[1]].concat(wrong))});
+    qs.push({q:"Where do they work? “"+p[0]+"”",a:p[1],opts:shuffle([p[1]].concat(wrong))});
   });
   shuffle(MISTAKES).slice(0,3).forEach(function(m){
     var opts=shuffle([m[1],m[0]]);
@@ -440,7 +446,7 @@ function spellGame(){
 }
 
 // ============ КЛАСС: команды + игры ============
-var TK="gia2-u1-teams";
+var TK="gia2-u7-teams";
 var teams;try{teams=JSON.parse(localStorage.getItem(TK))||null}catch(e){teams=null}
 if(!teams)teams=[{n:"Crew 1",s:0},{n:"Crew 2",s:0},{n:"Crew 3",s:0}];
 function tSave(){try{localStorage.setItem(TK,JSON.stringify(teams))}catch(e){}}
