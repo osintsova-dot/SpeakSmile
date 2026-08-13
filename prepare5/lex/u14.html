@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 14 · Let's cook! — cooking verbs and relative clauses · Word chunks · Speak&Smile</title>
+<style>
+:root{--p:#6C3FC5;--pd:#4B278F;--h:#F5C842;--hd:#8A6400;--ink:#1A1A2E;--soft:#F4F4F8;--ok:#1F9D57;--bad:#D64545}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--soft);color:var(--ink);min-height:100vh}
+header{background:var(--p);color:#fff;padding:14px 16px 12px}
+header h1{font-size:1.05rem}header .sub{font-size:.8rem;opacity:.85;margin-top:2px}
+.tabs{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;background:#fff;box-shadow:0 2px 12px rgba(108,63,197,.10)}
+.tabs button{flex:0 0 auto;border:2px solid var(--p);background:#fff;color:var(--pd);font-weight:800;font-size:.85rem;
+ border-radius:12px;padding:10px 14px;min-height:44px;cursor:pointer}
+.tabs button.on{background:var(--p);color:#fff}
+main{max-width:560px;margin:0 auto;padding:14px 12px 60px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(108,63,197,.10);padding:16px;margin-bottom:12px}
+.big{font-size:1.15rem;font-weight:800;line-height:1.45;margin-bottom:12px}
+.opts{display:grid;gap:8px}
+.opts button,.chip{border:2px solid var(--p);background:#fff;color:var(--ink);border-radius:12px;padding:12px;
+ font-size:1rem;min-height:44px;cursor:pointer;text-align:left;font-weight:600}
+.opts button.ok{background:#E4F5EB;border-color:var(--ok)} .opts button.bad{background:#FBEAEA;border-color:var(--bad)}
+.halves{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.halves button{border:2px solid var(--p);background:#fff;border-radius:12px;padding:12px 8px;font-size:.95rem;
+ min-height:52px;cursor:pointer;font-weight:700;color:var(--ink)}
+.halves button.sel{background:var(--h);border-color:var(--hd)}
+.halves button.done{opacity:.28;pointer-events:none;background:#E4F5EB;border-color:var(--ok)}
+.halves button.bad{background:#FBEAEA;border-color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip.used{opacity:.25;pointer-events:none}
+.built{min-height:46px;border:2px dashed var(--p);border-radius:12px;padding:10px;font-weight:800;font-size:1.05rem;margin-bottom:12px;background:#fff}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:#6D6584;margin-bottom:10px}
+.bar{background:var(--p);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-size:1rem;font-weight:800;min-height:44px;cursor:pointer;width:100%}
+.fin{text-align:center;padding:22px 14px}
+.fin .n{font-size:2.6rem;font-weight:900;color:var(--pd)}
+.setlinks{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.setlink{color:var(--pd);font-weight:700;text-decoration:none;border:2px solid var(--p);border-radius:12px;padding:9px 13px;background:#fff}
+</style></head><body>
+<header><h1>🧩 Unit 14 · Word chunks</h1><div class="sub">Let's cook! — cooking verbs and relative clauses · Speak&Smile · no translation — English only</div></header>
+<div class="tabs" id="tabs"></div>
+<main id="main"></main>
+<footer style="max-width:560px;margin:0 auto;padding:0 12px 40px"><div class="setlinks"><a class="setlink" href="u13.html">Unit 13</a><a class="setlink" href="block7.html">Block 7 review</a><a class="setlink" href="index.html">All sets</a></div></footer>
+<script>
+"use strict";
+var DATA=[{"h1": "roast", "h2": "the chicken", "gap": "___ ___ ___ for forty minutes in a hot oven.", "defn": "to cook meat in the oven with a little oil"}, {"h1": "barbecue", "h2": "the sausages outside", "gap": "If it stays dry we can ___ ___ ___ ___.", "defn": "to cook food over a fire in the garden"}, {"h1": "fry", "h2": "the onion and garlic", "gap": "___ ___ ___ ___ ___ for two minutes, but don't let them burn.", "defn": "to cook small pieces of food in hot oil in a pan"}, {"h1": "stir", "h2": "the soup", "gap": "___ ___ ___ with a wooden spoon so that it doesn't stick.", "defn": "to move food round and round with a spoon while it cooks"}, {"h1": "steam", "h2": "some rice", "gap": "___ ___ ___ to serve with the curry.", "defn": "to cook food over boiling water, not in it"}, {"h1": "bake", "h2": "your own bread", "gap": "It's much cheaper to ___ ___ ___ ___ than to buy it.", "defn": "to make loaves or cakes in the oven, with no fat added"}, {"h1": "taste", "h2": "it before you serve it", "gap": "___ ___ ___ ___ ___ ___ and add salt if you need to.", "defn": "to put a little in your mouth to find out what it is like"}, {"h1": "freeze", "h2": "the rest", "gap": "There's too much, so we'll ___ ___ ___ for next week.", "defn": "to make food so cold that it goes hard and keeps for months"}, {"h1": "the chef", "h2": "who we interviewed", "gap": "He's ___ ___ ___ ___ ___ last month.", "defn": "the cook you asked questions to — this part tells you which one"}, {"h1": "the restaurant", "h2": "which serves vegetarian food", "gap": "We chose ___ ___ ___ ___ ___ ___.", "defn": "this part tells you exactly which eating place we mean"}, {"h1": "my brother,", "h2": "who is a baby", "gap": "I have to look after ___ ___ ___ ___ ___ ___.", "defn": "the youngest person in my family — the words in commas only add extra information"}, {"h1": "the egg", "h2": "is frying in the pan", "gap": "Can you hear it? ___ ___ ___ ___ ___ ___ ___.", "defn": "it is cooking in hot oil by itself — here the verb has no object"}];
+var KEY="ss-lex-u14";
+var MODES=[["halves","🧷 Halves"],["gap","✏️ In context"],["defn","🗣 Definition"],["speed","⚡ Speed build"]];
+var state={mode:"halves"};
+function el(t,cls,txt){var e=document.createElement(t);if(cls)e.className=cls;if(txt!==undefined)e.appendChild(document.createTextNode(txt));return e}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function chunkText(c){return c.h1+" "+c.h2}
+function best(mode,val){try{var s=JSON.parse(localStorage.getItem(KEY)||"{}");if(val!==undefined&&(s[mode]===undefined||val>s[mode].score||(val===s[mode]))){ }return s}catch(e){return {}}}
+function saveBest(mode,score,total){try{var s=JSON.parse(localStorage.getItem(KEY)||"{}");var old=s[mode];if(!old||score>old.score){s[mode]={score:score,total:total};localStorage.setItem(KEY,JSON.stringify(s))}}catch(e){}}
+function tabs(){var t=document.getElementById("tabs");while(t.firstChild)t.removeChild(t.firstChild);
+ MODES.forEach(function(m){var b=el("button",state.mode===m[0]?"on":"",m[1]);b.onclick=function(){state.mode=m[0];render()};t.appendChild(b)})}
+function finish(score,total,replay){saveBest(state.mode,score,total);var main=document.getElementById("main");
+ while(main.firstChild)main.removeChild(main.firstChild);
+ var c=el("div","card fin");c.appendChild(el("div","n",score+" / "+total));
+ c.appendChild(el("div","",score===total?"Perfect! Every chunk is yours.":"Good work — run it again and beat your score."));
+ var b=el("button","bar","Play again");b.style.marginTop="14px";b.onclick=replay;c.appendChild(b);main.appendChild(c);addLinks(main)}
+function addLinks(main){}
+/* -------- режим 1: половинки -------- */
+function rHalves(){var main=document.getElementById("main");while(main.firstChild)main.removeChild(main.firstChild);
+ var picks=shuffle(DATA).slice(0,8),score=0,done=0,sel=null;
+ var card=el("div","card");card.appendChild(el("div","meta","Match the halves — tap left, then right"));
+ var grid=el("div","halves");
+ var lefts=shuffle(picks.map(function(c){return c.h1})),rights=shuffle(picks.map(function(c){return c.h2}));
+ var map={};picks.forEach(function(c){map[c.h1]=c.h2});
+ function mk(txt,side){var b=el("button","",txt);b.onclick=function(){
+   if(side==="L"){if(sel)sel.classList.remove("sel");sel=b;b.classList.add("sel");return}
+   if(!sel)return;
+   if(map[sel.textContent]===txt){sel.classList.add("done");b.classList.add("done");sel.classList.remove("sel");sel=null;score++;done++;
+     if(done===picks.length)setTimeout(function(){finish(score,picks.length,rHalves)},500)}
+   else{b.classList.add("bad");setTimeout(function(){b.classList.remove("bad")},450);score=Math.max(0,score)}
+ };return b}
+ for(var i=0;i<picks.length;i++){grid.appendChild(mk(lefts[i],"L"));grid.appendChild(mk(rights[i],"R"))}
+ card.appendChild(grid);main.appendChild(card);addLinks(main)}
+/* -------- режимы 2–3: вопрос + 4 варианта -------- */
+function rQuiz(kind){var main=document.getElementById("main");while(main.firstChild)main.removeChild(main.firstChild);
+ var qs=shuffle(DATA).slice(0,8),i=0,score=0;
+ function q(){while(main.firstChild)main.removeChild(main.firstChild);
+  if(i>=qs.length)return finish(score,qs.length,function(){rQuiz(kind)});
+  var c=qs[i],card=el("div","card");
+  card.appendChild(el("div","meta",(i+1)+" / "+qs.length));
+  card.appendChild(el("div","big",kind==="gap"?c.gap:c.defn+"  →  ?"));
+  var opts=[chunkText(c)];shuffle(DATA).forEach(function(o){if(opts.length<4&&chunkText(o)!==chunkText(c))opts.push(chunkText(o))});
+  var wrap=el("div","opts");
+  shuffle(opts).forEach(function(t){var b=el("button","",t);b.onclick=function(){
+    if(t===chunkText(c)){b.classList.add("ok");score++}else{b.classList.add("bad")}
+    var bs=wrap.getElementsByTagName("button");for(var k=0;k<bs.length;k++)bs[k].disabled=true;
+    setTimeout(function(){i++;q()},700)};wrap.appendChild(b)});
+  card.appendChild(wrap);main.appendChild(card)}
+ q()}
+/* -------- режим 4: сборка на скорость -------- */
+function rSpeed(){var main=document.getElementById("main");while(main.firstChild)main.removeChild(main.firstChild);
+ var qs=shuffle(DATA).slice(0,6),i=0,t0=Date.now(),errors=0;
+ function q(){while(main.firstChild)main.removeChild(main.firstChild);
+  if(i>=qs.length){var sec=Math.round((Date.now()-t0)/1000);
+   var main2=document.getElementById("main");var c=el("div","card fin");
+   c.appendChild(el("div","n",sec+"s"));
+   c.appendChild(el("div","",qs.length+" chunks built · "+errors+" wrong taps. Beat your time!"));
+   var b=el("button","bar","Play again");b.style.marginTop="14px";b.onclick=rSpeed;c.appendChild(b);
+   main2.appendChild(c);addLinks(main2);saveBest("speed",-sec,0);return}
+  var c=qs[i],words=chunkText(c).split(" "),pos=0;
+  var card=el("div","card");card.appendChild(el("div","meta",(i+1)+" / "+qs.length+" · build the chunk in order"));
+  card.appendChild(el("div","big",c.defn));
+  var built=el("div","built"," ");card.appendChild(built);
+  var chips=el("div","chips");
+  shuffle(words.map(function(w,ix){return {w:w,ix:ix}})).forEach(function(o){
+   var b=el("button","chip",o.w);b.onclick=function(){
+    if(words[pos]===o.w&&!b.classList.contains("used")){b.classList.add("used");
+     built.textContent=(built.textContent+" "+o.w).trim();pos++;
+     if(pos===words.length)setTimeout(function(){i++;q()},350)}
+    else{errors++;b.classList.add("bad");setTimeout(function(){b.classList.remove("bad")},300)}};
+   chips.appendChild(b)});
+  card.appendChild(chips);main.appendChild(card)}
+ q()}
+function render(){tabs();
+ if(state.mode==="halves")rHalves();
+ else if(state.mode==="gap")rQuiz("gap");
+ else if(state.mode==="defn")rQuiz("defn");
+ else rSpeed()}
+render();
+</script></body></html>
