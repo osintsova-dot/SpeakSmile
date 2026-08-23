@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 9 · Reading chunks · Tech talk — words and chunks from both texts · Word chunks · Speak&Smile</title>
+<style>
+:root{--p:#6C3FC5;--pd:#4B278F;--h:#F5C842;--hd:#8A6400;--ink:#1A1A2E;--soft:#F4F4F8;--ok:#1F9D57;--bad:#D64545}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--soft);color:var(--ink);min-height:100vh}
+header{background:var(--p);color:#fff;padding:14px 16px 12px}
+header h1{font-size:1.05rem}header .sub{font-size:.8rem;opacity:.85;margin-top:2px}
+.tabs{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;background:#fff;box-shadow:0 2px 12px rgba(108,63,197,.10)}
+.tabs button{flex:0 0 auto;border:2px solid var(--p);background:#fff;color:var(--pd);font-weight:800;font-size:.85rem;
+ border-radius:12px;padding:10px 14px;min-height:44px;cursor:pointer}
+.tabs button.on{background:var(--p);color:#fff}
+main{max-width:560px;margin:0 auto;padding:14px 12px 60px}
+.card{background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(108,63,197,.10);padding:16px;margin-bottom:12px}
+.big{font-size:1.15rem;font-weight:800;line-height:1.45;margin-bottom:12px}
+.opts{display:grid;gap:8px}
+.opts button,.chip{border:2px solid var(--p);background:#fff;color:var(--ink);border-radius:12px;padding:12px;
+ font-size:1rem;min-height:44px;cursor:pointer;text-align:left;font-weight:600}
+.opts button.ok{background:#E4F5EB;border-color:var(--ok)} .opts button.bad{background:#FBEAEA;border-color:var(--bad)}
+.halves{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.halves button{border:2px solid var(--p);background:#fff;border-radius:12px;padding:12px 8px;font-size:.95rem;
+ min-height:52px;cursor:pointer;font-weight:700;color:var(--ink)}
+.halves button.sel{background:var(--h);border-color:var(--hd)}
+.halves button.done{opacity:.28;pointer-events:none;background:#E4F5EB;border-color:var(--ok)}
+.halves button.bad{background:#FBEAEA;border-color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip.used{opacity:.25;pointer-events:none}
+.built{min-height:46px;border:2px dashed var(--p);border-radius:12px;padding:10px;font-weight:800;font-size:1.05rem;margin-bottom:12px;background:#fff}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;color:#6D6584;margin-bottom:10px}
+.bar{background:var(--p);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-size:1rem;font-weight:800;min-height:44px;cursor:pointer;width:100%}
+.fin{text-align:center;padding:22px 14px}
+.fin .n{font-size:2.6rem;font-weight:900;color:var(--pd)}
+.setlinks{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.setlink{color:var(--pd);font-weight:700;text-decoration:none;border:2px solid var(--p);border-radius:12px;padding:9px 13px;background:#fff}
+</style></head><body>
+<header><h1>Unit 9 · Reading chunks — Word chunks</h1><div class="sub">Tech talk — words and chunks from both texts · Speak&Smile · B2 · English only · no translation</div></header>
+<div class="tabs" id="tabs"></div>
+<main id="main"></main>
+<footer style="max-width:560px;margin:0 auto;padding:0 12px 40px"><div class="setlinks"><a class="setlink" href="u9voc.html">Unit 9 · Vocabulary</a><a class="setlink" href="u9gram.html">Unit 9 · Grammar in chunks</a><a class="setlink" href="index.html">All sets</a></div></footer>
+<script>
+"use strict";
+var DATA=[{"h1": "a vast", "h2": "number of", "gap": "___ ___ ___ ___ products could use graphene.", "defn": "an extremely large quantity of"}, {"h1": "stem", "h2": "from", "gap": "Many inventions ___ ___ simple experiments.", "defn": "be caused by or originate in"}, {"h1": "a", "h2": "tiny circuit", "gap": "The device contains ___ ___ ___.", "defn": "a small complete path through which electricity flows"}, {"h1": "thermally", "h2": "conductive", "gap": "Graphene is ___ ___.", "defn": "able to let heat pass through"}, {"h1": "a", "h2": "battery's lifespan", "gap": "Graphene could extend ___ ___ ___.", "defn": "the length of time it continues to work"}, {"h1": "light", "h2": "but bulletproof", "gap": "The new material is ___ ___ ___.", "defn": "light but able to stop bullets"}, {"h1": "a layer", "h2": "of graphene", "gap": "The lens has ___ ___ ___ ___.", "defn": "a thin amount covering a surface"}, {"h1": "a", "h2": "tiny flake", "gap": "They isolated ___ ___ ___ of graphene.", "defn": "a small thin piece separated from a surface"}, {"h1": "one", "h2": "atom thick", "gap": "Graphene is only ___ ___ ___.", "defn": "having the thickness of a single atom"}, {"h1": "strong", "h2": "but brittle", "gap": "The material is ___ ___ ___.", "defn": "strong but easy to break or crack"}, {"h1": "turning materials", "h2": "science upside down", "gap": "Graphene is ___ ___ ___ ___ ___.", "defn": "changing accepted ideas completely"}, {"h1": "cut down", "h2": "on fuel", "gap": "Lighter planes could ___ ___ ___ ___.", "defn": "reduce the amount of fuel used"}, {"h1": "this", "h2": "gadget", "gap": "___ ___ measures air quality.", "defn": "this small useful device"}, {"h1": "were", "h2": "bulky", "gap": "The first mobile phones ___ ___.", "defn": "were large and difficult to carry"}, {"h1": "looked", "h2": "perplexed", "gap": "The teenagers ___ ___.", "defn": "looked confused because something is hard to understand"}, {"h1": "struggled", "h2": "to use", "gap": "They ___ ___ ___ the VCR.", "defn": "tried hard because it was difficult"}, {"h1": "still use", "h2": "a landline", "gap": "My grandparents ___ ___ ___ ___.", "defn": "still use a telephone connected by a fixed cable"}, {"h1": "take it", "h2": "for granted that", "gap": "We ___ ___ ___ ___ ___ phones can stream video.", "defn": "accept it as normal without appreciating it"}, {"h1": "pressed the", "h2": "eject button", "gap": "She ___ ___ ___ ___.", "defn": "pushed the control that releases a tape or disc"}, {"h1": "figure out", "h2": "how this works", "gap": "Can you ___ ___ ___ ___ ___?", "defn": "understand it by thinking or trying"}, {"h1": "store large", "h2": "amounts of data", "gap": "The device can ___ ___ ___ ___ ___.", "defn": "keep a lot of digital information"}, {"h1": "streamed", "h2": "the video", "gap": "We ___ ___ ___ in class.", "defn": "watched it online without downloading the whole file"}, {"h1": "surrounded", "h2": "by technology", "gap": "Teenagers are ___ ___ ___.", "defn": "with technology everywhere around you"}];
+var KEY="ss-lex-u9read";
+var MODES=[["halves","Collocations"],["gap","In context"],["defn","Definitions"],["speed","Against the clock"]];
+var state={mode:"halves"};
+function el(t,cls,txt){var e=document.createElement(t);if(cls)e.className=cls;if(txt!==undefined)e.appendChild(document.createTextNode(txt));return e}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function chunkText(c){return c.h1+" "+c.h2}
+function best(mode,val){try{var s=JSON.parse(localStorage.getItem(KEY)||"{}");if(val!==undefined&&(s[mode]===undefined||val>s[mode].score||(val===s[mode]))){ }return s}catch(e){return {}}}
+function saveBest(mode,score,total){try{var s=JSON.parse(localStorage.getItem(KEY)||"{}");var old=s[mode];if(!old||score>old.score){s[mode]={score:score,total:total};localStorage.setItem(KEY,JSON.stringify(s))}}catch(e){}}
+function tabs(){var t=document.getElementById("tabs");while(t.firstChild)t.removeChild(t.firstChild);
+ MODES.forEach(function(m){var b=el("button",state.mode===m[0]?"on":"",m[1]);b.onclick=function(){state.mode=m[0];render()};t.appendChild(b)})}
+function finish(score,total,replay){saveBest(state.mode,score,total);var main=document.getElementById("main");
+ while(main.firstChild)main.removeChild(main.firstChild);
+ var c=el("div","card fin");c.appendChild(el("div","n",score+" / "+total));
+ c.appendChild(el("div","",score===total?"Full marks.":"Run it again — accuracy first, speed second."));
+ var b=el("button","bar","Try again");b.style.marginTop="14px";b.onclick=replay;c.appendChild(b);main.appendChild(c);addLinks(main)}
+function addLinks(main){}
+/* -------- режим 1: половинки -------- */
+function rHalves(){var main=document.getElementById("main");while(main.firstChild)main.removeChild(main.firstChild);
+ var picks=shuffle(DATA).slice(0,8),score=0,done=0,sel=null;
+ var card=el("div","card");card.appendChild(el("div","meta","Match the halves — tap left, then right"));
+ var grid=el("div","halves");
+ var lefts=shuffle(picks.map(function(c){return c.h1})),rights=shuffle(picks.map(function(c){return c.h2}));
+ var map={};picks.forEach(function(c){map[c.h1]=c.h2});
+ function mk(txt,side){var b=el("button","",txt);b.onclick=function(){
+   if(side==="L"){if(sel)sel.classList.remove("sel");sel=b;b.classList.add("sel");return}
+   if(!sel)return;
+   if(map[sel.textContent]===txt){sel.classList.add("done");b.classList.add("done");sel.classList.remove("sel");sel=null;score++;done++;
+     if(done===picks.length)setTimeout(function(){finish(score,picks.length,rHalves)},500)}
+   else{b.classList.add("bad");setTimeout(function(){b.classList.remove("bad")},450);score=Math.max(0,score)}
+ };return b}
+ for(var i=0;i<picks.length;i++){grid.appendChild(mk(lefts[i],"L"));grid.appendChild(mk(rights[i],"R"))}
+ card.appendChild(grid);main.appendChild(card);addLinks(main)}
+/* -------- режимы 2–3: вопрос + 4 варианта -------- */
+function rQuiz(kind){var main=document.getElementById("main");while(main.firstChild)main.removeChild(main.firstChild);
+ var qs=shuffle(DATA).slice(0,8),i=0,score=0;
+ function q(){while(main.firstChild)main.removeChild(main.firstChild);
+  if(i>=qs.length)return finish(score,qs.length,function(){rQuiz(kind)});
+  var c=qs[i],card=el("div","card");
+  card.appendChild(el("div","meta",(i+1)+" / "+qs.length));
+  card.appendChild(el("div","big",kind==="gap"?c.gap:c.defn+"  →  ?"));
+  var opts=[chunkText(c)];shuffle(DATA).forEach(function(o){if(opts.length<4&&chunkText(o)!==chunkText(c))opts.push(chunkText(o))});
+  var wrap=el("div","opts");
+  shuffle(opts).forEach(function(t){var b=el("button","",t);b.onclick=function(){
+    if(t===chunkText(c)){b.classList.add("ok");score++}else{b.classList.add("bad")}
+    var bs=wrap.getElementsByTagName("button");for(var k=0;k<bs.length;k++)bs[k].disabled=true;
+    setTimeout(function(){i++;q()},700)};wrap.appendChild(b)});
+  card.appendChild(wrap);main.appendChild(card)}
+ q()}
+/* -------- режим 4: сборка на скорость -------- */
+function rSpeed(){var main=document.getElementById("main");while(main.firstChild)main.removeChild(main.firstChild);
+ var qs=shuffle(DATA).slice(0,6),i=0,t0=Date.now(),errors=0;
+ function q(){while(main.firstChild)main.removeChild(main.firstChild);
+  if(i>=qs.length){var sec=Math.round((Date.now()-t0)/1000);
+   var main2=document.getElementById("main");var c=el("div","card fin");
+   c.appendChild(el("div","n",sec+"s"));
+   c.appendChild(el("div","",qs.length+" chunks built · "+errors+" wrong taps. Accuracy first, speed second."));
+   var b=el("button","bar","Try again");b.style.marginTop="14px";b.onclick=rSpeed;c.appendChild(b);
+   main2.appendChild(c);addLinks(main2);saveBest("speed",-sec,0);return}
+  var c=qs[i],words=chunkText(c).split(" "),pos=0;
+  var card=el("div","card");card.appendChild(el("div","meta",(i+1)+" / "+qs.length+" · build the chunk in order"));
+  card.appendChild(el("div","big",c.defn));
+  var built=el("div","built"," ");card.appendChild(built);
+  var chips=el("div","chips");
+  shuffle(words.map(function(w,ix){return {w:w,ix:ix}})).forEach(function(o){
+   var b=el("button","chip",o.w);b.onclick=function(){
+    if(words[pos]===o.w&&!b.classList.contains("used")){b.classList.add("used");
+     built.textContent=(built.textContent+" "+o.w).trim();pos++;
+     if(pos===words.length)setTimeout(function(){i++;q()},350)}
+    else{errors++;b.classList.add("bad");setTimeout(function(){b.classList.remove("bad")},300)}};
+   chips.appendChild(b)});
+  card.appendChild(chips);main.appendChild(card)}
+ q()}
+function render(){tabs();
+ if(state.mode==="halves")rHalves();
+ else if(state.mode==="gap")rQuiz("gap");
+ else if(state.mode==="defn")rQuiz("defn");
+ else rSpeed()}
+render();
+</script></body></html>
