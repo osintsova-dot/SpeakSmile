@@ -35,6 +35,7 @@ ORG = {
         "streetAddress": ADDR,
         "addressLocality": CITY,
         "addressRegion": "Красноярский край",
+        "postalCode": "663305",
         "addressCountry": "RU",
     },
     "areaServed": {"@type": "City", "name": CITY},
