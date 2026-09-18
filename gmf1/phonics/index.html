@@ -48,7 +48,43 @@
   .stgrid button.cur{ background:var(--honey); color:#3a2560; }
   .stmenu .close{ display:block; margin:20px auto 0; border:0; border-radius:999px; background:rgba(255,255,255,.16); color:#fff; font-family:var(--f); font-weight:800; font-size:16px; padding:12px 26px; cursor:pointer; }
   #wrap{ padding-bottom:76px; } /* место под нижнюю панель */
-  @media(min-width:900px){ .stbar{ display:none; } } /* на проекторе/десктопе хватает табов */
+  .tabs{ display:none; } /* урок = страницы (как Jolly): листаем нижней панелью / стрелками клавиатуры */
+  .stbar .mid .pg{ opacity:.7; margin-right:6px; }
+  .stgrid button .num{ font-size:12px; opacity:.7; }
+  /* 🌈 Повтор звуков: яркие плашки */
+  .rvStage{ position:relative; display:flex; align-items:center; justify-content:center; min-height:480px; overflow:hidden; }
+  .rvPlate{ position:relative; width:min(46vmin,360px); cursor:pointer; user-select:none; text-align:center; border-radius:30px; padding:20px 16px 18px; background:linear-gradient(180deg,#ffffff,#fdf6ff); box-shadow:0 10px 0 rgba(108,63,197,.18),0 14px 30px rgba(108,63,197,.25); border:3px solid rgba(255,255,255,.9); }
+  .rvPlate img{ display:block; width:min(30vmin,220px); height:min(30vmin,220px); object-fit:contain; margin:0 auto 2px; border-radius:18px; }
+  .rvPlate.nopic{ padding:10px 16px 16px; }
+  .rvPlate.nopic .rvLt{ font-size:min(32vmin,250px); }
+  .rvPlate .rvLt{ font-family:"AndikaJP",var(--f); font-size:min(20vmin,150px); line-height:1.2; color:var(--p); }
+  .rvPlate svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .rvPlate .rvL{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:"AndikaJP",var(--f); font-weight:700; color:#2A2140; font-size:min(24vmin,190px); line-height:1; padding-bottom:4%; }
+  .rvPlate .rvL span{ border-bottom:.06em solid rgba(160,40,20,.75); padding:0 .12em .02em; }
+  .rvPlate.in{ animation:rvIn .85s cubic-bezier(.22,.9,.3,1) both; }
+  .rvPlate.out{ animation:rvOut .45s ease-in both; }
+  @keyframes rvIn{ from{ transform:translateX(var(--fx,-35vw)) rotate(var(--fr,-6deg)) scale(.92); opacity:0; } to{ transform:none; opacity:1; } }
+  @keyframes rvOut{ to{ transform:translateX(var(--tx,30vw)) rotate(var(--tr,5deg)) scale(.95); opacity:0; } }
+  .rvBar{ display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin-top:8px; }
+  .rvBar .cnt{ font-weight:800; font-size:18px; min-width:70px; text-align:center; }
+  /* 📚 Читаем слова: разворот книжки */
+  .wbTools{ display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+  .wbTools .on{ background:var(--honey); color:#3a2560; }
+  .wbook{ background:#fffdf6; color:#3b3346; border-radius:14px; padding:14px clamp(10px,3vw,30px) 18px; box-shadow:0 10px 26px rgba(0,0,0,.28); max-width:860px; margin:0 auto; }
+  .wbook .wbH{ text-align:center; font-family:Georgia,serif; color:#6d6584; font-size:clamp(15px,2.4vw,20px); margin:2px 0 8px; }
+  .wbgrid{ display:grid; grid-template-columns:repeat(3,1fr); border-top:2px solid #6d6584; border-bottom:2px solid #6d6584; }
+  .wbw{ border:0; border-bottom:1px solid #d9d3c7; background:none; font-family:"AndikaJP",var(--f); font-size:clamp(22px,min(4.4vw,4.6vh),44px); color:#3b3346; padding:.06em .2em; cursor:pointer; position:relative; transition:background .15s; }
+  .wbw:nth-child(3n+1),.wbw:nth-child(3n+2){ border-right:1px solid #d9d3c7; }
+  .wbw .fg{ color:#6C3FC5; font-weight:700; }
+  .wbw.done{ background:#dff7e3; }
+  .wbw.done::after{ content:'✓'; position:absolute; right:8px; top:4px; font-size:18px; color:#2e9e4a; font-family:var(--f); font-weight:800; }
+  .wbw.hl{ background:#fff1b8; }
+  .wb1{ text-align:center; }
+  .wb1 .strip{ display:flex; flex-wrap:wrap; gap:4px; justify-content:center; margin:0 auto 14px; max-width:760px; }
+  .wb1 .strip span{ background:#fff; color:#3b3346; border:1px solid #cfc8bb; min-width:34px; padding:2px 6px; font-family:"AndikaJP",var(--f); font-size:24px; border-radius:4px; }
+  .wb1 .strip span.new{ background:var(--honey); }
+  .wb1 .card{ background:#fff; color:#2A2140; border-radius:10px; border:1px solid #cfc8bb; max-width:560px; margin:0 auto; padding:.35em .4em; font-family:"AndikaJP",var(--f); font-size:clamp(56px,13vw,120px); cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.2); }
+  .wb1 .card .fg{ color:#6C3FC5; }
   .tab.on{ background:#fff; color:var(--p); }
   .panel{ background:rgba(255,255,255,.1); border-radius:22px; padding:clamp(14px,3vh,26px); min-height:50vh; }
   .lead{ font-weight:700; opacity:.95; margin-bottom:14px; font-size:15px; }
@@ -365,14 +401,14 @@ const VOW=[
     if(!pool.length){ p.innerHTML='<div class="lead">Нет картинок для сюрприза.</div>'; return; }
     let it=null;
     p.innerHTML=`<div class="lead">🥚 <b>Сюрприз:</b> под пузырями спрятана картинка! Назови звук → тапни пузырь — он лопнет. Что там? Скажи слово!</div>
-      <div id="rvBox" style="position:relative;width:min(320px,84vw);height:min(320px,84vw);margin:6px auto;border-radius:24px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25)">
+      <div id="rvBox" style="position:relative;width:min(460px,84vw);height:min(460px,84vw);margin:6px auto;border-radius:24px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25)">
         <img id="rvImg" style="width:100%;height:100%;object-fit:cover">
         <div id="rvGrid" style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)"></div></div>
       <div style="text-align:center;margin-top:10px"><button class="bigbtn" id="rvSay" style="display:none">🔊 Слово</button> <button class="bigbtn" id="rvNext">Ещё →</button></div>`;
     function load(){ it=pool[Math.floor(Math.random()*pool.length)]; $("#rvImg").src=it.img; $("#rvSay").style.display='none';
       const base=priorLetters().concat(LES().letters); let snds=[]; while(snds.length<9) snds=snds.concat(shuffle(base)); snds=snds.slice(0,9); // всегда 9 пузырей — картинка закрыта полностью
       const g=$("#rvGrid"); let left=9;
-      g.innerHTML=snds.map((c,k)=>`<button data-c="${c}" style="border:1px solid rgba(255,255,255,.5);background:linear-gradient(160deg,#8b5cf6,#6C3FC5);color:#fff;font-family:'AndikaJP',var(--f);font-size:26px;font-weight:800;cursor:pointer">${dispG(c)}</button>`).join('');
+      g.innerHTML=snds.map((c,k)=>`<button data-c="${c}" style="border:1px solid rgba(255,255,255,.5);background:linear-gradient(160deg,#8b5cf6,#6C3FC5);color:#fff;font-family:'AndikaJP',var(--f);font-size:44px;font-weight:800;cursor:pointer">${dispG(c)}</button>`).join('');
       g.querySelectorAll('button').forEach(b=>b.onclick=()=>{ playSnd(b.dataset.c); b.style.transition='opacity .4s, transform .4s'; b.style.opacity=0; b.style.transform='scale(1.4)'; b.style.pointerEvents='none';
         if(--left===0){ sparkBurst($("#rvBox"),'🎉',14); $("#rvSay").style.display=''; } }); }
     load();
@@ -383,16 +419,16 @@ const VOW=[
     const p=$("#panel"); const pool=priorLetters().concat(LES().letters);
     p.innerHTML=`<div class="lead">🐝 <b>Пчёлки:</b> нажми 🔊 — услышь звук → тапни <b>цветок</b> с этим звуком. Пчёлка сядет на него. Посади всех пчёлок!</div>
       <div style="text-align:center;margin-bottom:8px"><button class="bigbtn p" id="beePlay">🔊 Звук</button> <span style="font-weight:800;margin-left:8px">🐝 <span id="beeSc">0</span> / <span id="beeTot"></span></span></div>
-      <div id="beeField" style="position:relative;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;min-height:230px;padding:8px 0 34px"></div>
+      <div id="beeField" style="position:relative;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;min-height:330px;padding:8px 0 70px"></div>
       <div style="text-align:center"><button class="bigbtn" id="beeAgain" style="display:none">Ещё раз 🔄</button></div>`;
     const field=$("#beeField");
     const opts=shuffle(pool).slice(0,Math.min(6,pool.length));
     let doneSet=new Set(), target=null, busyB=false;
     $("#beeTot").textContent=opts.length;
-    opts.forEach(c=>field.insertAdjacentHTML('beforeend',`<button class="flw" data-c="${c}" style="width:92px;height:92px;border:0;background:none;cursor:pointer;position:relative">
-      <span style="position:absolute;inset:0;font-size:84px;line-height:92px">🌸</span>
-      <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:40px;height:40px;padding:0 4px;border-radius:20px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-family:'AndikaJP',var(--f);font-size:23px;font-weight:900;color:#6C3FC5">${dispG(c)}</span></button>`));
-    field.insertAdjacentHTML('beforeend',`<div id="bee" style="position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);font-size:40px;transition:all .9s cubic-bezier(.3,1.2,.4,1);z-index:3">🐝</div>`);
+    opts.forEach(c=>field.insertAdjacentHTML('beforeend',`<button class="flw" data-c="${c}" style="width:122px;height:122px;border:0;background:none;cursor:pointer;position:relative">
+      <span style="position:absolute;inset:0;font-size:110px;line-height:122px">🌸</span>
+      <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:58px;height:58px;padding:0 6px;border-radius:29px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-family:'AndikaJP',var(--f);font-size:34px;font-weight:900;color:#6C3FC5">${dispG(c)}</span></button>`));
+    field.insertAdjacentHTML('beforeend',`<div id="bee" style="position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);font-size:60px;transition:all .9s cubic-bezier(.3,1.2,.4,1);z-index:3">🐝</div>`);
     function speak(){ if(!target)return; if(sndData(target)) playSnd(target); else say(target); }
     function pick(){ const rest=opts.filter(c=>!doneSet.has(c)); target=rest.length?rest[Math.floor(Math.random()*rest.length)]:null; }
     pick();
@@ -400,10 +436,10 @@ const VOW=[
     $("#beeAgain").onclick=renderBees;
     field.querySelectorAll('.flw').forEach(b=>b.onclick=()=>{ if(!target||busyB||doneSet.has(b.dataset.c))return;
       if(b.dataset.c===target){ busyB=true; const r=b.getBoundingClientRect(), f=field.getBoundingClientRect(), bee=$("#bee");
-        bee.style.left=(r.left-f.left+r.width/2)+'px'; bee.style.transform='translateX(-50%)'; bee.style.bottom=(f.offsetHeight-(r.top-f.top)-r.height*0.32)+'px';
+        const z=window.PZ||1; bee.style.left=((r.left-f.left+r.width/2)/z)+'px'; bee.style.transform='translateX(-50%)'; bee.style.bottom=(f.offsetHeight-((r.top-f.top)+r.height*0.32)/z)+'px';
         playSnd(b.dataset.c); sparkBurst(field,'✨',8); doneSet.add(b.dataset.c); $("#beeSc").textContent=doneSet.size;
         setTimeout(()=>{ // пчела ОСТАЁТСЯ на цветке: печатаем её на цветок, спавним новую снизу
-          const mark=document.createElement('span'); mark.textContent='🐝'; mark.style.cssText='position:absolute;top:-12px;right:-6px;font-size:34px;z-index:2';
+          const mark=document.createElement('span'); mark.textContent='🐝'; mark.style.cssText='position:absolute;top:-14px;right:-8px;font-size:48px;z-index:2';
           b.appendChild(mark);
           if(doneSet.size===opts.length){ bee.remove(); sparkBurst(field,'🎉',16); setTimeout(()=>sparkBurst(field,'🍯',10),300); $("#beeAgain").style.display=''; target=null; }
           else { bee.style.transition='none'; bee.style.left='50%'; bee.style.bottom='-2px'; bee.style.transform='translateX(-50%)'; void bee.offsetWidth; bee.style.transition='all .9s cubic-bezier(.3,1.2,.4,1)';
@@ -443,15 +479,168 @@ const VOW=[
       else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } });
     show();
   }
-  const ST_VOW=[["🔤 Звук",renderSounds],["🖐 Ладошка",renderPalm],["🏠 Сортировка",renderSort],["🔗 Блендинг",renderBlend],["✍️ Диктант",renderSeg]];
+
+  // ===== 🌈 ПОВТОР ЗВУКОВ (как Flashcards у Jolly): яркая плашка, клик → следующий звук, вразброс, за круг каждый по разу =====
+  function reviewLetters(){ const L=LES(); let a=priorLetters().concat(L.letters);
+    if(track==='dig' && a.length<8) a=a.concat(shuffle('satipnckehrmdgoulfbjvwxyz'.split('')).slice(0,8-a.length)); // диграфов мало → добиваем пройденными буквами
+    if(track==='adv' && a.length<8) a=a.concat(shuffle(DIGRAPHS.flatMap(x=>x.letters)).slice(0,8-a.length));
+    return [...new Set(a)]; }
+  let rvPic=true; // картинка-подсказка на карточке (выкл = только буквы, сложнее)
+  function renderReview(){
+    const letters=reviewLetters(), p=$("#panel");
+    let order=[], pos=0, lastC=null, busy=false;
+    const deal=()=>{ order=shuffle(letters); if(order.length>1 && order[0]===lastC){ order.push(order.shift()); } pos=0; };
+    p.innerHTML=`<div class="lead">🌈 <b>Повтор звуков:</b> клик по карточке — следующий звук. Дети хором называют звук (и показывают движение). Вразброс, за круг каждый звук по разу.</div>
+      <div class="rvStage" id="rvStage"><div class="rvPlate" id="rvPlate"></div></div>
+      <div class="rvBar"><button class="btn" id="rvRe">🔀 Перемешать</button><span class="cnt" id="rvCnt"></span><button class="btn" id="rvCase">${showCase==='low'?'aA → ЗАГЛАВНЫЕ':'Aa → строчные'}</button><button class="btn" id="rvPicB">${rvPic?'🖼 Картинки: вкл':'🔤 Только буквы'}</button></div>`;
+    const plate=$("#rvPlate");
+    function draw(){ const c=order[pos]; lastC=c;
+      const txt=(showCase==='up'&&c.length===1)?cap(c):dispG(c), k=skey(c), pic=rvPic&&SND_PICS.has(k)?`<img src="pics/snd_${k}.jpg" alt="">`:'';
+      plate.innerHTML=pic+`<div class="rvLt">${txt}</div>`;
+      plate.classList.toggle('nopic',!pic);
+      plate.style.setProperty('--fx','35vw'); plate.style.setProperty('--fr','6deg'); // всегда входит справа
+      plate.classList.remove('out','in'); void plate.offsetWidth; plate.classList.add('in');
+      $("#rvCnt").textContent=(pos+1)+' / '+order.length; }
+    function next(){ if(busy)return; busy=true;
+      plate.style.setProperty('--tx','-30vw'); plate.style.setProperty('--tr','-5deg'); // и уходит влево — как перелистывание
+      plate.classList.remove('in'); void plate.offsetWidth; plate.classList.add('out');
+      const endRound=(pos>=order.length-1);
+      setTimeout(()=>{ if(endRound){ sparkBurst($("#rvStage"),'🎉',18); deal(); } else pos++; draw(); busy=false; }, endRound?700:420); }
+    plate.onclick=next;
+    $("#rvRe").onclick=()=>{ deal(); draw(); };
+    $("#rvPicB").onclick=()=>{ rvPic=!rvPic; $("#rvPicB").textContent=rvPic?'🖼 Картинки: вкл':'🔤 Только буквы'; draw(); };
+    $("#rvCase").onclick=()=>{ showCase=showCase==='low'?'up':'low'; $("#rvCase").textContent=showCase==='low'?'aA → ЗАГЛАВНЫЕ':'Aa → строчные'; draw(); };
+    deal(); draw();
+  }
+
+  // ===== 📚 ЧИТАЕМ СЛОВА: разворот как в книжке Jolly (3 колонки) / по одному (как Blending у Jolly) =====
+  // Банк слов — Jolly Phonics word book (фото Оксаны 18.09.2026) + наши банки блендинга. Показываем ТОЛЬКО слова из пройденных звуков.
+  const BOOK_WORDS=["sit", "it", "spat", "pan", "tap", "pit", "tip", "pip", "sip", "sat", "at", "tin", "in", "spin", "pant", "ant", "nap", "tan", "pat", "an", "spit", "snip", "pin", "nip", "sap", "its", "span", "snap", "sin", "stint", "red", "can", "am", "mat", "ten", "kept", "dip", "ham", "did", "end", "stamp", "cat", "sad", "man", "pen", "hip", "sent", "hand", "mist", "stand", "met", "spend", "hid", "step", "men", "kid", "hat", "tent", "cap", "cramp", "him", "din", "hen", "mad", "rest", "ran", "and", "pet", "crept", "hit", "had", "test", "map", "desk", "rat", "rip", "tramp", "act", "mend", "set", "sack", "damp", "risk", "camp", "send", "ram", "hint", "mint", "sand", "dent", "get", "hot", "fat", "bat", "rug", "best", "on", "clap", "lid", "bus", "dug", "if", "leg", "flat", "hop", "pot", "us", "soft", "bent", "log", "milk", "flag", "help", "lump", "grub", "bill", "held", "fist", "loft", "drill", "fun", "bad", "cut", "gap", "fit", "lamp", "bed", "elf", "not", "lip", "club", "up", "sun", "lot", "plan", "dot", "must", "got", "plug", "crab", "left", "stop", "big", "gift", "list", "fill", "crib", "pump", "crust", "still", "mug", "bit", "loss", "rot", "tug", "sell", "but", "let", "drop", "nut", "huff", "flap", "gum", "puff", "bell", "bump", "from", "drum", "frost", "belt", "stick", "lit", "pill", "lost", "slim", "grab", "mud", "tell", "hill", "jam", "job", "jog", "jet", "jug", "just", "jump", "jazz", "junk", "zip", "zap", "zebra", "zigzag", "buzz", "fizz", "win", "wind", "wigwam", "web", "wag", "will", "swim", "well", "wept", "went", "west", "wet", "wig", "swell", "swam", "golf", "lift", "crisp", "melt", "slept", "ring", "king", "ping", "sing", "sung", "pong", "bang", "rang", "lung", "song", "clang", "strong", "wing", "swing", "cling", "hang", "ding", "sang", "long", "dong", "hung", "sting", "stung", "string", "spring", "sling", "belong", "bring", "singing", "fling", "bank", "ink", "rink", "wink", "sank", "plonk", "sink", "link", "pink", "blank", "frank", "honk", "clunk", "sunk", "bunk", "blink", "tank", "drink", "think", "ankle", "plank", "shrunk", "shrink", "trunk", "sprinkler", "chin", "finch", "chest", "chip", "chill", "check", "rich", "such", "champ", "chop", "chick", "hunch", "chat", "munch", "chess", "much", "chicken", "crunch", "punch", "pinch", "children", "bench", "chimp", "chunk", "bunch", "trench", "chug", "lunch", "chuff", "drench"];
+  const GR=['igh','air','ear','are','ai','oa','ie','ee','or','ng','nk','oo','ch','sh','th','qu','ou','oi','ue','er','ar','ay','oy','ea','ow','ir','ur','ew','aw','au','ph','wh','ck','ll','ss','ff','zz'];
+  const ALPHA='abcdefghijklmnopqrstuvwxyz'.split('').filter(c=>c!=='q');
+  function allTricky(){ const t=new Set(); Object.values(TRACKS).forEach(T=>T.forEach(L=>(L.tricky||[]).forEach(w=>t.add(String(w).toLowerCase())))); return t; }
+  function known(){ const K=new Set(), F={endy:false,softc:false};
+    const add=L=>{ (L.letters||[]).forEach(c=>K.add(dispG(c))); if(L.alias){ if(L.alias.y==='ee'||L.alias.y2) F.endy=true; if(L.alias.c==='s') F.softc=true; } };
+    if(track==='beg'){ for(let k=0;k<=gi;k++) add(GROUPS[k]); }
+    else if(track==='dig'){ ALPHA.forEach(c=>K.add(c)); for(let k=0;k<=gi;k++) add(DIGRAPHS[k]); }
+    else { ALPHA.forEach(c=>K.add(c)); K.add('qu'); DIGRAPHS.forEach(add); for(let k=0;k<=gi;k++) add(ADV[k]); }
+    return [K,F]; }
+  function tokens(w){ const out=[]; let i=0; while(i<w.length){ let m=null; for(const g of GR){ if(w.substr(i,g.length)===g){ m=g; break; } } if(m){ out.push(m); i+=m.length; } else { out.push(w[i]); i++; } } return out; }
+  function magicE(w){ const m=w.match(/([aeiou])([^aeiouy]{1,2})e$/); return (m && !/ee$/.test(w) && m[2][0]!=='r') ? m[1]+'-e' : null; } // car-e/large — не magic-e
+  function decodable(w,K,F,TR){ if(!/^[a-z]+$/.test(w) || TR.has(w)) return false;
+    if(/[^aeiou]y$/.test(w) && w.length>2 && !F.endy) return false;
+    if(/c[eiy]/.test(w) && !F.softc) return false;
+    if(/al[lkt]/.test(w) && !K.has('al')) return false;
+    const me=magicE(w); let base=w; if(me){ if(!K.has(me)) return false; base=w.slice(0,-1); }
+    for(const t of tokens(base)){
+      if(t==='ck'){ if(!(K.has('c')&&K.has('k'))) return false; continue; }
+      if(['ll','ss','ff','zz'].includes(t)){ if(!K.has(t[0])) return false; continue; }
+      if(t==='nk'){ if(!K.has('ng')) return false; continue; } // nk — после ng (как в книге Jolly)
+      if(t==='wh') return false;
+      if(!K.has(t)) return false; }
+    return true; }
+  function lessonWordSets(){ const L=LES();
+    if(track==='vow'){ const ws=[...new Set((L.blend||[]).map(x=>x.w).concat(((L.sort||{}).words||[]).map(x=>x[0])))]; return {sets:[ws], focus:new Set(L.letters.map(dispG))}; }
+    const [K,F]=known(), TR=allTricky();
+    let pool=BOOK_WORDS.concat(GROUPS.flatMap(x=>(x.blend||[]).map(b=>b.w)), DIGRAPHS.flatMap(x=>(x.blend||[]).map(b=>b.w)));
+    if(track==='adv') pool=pool.concat(ADV.slice(0,gi+1).flatMap(x=>(x.blend||[]).map(b=>b.w))); // банки будущих уроков не подмешиваем (gym, large…)
+    pool=[...new Set(pool.map(w=>String(w).toLowerCase()))].filter(w=>decodable(w,K,F,TR));
+    const focus=new Set(L.letters.map(dispG)); if(track==='beg' && L.letters.includes('ng')) focus.add('nk');
+    const SPEC=(L.alias&&L.alias.c==='s')?/[cg](?=[eiy])/:(focus.has('al')?/al(?=[lkt])/:null); // soft c/g · al — фокус по шаблону
+    if(SPEC) focus.spec=SPEC;
+    const isFocus=w=>{ if(SPEC) return SPEC.test(w); const me=magicE(w); if(me&&focus.has(me)) return true; return tokens(me?w.slice(0,-1):w).some(t=>focus.has(t)); };
+    const fw=shuffle(pool.filter(isFocus)), ow=shuffle(pool.filter(w=>!isFocus(w)));
+    const all=fw.concat(ow).slice(0,90), sets=[]; for(let k=0;k<all.length;k+=30) sets.push(all.slice(k,k+30));
+    return {sets:sets.length?sets:[[]], focus}; }
+  function markFocus(w,focus){ if(focus.spec){ const re=new RegExp(focus.spec.source,'g'); return w.replace(re,m=>'<span class="fg">'+m+'</span>'); } const me=magicE(w);
+    if(me && focus.has(me)){ const v=me[0], i=w.lastIndexOf(v, w.length-2); return w.slice(0,i)+'<span class="fg">'+v+'</span>'+w.slice(i+1,-1)+'<span class="fg">e</span>'; }
+    return tokens(w).map(t=>focus.has(t)?'<span class="fg">'+t+'</span>':t).join(''); }
+  let wbMode='page', wbTap='mark';
+  function renderWords(){
+    const p=$("#panel"), L=LES(); const {sets,focus}=lessonWordSets(); let si=0, one=0;
+    const learned=track==='beg'? priorLetters().concat(L.letters) : [...new Set(priorLetters().concat(L.letters))];
+    p.innerHTML=`<div class="lead">📚 <b>Читаем слова:</b> только слова из пройденных звуков. <b>Фиолетовым</b> — новый звук урока. Тап по слову — ${'отметить «прочитано»'} (или 🔊 послушать).</div>
+      <div class="wbTools"><button class="btn" id="wbPage">📄 Страница</button><button class="btn" id="wbOne">1️⃣ По одному</button>
+        <button class="btn" id="wbTapB"></button><button class="btn" id="wbShuf">🔀</button>
+        <span id="wbSetNav"><button class="btn" id="wbSP">◀</button> <b id="wbSN"></b> <button class="btn" id="wbSNx">▶</button></span><button class="btn" id="wbHome">📤 Ссылка для дома</button></div><div id="wbLink" style="display:none;text-align:center;margin:-4px 0 12px;font-weight:700"></div>
+      <div id="wbBody"></div>`;
+    function body(){ const ws=sets[si]||[]; const b=$("#wbBody");
+      $("#wbPage").classList.toggle('on',wbMode==='page'); $("#wbOne").classList.toggle('on',wbMode==='one');
+      $("#wbTapB").textContent=wbTap==='mark'?'✓ тап = прочитано':'🔊 тап = послушать';
+      $("#wbSN").textContent='Набор '+(si+1)+'/'+sets.length; $("#wbSetNav").style.display=sets.length>1?'':'none';
+      if(!ws.length){ b.innerHTML='<div class="wbook"><div class="wbH">Пока нет слов из пройденных звуков — сначала блендинг 🔗</div></div>'; return; }
+      if(wbMode==='page'){
+        b.innerHTML=`<div class="wbook"><div class="wbH">${L.title} · words <span id="wbDone" style="float:right;font-family:var(--f);font-weight:800;color:#2e9e4a"></span></div><div class="wbgrid">`+
+          ws.map((w,k)=>`<button class="wbw" data-k="${k}">${markFocus(w,focus)}</button>`).join('')+`</div></div>`;
+        const upd=()=>{ $("#wbDone").textContent='прочитано '+b.querySelectorAll('.wbw.done').length+'/'+ws.length; }; upd();
+        b.querySelectorAll('.wbw').forEach(el=>el.onclick=()=>{ const w=ws[+el.dataset.k];
+          if(wbTap==='say'){ say(w); el.classList.add('hl'); setTimeout(()=>el.classList.remove('hl'),700); return; }
+          el.classList.toggle('done'); upd(); if(b.querySelectorAll('.wbw.done').length===ws.length) sparkBurst(b,'⭐',18); });
+      } else {
+        one=((one%ws.length)+ws.length)%ws.length;
+        const cur=new Set(L.letters.map(dispG));
+        b.innerHTML=`<div class="wb1"><div class="strip">`+learned.map(c=>`<span class="${cur.has(dispG(c))?'new':''}">${dispG(c)}</span>`).join('')+`</div>
+          <div class="card" id="wb1w">${markFocus(ws[one],focus)}</div>
+          <div class="rvBar" style="margin-top:14px"><button class="btn" id="wb1p">◀</button><span class="cnt">${one+1} / ${ws.length}</span><button class="bigbtn p" id="wb1n" style="font-size:20px;padding:.35em 1.2em">Дальше →</button></div></div>`;
+        $("#wb1w").onclick=()=>say(ws[one]);
+        $("#wb1n").onclick=()=>{ one++; body(); };
+        $("#wb1p").onclick=()=>{ one--; body(); };
+      } }
+    $("#wbHome").onclick=()=>{ const u=location.origin+location.pathname+'?read='+track+'-'+gi, box=$("#wbLink");
+      box.style.display=''; box.innerHTML='Ссылка для детей (чтение дома): <input readonly value="'+u+'" style="width:min(460px,80vw);font:inherit;padding:4px 8px;border-radius:8px;border:0" onclick="this.select()"> <span id="wbCp"></span>';
+      try{ navigator.clipboard.writeText(u).then(()=>{ $("#wbCp").textContent='✓ скопирована'; }).catch(()=>{}); }catch(e){} };
+    $("#wbPage").onclick=()=>{ wbMode='page'; body(); };
+    $("#wbOne").onclick=()=>{ wbMode='one'; one=0; body(); };
+    $("#wbTapB").onclick=()=>{ wbTap=wbTap==='mark'?'say':'mark'; body(); };
+    $("#wbShuf").onclick=()=>{ sets[si]=shuffle(sets[si]); one=0; body(); };
+    $("#wbSP").onclick=()=>{ si=(si-1+sets.length)%sets.length; one=0; body(); };
+    $("#wbSNx").onclick=()=>{ si=(si+1)%sets.length; one=0; body(); };
+    body();
+  }
+  // ===== 📚 ЧИТАЕМ ДОМА (?read=beg-2): сам прочитал → «Я прочитал» → послушал 🔊 → сравнил =====
+  function renderHomeWords(){
+    const p=$("#panel"), L=LES(); const {sets,focus}=lessonWordSets(); const ws=(sets[0]||[]).slice(0,20);
+    let i=0, stars=0, stage='read';
+    function draw(){
+      if(i>=ws.length){ p.innerHTML=`<div class="wb1" style="padding:30px 0"><div style="font-size:64px">🎉</div><h2 style="margin:6px 0">Молодец!</h2>
+        <div style="font-size:26px;font-weight:800">⭐ ${stars} из ${ws.length}</div><div style="margin-top:18px"><button class="bigbtn p" id="hwAgain">🔁 Ещё раз</button></div></div>`;
+        sparkBurst(p,'⭐',20); $("#hwAgain").onclick=()=>{ i=0; stars=0; stage='read'; shuffleIn(); draw(); }; return; }
+      const w=ws[i];
+      p.innerHTML=`<div class="lead" style="text-align:center">👀 Прочитай слово <b>вслух сам</b> → нажми «Я прочитал» → 👂 послушай и сравни!</div>
+        <div class="wb1"><div style="font-weight:800;margin-bottom:10px">${i+1} / ${ws.length} &nbsp; ⭐ ${stars}</div>
+        <div class="card" id="hwW">${markFocus(w,focus)}</div>
+        <div class="rvBar" style="margin-top:18px" id="hwBtns"></div></div>`;
+      const bt=$("#hwBtns");
+      if(stage==='read'){ bt.innerHTML=`<button class="bigbtn p" id="hwRead" style="font-size:24px">✅ Я прочитал</button>`;
+        $("#hwRead").onclick=()=>{ stage='listen'; draw(); say(w); }; }
+      else { bt.innerHTML=`<button class="btn" id="hwSay" style="font-size:18px">🔊 Ещё послушать</button>
+          <button class="bigbtn p" id="hwOk" style="font-size:22px">👍 Так же!</button><button class="bigbtn" id="hwRetry" style="font-size:22px">🔁 Ещё раз</button>`;
+        $("#hwSay").onclick=()=>say(w);
+        $("#hwOk").onclick=()=>{ stars++; sparkBurst($("#hwW"),'⭐',8); stage='read'; i++; setTimeout(draw,350); };
+        $("#hwRetry").onclick=()=>{ stage='read'; draw(); }; } }
+    function shuffleIn(){ const t=shuffle(ws); ws.length=0; t.forEach(x=>ws.push(x)); }
+    draw();
+  }
+  function openHomeRead(tr,i){ track=tr; gi=i; station=0; window._stGo=null;
+    $("#back").style.display="none"; $("#htitle").textContent="📚 Читаем дома · "+LES().title;
+    wrap.innerHTML='<div class="panel" id="panel"></div>'; applyZoom(); renderHomeWords(); }
+  const ST_VOW=[["🔤 Звук",renderSounds],["🖐 Ладошка",renderPalm],["🏠 Сортировка",renderSort],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["✍️ Диктант",renderSeg]];
   // Порядок = методика (Оксана): 1) ввели звуки → 2) поиграли/отработали звуки → 3) читаем → 4) диктант → 5) tricky → 6) книжка
-  const ST_BEG=[["🔤 Звуки",renderSounds],["🔠 Заглавные",renderCaps],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
-  const ST_DIG=[["🔤 Звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
+  const ST_BEG=[["🌈 Повтор",renderReview],["🔤 Новые звуки",renderSounds],["🔠 Заглавные",renderCaps],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
+  const ST_DIG=[["🌈 Повтор",renderReview],["🔤 Новый звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
   function stList(){ if(track==='vow'){ const L=LES(); return ST_VOW.filter(s=> s[0].includes('Ладошка')?!!L.palm : s[0].includes('Сортировка')?!!L.sort : true); } return track==='beg'?ST_BEG:ST_DIG; }
 
+  // ←/→, PageUp/PageDown (кликер у проектора) — листать страницы урока
+  document.addEventListener('keydown',e=>{ if(!$("#stPrev")||!window._stGo) return; const a=document.activeElement; if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)) return; if($("#stMenu")&&$("#stMenu").classList.contains('on')) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){ e.preventDefault(); window._stGo(1); } else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); window._stGo(-1); } });
+  // Автомасштаб страницы урока под экран (проектор/большой монитор): всё крупнее одинаково; телефон — 1:1
+  window.PZ=1;
+  function applyZoom(){ const p=$("#panel"); if(!p) return; const Z=Math.max(1,Math.min(2.2, innerWidth/1000, (innerHeight-110)/620));
+    window.PZ=Z; p.style.zoom=Z; wrap.style.maxWidth=Math.round(920*Z)+'px'; }
+  window.addEventListener('resize',()=>{ if($("#panel")) applyZoom(); });
   // ---------- HUB ----------
   function renderHub(){
-    $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
+    window._stGo=null; window.PZ=1; wrap.style.maxWidth=""; $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
     const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.map(dispG).join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc}${g.tricky.length?' · '+g.tricky.length+' tricky':''}</div></button>`;
     let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
     h+=`<h2 class="sec">🎮 Игры на чтение слов</h2><div class="subsec">Командные игры: читаем слова — играем! Уровни: CVC · диграфы · продвинутые</div><div class="grid">
@@ -474,9 +663,9 @@ const VOW=[
     preloadSnds(priorLetters().concat(LES().letters)); // предзагрузка звуков урока — играют мгновенно
     const list=stList();
     let h=`<div class="tabs">`+list.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s[0]}</button>`).join('')+`</div><div class="panel" id="panel"></div>
-      <div class="stbar"><button class="arr" id="stPrev">◀</button><button class="mid" id="stMid">${list[station][0]}</button><button class="arr" id="stNext">▶</button></div>
-      <div class="stmenu" id="stMenu"><h3>${LES().title} · выбери станцию</h3><div class="stgrid">`+
-      list.map((s,k)=>{ const sp=s[0].split(' '); return `<button class="${k===station?'cur':''}" data-k="${k}"><span class="ico">${sp[0]}</span>${sp.slice(1).join(' ')}</button>`; }).join('')+
+      <div class="stbar"><button class="arr" id="stPrev">◀</button><button class="mid" id="stMid"><span class="pg">${station+1}/${list.length}</span>${list[station][0]}</button><button class="arr" id="stNext">▶</button></div>
+      <div class="stmenu" id="stMenu"><h3>${LES().title} · страницы урока</h3><div class="stgrid">`+
+      list.map((s,k)=>{ const sp=s[0].split(' '); return `<button class="${k===station?'cur':''}" data-k="${k}"><span class="num">стр. ${k+1}</span><span class="ico">${sp[0]}</span>${sp.slice(1).join(' ')}</button>`; }).join('')+
       `</div><button class="close" id="stClose">Закрыть ✕</button></div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ station=+t.dataset.k; renderLesson(); });
@@ -486,6 +675,8 @@ const VOW=[
     $("#stMid").onclick=()=>$("#stMenu").classList.add('on');
     $("#stClose").onclick=()=>$("#stMenu").classList.remove('on');
     $("#stMenu").querySelectorAll('.stgrid button').forEach(b=>b.onclick=()=>go(+b.dataset.k));
+    window._stGo=d=>go(station+d);
+    applyZoom();
     list[station][1]();
   }
 
@@ -500,7 +691,7 @@ const VOW=[
     oo:['ani-bounce','🕰️'], ch:['ani-fly','🚂'], sh:['ani-puff','🤫'], th:['ani-wiggle','👅'], ou:['ani-squeak','🌟'], oi:['ani-bounce','⚓'],
     ue:['ani-fly','🚀'], er:['ani-wiggle','🌀'], ar:['ani-squeak','😮'] }; // тема оживления + частица
   function sparkBurst(host, emo, n){ // разлетающиеся искры вокруг карточки
-    const r=host.getBoundingClientRect();
+    const r0=host.getBoundingClientRect(), zz=(host.closest&&host.closest('#panel'))?(window.PZ||1):1, r={width:r0.width/zz,height:r0.height/zz};
     for(let k=0;k<n;k++){ const s=document.createElement('span'); s.className='spark'; s.textContent=(k%3===0)?'✨':emo;
       s.style.left=(r.width/2-11+(Math.random()*40-20))+'px'; s.style.top=(r.height*0.35+(Math.random()*30-15))+'px';
       const ang=Math.random()*6.283, dist=70+Math.random()*90;
@@ -550,7 +741,7 @@ const VOW=[
     }).catch(e=>alert('Нет доступа к микрофону. Разреши микрофон для сайта в браузере.'));
   }
   function renderSounds(){
-    const g=LES(), letters=priorLetters().concat(g.letters), p=$("#panel");
+    const g=LES(), letters=g.letters.slice(), p=$("#panel"); // пройденные — на странице 🌈 Повтор
     let idx=0;
     p.innerHTML=`<div id="miniLts" style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:2px 0 12px"></div>
       <div id="sndStage">
@@ -610,7 +801,7 @@ const VOW=[
     ups.forEach(c=>up.insertAdjacentHTML('beforeend',`<button class="mbtn up" data-c="${c}">${cap(c)}</button>`));
     const PAIRC=['#e2542f','#6C3FC5','#f5a623','#2ea866','#3aa0e0','#d94f9a','#8e44ad','#00a3a3'];
     function drawPairLine(a,bEl,color){ const svg=$("#mLines"), wrap=$("#mWrap"); if(!svg||!wrap)return; const wr=wrap.getBoundingClientRect(), ar=a.getBoundingClientRect(), br=bEl.getBoundingClientRect();
-      const ns='http://www.w3.org/2000/svg', pts=[[ar.right-wr.left,ar.top+ar.height/2-wr.top],[br.left-wr.left,br.top+br.height/2-wr.top]];
+      const ns='http://www.w3.org/2000/svg', z=window.PZ||1, pts=[[(ar.right-wr.left)/z,(ar.top+ar.height/2-wr.top)/z],[(br.left-wr.left)/z,(br.top+br.height/2-wr.top)/z]];
       const ln=document.createElementNS(ns,'line'); ln.setAttribute('x1',pts[0][0]);ln.setAttribute('y1',pts[0][1]);ln.setAttribute('x2',pts[1][0]);ln.setAttribute('y2',pts[1][1]);
       ln.setAttribute('stroke',color); ln.setAttribute('stroke-width','5'); ln.setAttribute('stroke-linecap','round'); svg.appendChild(ln);
       pts.forEach(([cx,cy])=>{ const c=document.createElementNS(ns,'circle'); c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r','5');c.setAttribute('fill',color); svg.appendChild(c); }); }
@@ -801,6 +992,8 @@ const VOW=[
   }
   try{const _f=new URLSearchParams(location.search).get("from"); if(_f) sessionStorage.setItem("ph_from",_f);}catch(e){}
   $("#home").onclick=()=>{ let f="gmf1"; try{ f=new URLSearchParams(location.search).get("from")||sessionStorage.getItem("ph_from")||"gmf1"; }catch(e){} location.href = f==="gmf2" ? "../../gmf2/" : "../"; };
-  renderHub();
+  { let rq=null; try{ rq=new URLSearchParams(location.search).get("read"); }catch(e){}
+    const m=rq&&rq.match(/^(beg|dig|adv|vow)-(\d+)$/);
+    if(m && TRACKS[m[1]] && TRACKS[m[1]][+m[2]]) openHomeRead(m[1],+m[2]); else renderHub(); }
 })();
 </script>
