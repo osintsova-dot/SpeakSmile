@@ -134,6 +134,13 @@
     {name:"Диграфы", em:"🚂", words:["rain","train","snail","tail","goat","boat","coat","soap","tree","bee","feet","green","corn","fork","king","ring","moon","food","boot","spoon","book","fish","ship","chip","shop","queen","cloud","mouth","coin","oil","car","star","farm","park","arm","shark"]},
     {name:"Продвинутые", em:"🚀", words:["cake","snake","whale","game","bike","kite","five","time","nose","bone","home","cube","mule","play","day","boy","toy","sky","fly","sea","leaf","night","light","cow","owl","town","flower","girl","bird","shirt","purple","new","paw","face","ice","phone","dolphin","wall","small"]}
   ];
+  // Из Phonics Hub: ?snd=s:s,a-e:ai,… — звуки группы (показ:ключ записи/картинки) · ?w=sat,pin,… — слова урока · &title=
+  const Q=new URLSearchParams(location.search), SNDMODE=Q.has("snd"), CUSTOM=Q.get("snd")||Q.get("w");
+  if(CUSTOM){ const items=CUSTOM.split(",").map(x=>x.trim()).filter(Boolean); LEVELS.splice(0,LEVELS.length,{name:Q.get("title")||"Урок", em:SNDMODE?"🔤":"📖", words:items}); }
+  const itTxt=w=>SNDMODE?w.split(":")[0]:w, itKey=w=>SNDMODE?(w.split(":")[1]||w.split(":")[0]):w;
+  const itPic=w=>SNDMODE?"pics/snd_"+itKey(w)+".jpg":"pics/w_"+w+".jpg";
+  let sndAu=null;
+  function sayItem(w){ if(!SNDMODE){ speak(w); return; } try{ if(sndAu) sndAu.pause(); sndAu=new Audio("sounds/"+itKey(w)+".m4a"); sndAu.play().catch(()=>{}); }catch(e){} }
   const NAMES=["Крестики","Нолики"], COL=["var(--x)","var(--o)"], KIND=["X","O"];
   function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
@@ -168,8 +175,8 @@
   let curWord="";
   function askWord(){ busy=true; curWord=nextWord();
     claim.innerHTML=`<span style="color:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${teamName(cur)}</span> — клетка ${claimIdx+1}`;
-    mWord.textContent=curWord;
-    mPic.src="pics/w_"+curWord+".jpg"; mPic.classList.remove("show"); mHint.style.display="";
+    mWord.textContent=itTxt(curWord);
+    mPic.style.visibility=""; mPic.src=itPic(curWord); mPic.classList.remove("show"); mHint.style.display="";
     mBtns.style.display=""; mHint2.style.display="";
     okBtn.disabled=false; noBtn.disabled=false;
     modal.classList.add("on"); }
@@ -188,14 +195,14 @@
       const i=cpuPick(); if(i===null){ busy=false; return; }
       const w=nextWord(); curWord=w;
       claim.innerHTML=`<span style="color:${COL[1]}">◯ 🤖 Компьютер</span> — клетка ${i+1}`;
-      mWord.textContent=w; mPic.src="pics/w_"+w+".jpg"; mPic.classList.remove("show");
+      mWord.textContent=itTxt(w); mPic.style.visibility=""; mPic.src=itPic(w); mPic.classList.remove("show");
       mHint.style.display="none"; mBtns.style.display="none"; mHint2.style.display="none";
-      modal.classList.add("on"); speak(w);
+      modal.classList.add("on"); sayItem(w);
       setTimeout(()=>mPic.classList.add("show"),350);
       cpuT2=setTimeout(()=>{ cpuT2=null; modal.classList.remove("on"); place(i,1); },1700);
     },800); }
   okBtn.onclick=()=>{ okBtn.disabled=true; noBtn.disabled=true;
-    mHint.style.display="none"; mPic.classList.add("show"); speak(curWord);
+    mHint.style.display="none"; mPic.classList.add("show"); sayItem(curWord);
     setTimeout(()=>{ modal.classList.remove("on"); place(claimIdx,cur); }, 1500); };
   noBtn.onclick=()=>{ modal.classList.remove("on"); busy=false; toast("❌ Не вышло! Ход переходит"); nextTurn(); };
 
@@ -251,7 +258,7 @@
     modeOpts.appendChild(b); });
   const lvlOpts=$("#lvlOpts");
   LEVELS.forEach((L,i)=>{ const b=document.createElement("button"); b.className="lvl"+(i===0?" sel":"");
-    b.innerHTML='<span class="em">'+L.em+'</span><span><span class="nm">'+L.name+'</span><br><span class="sub">'+L.words.slice(0,4).join(" · ")+' …</span></span>';
+    b.innerHTML='<span class="em">'+L.em+'</span><span><span class="nm">'+L.name+'</span><br><span class="sub">'+L.words.slice(0,SNDMODE?10:4).map(itTxt).join(" · ")+' …</span></span>';
     b.onclick=()=>{ LVL=i; [...lvlOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; lvlOpts.appendChild(b); });
   const targetOpts=$("#targetOpts");
   [2,3,5].forEach((v,i)=>{ const b=document.createElement("button"); b.className="opt"+(i===1?" sel":""); b.textContent=v; b.onclick=()=>{ TARGET=v; [...targetOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; targetOpts.appendChild(b); });
@@ -264,6 +271,13 @@
   function burst(){ for(let i=0;i<140;i++) parts.push({x:innerWidth/2,y:innerHeight*.4,vx:(Math.random()-.5)*15,vy:Math.random()*-14-3,g:.35,s:6+Math.random()*7,c:CF[(Math.random()*CF.length)|0],a:1,r:Math.random()*6,vr:(Math.random()-.5)*.4}); }
   (function loop(){ cx.clearRect(0,0,cc.width,cc.height); for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.a-=.008;if(p.a<=0||p.y>cc.height+20){parts.splice(i,1);continue;}cx.save();cx.globalAlpha=Math.max(p.a,0);cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore();} requestAnimationFrame(loop); })();
 
+  mPic.onerror=()=>{ mPic.style.visibility="hidden"; };
+  if(SNDMODE){ document.title="Звуковые крестики-нолики · Speak & Smile";
+    $("#setup h1").textContent="Звуковые крестики-нолики!";
+    $("#setup h1").nextElementSibling.innerHTML='Выбери клетку → <b>назови звук</b> → твой значок прибежит на клетку! Собери 3 в ряд — победа раунда. <b style="color:var(--x)">✗ Крестики</b> против <b style="color:var(--o)">◯ Ноликов</b>.';
+    mHint.textContent="Назови звук! 📢"; okBtn.textContent="✅ Назвали!";
+    modal.querySelector(".hint2").textContent="Назвали верно — прозвучит звук и значок займёт клетку. Ошибка — ход переходит."; }
+  if(CUSTOM){ const lab=$("#lvlOpts").previousElementSibling; if(lab) lab.textContent=SNDMODE?"Звуки":"Слова"; }
   buildBoard(); setTurn(); renderScore();
 })();
 </script>

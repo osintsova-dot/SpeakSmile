@@ -555,7 +555,8 @@ const VOW=[
     return {sets:sets.length?sets:[[]], focus}; }
   function markFocus(w,focus){ if(focus.spec){ const re=new RegExp(focus.spec.source,'g'); return w.replace(re,m=>'<span class="fg">'+m+'</span>'); } const me=magicE(w);
     if(me && focus.has(me)){ const v=me[0], i=w.lastIndexOf(v, w.length-2); return w.slice(0,i)+'<span class="fg">'+v+'</span>'+w.slice(i+1,-1)+'<span class="fg">e</span>'; }
-    return tokens(w).map(t=>focus.has(t)?'<span class="fg">'+t+'</span>':t).join(''); }
+    const tk=tokens(w); if(tk.every(t=>focus.has(t))) return w; // всё слово из новых звуков — подсветка ничего не выделяет
+    return tk.map(t=>focus.has(t)?'<span class="fg">'+t+'</span>':t).join(''); }
   let wbMode='page', wbTap='mark';
   function renderWords(){
     const p=$("#panel"), L=LES(); const {sets,focus}=lessonWordSets(); let si=0, one=0;
@@ -625,11 +626,27 @@ const VOW=[
   function openHomeRead(tr,i){ track=tr; gi=i; station=0; window._stGo=null;
     $("#back").style.display="none"; $("#htitle").textContent="📚 Читаем дома · "+LES().title;
     wrap.innerHTML='<div class="panel" id="panel"></div>'; applyZoom(); renderHomeWords(); }
-  const ST_VOW=[["🔤 Звук",renderSounds],["🖐 Ладошка",renderPalm],["🏠 Сортировка",renderSort],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["✍️ Диктант",renderSeg]];
+  // ===== ⭕ КРЕСТИКИ-НОЛИКИ по группе: звуки (все пройденные) или слова для чтения → read-ttt.html с набором урока =====
+  function renderTTT(){ const p=$("#panel"), L=LES();
+    const snd=reviewLetters(), ws=lessonWordSets().sets.flat();
+    const t=encodeURIComponent(L.title), fr=(()=>{ try{ const f=new URLSearchParams(location.search).get("from")||sessionStorage.getItem("ph_from"); return f?'&from='+f:''; }catch(e){ return ''; } })();
+    const uS='read-ttt.html?snd='+snd.map(c=>encodeURIComponent(dispG(c)+':'+skey(c))).join(',')+'&title='+t+fr;
+    const uW='read-ttt.html?w='+ws.map(encodeURIComponent).join(',')+'&title='+t+fr;
+    const card=(href,em,h,d,ex)=>`<a href="${href}" style="display:block;text-decoration:none;background:#fff;color:#2a2140;border-radius:24px;padding:22px 20px;box-shadow:0 8px 22px rgba(0,0,0,.25);text-align:center">
+      <div style="font-size:52px;line-height:1">${em}</div><div style="font-weight:800;font-size:24px;margin-top:6px">${h}</div>
+      <div style="color:#6d6584;font-weight:600;font-size:15px;margin-top:4px">${d}</div>
+      <div style="font-family:'AndikaJP',var(--f);color:var(--p);font-size:26px;margin-top:10px">${ex}</div></a>`;
+    p.innerHTML=`<div class="lead">⭕✖️ <b>Крестики-нолики:</b> команды по очереди выбирают клетку → называют звук / читают слово → верно — значок занимает клетку. Три в ряд — победа! Можно и против компьютера 🤖.</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:760px;margin:10px auto">
+        ${card(uS,'🔤','Звуки','простое поле · называем звук · '+snd.length+' звуков',snd.slice(0,8).map(dispG).join(' '))}
+        ${ws.length?card(uW,'📖','Слова','сложнее · читаем слово · '+ws.length+' слов',ws.slice(0,4).join(' · ')):''}
+      </div>`;
+  }
+  const ST_VOW=[["🔤 Звук",renderSounds],["🖐 Ладошка",renderPalm],["🏠 Сортировка",renderSort],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["⭕ Крестики-нолики",renderTTT],["✍️ Диктант",renderSeg]];
   // Порядок = методика (Оксана): 1) ввели звуки → 2) поиграли/отработали звуки → 3) читаем → 4) диктант → 5) tricky → 6) книжка
-  const ST_BEG=[["🌈 Повтор",renderReview],["🔤 Новые звуки",renderSounds],["🔠 Заглавные",renderCaps],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
-  const ST_DIG=[["🌈 Повтор",renderReview],["🔤 Новый звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
-  function stList(){ if(track==='vow'){ const L=LES(); return ST_VOW.filter(s=> s[0].includes('Ладошка')?!!L.palm : s[0].includes('Сортировка')?!!L.sort : true); } return track==='beg'?ST_BEG:ST_DIG; }
+  const ST_BEG=[["🌈 Повтор",renderReview],["🔤 Новые звуки",renderSounds],["🔠 Заглавные",renderCaps],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["⭕ Крестики-нолики",renderTTT],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
+  const ST_DIG=[["🌈 Повтор",renderReview],["🔤 Новый звук",renderSounds],["🐝 Пчёлки",renderBees],["🎈 Шарики",renderBalloons],["🥚 Сюрприз",renderReveal],["🔗 Блендинг",renderBlend],["📚 Читаем слова",renderWords],["⭕ Крестики-нолики",renderTTT],["🧩 Пазл",renderJigsaw],["🔀 Анаграмма",renderAnagram],["✍️ Диктант",renderSeg],["⭐ Tricky",renderTricky],["⚡ Speed",renderSpeed],["📖 Книжка",renderRead]];
+  function stList(){ if(track==='vow'){ const L=LES(); return ST_VOW.filter(s=> s[0].includes('Ладошка')?!!L.palm : s[0].includes('Сортировка')?!!L.sort : true); } const L0=track==='beg'?ST_BEG:ST_DIG; return (track==='beg'&&gi===0)?L0.filter(x=>x[1]!==renderReview):L0; } // 1-й урок начинающих: повторять нечего
 
   // ←/→, PageUp/PageDown (кликер у проектора) — листать страницы урока
   document.addEventListener('keydown',e=>{ if(!$("#stPrev")||!window._stGo) return; const a=document.activeElement; if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)) return; if($("#stMenu")&&$("#stMenu").classList.contains('on')) return;
