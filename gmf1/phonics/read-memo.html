@@ -110,6 +110,10 @@
     {name:"Диграфы", em:"🚂", words:["rain","train","snail","tail","goat","boat","coat","soap","tree","bee","feet","green","corn","fork","king","ring","moon","food","boot","spoon","book","fish","ship","chip","shop","queen","cloud","mouth","coin","oil","car","star","farm","park","arm","shark"]},
     {name:"Продвинутые", em:"🚀", words:["cake","snake","whale","game","bike","kite","five","time","nose","bone","home","cube","mule","play","day","boy","toy","sky","fly","sea","leaf","night","light","cow","owl","town","flower","girl","bird","shirt","purple","new","paw","face","ice","phone","dolphin","wall","small"]}
   ];
+  // Из Phonics Hub: ?tw=the,he,she… — пары «слово ↔ слово» (tricky words, картинок нет) · ?w=… — обычные слова с картинками
+  const Q=new URLSearchParams(location.search), TWMODE=Q.has("tw"), CUSTOM=Q.get("tw")||Q.get("w");
+  if(CUSTOM){ const items=CUSTOM.split(",").map(x=>x.trim()).filter(Boolean);
+    LEVELS.splice(0,LEVELS.length,{name:Q.get("title")||"Урок", em:TWMODE?"⭐":"📖", words:items}); }
   const COLORS=["#FF5D5D","#4D96FF","#38C976","#B15CFF"], NAMES=["Красные","Синие","Зелёные","Фиолетовые"];
   function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
@@ -120,13 +124,14 @@
   function buildBoard(){
     const pairs=SIZE/2;
     const pool=shuffle(LEVELS[LVL].words).slice(0,pairs);
-    const deck=shuffle(pool.map(w=>({word:w,kind:"pic"})).concat(pool.map(w=>({word:w,kind:"word"}))));
+    const deck=shuffle(pool.map(w=>({word:w,kind:TWMODE?"word2":"pic"})).concat(pool.map(w=>({word:w,kind:"word"}))));
     cards=deck; matched=0; total=deck.length; flipped=[]; busy=false;
     boardEl.style.setProperty("--rows", Math.ceil(SIZE/4));
     boardEl.innerHTML="";
     deck.forEach((c,i)=>{ const b=document.createElement("button"); b.className="card";
-      const back = c.kind==="word" ? '<span class="back wb">Aa</span>' : '<span class="back">?</span>';
-      const face = c.kind==="word"
+      const isWord = TWMODE || c.kind==="word";
+      const back = isWord ? '<span class="back wb">Aa</span>' : '<span class="back">?</span>';
+      const face = isWord
         ? '<span class="face"><span class="wrd'+(c.word.length>5?" long":"")+'">'+c.word+'</span></span>'
         : '<span class="face"><img src="pics/w_'+c.word+'.jpg" alt=""></span>';
       b.innerHTML='<span class="inner">'+back+face+'</span>';
@@ -174,6 +179,10 @@
   [1,2,3,4].forEach(k=>{ const b=document.createElement("button"); b.className="opt"+(k===2?" sel":""); b.textContent=k; b.onclick=()=>{ nTeams=k; [...teamOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; teamOpts.appendChild(b); });
   const sizeOpts=$("#sizeOpts");
   [8,12,16].forEach(v=>{ const b=document.createElement("button"); b.className="opt"+(v===12?" sel":""); b.textContent=v; b.onclick=()=>{ SIZE=v; [...sizeOpts.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); }; sizeOpts.appendChild(b); });
+  if(TWMODE){ document.title="Мемо · tricky words · Speak & Smile";
+    const h=$("#setup h1"); if(h) h.textContent="Мемо: tricky words";
+    const d=h&&h.nextElementSibling; if(d) d.innerHTML='Переворачивай карточки и <b>читай слова вслух</b> — найди <b>две одинаковые</b>. Tricky words читаем целиком, по звукам их не сложить.'; }
+  if(CUSTOM){ const lab=$("#lvlOpts").previousElementSibling; if(lab) lab.textContent=TWMODE?"Tricky words":"Слова"; }
   $("#startBtn").onclick=()=>{ $("#setup").classList.remove("on"); startGame(); speak(""); };
 
   const cc=$("#confetti"), cx=cc.getContext("2d"); let parts=[];

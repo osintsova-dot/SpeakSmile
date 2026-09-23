@@ -903,10 +903,21 @@ const VOW=[
   function renderTricky(){
     const g=LES(), p=$("#panel");
     p.innerHTML=`<div class="lead"><b>Tricky words</b> — читаем целиком, их не «сложить» по звукам. Тапни карточку → откроется, послушай 🔊.</div>
-      <div class="tricky" id="tk"></div><div class="hintline">Прочитали хором → перевернули → проверили.</div>`;
+      <div class="tricky" id="tk"></div><div class="hintline">Прочитали хором → перевернули → проверили.</div>
+      <div id="tkGames" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;max-width:620px;margin:20px auto 0"></div>`;
     const box=$("#tk");
     g.tricky.forEach(w=>box.insertAdjacentHTML('beforeend',`<button class="tk" data-w="${w}"><span class="q">?</span></button>`));
     box.querySelectorAll(".tk").forEach(b=>b.onclick=()=>{ const w=b.dataset.w; if(!b.classList.contains("open")){ b.classList.add("open"); b.innerHTML=w; say(w); } });
+    // ⭐ игры на tricky words урока (все пройденные + новые): мемо «слово↔слово» и крестики-нолики
+    const tw=priorTricky(); if(tw.length>=4){
+      const t=encodeURIComponent(LES().title+" · tricky"), lst=tw.map(encodeURIComponent).join(','),
+        fr=(()=>{ try{ const f=new URLSearchParams(location.search).get("from")||sessionStorage.getItem("ph_from"); return f?'&from='+f:''; }catch(e){ return ''; } })();
+      const card=(href,em,h,d)=>`<a href="${href}" style="display:block;text-decoration:none;background:#fff;color:#2a2140;border-radius:22px;padding:18px 16px;box-shadow:0 8px 22px rgba(0,0,0,.25);text-align:center">
+        <div style="font-size:44px;line-height:1">${em}</div><div style="font-weight:800;font-size:21px;margin-top:4px">${h}</div>
+        <div style="color:#6d6584;font-weight:600;font-size:14px;margin-top:3px">${d}</div></a>`;
+      $("#tkGames").innerHTML=card('read-memo.html?tw='+lst+'&title='+t+fr,'🃏','Мемо','найди две одинаковые · '+tw.length+' слов')
+        +card('read-ttt.html?w='+lst+'&nopic=1&title='+t+fr,'⭕✖️','Крестики-нолики','прочитай tricky — займи клетку');
+    }
   }
 
   // Station 6: 🎈 Шарики (буквы взлетают, назови звук и лопни)

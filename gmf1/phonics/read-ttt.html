@@ -138,7 +138,8 @@
   const Q=new URLSearchParams(location.search), SNDMODE=Q.has("snd"), CUSTOM=Q.get("snd")||Q.get("w");
   if(CUSTOM){ const items=CUSTOM.split(",").map(x=>x.trim()).filter(Boolean); LEVELS.splice(0,LEVELS.length,{name:Q.get("title")||"Урок", em:SNDMODE?"🔤":"📖", words:items}); }
   const itTxt=w=>SNDMODE?w.split(":")[0]:w, itKey=w=>SNDMODE?(w.split(":")[1]||w.split(":")[0]):w;
-  const itPic=w=>SNDMODE?"pics/snd_"+itKey(w)+".jpg":"pics/w_"+w+".jpg";
+  const NOPIC=Q.has("nopic"); // tricky words — картинок нет
+  const itPic=w=>NOPIC?"":(SNDMODE?"pics/snd_"+itKey(w)+".jpg":"pics/w_"+w+".jpg");
   let sndAu=null;
   function sayItem(w){ if(!SNDMODE){ speak(w); return; } try{ if(sndAu) sndAu.pause(); sndAu=new Audio("sounds/"+itKey(w)+".m4a"); sndAu.play().catch(()=>{}); }catch(e){} }
   const NAMES=["Крестики","Нолики"], COL=["var(--x)","var(--o)"], KIND=["X","O"];
@@ -176,7 +177,7 @@
   function askWord(){ busy=true; curWord=nextWord();
     claim.innerHTML=`<span style="color:${COL[cur]}">${KIND[cur]==="X"?"✗":"◯"} ${teamName(cur)}</span> — клетка ${claimIdx+1}`;
     mWord.textContent=itTxt(curWord);
-    mPic.style.visibility=""; mPic.src=itPic(curWord); mPic.classList.remove("show"); mHint.style.display="";
+    const pc=itPic(curWord); mPic.style.visibility=pc?"":"hidden"; if(pc) mPic.src=pc; else mPic.removeAttribute("src"); mPic.classList.remove("show"); mHint.style.display="";
     mBtns.style.display=""; mHint2.style.display="";
     okBtn.disabled=false; noBtn.disabled=false;
     modal.classList.add("on"); }
@@ -195,7 +196,7 @@
       const i=cpuPick(); if(i===null){ busy=false; return; }
       const w=nextWord(); curWord=w;
       claim.innerHTML=`<span style="color:${COL[1]}">◯ 🤖 Компьютер</span> — клетка ${i+1}`;
-      mWord.textContent=itTxt(w); mPic.style.visibility=""; mPic.src=itPic(w); mPic.classList.remove("show");
+      mWord.textContent=itTxt(w); const pc2=itPic(w); mPic.style.visibility=pc2?"":"hidden"; if(pc2) mPic.src=pc2; else mPic.removeAttribute("src"); mPic.classList.remove("show");
       mHint.style.display="none"; mBtns.style.display="none"; mHint2.style.display="none";
       modal.classList.add("on"); sayItem(w);
       setTimeout(()=>mPic.classList.add("show"),350);
@@ -278,6 +279,7 @@
     mHint.textContent="Назови звук! 📢"; okBtn.textContent="✅ Назвали!";
     modal.querySelector(".hint2").textContent="Назвали верно — прозвучит звук и значок займёт клетку. Ошибка — ход переходит."; }
   if(CUSTOM){ const lab=$("#lvlOpts").previousElementSibling; if(lab) lab.textContent=SNDMODE?"Звуки":"Слова"; }
+  if(NOPIC) modal.querySelector(".hint2").textContent="Прочитали верно — значок займёт клетку. Ошибка — ход переходит.";
   buildBoard(); setTurn(); renderScore();
 })();
 </script>
