@@ -15,6 +15,7 @@ NAV = [
     ("/angliyskiy-podrostki/",      "Подростки"),
     ("/oge-angliyskiy/",            "ОГЭ"),
     ("/ege-angliyskiy/",            "ЕГЭ"),
+    ("/tseny/",                     "Цены"),
 ]
 
 ORG = {
@@ -88,6 +89,14 @@ def jsonld(page):
             "inLanguage": "ru-RU",
             "teaches": "Английский язык",
             "provider": {"@id": SITE + "/#org"},
+            "offers": {
+                "@type": "Offer",
+                "price": c["price"],
+                "priceCurrency": "RUB",
+                "category": "Абонемент на месяц",
+                "availability": "https://schema.org/InStock",
+                "url": SITE + "/tseny/",
+            },
             "hasCourseInstance": {
                 "@type": "CourseInstance",
                 "courseMode": "onsite",
@@ -138,6 +147,21 @@ def also_html(links):
         for href, t, s in links
     )
     return ('\n<h2>Другие программы</h2>\n<div class="also">\n' + cards + '\n</div>\n')
+
+
+def price_html(page):
+    if not page.get("price_note"):
+        return ""
+    return ('''
+<h2>Стоимость</h2>
+<div class="card">
+  <h3>{note}</h3>
+  <p>В цену входят занятия в группе, разговорный клуб с британским педагогом
+     (для учеников с 4 класса) и все раздаточные материалы. Учебник покупается
+     отдельно и остаётся у ребёнка.</p>
+  <p><a href="/tseny/">Все цены и что входит в стоимость →</a></p>
+</div>
+''').format(note=page["price_note"])
 
 
 def lead_html(path):
@@ -237,6 +261,7 @@ def render(page):
 
 <main class="wrap">
 {body}
+{price}
 {faq}
 {also}
 {form}
@@ -264,7 +289,8 @@ def render(page):
         <a href="/angliyskiy-doshkolniki/">Дошкольники</a><br>
         <a href="/angliyskiy-dlya-detey/">Дети 7–10 лет</a><br>
         <a href="/angliyskiy-podrostki/">Подростки</a><br>
-        <a href="/oge-angliyskiy/">ОГЭ</a> · <a href="/ege-angliyskiy/">ЕГЭ</a>
+        <a href="/oge-angliyskiy/">ОГЭ</a> · <a href="/ege-angliyskiy/">ЕГЭ</a><br>
+        <a href="/tseny/">Стоимость занятий</a>
       </div>
     </div>
     <div class="cp">
@@ -285,6 +311,7 @@ def render(page):
         sub=page["sub"],
         badges="".join("<span>{}</span>".format(b) for b in page["badges"]),
         body=page["body"].strip(),
+        price=price_html(page),
         faq=faq_html(page.get("faq")),
         also=also_html(page.get("also")),
         form=lead_html(page["path"]),
