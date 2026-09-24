@@ -555,3 +555,19 @@ const ASSETS = {"title": "Unit 4 · Wild animals", "emoji": "🦁", "bg": "data:
   buildPins(); resize(); render();
 })();
 </script>
+
+<style id="mimi-skin">
+body{background:
+  radial-gradient(120% 80% at 12% 0%, rgba(241,127,190,.26), transparent 55%),
+  radial-gradient(120% 80% at 100% 6%, rgba(99,179,255,.32), transparent 55%),
+  linear-gradient(180deg,#7C4DE0 0%, #5B3FCF 60%, #4A2FB0 100%) !important;
+  animation:mimifade .5s ease both;}
+.topbar{background:rgba(255,255,255,.08) !important;border-bottom:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);}
+.homebtn,.finbtn,.back{transition:transform .14s,background .14s,filter .14s;}
+.homebtn:hover,.finbtn:hover,.back:hover{transform:translateY(-2px);filter:brightness(1.08);}
+.cbtn{transition:transform .1s,filter .14s;}
+.cbtn:hover{filter:brightness(1.06);}
+.ov{background:rgba(24,12,48,.62) !important;backdrop-filter:blur(6px);}
+@keyframes mimifade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){body,*{animation:none !important}}
+</style>
