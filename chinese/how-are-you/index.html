@@ -71,6 +71,8 @@ body{
 .card img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:16px;background:#fff}
 .card .zh{font-family:var(--zh);font-weight:900;font-size:clamp(28px,7.2vw,38px);line-height:1.15;margin-top:4px}
 .card .py{font-weight:800;font-size:clamp(16px,4.4vw,19px);color:var(--p)}
+.card .cap{display:none;flex-direction:column;align-items:center;gap:4px}
+.card.right .cap{display:flex;animation:pop .45s var(--ease)}
 .card .py.big{font-weight:800;font-size:clamp(21px,6vw,28px);line-height:1.15;margin-top:6px}
 .card .ru{font-weight:600;font-size:13px;color:var(--muted)}
 .card.playing{animation:bounce .55s var(--ease)}
@@ -354,7 +356,7 @@ function play(id,onend){ if(current){current.pause();current.currentTime=0;} con
 function cardHTML(w,i,withText=true){
   return `<button class="card" data-id="${w.id}" style="--i:${i}" aria-label="${w.ru}">${SPK}
     <img src="img/${w.id}.webp" alt="" loading="lazy">
-    ${withText?`<span class="zh" lang="zh">${w.zh}</span><span class="py">${w.py}</span><span class="ru">${w.ru}</span>`:`<span class="py big">${w.py}</span>`}
+    ${withText?`<span class="zh" lang="zh">${w.zh}</span><span class="py">${w.py}</span><span class="ru">${w.ru}</span>`:`<span class="cap"><span class="zh" lang="zh">${w.zh}</span><span class="py big">${w.py}</span><span class="ru">${w.ru}</span></span>`}
   </button>`;
 }
 const grid=document.getElementById('grid');
@@ -376,7 +378,7 @@ function newRound(){
 gameGrid.addEventListener('click',e=>{const c=e.target.closest('.card'); if(!c||locked)return;
   total++; totalEl.textContent=total;
   if(c.dataset.id===target.id){locked=true;score++;scoreEl.textContent=score;c.classList.add('right');
-    hint.textContent="对了！Верно!"; play(target.id,()=>setTimeout(newRound,500));}
+    hint.textContent="对了！Верно!"; play(target.id,()=>setTimeout(newRound,1400));}
   else{c.classList.add('wrong');setTimeout(()=>c.classList.remove('wrong'),450);hint.textContent="Ещё раз послушай…";play(target.id);}
 });
 document.getElementById('askBtn').onclick=()=>target&&play(target.id);
