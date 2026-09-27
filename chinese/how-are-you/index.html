@@ -71,6 +71,7 @@ body{
 .card img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:16px;background:#fff}
 .card .zh{font-family:var(--zh);font-weight:900;font-size:clamp(22px,5.4vw,30px);line-height:1.15;margin-top:2px}
 .card .py{font-weight:700;font-size:14px;color:var(--p)}
+.card .py.big{font-weight:800;font-size:clamp(16px,4.4vw,20px);margin-top:4px}
 .card .ru{font-weight:600;font-size:13px;color:var(--muted)}
 .card.playing{animation:bounce .55s var(--ease)}
 @keyframes bounce{30%{transform:scale(1.06) rotate(-1.5deg)}60%{transform:scale(.98) rotate(1deg)}}
@@ -353,7 +354,7 @@ function play(id,onend){ if(current){current.pause();current.currentTime=0;} con
 function cardHTML(w,i,withText=true){
   return `<button class="card" data-id="${w.id}" style="--i:${i}" aria-label="${w.ru}">${SPK}
     <img src="img/${w.id}.webp" alt="" loading="lazy">
-    ${withText?`<span class="zh" lang="zh">${w.zh}</span><span class="py">${w.py}</span><span class="ru">${w.ru}</span>`:""}
+    ${withText?`<span class="zh" lang="zh">${w.zh}</span><span class="py">${w.py}</span><span class="ru">${w.ru}</span>`:`<span class="py big">${w.py}</span>`}
   </button>`;
 }
 const grid=document.getElementById('grid');
