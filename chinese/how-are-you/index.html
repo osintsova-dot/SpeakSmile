@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>你好吗？ Как дела? · Speak&Smile</title>
+<meta name="description" content="Китайский для детей: 12 фраз «Как дела?» с озвучкой, игра «послушай и найди» и песня.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6C3FC5; --honey:#F5C842; --violet:#8B5CF6; --sky:#63B3FF; --pink:#F17FBE; --teal:#34D3C0; --red:#F26B6B;
+  --ink:#2A2140; --muted:#6A5B9A; --paper:#FFFFFF;
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,"Trebuchet MS",system-ui,sans-serif;
+  --zh:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1.1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#5B3FCF}
+html,body{margin:0}
+body{
+  font-family:var(--f); color:#fff; min-height:100vh; overflow-x:hidden; position:relative;
+  background:
+    radial-gradient(120% 90% at 15% 0%, rgba(241,127,190,.35), transparent 55%),
+    radial-gradient(120% 90% at 100% 10%, rgba(99,179,255,.40), transparent 55%),
+    radial-gradient(140% 120% at 50% 100%, #5B34C9, transparent 60%),
+    linear-gradient(180deg,#7C4DE0 0%, #5B3FCF 55%, #4A2FB0 100%);
+  padding:28px 18px 60px; text-align:center;
+}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:12px}
+.bubbles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bubbles i{position:absolute;bottom:-14vh;border-radius:50%;opacity:.45;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.15) 60%, transparent 70%);animation:rise linear infinite}
+.bubbles i:nth-child(1){left:8%;width:46px;height:46px;animation-duration:17s;animation-delay:-2s}
+.bubbles i:nth-child(2){left:26%;width:26px;height:26px;animation-duration:21s;animation-delay:-8s}
+.bubbles i:nth-child(3){left:49%;width:60px;height:60px;animation-duration:26s;animation-delay:-4s;opacity:.3}
+.bubbles i:nth-child(4){left:70%;width:32px;height:32px;animation-duration:19s;animation-delay:-11s}
+.bubbles i:nth-child(5){left:88%;width:52px;height:52px;animation-duration:23s;animation-delay:-6s;opacity:.35}
+@keyframes rise{to{transform:translateY(-130vh)}}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto}
+
+/* ── герой ── */
+.hero{animation:pop .7s var(--ease) both}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.hero .zh{font-family:var(--zh);font-weight:900;font-size:clamp(56px,16vw,96px);line-height:1;margin:6px 0 0;
+  text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.hero .py{font-size:clamp(18px,4.6vw,24px);font-weight:700;color:var(--honey);margin:8px 0 0;letter-spacing:.01em}
+.hero .ru{font-size:clamp(15px,3.6vw,18px);font-weight:600;opacity:.92;margin:4px 0 0}
+.brand{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;padding:6px 14px;border-radius:999px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px}
+.brand b{color:var(--honey)}
+
+/* ── переключатель режимов ── */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:26px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.26);backdrop-filter:blur(8px);width:max-content;max-width:100%}
+.tab{appearance:none;border:0;background:transparent;color:#fff;font:inherit;font-weight:800;font-size:15px;
+  padding:10px 18px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,transform .15s}
+.tab[aria-selected="true"]{background:#fff;color:var(--p)}
+.tab:active{transform:scale(.97)}
+
+/* ── карточки слов ── */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+.card{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--paper);color:var(--ink);
+  border-radius:24px;padding:14px 10px 14px;cursor:pointer;border:0;font:inherit;text-align:center;
+  box-shadow:0 12px 26px rgba(30,10,70,.28),0 2px 0 rgba(0,0,0,.05);
+  animation:rise-in .55s var(--ease) backwards;animation-delay:calc(var(--i)*55ms);
+  transition:transform .18s var(--ease),box-shadow .18s}
+@keyframes rise-in{from{transform:translateY(16px);opacity:0}}
+.card:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(30,10,70,.34)}
+.card:active{transform:scale(.97)}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:16px;background:#fff}
+.card .zh{font-family:var(--zh);font-weight:900;font-size:clamp(22px,5.4vw,30px);line-height:1.15;margin-top:2px}
+.card .py{font-weight:700;font-size:14px;color:var(--p)}
+.card .ru{font-weight:600;font-size:13px;color:var(--muted)}
+.card.playing{animation:bounce .55s var(--ease)}
+@keyframes bounce{30%{transform:scale(1.06) rotate(-1.5deg)}60%{transform:scale(.98) rotate(1deg)}}
+.card.playing::after{content:"";position:absolute;inset:0;border-radius:24px;box-shadow:0 0 0 4px var(--honey) inset;pointer-events:none}
+.card.right{box-shadow:0 0 0 5px var(--teal) inset,0 12px 26px rgba(30,10,70,.28)}
+.card.wrong{animation:shake .4s ease}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.card .spk{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;background:var(--p);display:grid;place-items:center}
+.card .spk svg{width:14px;height:14px;fill:#fff}
+
+/* ── игра «послушай и найди» ── */
+.game-bar{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:0 0 18px}
+.btn{appearance:none;border:0;font:inherit;font-weight:800;font-size:16px;padding:14px 22px;border-radius:999px;cursor:pointer;
+  color:var(--ink);background:var(--honey);box-shadow:0 8px 20px rgba(0,0,0,.22),0 2px 0 rgba(0,0,0,.08);
+  transition:transform .15s var(--ease),box-shadow .15s;display:inline-flex;align-items:center;gap:10px}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
+.btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);box-shadow:none}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.score{font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)}
+.score b{color:var(--honey)}
+.hint{font-weight:600;font-size:14px;opacity:.9;margin:0 0 14px}
+
+/* ── песня ── */
+.song{background:var(--paper);color:var(--ink);border-radius:28px;padding:22px 18px 24px;
+  box-shadow:0 14px 30px rgba(30,10,70,.30);animation:pop .6s var(--ease) both}
+.song h2{margin:0 0 4px;font-size:22px}
+.song .sub{margin:0 0 16px;color:var(--muted);font-weight:600;font-size:14px}
+.lyrics{display:flex;flex-direction:column;gap:6px;text-align:left;margin:16px 0 18px}
+.line{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:10px 14px;border-radius:16px;transition:background .25s,transform .25s;cursor:pointer}
+.line:active{transform:scale(.985)}
+.line.say{background:#F3EEFF}
+.line .zh{font-family:var(--zh);font-weight:900;font-size:clamp(20px,5vw,26px);line-height:1.15}
+.line .py{font-weight:800;font-size:17px;color:var(--p)}
+.line .ru{font-size:13px;color:var(--muted);font-weight:600}
+.line img{width:52px;height:52px;border-radius:12px;object-fit:cover;background:#F3EEFF}
+.line.on{background:linear-gradient(90deg,#FFF3C4,#FFFAE6);transform:translateX(4px)}
+.line.on .zh{color:var(--p)}
+.rep{display:inline-flex;gap:4px;margin-left:10px;vertical-align:middle}
+.rep i{width:10px;height:10px;border-radius:50%;background:#E6DEFB;border:2px solid #C9B8F5;transition:background .2s,transform .2s}
+.rep i.done{background:var(--honey);border-color:#E0B32E;transform:scale(1.15)}
+.controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn.primary{background:var(--p);color:#fff}
+.tempo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--muted)}
+.tempo input{accent-color:var(--p)}
+
+
+
+/* ── иероглиф дня ── */
+.hz{background:var(--paper);color:var(--ink);border-radius:28px;padding:20px 18px 24px;box-shadow:0 14px 30px rgba(30,10,70,.30);animation:pop .6s var(--ease) both}
+.hz-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.hz-top h2{margin:0;font-size:20px}
+.hz-top .n{font-size:13px;color:var(--muted);font-weight:700}
+.hz-nav{display:flex;gap:6px}
+.hz-nav button{width:40px;height:40px;border-radius:50%;border:0;background:#F3EEFF;color:var(--p);cursor:pointer;display:grid;place-items:center;transition:transform .15s var(--ease),background .15s}
+.hz-nav button:hover{background:#E6DEFB;transform:translateY(-1px)}.hz-nav button:active{transform:scale(.94)}
+.hz-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.hz-main{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:18px;align-items:center;margin-top:8px}
+@media(max-width:520px){.hz-main{grid-template-columns:1fr;justify-items:center}}
+.hz-svg{width:100%;max-width:260px;aspect-ratio:1;border-radius:24px;background:#FBF9FF;border:2px dashed #E6DEFB;position:relative;cursor:pointer}
+.hz-svg svg{width:100%;height:100%;display:block;border-radius:24px}
+.hz-svg .grid line{stroke:#EDE7FA;stroke-width:6;stroke-dasharray:18 18}
+.hz-svg .under path{fill:#EEE8FA}
+.hz-svg .stroke{fill:none;stroke-width:210;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset .38s ease-out,opacity .3s}
+.hz-svg .comp{transition:transform .5s var(--ease),opacity .3s}
+.hz-svg.dim .comp:not(.hot){opacity:.18}
+.hz-word{text-align:left}
+@media(max-width:520px){.hz-word{text-align:center}}
+.hz-word .big{font-family:var(--zh);font-weight:900;font-size:48px;line-height:1;color:var(--p)}
+.hz-word .py{font-weight:800;font-size:20px;color:var(--pink);margin-top:4px}
+.hz-word .ru{font-weight:700;font-size:16px;color:var(--ink)}
+.hz-word .story{margin-top:10px;font-size:15px;line-height:1.35;color:var(--muted);font-weight:600}
+.hz-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+@media(max-width:520px){.hz-acts{justify-content:center}}
+.hz-acts .btn{padding:11px 16px;font-size:14px}
+.hz-parts{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.part{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 14px;border-radius:18px;background:#FBF9FF;border:2px solid transparent;cursor:pointer;min-width:84px;transition:transform .15s var(--ease),border-color .15s,background .15s}
+.part:hover{transform:translateY(-2px)}.part.on{border-color:currentColor;background:#fff}
+.part .g{font-family:var(--zh);font-weight:900;font-size:34px;line-height:1.1}
+.part .p{font-size:12px;font-weight:800;color:var(--muted)}
+.part .r{font-size:13px;font-weight:700;color:var(--ink)}
+.part.sum{background:var(--honey);color:var(--ink)}.part.sum .p,.part.sum .r{color:#5A4300}
+.hz-op{font-weight:900;font-size:26px;color:var(--muted)}
+.hz-where{margin-top:18px;text-align:left}
+@media(max-width:520px){.hz-where{text-align:center}}
+.hz-where h3{margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:520px){.chips{justify-content:center}}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px 8px 10px;border-radius:999px;background:#F3EEFF;color:var(--ink);border:0;font:inherit;font-weight:700;font-size:14px;cursor:pointer;transition:transform .15s var(--ease),background .15s}
+.chip:hover{background:#E6DEFB;transform:translateY(-1px)}.chip:active{transform:scale(.96)}
+.chip .zh{font-family:var(--zh);font-weight:900;font-size:18px}
+.chip mark{background:var(--honey);border-radius:6px;padding:0 3px;color:inherit}
+.chip .spk{position:static;width:22px;height:22px}.chip .spk svg{width:12px;height:12px}
+.hz-quiz{margin-top:16px;display:none;flex-direction:column;align-items:center;gap:10px}
+.hz-quiz.show{display:flex}
+.hz-quiz .padwrap{position:relative;width:min(320px,86vw);aspect-ratio:1}
+.hz-quiz .pad{position:absolute;inset:0;border-radius:24px;background:#FBF9FF;border:2px dashed #C9B8F5;touch-action:none}
+.hz-quiz .pad svg{width:100%;height:100%}
+.hz-quiz .guide{position:absolute;inset:0;pointer-events:none}
+.hz-quiz .guide .g{fill:none;stroke:var(--sky);stroke-width:14;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:22 20;animation:march 1.2s linear infinite}
+@keyframes march{to{stroke-dashoffset:-42}}
+.hz-quiz .guide .dot{fill:var(--sky)}
+.hz-quiz .guide .arr{fill:var(--sky)}
+.hz-quiz .msg{font-weight:700;color:var(--muted);font-size:14px;min-height:20px}
+
+/* ── сцена на весь экран (в духе Genki: кремовый фон, слова выскакивают, герой на эмоциях) ── */
+.stage{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:8px;
+  padding:max(14px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));overflow:hidden;cursor:pointer;color:var(--p);
+  background:#fff;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0}}
+.stage .close{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%;border:0;
+  background:#F3EEFF;color:var(--p);display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 16px rgba(60,30,120,.18)}
+.stage .close svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.stage .title{font-weight:800;font-size:13px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.stage .scene{flex:1;width:100%;max-width:820px;position:relative;display:grid;grid-template-columns:1fr;grid-template-areas:"kin" "sub";align-content:center;justify-items:center;min-height:0;row-gap:10px}
+.stage .kin{grid-area:kin}.stage .sub{grid-area:sub}.stage .clip{grid-area:clip}
+.stage .scene.split{grid-template-columns:1.1fr 1fr;grid-template-rows:auto auto;grid-template-areas:"kin clip" "sub clip";column-gap:12px;align-content:center}
+.stage .scene.split.flip{grid-template-columns:1fr 1.1fr;grid-template-areas:"clip kin" "clip sub"}
+.stage .kin{text-align:center;width:100%;position:relative}
+.stage .scene.split .kin{text-align:left}
+.stage .kin .w{display:inline-block;font-family:var(--zh);font-weight:900;color:var(--p);line-height:1.05;margin:0 .06em;
+  font-size:clamp(46px,13vw,120px);text-shadow:4px 5px 0 var(--honey);opacity:0;transform:scale(.3) rotate(-6deg)}
+.stage .scene.split .kin .w{font-size:clamp(40px,10vw,96px)}
+.stage .kin .w.in{animation:wpop .42s var(--ease) forwards}
+.stage .kin .c{display:inline-block;transition:color .12s}
+.stage .kin .c.hl{color:var(--pink);animation:chl .28s var(--ease)}
+@keyframes chl{40%{transform:translateY(-.12em) scale(1.12)}}
+.stage .sub .s{display:inline-block;margin:0 .12em;color:var(--muted);transition:color .12s}
+.stage .sub .s.hl{color:var(--pink)}
+@keyframes wpop{60%{transform:scale(1.12) rotate(2deg);opacity:1}100%{transform:none;opacity:1}}
+.stage .kin.slide .w{opacity:1;transform:none;font-size:clamp(70px,20vw,180px);white-space:nowrap}
+.stage .kin.slide{width:max-content;animation:slidein var(--dur,3s) linear both;white-space:nowrap;justify-self:start}
+@keyframes slidein{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+.stage.rec .close,.stage.rec .tip,.stage.rec .bar{display:none}
+.stage .sub{font-weight:800;font-size:clamp(24px,6.4vw,42px);line-height:1.15;color:var(--muted);opacity:0;transition:opacity .3s;text-align:center}
+.stage .scene.split .sub{text-align:left}.stage .scene.split.flip .sub{text-align:right}
+.stage .sub.in{opacity:1}
+.stage .sub small{display:block;color:var(--muted);font-weight:600;font-size:.5em;margin-top:4px;opacity:.85}
+.stage .scene:not(.split) .clip{display:none}
+.stage .clip{width:min(46vw,38vh);max-height:100%;aspect-ratio:9/16;overflow:hidden;position:relative;opacity:0;transform:scale(.4) translateY(30px)}
+.stage .clip.in{animation:clipin .5s var(--ease) forwards}
+@keyframes clipin{to{opacity:1;transform:none}}
+.stage .clip video{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;opacity:0}
+.stage .clip video.on{opacity:1}
+.stage .dancers{display:flex;justify-content:center;gap:10px;height:clamp(90px,16vh,150px);width:100%;opacity:0;transition:opacity .4s}
+.stage .dancers.in{opacity:1}
+.stage .dancers video{height:100%;aspect-ratio:9/16;object-fit:cover;animation:dance .6s ease-in-out infinite alternate}
+.stage .dancers video:nth-child(2){animation-delay:-.2s}.stage .dancers video:nth-child(3){animation-delay:-.4s}
+@keyframes dance{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-8px) rotate(3deg)}}
+.stage .bar{width:min(520px,80vw);height:8px;border-radius:999px;background:rgba(108,63,197,.15);overflow:hidden}
+.stage .bar i{display:block;height:100%;width:0;background:var(--p);border-radius:999px}
+.stage .tip{font-size:12px;font-weight:600;color:var(--muted)}
+.stage .paused-badge{position:absolute;inset:0;display:none;place-items:center;pointer-events:none;z-index:2}
+.stage.paused .paused-badge{display:grid}
+.stage .paused-badge span{width:92px;height:92px;border-radius:50%;background:var(--p);display:grid;place-items:center;box-shadow:0 16px 40px rgba(60,30,120,.3)}
+.stage .paused-badge svg{width:40px;height:40px;fill:#fff;margin-left:6px}
+.stage .burst{position:absolute;inset:0;pointer-events:none;display:grid;place-items:center}
+.stage .burst i{position:absolute;width:16px;height:16px;border-radius:50%;background:var(--honey);animation:spark .8s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+@media(max-width:600px){.stage .scene.split,.stage .scene.split.flip{grid-template-columns:1fr;grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:"kin" "sub" "clip";align-content:start;row-gap:8px}.stage .scene.split .kin{padding:4px 0 0}.stage .scene.split .kin,.stage .scene.split .sub,.stage .scene.split.flip .sub{text-align:center}
+  .stage .scene.split .clip{width:auto;height:100%;max-width:70vw;min-height:0;justify-self:center}.stage .scene.split .kin .w{font-size:clamp(46px,12vw,96px)}}
+@media(prefers-reduced-motion:reduce){.stage .dancers video{animation:none}}
+
+/* ── подвал ── */
+.foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}
+.foot a{color:var(--honey);text-decoration:none;border-bottom:1px solid rgba(245,200,66,.6)}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style></head>
+<body>
+<div class="bubbles"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">Speak<b>&</b>Smile · китайский для детей</div>
+    <div class="zh">你好吗？</div>
+    <div class="py">Nǐ hǎo ma?</div>
+    <div class="ru">Как дела?</div>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Режим">
+    <button class="tab" role="tab" aria-selected="true" data-tab="words">Слова</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="game">Послушай и найди</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="song">Песня</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="hanzi">Иероглиф</button>
+  </div>
+
+  <section id="words" role="tabpanel">
+    <p class="hint">Нажми на карточку — услышишь, как это звучит. Повтори вслух!</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="game" role="tabpanel" hidden>
+    <div class="game-bar">
+      <button class="btn" id="askBtn"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>Слушать ещё раз</button>
+      <span class="score">Верно: <b id="score">0</b> / <span id="total">0</span></span>
+    </div>
+    <p class="hint" id="gameHint">Слушай и нажимай на нужную карточку.</p>
+    <div class="grid" id="gameGrid"></div>
+  </section>
+
+
+  <section id="hanzi" role="tabpanel" hidden>
+    <div class="hz">
+      <div class="hz-top"><div><h2>Иероглиф дня</h2><div class="n" id="hzN"></div></div>
+        <div class="hz-nav"><button id="hzPrev" aria-label="Предыдущий"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button id="hzNext" aria-label="Следующий"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+      <div class="hz-main">
+        <div class="hz-svg" id="hzSvg" title="Нажми — напишу ещё раз"></div>
+        <div class="hz-word"><div class="big" id="hzBig" lang="zh"></div><div class="py" id="hzPy"></div><div class="ru" id="hzRu"></div><div class="story" id="hzStory"></div>
+          <div class="hz-acts"><button class="btn" id="hzWrite"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm17.71-10.21a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Написать</button><button class="btn ghost" id="hzTry" style="color:var(--p);border-color:#E6DEFB;background:#F3EEFF">Обвести пальцем</button></div></div>
+      </div>
+      <div class="hz-parts" id="hzParts"></div>
+      <div class="hz-quiz" id="hzQuiz"><div class="padwrap"><div class="pad" id="hzPad"></div><svg class="guide" id="hzGuide" viewBox="0 0 1024 1024"></svg></div><div class="msg" id="hzMsg">Веди пальцем по серым чертам по порядку</div></div>
+      <div class="hz-where"><h3>Где встречается</h3><div class="chips" id="hzWhere"></div></div>
+    </div>
+  </section>
+
+  <section id="song" role="tabpanel" hidden>
+    <div class="song">
+      <h2>你好，你好吗？</h2>
+      <p class="sub">Та же песня, что «Hello, how are you?», только по-китайски. Нажми на строчку — услышишь её отдельно.</p>
+      <div class="controls">
+        <button class="btn primary" id="playSong"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
+        <button class="btn ghost" id="stopSong" hidden>Стоп</button>
+        <button class="btn" id="stageBtn" hidden><svg viewBox="0 0 24 24"><path d="M5 5h5V3H3v7h2V5zm14 0v5h2V3h-7v2h5zM5 19v-5H3v7h7v-2H5zm14 0h-5v2h7v-7h-2v5z"/></svg>На весь экран</button>
+        <label class="tempo">Темп <input type="range" id="tempo" min="0.7" max="1.2" step="0.05" value="1"></label>
+      </div>
+      <div class="lyrics" id="lyrics"></div>
+      <p class="sub" style="margin:0">Нажми «Петь» — строчки подсвечиваются под музыку. Темп можно замедлить.</p>
+    </div>
+  </section>
+
+  
+<div class="stage" id="stage" hidden aria-label="Песня на весь экран">
+  <button class="close" id="stageClose" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="title">你好，你好吗？ · Speak&Smile</div>
+  <div class="scene" id="scene">
+    <div class="kin" id="kin"></div>
+    <div class="sub" id="stageSub"></div>
+    <div class="clip" id="clip"><video data-pose="hello" src="clips/hello.mp4" muted loop playsinline preload="auto"></video><video data-pose="good" src="clips/good.mp4" muted loop playsinline preload="auto"></video><video data-pose="great" src="clips/great.mp4" muted loop playsinline preload="auto"></video><video data-pose="okay" src="clips/okay.mp4" muted loop playsinline preload="auto"></video><video data-pose="happy" src="clips/happy.mp4" muted loop playsinline preload="auto"></video><video data-pose="hungry" src="clips/hungry.mp4" muted loop playsinline preload="auto"></video><video data-pose="thirsty" src="clips/thirsty.mp4" muted loop playsinline preload="auto"></video><video data-pose="tired" src="clips/tired.mp4" muted loop playsinline preload="auto"></video><video data-pose="sad" src="clips/sad.mp4" muted loop playsinline preload="auto"></video><video data-pose="hot" src="clips/hot.mp4" muted loop playsinline preload="auto"></video><video data-pose="cold" src="clips/cold.mp4" muted loop playsinline preload="auto"></video><video data-pose="wet" src="clips/wet.mp4" muted loop playsinline preload="auto"></video><video data-pose="thanks" src="clips/thanks.mp4" muted loop playsinline preload="auto"></video></div>
+    <div class="burst" id="burst"></div>
+    <div class="paused-badge"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
+  </div>
+  <div class="dancers" id="dancers"><video src="clips/happy.mp4" muted loop playsinline preload="auto"></video><video src="clips/hello.mp4" muted loop playsinline preload="auto"></video><video src="clips/good.mp4" muted loop playsinline preload="auto"></video></div>
+  <div class="bar"><i id="stageBar"></i></div>
+  <div class="tip">Нажми на экран — пауза</div>
+</div>
+
+<p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
+</div>
+
+<script src="../gate.js"></script>
+<script src="hanzi-data.js"></script>
+<script>
+ZhGate.lock('how-are-you');
+const WORDS=[
+ {id:"good",zh:"我很好！",py:"Wǒ hěn hǎo!",ru:"Хорошо!"},
+ {id:"great",zh:"太棒了！",py:"Tài bàng le!",ru:"Отлично!"},
+ {id:"okay",zh:"还可以。",py:"Hái kěyǐ.",ru:"Нормально."},
+ {id:"happy",zh:"我很开心！",py:"Wǒ hěn kāixīn!",ru:"Мне весело!"},
+ {id:"hungry",zh:"我饿了。",py:"Wǒ è le.",ru:"Я хочу есть."},
+ {id:"thirsty",zh:"我渴了。",py:"Wǒ kě le.",ru:"Я хочу пить."},
+ {id:"tired",zh:"我累了。",py:"Wǒ lèi le.",ru:"Я устал(а)."},
+ {id:"sad",zh:"我很难过。",py:"Wǒ hěn nánguò.",ru:"Мне грустно."},
+ {id:"hot",zh:"我很热！",py:"Wǒ hěn rè!",ru:"Мне жарко!"},
+ {id:"cold",zh:"我很冷！",py:"Wǒ hěn lěng!",ru:"Мне холодно!"},
+ {id:"wet",zh:"我湿了！",py:"Wǒ shī le!",ru:"Я промок(ла)!"},
+ {id:"q_howareyou",zh:"你好吗？",py:"Nǐ hǎo ma?",ru:"Как дела?"},
+];
+const SONG=[ // структура Genki «Hello, how are you?»
+ "hello","hello","hungry","tired","cold","sad","hello","hello","hello","hello",
+ "happy","great","good","okay","hello","hello","hello","hello","thanks"];
+const EXTRA={hello:{zh:"你好，你好吗？",py:"Nǐ hǎo, nǐ hǎo ma?",ru:"Привет, как дела?",id:"song_hello"},
+             thanks:{zh:"谢谢！",py:"Xièxie!",ru:"Спасибо!",id:"song_thanks"}};
+const byId=Object.fromEntries(WORDS.map(w=>[w.id,w]));
+const SPK='<span class="spk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg></span>';
+const audio={}; let current=null;
+function snd(id){ if(!audio[id]){audio[id]=new Audio(`audio/${id}.mp3`);audio[id].preload="auto";} return audio[id]; }
+function play(id,onend){ if(current){current.pause();current.currentTime=0;} const a=snd(id); current=a; a.onended=onend||null; a.play().catch(()=>{}); return a; }
+
+/* карточки */
+function cardHTML(w,i,withText=true){
+  return `<button class="card" data-id="${w.id}" style="--i:${i}" aria-label="${w.ru}">${SPK}
+    <img src="img/${w.id}.webp" alt="" loading="lazy">
+    ${withText?`<span class="zh" lang="zh">${w.zh}</span><span class="py">${w.py}</span><span class="ru">${w.ru}</span>`:""}
+  </button>`;
+}
+const grid=document.getElementById('grid');
+grid.innerHTML=WORDS.map((w,i)=>cardHTML(w,i)).join('');
+grid.addEventListener('click',e=>{const c=e.target.closest('.card'); if(!c)return;
+  c.classList.remove('playing'); void c.offsetWidth; c.classList.add('playing'); play(c.dataset.id,()=>c.classList.remove('playing')); setTimeout(()=>c.classList.remove('playing'),3500);});
+
+/* игра */
+const gameGrid=document.getElementById('gameGrid'), scoreEl=document.getElementById('score'), totalEl=document.getElementById('total'), hint=document.getElementById('gameHint');
+let target=null, score=0, total=0, locked=false;
+function newRound(){
+  const pool=WORDS.filter(w=>w.id!=="q_howareyou");
+  const pick=[...pool].sort(()=>Math.random()-.5).slice(0,6);
+  target=pick[Math.floor(Math.random()*pick.length)];
+  gameGrid.innerHTML=pick.map((w,i)=>cardHTML(w,i,false)).join('');
+  locked=false; hint.textContent="Слушай и нажимай на нужную карточку.";
+  setTimeout(()=>play(target.id),350);
+}
+gameGrid.addEventListener('click',e=>{const c=e.target.closest('.card'); if(!c||locked)return;
+  total++; totalEl.textContent=total;
+  if(c.dataset.id===target.id){locked=true;score++;scoreEl.textContent=score;c.classList.add('right');
+    hint.textContent="对了！Верно!"; play(target.id,()=>setTimeout(newRound,500));}
+  else{c.classList.add('wrong');setTimeout(()=>c.classList.remove('wrong'),450);hint.textContent="Ещё раз послушай…";play(target.id);}
+});
+document.getElementById('askBtn').onclick=()=>target&&play(target.id);
+
+/* песня — речитатив по структуре Genki, с подсветкой строк; при наличии song.mp3 + song.json — играет мелодия */
+const lyricsEl=document.getElementById('lyrics');
+const lines=SONG.map(k=>EXTRA[k]||byId[k]); let lineRow=[];
+(()=>{ // повторы подряд складываем в одну строку с бейджем ×N
+  const rows=[]; lines.forEach((w,i)=>{const last=rows[rows.length-1]; if(last&&last.w.id===w.id){last.idx.push(i);} else rows.push({w,idx:[i]});});
+  window.ROWS=rows; lineRow=new Array(lines.length); rows.forEach((r,k)=>r.idx.forEach(i=>lineRow[i]=k));
+  lyricsEl.innerHTML=rows.map((r,k)=>{const w=r.w; const pic=(w.id==='song_hello'?'q_howareyou':w.id==='song_thanks'?'happy':w.id);
+    const dots=r.idx.length>1?`<span class="rep" aria-label="${r.idx.length} раза">${r.idx.map(()=>'<i></i>').join('')}</span>`:'';
+    return `<div class="line" data-k="${k}"><img src="img/${pic}.webp" alt=""><div><div class="zh" lang="zh">${w.zh}${dots}</div><div class="py">${w.py}</div><div class="ru">${w.ru}</div></div></div>`;}).join('');
+})();
+const playBtn=document.getElementById('playSong'), stopBtn=document.getElementById('stopSong'), tempo=document.getElementById('tempo');
+let singing=false, songAudio=null, songTimes=null;
+fetch('song.json').then(r=>r.ok?r.json():null).then(j=>{if(j){songTimes=j;songAudio=new Audio('song.mp3');songAudio.preload='auto';stageBtn.hidden=false;songAudio.addEventListener('ended',()=>{ if(stageOn) closeStage(); });}}).catch(()=>{});
+function light(i){ const k=i<0?-1:lineRow[i];
+  [...lyricsEl.children].forEach((el,r)=>{ el.classList.toggle('on',r===k);
+    const dots=el.querySelectorAll('.rep i'); const row=ROWS[r]; dots.forEach((d,n)=>d.classList.toggle('done', i>=0 && row.idx[n]<=i && r===k)); if(r!==k) dots.forEach(d=>d.classList.remove('done')); });
+  const el=lyricsEl.children[k]; if(el&&el.scrollIntoView)el.scrollIntoView({block:'nearest',behavior:'smooth'});}
+function stop(){singing=false; clearTimeout(chantTimer); if(current){current.pause();} if(songAudio){songAudio.pause();songAudio.currentTime=0;} light(-1); playBtn.hidden=false; stopBtn.hidden=true;}
+let chantTimer=null;
+function chant(i){ if(!singing)return; if(i>=lines.length){stop();return;} light(i);
+  clearTimeout(chantTimer); let next=false; const go=()=>{ if(next||!singing)return; next=true; clearTimeout(chantTimer); setTimeout(()=>chant(i+1),120/parseFloat(tempo.value)); };
+  const a=play(lines[i].id,go); a.playbackRate=parseFloat(tempo.value);
+  chantTimer=setTimeout(go,3800/parseFloat(tempo.value)); // страховка, если браузер не отдал событие ended
+}
+function sing(){
+  singing=true; playBtn.hidden=true; stopBtn.hidden=false;
+  if(songAudio&&songTimes){ songAudio.playbackRate=parseFloat(tempo.value); songAudio.currentTime=0; songAudio.play();
+    const tick=()=>{ if(!singing)return; const t=songAudio.currentTime; let idx=-1; songTimes.forEach((s,k)=>{if(t>=s)idx=k;}); light(idx); if(songAudio.ended){stop();return;} requestAnimationFrame(tick); }; tick();
+  } else chant(0);
+}
+playBtn.onclick=sing; stopBtn.onclick=stop;
+
+/* сцена на весь экран в духе Genki: слова выскакивают по одному, герой из клипов появляется на эмоциях,
+   на припеве внизу пляшут трое, каждый 2-й припев — гигантский текст проезжает через экран */
+const stage=document.getElementById('stage'), scene=document.getElementById('scene'), kin=document.getElementById('kin'), clipBox=document.getElementById('clip'),
+      stageSub=document.getElementById('stageSub'), dancers=document.getElementById('dancers'), burst=document.getElementById('burst'),
+      stageBar=document.getElementById('stageBar'), stageBtn=document.getElementById('stageBtn');
+const clipVids={}; clipBox.querySelectorAll('video').forEach(v=>clipVids[v.dataset.pose]=v);
+const WORDS_OF={song_hello:['你好，','你好吗？'],hungry:['我','饿了。'],tired:['我','累了。'],cold:['我','很冷！'],sad:['我','很难过。'],happy:['我','很开心！'],
+  great:['太棒了！'],good:['我','很好！'],okay:['还可以。'],song_thanks:['谢谢！'],outro:['再见！']};
+let stageOn=false, stageIdx=-2, stageRaf=0, wordTimers=[], chorusN=0, karStart=0, karPer=0, karN=0;
+const PY_SYL={song_hello:['Nǐ','hǎo,','nǐ','hǎo','ma?'],hungry:['Wǒ','è','le.'],tired:['Wǒ','lèi','le.'],cold:['Wǒ','hěn','lěng!'],sad:['Wǒ','hěn','nán','guò.'],
+  happy:['Wǒ','hěn','kāi','xīn!'],great:['Tài','bàng','le!'],good:['Wǒ','hěn','hǎo!'],okay:['Hái','kě','yǐ.'],song_thanks:['Xiè','xie!'],outro:['Zài','jiàn!']};
+function karaoke(t){ const j=karN? Math.floor((t-karStart)/karPer) : -1;
+  kin.querySelectorAll('.c').forEach((c,k)=>c.classList.toggle('hl',k<=j)); stageSub.querySelectorAll('.s').forEach((c,k)=>c.classList.toggle('hl',k<=j)); }
+function clearTimers(){ wordTimers.forEach(clearTimeout); wordTimers=[]; }
+function showClip(pose){ Object.values(clipVids).forEach(v=>{ if(v.dataset.pose===pose){ v.classList.add('on'); v.currentTime=0; v.play().catch(()=>{}); } else { v.classList.remove('on'); v.pause(); } });
+  clipBox.classList.remove('in'); void clipBox.offsetWidth; clipBox.classList.add('in');
+  burst.innerHTML=''; for(let n=0;n<8;n++){ const sp=document.createElement('i'); const a=n/8*Math.PI*2, r=140+Math.random()*90;
+    sp.style.setProperty('--dx',Math.cos(a)*r+'px'); sp.style.setProperty('--dy',Math.sin(a)*r+'px'); burst.appendChild(sp); } setTimeout(()=>burst.innerHTML='',900); }
+function hideClip(){ clipBox.classList.remove('in'); Object.values(clipVids).forEach(v=>{ v.classList.remove('on'); v.pause(); }); }
+function setDancers(on){ dancers.classList.toggle('in',on); dancers.querySelectorAll('video').forEach(v=>{ if(on){ v.play().catch(()=>{}); } else v.pause(); }); }
+function kinetic(words, dur, slide){
+  clearTimers(); kin.className='kin'+(slide?' slide':''); kin.style.setProperty('--dur',(dur*0.98)+'s'); kin.innerHTML=words.map(w=>`<span class="w" lang="zh">${[...w].map(ch=>/[\u4e00-\u9fff]/.test(ch)?`<span class="c">${ch}</span>`:ch).join('')}</span>`).join('');
+  if(slide) return;
+  const per=Math.min(0.5, dur*0.55/words.length);
+  [...kin.children].forEach((el,k)=>wordTimers.push(setTimeout(()=>el.classList.add('in'), 60+k*per*1000)));
+}
+function setStage(i){
+  stageIdx=i; const last=songTimes.length-1;
+  let id, py, ru, dur;
+  if(i<0){ id='song_hello'; py='Nǐ hǎo, nǐ hǎo ma?'; ru='Приготовились!'; dur=2; }
+  else if(i>=lines.length){ id='outro'; py='Zàijiàn!'; ru='Пока!'; dur=3; }
+  else { const w=lines[i]; id=w.id; py=w.py; ru=w.ru; dur=(i<last?songTimes[i+1]:songTimes[i]+1.5)-songTimes[i]; }
+  const chorus = id==='song_hello';
+  if(chorus){ chorusN++; } else chorusN=0;
+  const slide = chorus && chorusN%2===0;           // каждый второй припев — проезд гигантского текста
+  scene.className='scene'; stageSub.classList.remove('in');
+  if(chorus||i<0){ hideClip(); setDancers(true); kinetic(WORDS_OF[id], dur, slide); }
+  else { const pose=(id==='song_thanks')?'thanks':(id==='outro'?'happy':id); scene.classList.add('split'); if(i%2) scene.classList.add('flip');
+    setDancers(id==='outro'); kinetic(WORDS_OF[id], dur, false); showClip(pose); }
+  const syl=PY_SYL[id]||[py]; karN=syl.length; karStart=(i<0)?-1e9:(i>=lines.length? songTimes[last]+3 : songTimes[i]); karPer=Math.min(0.5, dur*0.85/karN); if(i<0) karN=0;
+  stageSub.innerHTML=`${syl.map(x=>`<span class="s">${x}</span>`).join('')}<small>${ru}</small>`;
+  wordTimers.push(setTimeout(()=>{ stageSub.classList.add('in'); }, slide?300:250));
+}
+function stageLoop(){ if(!stageOn||songAudio.paused) return;
+  const t=songAudio.currentTime; let idx=-1; songTimes.forEach((s,k)=>{ if(t>=s) idx=k; });
+  if(idx===songTimes.length-1 && t>songTimes[idx]+3) idx=lines.length;      // после 谢谢 — прощание
+  if(idx!==stageIdx) setStage(idx);
+  karaoke(t);
+  stageBar.style.width=(t/(songAudio.duration||59)*100)+'%';
+  if(songAudio.ended){ closeStage(); return; }
+  stageRaf=requestAnimationFrame(stageLoop); }
+function openStage(){ if(!(songAudio&&songTimes)) return; stop(); stageOn=true; stage.hidden=false; stage.classList.remove('paused'); document.body.style.overflow='hidden'; chorusN=0;
+  if(!new URLSearchParams(location.search).has('rec') && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
+  Object.values(clipVids).forEach(v=>{ v.load(); }); setStage(-1); songAudio.playbackRate=parseFloat(tempo.value); songAudio.currentTime=0; songAudio.play().catch(()=>{}); stageLoop(); }
+function closeStage(){ stageOn=false; cancelAnimationFrame(stageRaf); clearTimers(); stage.hidden=true; document.body.style.overflow=''; hideClip(); setDancers(false);
+  if(songAudio){ songAudio.pause(); songAudio.currentTime=0; } if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }
+if(new URLSearchParams(location.search).has('rec')) stage.classList.add('rec');
+window.__stageDebug=(i,c)=>{ stageOn=true; stage.hidden=false; document.body.style.overflow='hidden'; Object.values(clipVids).forEach(v=>v.load()); if(c!=null) chorusN=c; setStage(i); };
+stageBtn.onclick=openStage; document.getElementById('stageClose').onclick=e=>{ e.stopPropagation(); closeStage(); };
+stage.onclick=()=>{ if(!stageOn) return; if(songAudio.paused){ stage.classList.remove('paused'); songAudio.play().catch(()=>{}); Object.values(clipVids).forEach(v=>{ if(v.classList.contains('on')) v.play().catch(()=>{}); }); stageLoop(); }
+  else { songAudio.pause(); stage.classList.add('paused'); Object.values(clipVids).forEach(v=>v.pause()); } };
+
+/* ── иероглиф дня: черта за чертой, части цветом, «из чего состоит», обводка пальцем ── */
+const COMPC=['#6C3FC5','#F17FBE','#34D3C0','#63B3FF'];
+const ALLW={q_howareyou:'你好吗？',good:'我很好！',song_hello:'你好，你好吗？',happy:'我很开心！',cold:'我很冷！',hot:'我很热！',hungry:'我饿了。',thirsty:'我渴了。',tired:'我累了。',sad:'我很难过。',song_thanks:'谢谢！'};
+const DAY0=Date.UTC(2026,8,27); let hzIdx=(((Math.floor((Date.now()-DAY0)/864e5))%HANZI.length)+HANZI.length)%HANZI.length; let hzWriter=null;
+const SVGNS='http://www.w3.org/2000/svg'; const mk=(t,a={})=>{const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+function compOf(h,i){ return h.comps.findIndex(c=>c.s.includes(i)); }
+function drawHanzi(h,animate){
+  const box=document.getElementById('hzSvg'); box.innerHTML=''; box.classList.remove('dim');
+  const svg=mk('svg',{viewBox:'0 0 1024 1024'}); const defs=mk('defs'); svg.appendChild(defs);
+  const grid=mk('g',{class:'grid'}); [[512,0,512,1024],[0,512,1024,512],[0,0,1024,1024],[1024,0,0,1024]].forEach(([x1,y1,x2,y2])=>grid.appendChild(mk('line',{x1,y1,x2,y2}))); svg.appendChild(grid);
+  const root=mk('g',{transform:'scale(1,-1) translate(0,-900)'}); svg.appendChild(root);
+  const under=mk('g',{class:'under'}); h.strokes.forEach(d=>under.appendChild(mk('path',{d}))); root.appendChild(under);
+  const groups=h.comps.map((c,k)=>{const g=mk('g',{class:'comp','data-k':k}); root.appendChild(g); return g;});
+  const anims=[];
+  h.strokes.forEach((d,i)=>{ const k=compOf(h,i); const id=`hzc${i}`; const cp=mk('clipPath',{id}); cp.appendChild(mk('path',{d})); defs.appendChild(cp);
+    const m=h.medians[i]; const p=mk('path',{class:'stroke',d:'M'+m.map(q=>q.join(' ')).join(' L'),stroke:COMPC[k%COMPC.length],'clip-path':`url(#${id})`}); groups[Math.max(k,0)].appendChild(p);
+    const L=p.getTotalLength()+40; p.style.strokeDasharray=L; p.style.strokeDashoffset=animate?L:0; anims.push([p,L]); });
+  box.appendChild(svg);
+  if(animate){ anims.forEach(([p],i)=>setTimeout(()=>{p.style.strokeDashoffset=0;},220+i*380)); }
+}
+function showHanzi(i,animate){
+  hzIdx=(i+HANZI.length)%HANZI.length; const h=HANZI[hzIdx];
+  document.getElementById('hzN').textContent=`${hzIdx+1} из ${HANZI.length}`;
+  document.getElementById('hzBig').textContent=h.ch; document.getElementById('hzPy').textContent=h.py; document.getElementById('hzRu').textContent=h.ru; document.getElementById('hzStory').textContent=h.story;
+  drawHanzi(h,animate);
+  const parts=document.getElementById('hzParts'); parts.innerHTML='';
+  if(h.comps.length>1){ h.comps.forEach((c,k)=>{ if(k) parts.insertAdjacentHTML('beforeend','<span class="hz-op">+</span>');
+      parts.insertAdjacentHTML('beforeend',`<button class="part" data-k="${k}" style="color:${COMPC[k%COMPC.length]}"><span class="g" lang="zh">${c.g}</span><span class="p">${c.py}</span><span class="r">${c.ru}</span></button>`); });
+    parts.insertAdjacentHTML('beforeend',`<span class="hz-op">=</span><span class="part sum"><span class="g" lang="zh">${h.ch}</span><span class="p">${h.py}</span><span class="r">${h.ru}</span></span>`); }
+  const w=document.getElementById('hzWhere'); w.innerHTML=h.where.map(id=>`<button class="chip" data-id="${id}">${SPK}<span class="zh" lang="zh">${ALLW[id].replace(new RegExp(h.ch,'g'),`<mark>${h.ch}</mark>`)}</span></button>`).join('');
+  document.getElementById('hzQuiz').classList.remove('show'); document.getElementById('hzGuide').innerHTML=''; if(hzWriter){hzWriter=null; document.getElementById('hzPad').innerHTML='';}
+}
+document.getElementById('hzPrev').onclick=()=>showHanzi(hzIdx-1,true); document.getElementById('hzNext').onclick=()=>showHanzi(hzIdx+1,true);
+document.getElementById('hzWrite').onclick=()=>drawHanzi(HANZI[hzIdx],true); document.getElementById('hzSvg').onclick=()=>drawHanzi(HANZI[hzIdx],true);
+document.getElementById('hzParts').addEventListener('click',e=>{ const b=e.target.closest('.part[data-k]'); if(!b)return; const box=document.getElementById('hzSvg'); const on=b.classList.contains('on');
+  document.querySelectorAll('.part').forEach(p=>p.classList.remove('on')); box.querySelectorAll('.comp').forEach(g=>g.classList.remove('hot')); box.classList.remove('dim');
+  if(!on){ b.classList.add('on'); box.classList.add('dim'); box.querySelector(`.comp[data-k="${b.dataset.k}"]`).classList.add('hot'); } });
+document.getElementById('hzWhere').addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(c) play(c.dataset.id); });
+function hzGuide(h,i){ const g=document.getElementById('hzGuide'); g.innerHTML=''; if(i==null||i>=h.medians.length) return;
+  // те же координаты, что у hanzi-writer: padding 14 из 256 → масштаб; переворот оси Y
+  const PAD=14/320*1024, SC=(1024-2*PAD)/1024; const tr=([x,y])=>[PAD+x*SC, PAD+(900-y)*SC];
+  const m=h.medians[i].map(tr); const d='M'+m.map(q=>q.join(' ')).join(' L');
+  g.appendChild(mk('path',{class:'g',d})); const [x0,y0]=m[0]; g.appendChild(mk('circle',{class:'dot',cx:x0,cy:y0,r:26}));
+  const [xa,ya]=m[m.length-1], [xb,yb]=m[Math.max(0,m.length-2)]; const ang=Math.atan2(ya-yb,xa-xb)*180/Math.PI;
+  g.appendChild(mk('path',{class:'arr',d:'M0 -30 L52 0 L0 30 Z',transform:`translate(${xa} ${ya}) rotate(${ang})`})); }
+document.getElementById('hzTry').onclick=()=>{ const q=document.getElementById('hzQuiz'); q.classList.add('show'); const pad=document.getElementById('hzPad'); const msg=document.getElementById('hzMsg'); pad.innerHTML=''; msg.textContent='Веди пальцем по серым чертам по порядку';
+  const start=()=>{ const h=HANZI[hzIdx]; msg.textContent='Веди пальцем по серым чертам по порядку'; hzWriter=HanziWriter.create(pad,h.ch,{width:320,height:320,padding:14,showCharacter:false,showOutline:true,outlineColor:'#DDD3F7',strokeColor:'#6C3FC5',drawingColor:'#F17FBE',drawingWidth:22,highlightColor:'#F5C842',showHintAfterMisses:2,padding:14,
+      charDataLoader:(c,onLoad)=>onLoad({strokes:h.strokes,medians:h.medians})});
+    hzGuide(h,0); hzWriter.quiz({onMistake:()=>{msg.textContent='Почти! Попробуй эту черту ещё раз.';},onCorrectStroke:d=>{msg.textContent=`Черта ${d.strokeNum+1} из ${d.strokesRemaining+d.strokeNum+1} — да!`; hzGuide(h,d.strokeNum+1);},
+      onComplete:()=>{msg.textContent='对了！Получилось! Ты написал(а) '+h.ch; hzGuide(h,null); play(h.where[0]);}}); q.scrollIntoView({block:'nearest',behavior:'smooth'}); };
+  if(window.HanziWriter) start(); else { msg.textContent='Загружаю…'; const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js'; sc.onload=start; sc.onerror=()=>{msg.textContent='Не удалось загрузить обводку. Попробуй позже.';}; document.head.appendChild(sc); } };
+
+lyricsEl.addEventListener('click',e=>{ const el=e.target.closest('.line'); if(!el) return; if(singing) stop();
+  const row=ROWS[+el.dataset.k]; [...lyricsEl.children].forEach(x=>x.classList.remove('say')); el.classList.add('say');
+  play(row.w.id, ()=>el.classList.remove('say')); setTimeout(()=>el.classList.remove('say'),3500); });
+/* вкладки */
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===b));
+  ['words','game','song','hanzi'].forEach(id=>document.getElementById(id).hidden=(id!==b.dataset.tab));
+  stop(); if(b.dataset.tab==='game'&&!target)newRound(); if(b.dataset.tab==='hanzi')showHanzi(hzIdx,true);
+});
+const h=location.hash.slice(1); if(['game','song','hanzi'].includes(h)){document.querySelector(`.tab[data-tab="${h}"]`).click();}
+</script>
+</body></html>
