@@ -448,7 +448,7 @@ function setStage(i){
   else if(i>=lines.length){ id='outro'; py='Zàijiàn!'; ru='Пока!'; dur=3; }
   else { const w=lines[i]; id=w.id; py=w.py; ru=w.ru; dur=(i<last?songTimes[i+1]:songTimes[i]+1.5)-songTimes[i]; }
   const chorus = id==='song_hello';
-  if(chorus){ chorusN++; } else chorusN=0;
+  if(i<0){ chorusN=0; } else if(chorus){ chorusN++; } else chorusN=0;   // «Приготовились» не считается припевом
   const slide = chorus && chorusN%2===0;           // каждый второй припев — проезд гигантского текста
   scene.className='scene'; stageSub.classList.remove('in');
   if(chorus||i<0){ hideClip(); setDancers(true); kinetic(WORDS_OF[id], dur, slide); }
