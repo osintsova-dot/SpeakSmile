@@ -236,6 +236,15 @@ body{
   .stage .scene.split .clip{width:auto;height:100%;max-width:70vw;min-height:0;justify-self:center}.stage .scene.split .kin .w{font-size:clamp(46px,12vw,96px)}}
 @media(prefers-reduced-motion:reduce){.stage .dancers video{animation:none}}
 
+
+/* ── запись в группу (после урока) ── */
+.join{margin-top:34px}
+.join-card{background:var(--paper);color:var(--ink);border-radius:28px;padding:24px 20px;box-shadow:0 14px 30px rgba(30,10,70,.30);text-align:center}
+.join-t{font-weight:800;font-size:24px;margin-bottom:6px}
+.join-p{margin:0 auto 16px;color:var(--muted);font-weight:600;font-size:15px;max-width:34ch}
+.join-btn{background:var(--p);color:#fff;box-shadow:0 10px 24px rgba(108,63,197,.35)}
+.join-more{display:inline-block;margin-top:12px;color:var(--p);font-weight:700;font-size:14px}
+
 /* ── подвал ── */
 .foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}
 .foot a{color:var(--honey);text-decoration:none;border-bottom:1px solid rgba(245,200,66,.6)}
@@ -320,7 +329,15 @@ body{
   <div class="tip">Нажми на экран — пауза</div>
 </div>
 
-<p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
+<section class="join" aria-label="Запись в группу">
+    <div class="join-card">
+      <div class="join-t">Понравилось?</div>
+      <p class="join-p">Так проходит каждое домашнее повторение в группе китайского для 5–7 классов. Старт 6 октября.</p>
+      <a class="btn join-btn" href="/chinese/start/#zapis"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 4.7 18.8L21 22l-1.2-4.3A10 10 0 0 0 12 2zm-4 8h8v2H8zm0 3h5v2H8z"/></svg>Записаться в группу</a>
+      <a class="join-more" href="/chinese/start/">Подробнее о курсе</a>
+    </div>
+  </section>
+  <p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
 </div>
 
 <script src="../gate.js"></script>
