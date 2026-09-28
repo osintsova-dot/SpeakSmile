@@ -116,6 +116,8 @@ body{
 .rep i.done{background:var(--honey);border-color:#E0B32E;transform:scale(1.15)}
 .controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn.primary{background:var(--p);color:#fff}
+.fab-stop{position:fixed;left:50%;transform:translateX(-50%);bottom:max(18px,env(safe-area-inset-bottom));z-index:40;appearance:none;border:0;font:inherit;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;background:#F17FBE;color:#fff;display:inline-flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 12px 28px rgba(0,0,0,.35);animation:pop .3s var(--ease)}
+.fab-stop svg{width:18px;height:18px;fill:currentColor}
 .btn.stopbtn{background:#F17FBE;color:#fff;box-shadow:0 8px 20px rgba(241,127,190,.4),0 2px 0 rgba(0,0,0,.08)}
 .tempo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--muted)}
 .tempo input{accent-color:var(--p)}
@@ -318,6 +320,7 @@ body{
   </section>
 
   
+<button class="fab-stop" id="fabStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
 <div class="stage" id="stage" hidden aria-label="Песня на весь экран">
   <button class="close" id="stageClose" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <div class="title">你好，你好吗？ · Speak&Smile</div>
@@ -421,7 +424,7 @@ function light(i){ const k=i<0?-1:lineRow[i];
   [...lyricsEl.children].forEach((el,r)=>{ el.classList.toggle('on',r===k);
     const dots=el.querySelectorAll('.rep i'); const row=ROWS[r]; dots.forEach((d,n)=>d.classList.toggle('done', i>=0 && row.idx[n]<=i && r===k)); if(r!==k) dots.forEach(d=>d.classList.remove('done')); });
   const el=lyricsEl.children[k]; if(el&&el.scrollIntoView)el.scrollIntoView({block:'nearest',behavior:'smooth'});}
-function stop(){singing=false; clearTimeout(chantTimer); if(current){current.pause();} if(songAudio){songAudio.pause();songAudio.currentTime=0;} light(-1); playBtn.hidden=false; stopBtn.hidden=true;}
+function stop(){singing=false; document.getElementById('fabStop').hidden=true; clearTimeout(chantTimer); if(current){current.pause();} if(songAudio){songAudio.pause();songAudio.currentTime=0;} light(-1); playBtn.hidden=false; stopBtn.hidden=true;}
 let chantTimer=null;
 function chant(i){ if(!singing)return; if(i>=lines.length){stop();return;} light(i);
   clearTimeout(chantTimer); let next=false; const go=()=>{ if(next||!singing)return; next=true; clearTimeout(chantTimer); setTimeout(()=>chant(i+1),120/parseFloat(tempo.value)); };
@@ -429,12 +432,12 @@ function chant(i){ if(!singing)return; if(i>=lines.length){stop();return;} light
   chantTimer=setTimeout(go,3800/parseFloat(tempo.value)); // страховка, если браузер не отдал событие ended
 }
 function sing(){
-  singing=true; playBtn.hidden=true; stopBtn.hidden=false;
+  singing=true; playBtn.hidden=true; stopBtn.hidden=false; document.getElementById('fabStop').hidden=false;
   if(songAudio&&songTimes){ songAudio.playbackRate=parseFloat(tempo.value); songAudio.currentTime=0; songAudio.play();
     const tick=()=>{ if(!singing)return; const t=songAudio.currentTime; let idx=-1; songTimes.forEach((s,k)=>{if(t>=s)idx=k;}); light(idx); if(songAudio.ended){stop();return;} requestAnimationFrame(tick); }; tick();
   } else chant(0);
 }
-playBtn.onclick=sing; stopBtn.onclick=stop;
+playBtn.onclick=sing; stopBtn.onclick=stop; document.getElementById('fabStop').onclick=stop;
 
 /* сцена на весь экран в духе Genki: слова выскакивают по одному, герой из клипов появляется на эмоциях,
    на припеве внизу пляшут трое, каждый 2-й припев — гигантский текст проезжает через экран */
