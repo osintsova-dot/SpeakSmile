@@ -116,6 +116,7 @@ body{
 .rep i.done{background:var(--honey);border-color:#E0B32E;transform:scale(1.15)}
 .controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn.primary{background:var(--p);color:#fff}
+.btn.stopbtn{background:#F17FBE;color:#fff;box-shadow:0 8px 20px rgba(241,127,190,.4),0 2px 0 rgba(0,0,0,.08)}
 .tempo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--muted)}
 .tempo input{accent-color:var(--p)}
 
@@ -183,7 +184,7 @@ body{
   padding:max(14px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom));overflow:hidden;cursor:pointer;color:var(--p);
   background:#fff;animation:fadein .35s ease}
 @keyframes fadein{from{opacity:0}}
-.stage .close{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%;border:0;
+.stage .close{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:52px;height:52px;border-radius:50%;border:0;
   background:#F3EEFF;color:var(--p);display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 16px rgba(60,30,120,.18)}
 .stage .close svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
 .stage .title{font-weight:800;font-size:13px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
@@ -225,6 +226,9 @@ body{
 .stage .bar{width:min(520px,80vw);height:8px;border-radius:999px;background:rgba(108,63,197,.15);overflow:hidden}
 .stage .bar i{display:block;height:100%;width:0;background:var(--p);border-radius:999px}
 .stage .tip{font-size:12px;font-weight:600;color:var(--muted)}
+.stage .exit{appearance:none;border:0;font:inherit;font-weight:800;font-size:15px;padding:12px 20px;border-radius:999px;background:var(--p);color:#fff;display:inline-flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 8px 20px rgba(108,63,197,.35);z-index:3}
+.stage .exit svg{width:16px;height:16px;fill:currentColor}
+.stage.rec .exit{display:none}
 .stage .paused-badge{position:absolute;inset:0;display:none;place-items:center;pointer-events:none;z-index:2}
 .stage.paused .paused-badge{display:grid}
 .stage .paused-badge span{width:92px;height:92px;border-radius:50%;background:var(--p);display:grid;place-items:center;box-shadow:0 16px 40px rgba(60,30,120,.3)}
@@ -304,7 +308,7 @@ body{
       <p class="sub">Та же песня, что «Hello, how are you?», только по-китайски. Нажми на строчку — услышишь её отдельно.</p>
       <div class="controls">
         <button class="btn primary" id="playSong"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
-        <button class="btn ghost" id="stopSong" hidden>Стоп</button>
+        <button class="btn stopbtn" id="stopSong" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
         <button class="btn" id="stageBtn" hidden><svg viewBox="0 0 24 24"><path d="M5 5h5V3H3v7h2V5zm14 0v5h2V3h-7v2h5zM5 19v-5H3v7h7v-2H5zm14 0h-5v2h7v-7h-2v5z"/></svg>На весь экран</button>
         <label class="tempo">Темп <input type="range" id="tempo" min="0.7" max="1.2" step="0.05" value="1"></label>
       </div>
@@ -326,7 +330,7 @@ body{
   </div>
   <div class="dancers" id="dancers"><video src="clips/happy.mp4" muted loop playsinline preload="auto"></video><video src="clips/hello.mp4" muted loop playsinline preload="auto"></video><video src="clips/good.mp4" muted loop playsinline preload="auto"></video></div>
   <div class="bar"><i id="stageBar"></i></div>
-  <div class="tip">Нажми на экран — пауза</div>
+  <button class="exit" id="stageExit"><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Выйти из песни</button><div class="tip">Нажми на экран — пауза</div>
 </div>
 
 <section class="join" aria-label="Запись в группу">
@@ -490,7 +494,8 @@ function closeStage(){ stageOn=false; cancelAnimationFrame(stageRaf); clearTimer
   if(songAudio){ songAudio.pause(); songAudio.currentTime=0; } if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }
 if(new URLSearchParams(location.search).has('rec')) stage.classList.add('rec');
 window.__stageDebug=(i,c)=>{ stageOn=true; stage.hidden=false; document.body.style.overflow='hidden'; Object.values(clipVids).forEach(v=>v.load()); if(c!=null) chorusN=c; setStage(i); };
-stageBtn.onclick=openStage; document.getElementById('stageClose').onclick=e=>{ e.stopPropagation(); closeStage(); };
+stageBtn.onclick=openStage; document.getElementById('stageClose').onclick=e=>{ e.stopPropagation(); closeStage(); }; document.getElementById('stageExit').onclick=e=>{ e.stopPropagation(); closeStage(); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&stageOn) closeStage(); }); document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElement&&stageOn&&!new URLSearchParams(location.search).has('rec')) closeStage(); });
 stage.onclick=()=>{ if(!stageOn) return; if(songAudio.paused){ stage.classList.remove('paused'); songAudio.play().catch(()=>{}); Object.values(clipVids).forEach(v=>{ if(v.classList.contains('on')) v.play().catch(()=>{}); }); stageLoop(); }
   else { songAudio.pause(); stage.classList.add('paused'); Object.values(clipVids).forEach(v=>v.pause()); } };
 
