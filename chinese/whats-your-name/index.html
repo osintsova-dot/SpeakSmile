@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>你好吗？ Как дела? · Speak&Smile</title>
-<meta name="description" content="Китайский для детей: 12 фраз «Как дела?» с озвучкой, игра «послушай и найди» и песня.">
+<title>你叫什么名字？ Как тебя зовут? · Speak&Smile</title>
+<meta name="description" content="Китайский для 5–7 классов: как тебя зовут, он/она, друг и учитель — фразы с озвучкой, игра, песня и иероглиф дня.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -256,15 +256,16 @@ body{
 .foot a{color:var(--honey);text-decoration:none;border-bottom:1px solid rgba(245,200,66,.6)}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+.hero .zh,.top .zh,header .zh{font-size:clamp(34px,10vw,54px)!important;line-height:1.08}
 </style></head>
 <body>
 <div class="bubbles"><i></i><i></i><i></i><i></i><i></i></div>
 <div class="wrap">
   <header class="hero">
     <div class="brand">Speak<b>&</b>Smile · китайский для детей</div>
-    <div class="zh">你好吗？</div>
-    <div class="py">Nǐ hǎo ma?</div>
-    <div class="ru">Как дела?</div>
+    <div class="zh">你叫什么名字？</div>
+    <div class="py">Nǐ jiào shénme míngzi?</div>
+    <div class="ru">Как тебя зовут?</div>
   </header>
 
   <div class="tabs" role="tablist" aria-label="Режим">
@@ -306,8 +307,8 @@ body{
 
   <section id="song" role="tabpanel" hidden>
     <div class="song">
-      <h2>你好，你好吗？</h2>
-      <p class="sub">Та же песня, что «Hello, how are you?», только по-китайски. Нажми на строчку — услышишь её отдельно.</p>
+      <h2>你叫什么名字？</h2>
+      <p class="sub">Та же идея, что в Genki «What's your name?», только по-китайски: вопрос — ответ — друзья. Нажми на строчку — услышишь её отдельно.</p>
       <div class="controls">
         <button class="btn primary" id="playSong"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
         <button class="btn stopbtn" id="stopSong" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
@@ -323,15 +324,15 @@ body{
 <button class="fab-stop" id="fabStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
 <div class="stage" id="stage" hidden aria-label="Песня на весь экран">
   <button class="close" id="stageClose" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-  <div class="title">你好，你好吗？ · Speak&Smile</div>
+  <div class="title">你叫什么名字？ · Speak&Smile</div>
   <div class="scene" id="scene">
     <div class="kin" id="kin"></div>
     <div class="sub" id="stageSub"></div>
-    <div class="clip" id="clip"><video data-pose="hello" src="clips/hello.mp4" muted loop playsinline preload="auto"></video><video data-pose="good" src="clips/good.mp4" muted loop playsinline preload="auto"></video><video data-pose="great" src="clips/great.mp4" muted loop playsinline preload="auto"></video><video data-pose="okay" src="clips/okay.mp4" muted loop playsinline preload="auto"></video><video data-pose="happy" src="clips/happy.mp4" muted loop playsinline preload="auto"></video><video data-pose="hungry" src="clips/hungry.mp4" muted loop playsinline preload="auto"></video><video data-pose="thirsty" src="clips/thirsty.mp4" muted loop playsinline preload="auto"></video><video data-pose="tired" src="clips/tired.mp4" muted loop playsinline preload="auto"></video><video data-pose="sad" src="clips/sad.mp4" muted loop playsinline preload="auto"></video><video data-pose="hot" src="clips/hot.mp4" muted loop playsinline preload="auto"></video><video data-pose="cold" src="clips/cold.mp4" muted loop playsinline preload="auto"></video><video data-pose="wet" src="clips/wet.mp4" muted loop playsinline preload="auto"></video><video data-pose="thanks" src="clips/thanks.mp4" muted loop playsinline preload="auto"></video></div>
+    <div class="clip" id="clip"><img data-pose="my_name" src="img/my_name.webp" alt="" loading="lazy"><img data-pose="nice" src="img/nice.webp" alt="" loading="lazy"><img data-pose="his_name" src="img/his_name.webp" alt="" loading="lazy"><img data-pose="her_name" src="img/her_name.webp" alt="" loading="lazy"><img data-pose="friend" src="img/friend.webp" alt="" loading="lazy"><img data-pose="me_too" src="img/me_too.webp" alt="" loading="lazy"><img data-pose="wave" src="img/wave.webp" alt="" loading="lazy"></div>
     <div class="burst" id="burst"></div>
     <div class="paused-badge"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></div>
   </div>
-  <div class="dancers" id="dancers"><video src="clips/happy.mp4" muted loop playsinline preload="auto"></video><video src="clips/hello.mp4" muted loop playsinline preload="auto"></video><video src="clips/good.mp4" muted loop playsinline preload="auto"></video></div>
+  <div class="dancers" id="dancers"><img src="img/friend.webp" alt=""><img src="img/nice.webp" alt=""><img src="img/wave.webp" alt=""></div>
   <div class="bar"><i id="stageBar"></i></div>
   <button class="exit" id="stageExit"><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Выйти из песни</button><div class="tip">Нажми на экран — пауза</div>
 </div>
@@ -341,7 +342,7 @@ body{
 <section class="join" aria-label="Запись в группу">
     <div class="join-card">
       <div class="join-t">Понравилось?</div>
-      <p class="join-p">Так проходит каждое домашнее повторение в группе китайского для 5–7 классов. Старт 6 октября.</p>
+      <p class="join-p">Так проходит каждое домашнее повторение в группе китайского для 5–7 классов. Группа уже учится — можно присоединиться.</p>
       <a class="btn join-btn" href="/chinese/start/#zapis"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 4.7 18.8L21 22l-1.2-4.3A10 10 0 0 0 12 2zm-4 8h8v2H8zm0 3h5v2H8z"/></svg>Записаться в группу</a>
       <a class="join-more" href="/chinese/start/">Подробнее о курсе</a>
     </div>
@@ -355,24 +356,22 @@ body{
 <script>
 ZhGate.lock('how-are-you');
 const WORDS=[
- {id:"good",zh:"我很好！",py:"Wǒ hěn hǎo!",ru:"Хорошо!"},
- {id:"great",zh:"太棒了！",py:"Tài bàng le!",ru:"Отлично!"},
- {id:"okay",zh:"还可以。",py:"Hái kěyǐ.",ru:"Нормально."},
- {id:"happy",zh:"我很开心！",py:"Wǒ hěn kāixīn!",ru:"Мне весело!"},
- {id:"hungry",zh:"我饿了。",py:"Wǒ è le.",ru:"Я хочу есть."},
- {id:"thirsty",zh:"我渴了。",py:"Wǒ kě le.",ru:"Я хочу пить."},
- {id:"tired",zh:"我累了。",py:"Wǒ lèi le.",ru:"Я устал(а)."},
- {id:"sad",zh:"我很难过。",py:"Wǒ hěn nánguò.",ru:"Мне грустно."},
- {id:"hot",zh:"我很热！",py:"Wǒ hěn rè!",ru:"Мне жарко!"},
- {id:"cold",zh:"我很冷！",py:"Wǒ hěn lěng!",ru:"Мне холодно!"},
- {id:"wet",zh:"我湿了！",py:"Wǒ shī le!",ru:"Я промок(ла)!"},
- {id:"q_howareyou",zh:"你好吗？",py:"Nǐ hǎo ma?",ru:"Как дела?"},
+ {id:"q_name",zh:"你叫什么名字？",py:"Nǐ jiào shénme míngzi?",ru:"Как тебя зовут?"},
+ {id:"my_name",zh:"我叫……",py:"Wǒ jiào …",ru:"Меня зовут …"},
+ {id:"q_hisname",zh:"他叫什么名字？",py:"Tā jiào shénme míngzi?",ru:"Как его зовут?"},
+ {id:"his_name",zh:"他叫小明。",py:"Tā jiào Xiǎo Míng.",ru:"Его зовут Сяо Мин."},
+ {id:"her_name",zh:"她叫小红。",py:"Tā jiào Xiǎo Hóng.",ru:"Её зовут Сяо Хун."},
+ {id:"nice",zh:"很高兴认识你！",py:"Hěn gāoxìng rènshi nǐ!",ru:"Очень приятно!"},
+ {id:"me_too",zh:"我也是！",py:"Wǒ yě shì!",ru:"Мне тоже!"},
+ {id:"and_you",zh:"你呢？",py:"Nǐ ne?",ru:"А ты?"},
+ {id:"friend",zh:"他是我的朋友。",py:"Tā shì wǒ de péngyou.",ru:"Он мой друг."},
+ {id:"teacher",zh:"她是我的老师。",py:"Tā shì wǒ de lǎoshī.",ru:"Она моя учительница."},
+ {id:"who",zh:"他是谁？",py:"Tā shì shéi?",ru:"Кто он?"},
+ {id:"pronouns",zh:"我 · 你 · 他 · 她",py:"wǒ · nǐ · tā · tā",ru:"я · ты · он · она"},
 ];
-const SONG=[ // структура Genki «Hello, how are you?»
- "hello","hello","hungry","tired","cold","sad","hello","hello","hello","hello",
- "happy","great","good","okay","hello","hello","hello","hello","thanks"];
-const EXTRA={hello:{zh:"你好，你好吗？",py:"Nǐ hǎo, nǐ hǎo ma?",ru:"Привет, как дела?",id:"song_hello"},
-             thanks:{zh:"谢谢！",py:"Xièxie!",ru:"Спасибо!",id:"song_thanks"}};
+const SONG=[ // структура Genki «What's your name?»
+ "q_name","q_name","song_me","nice","q_name","q_name","his_name","her_name","friend","q_name","q_name","nice","me_too"];
+const EXTRA={song_me:{zh:"我叫小明。",py:"Wǒ jiào Xiǎo Míng.",ru:"Меня зовут Сяо Мин.",id:"song_me"}};
 const byId=Object.fromEntries(WORDS.map(w=>[w.id,w]));
 const SPK='<span class="spk" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg></span>';
 const audio={}; let current=null;
@@ -395,7 +394,7 @@ grid.addEventListener('click',e=>{const c=e.target.closest('.card'); if(!c)retur
 const gameGrid=document.getElementById('gameGrid'), scoreEl=document.getElementById('score'), totalEl=document.getElementById('total'), hint=document.getElementById('gameHint');
 let target=null, score=0, total=0, locked=false;
 function newRound(){
-  const pool=WORDS.filter(w=>w.id!=="q_howareyou");
+  const pool=WORDS.filter(w=>w.id!=="pronouns");
   const pick=[...pool].sort(()=>Math.random()-.5).slice(0,6);
   target=pick[Math.floor(Math.random()*pick.length)];
   gameGrid.innerHTML=pick.map((w,i)=>cardHTML(w,i,false)).join('');
@@ -416,7 +415,7 @@ const lines=SONG.map(k=>EXTRA[k]||byId[k]); let lineRow=[];
 (()=>{ // повторы подряд складываем в одну строку с бейджем ×N
   const rows=[]; lines.forEach((w,i)=>{const last=rows[rows.length-1]; if(last&&last.w.id===w.id){last.idx.push(i);} else rows.push({w,idx:[i]});});
   window.ROWS=rows; lineRow=new Array(lines.length); rows.forEach((r,k)=>r.idx.forEach(i=>lineRow[i]=k));
-  lyricsEl.innerHTML=rows.map((r,k)=>{const w=r.w; const pic=(w.id==='song_hello'?'q_howareyou':w.id==='song_thanks'?'happy':w.id);
+  lyricsEl.innerHTML=rows.map((r,k)=>{const w=r.w; const pic=(w.id==='song_me'?'my_name':w.id);
     const dots=r.idx.length>1?`<span class="rep" aria-label="${r.idx.length} раза">${r.idx.map(()=>'<i></i>').join('')}</span>`:'';
     return `<div class="line" data-k="${k}"><img src="img/${pic}.webp" alt=""><div><div class="zh" lang="zh">${w.zh}${dots}</div><div class="py">${w.py}</div><div class="ru">${w.ru}</div></div></div>`;}).join('');
 })();
@@ -447,20 +446,20 @@ playBtn.onclick=sing; stopBtn.onclick=stop; document.getElementById('fabStop').o
 const stage=document.getElementById('stage'), scene=document.getElementById('scene'), kin=document.getElementById('kin'), clipBox=document.getElementById('clip'),
       stageSub=document.getElementById('stageSub'), dancers=document.getElementById('dancers'), burst=document.getElementById('burst'),
       stageBar=document.getElementById('stageBar'), stageBtn=document.getElementById('stageBtn');
-const clipVids={}; clipBox.querySelectorAll('video').forEach(v=>clipVids[v.dataset.pose]=v);
-const WORDS_OF={song_hello:['你好，','你好吗？'],hungry:['我','饿了。'],tired:['我','累了。'],cold:['我','很冷！'],sad:['我','很难过。'],happy:['我','很开心！'],
-  great:['太棒了！'],good:['我','很好！'],okay:['还可以。'],song_thanks:['谢谢！'],outro:['再见！']};
+const clipVids={}; clipBox.querySelectorAll('video,img').forEach(v=>clipVids[v.dataset.pose]=v);
+const WORDS_OF={q_name:['你叫','什么','名字？'],song_me:['我叫','小明。'],nice:['很高兴','认识你！'],his_name:['他叫','小明。'],
+  her_name:['她叫','小红。'],friend:['他是','我的','朋友。'],me_too:['我','也是！'],outro:['再见！']};
 let stageOn=false, stageIdx=-2, stageRaf=0, wordTimers=[], chorusN=0, karStart=0, karPer=0, karN=0;
-const PY_SYL={song_hello:['Nǐ','hǎo,','nǐ','hǎo','ma?'],hungry:['Wǒ','è','le.'],tired:['Wǒ','lèi','le.'],cold:['Wǒ','hěn','lěng!'],sad:['Wǒ','hěn','nán','guò.'],
-  happy:['Wǒ','hěn','kāi','xīn!'],great:['Tài','bàng','le!'],good:['Wǒ','hěn','hǎo!'],okay:['Hái','kě','yǐ.'],song_thanks:['Xiè','xie!'],outro:['Zài','jiàn!']};
+const PY_SYL={q_name:['Nǐ','jiào','shén','me','míng','zi?'],song_me:['Wǒ','jiào','Xiǎo','Míng.'],nice:['Hěn','gāo','xìng','rèn','shi','nǐ!'],
+  his_name:['Tā','jiào','Xiǎo','Míng.'],her_name:['Tā','jiào','Xiǎo','Hóng.'],friend:['Tā','shì','wǒ','de','péng','you.'],me_too:['Wǒ','yě','shì!'],outro:['Zài','jiàn!']};
 function karaoke(t){ const j=karN? Math.floor((t-karStart)/karPer) : -1;
   kin.querySelectorAll('.c').forEach((c,k)=>c.classList.toggle('hl',k<=j)); stageSub.querySelectorAll('.s').forEach((c,k)=>c.classList.toggle('hl',k<=j)); }
 function clearTimers(){ wordTimers.forEach(clearTimeout); wordTimers=[]; }
-function showClip(pose){ Object.values(clipVids).forEach(v=>{ if(v.dataset.pose===pose){ v.classList.add('on'); v.currentTime=0; v.play().catch(()=>{}); } else { v.classList.remove('on'); v.pause(); } });
+function showClip(pose){ Object.values(clipVids).forEach(v=>{ if(v.dataset.pose===pose){ v.classList.add('on'); if(v.play){ v.currentTime=0; v.play().catch(()=>{}); } } else { v.classList.remove('on'); if(v.pause) v.pause(); } });
   clipBox.classList.remove('in'); void clipBox.offsetWidth; clipBox.classList.add('in');
   burst.innerHTML=''; for(let n=0;n<8;n++){ const sp=document.createElement('i'); const a=n/8*Math.PI*2, r=140+Math.random()*90;
     sp.style.setProperty('--dx',Math.cos(a)*r+'px'); sp.style.setProperty('--dy',Math.sin(a)*r+'px'); burst.appendChild(sp); } setTimeout(()=>burst.innerHTML='',900); }
-function hideClip(){ clipBox.classList.remove('in'); Object.values(clipVids).forEach(v=>{ v.classList.remove('on'); v.pause(); }); }
+function hideClip(){ clipBox.classList.remove('in'); Object.values(clipVids).forEach(v=>{ v.classList.remove('on'); if(v.pause) v.pause(); }); }
 function setDancers(on){ dancers.classList.toggle('in',on); dancers.querySelectorAll('video').forEach(v=>{ if(on){ v.play().catch(()=>{}); } else v.pause(); }); }
 function kinetic(words, dur, slide){
   clearTimers(); kin.className='kin'+(slide?' slide':''); kin.style.setProperty('--dur',(dur*0.98)+'s'); kin.innerHTML=words.map(w=>`<span class="w" lang="zh">${[...w].map(ch=>/[\u4e00-\u9fff]/.test(ch)?`<span class="c">${ch}</span>`:ch).join('')}</span>`).join('');
@@ -471,15 +470,15 @@ function kinetic(words, dur, slide){
 function setStage(i){
   stageIdx=i; const last=songTimes.length-1;
   let id, py, ru, dur;
-  if(i<0){ id='song_hello'; py='Nǐ hǎo, nǐ hǎo ma?'; ru='Приготовились!'; dur=2; }
+  if(i<0){ id='q_name'; py='Nǐ jiào shénme míngzi?'; ru='Приготовились!'; dur=2; }
   else if(i>=lines.length){ id='outro'; py='Zàijiàn!'; ru='Пока!'; dur=3; }
   else { const w=lines[i]; id=w.id; py=w.py; ru=w.ru; dur=(i<last?songTimes[i+1]:songTimes[i]+1.5)-songTimes[i]; }
-  const chorus = id==='song_hello';
+  const chorus = id==='q_name';
   if(i<0){ chorusN=0; } else if(chorus){ chorusN++; } else chorusN=0;   // «Приготовились» не считается припевом
   const slide = chorus && chorusN%2===0;           // каждый второй припев — проезд гигантского текста
   scene.className='scene'; stageSub.classList.remove('in');
   if(chorus||i<0){ hideClip(); setDancers(true); kinetic(WORDS_OF[id], dur, slide); }
-  else { const pose=(id==='song_thanks')?'thanks':(id==='outro'?'happy':id); scene.classList.add('split'); if(i%2) scene.classList.add('flip');
+  else { const pose=(id==='song_me')?'my_name':(id==='outro'?'wave':id); scene.classList.add('split'); if(i%2) scene.classList.add('flip');
     setDancers(id==='outro'); kinetic(WORDS_OF[id], dur, false); showClip(pose); }
   const syl=PY_SYL[id]||[py]; karN=syl.length; karStart=(i<0)?-1e9:(i>=lines.length? songTimes[last]+3 : songTimes[i]); karPer=Math.min(0.5, dur*0.85/karN); if(i<0) karN=0;
   stageSub.innerHTML=`${syl.map(x=>`<span class="s">${x}</span>`).join('')}<small>${ru}</small>`;
@@ -487,7 +486,7 @@ function setStage(i){
 }
 function stageLoop(){ if(!stageOn||songAudio.paused) return;
   const t=songAudio.currentTime; let idx=-1; songTimes.forEach((s,k)=>{ if(t>=s) idx=k; });
-  if(idx===songTimes.length-1 && t>songTimes[idx]+3) idx=lines.length;      // после 谢谢 — прощание
+  if(idx===songTimes.length-1 && t>songTimes[idx]+3) idx=lines.length;      // после 我也是 — прощание
   if(idx!==stageIdx) setStage(idx);
   karaoke(t);
   stageBar.style.width=(t/(songAudio.duration||59)*100)+'%';
@@ -495,20 +494,21 @@ function stageLoop(){ if(!stageOn||songAudio.paused) return;
   stageRaf=requestAnimationFrame(stageLoop); }
 function openStage(){ if(!(songAudio&&songTimes)) return; stop(); stageOn=true; stage.hidden=false; stage.classList.remove('paused'); document.body.style.overflow='hidden'; chorusN=0;
   if(!new URLSearchParams(location.search).has('rec') && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
-  Object.values(clipVids).forEach(v=>{ v.load(); }); setStage(-1); songAudio.playbackRate=parseFloat(tempo.value); songAudio.currentTime=0; songAudio.play().catch(()=>{}); stageLoop(); }
+  Object.values(clipVids).forEach(v=>{ if(v.load) v.load(); }); setStage(-1); songAudio.playbackRate=parseFloat(tempo.value); songAudio.currentTime=0; songAudio.play().catch(()=>{}); stageLoop(); }
 function closeStage(){ stageOn=false; cancelAnimationFrame(stageRaf); clearTimers(); stage.hidden=true; document.body.style.overflow=''; hideClip(); setDancers(false);
   if(songAudio){ songAudio.pause(); songAudio.currentTime=0; } if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }
 if(new URLSearchParams(location.search).has('rec')) stage.classList.add('rec');
-window.__stageDebug=(i,c)=>{ stageOn=true; stage.hidden=false; document.body.style.overflow='hidden'; Object.values(clipVids).forEach(v=>v.load()); if(c!=null) chorusN=c; setStage(i); };
+window.__stageDebug=(i,c)=>{ stageOn=true; stage.hidden=false; document.body.style.overflow='hidden'; Object.values(clipVids).forEach(v=>{ if(v.load) v.load(); }); if(c!=null) chorusN=c; setStage(i); };
 stageBtn.onclick=openStage; document.getElementById('stageClose').onclick=e=>{ e.stopPropagation(); closeStage(); }; document.getElementById('stageExit').onclick=e=>{ e.stopPropagation(); closeStage(); };
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&stageOn) closeStage(); }); document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElement&&stageOn&&!new URLSearchParams(location.search).has('rec')) closeStage(); });
-stage.onclick=()=>{ if(!stageOn) return; if(songAudio.paused){ stage.classList.remove('paused'); songAudio.play().catch(()=>{}); Object.values(clipVids).forEach(v=>{ if(v.classList.contains('on')) v.play().catch(()=>{}); }); stageLoop(); }
-  else { songAudio.pause(); stage.classList.add('paused'); Object.values(clipVids).forEach(v=>v.pause()); } };
+stage.onclick=()=>{ if(!stageOn) return; if(songAudio.paused){ stage.classList.remove('paused'); songAudio.play().catch(()=>{}); Object.values(clipVids).forEach(v=>{ if(v.play&&v.classList.contains('on')) v.play().catch(()=>{}); }); stageLoop(); }
+  else { songAudio.pause(); stage.classList.add('paused'); Object.values(clipVids).forEach(v=>{ if(v.pause) v.pause(); }); } };
 
 /* ── иероглиф дня: черта за чертой, части цветом, «из чего состоит», обводка пальцем ── */
 const COMPC=['#6C3FC5','#F17FBE','#34D3C0','#63B3FF'];
-const ALLW={q_howareyou:'你好吗？',good:'我很好！',song_hello:'你好，你好吗？',happy:'我很开心！',cold:'我很冷！',hot:'我很热！',hungry:'我饿了。',thirsty:'我渴了。',tired:'我累了。',sad:'我很难过。',song_thanks:'谢谢！'};
-const DAY0=Date.UTC(2026,8,27); let hzIdx=(((Math.floor((Date.now()-DAY0)/864e5))%HANZI.length)+HANZI.length)%HANZI.length; let hzWriter=null;
+const ALLW={q_name:'你叫什么名字？',my_name:'我叫……',q_hisname:'他叫什么名字？',his_name:'他叫小明。',her_name:'她叫小红。',nice:'很高兴认识你！',
+  me_too:'我也是！',and_you:'你呢？',friend:'他是我的朋友。',teacher:'她是我的老师。',who:'他是谁？',fin_bye:'再见！',fin_tmrw:'明天见！'};
+const DAY0=Date.UTC(2026,9,8); let hzIdx=(((Math.floor((Date.now()-DAY0)/864e5))%HANZI.length)+HANZI.length)%HANZI.length; let hzWriter=null;
 const SVGNS='http://www.w3.org/2000/svg'; const mk=(t,a={})=>{const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 function compOf(h,i){ return h.comps.findIndex(c=>c.s.includes(i)); }
 function drawHanzi(h,animate){
