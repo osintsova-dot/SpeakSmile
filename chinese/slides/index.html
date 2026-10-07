@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Слайды урока · Speak&Smile</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6C3FC5; --p2:#8B5CF6; --honey:#F5C842; --ink:#2A2140; --muted:#6A5B9A; --soft:#F4EFFF; --bg:#FFFFFF;
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,system-ui,sans-serif;
+  --pyf:"Nunito",var(--f);
+  --zh:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* стартовый экран */
+.start{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;text-align:center;
+  background:radial-gradient(120% 90% at 20% 0%,#8B5CF6 0%,#6C3FC5 45%,#4B2A96 100%);color:#fff}
+.start h1{font-family:var(--zh);font-weight:900;font-size:clamp(48px,9vw,120px);line-height:1.05}
+.start .ru{color:#fff;font-size:clamp(20px,3vw,34px);font-weight:700;opacity:.9;margin-top:6px}
+.start .meta{font-size:clamp(14px,1.6vw,18px);opacity:.75;margin-top:4px}
+.start .go{margin-top:28px;display:inline-flex;align-items:center;gap:10px;padding:16px 34px;border-radius:999px;background:var(--honey);color:var(--ink);
+  font-size:clamp(18px,2.2vw,24px);font-weight:800;box-shadow:0 14px 34px rgba(0,0,0,.25);transition:transform .16s var(--ease)}
+.start .go:active{transform:scale(.97)}
+.start .go svg{width:22px;height:22px;fill:currentColor}
+.start .keys{margin-top:22px;font-size:14px;opacity:.75;line-height:1.7}
+kbd{display:inline-block;min-width:22px;padding:0 6px;border-radius:6px;background:rgba(255,255,255,.18);font:700 13px/22px var(--f)}
+
+/* слайд */
+.deck{position:fixed;inset:0;display:grid;grid-template-rows:minmax(0,1fr) auto}
+.slide{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:4vw;padding:4vh 6vw 2vh}
+.pic{justify-self:end;height:min(76vh,58vw);aspect-ratio:4/5;border-radius:clamp(18px,2.4vw,36px);overflow:hidden;background:var(--soft);
+  box-shadow:0 30px 60px -24px rgba(76,42,150,.45),0 0 0 1px rgba(108,63,197,.08);cursor:pointer}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.txt{min-width:0}
+.zh{font-family:var(--zh);font-weight:900;font-size:min(clamp(44px,7.4vw,140px),calc(50vw / var(--n,5)));white-space:nowrap;line-height:1.12;letter-spacing:.02em;color:var(--ink);cursor:pointer;overflow-wrap:anywhere}
+.zh .c{display:inline-block}
+.py{font-family:var(--pyf);font-weight:900;font-size:clamp(28px,4.2vw,76px);line-height:1.1;color:var(--p);margin-top:.25em}
+.ru{font-weight:700;font-size:clamp(18px,2.4vw,40px);color:var(--muted);margin-top:.5em;transition:opacity .25s}
+body.no-ru .ru{opacity:0}
+.speaking .zh{color:var(--p)}
+
+/* местоимения — плитки */
+.parts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2vw;grid-column:1/-1;width:min(92vw,150vh);justify-self:center}
+.part{border-radius:clamp(16px,2vw,30px);background:var(--soft);padding:4vh 1vw 3.4vh;text-align:center;transition:transform .16s var(--ease),background .2s}
+.part:active{transform:scale(.97)}
+.part.on{background:var(--honey)}
+.part .zh{font-size:clamp(60px,11vw,200px);line-height:1;white-space:normal}
+.part .py{font-size:clamp(26px,3.6vw,64px)}
+.part .ru{font-size:clamp(18px,2.2vw,36px)}
+
+/* режим «угадай»: текст скрыт до раскрытия */
+.slide.hide .txt>*{opacity:0;transform:translateY(12px)}
+.slide.hide .txt::after{content:"?";font-weight:800;font-size:clamp(80px,14vw,240px);color:var(--soft);-webkit-text-stroke:3px var(--p)}
+.slide .txt>*{transition:opacity .35s var(--ease),transform .35s var(--ease)}
+
+/* появление */
+@media (prefers-reduced-motion:no-preference){
+  .slide.enter .pic{animation:picin .55s var(--ease) both}
+  .slide.enter .zh .c{animation:up .45s var(--ease) both;animation-delay:calc(.12s + var(--k)*45ms)}
+  .slide.enter .py{animation:up .45s var(--ease) both;animation-delay:.3s}
+  .slide.enter .ru{animation:fade .45s ease both;animation-delay:.42s}
+  .slide.enter .part{animation:up .45s var(--ease) both;animation-delay:calc(var(--k)*70ms)}
+  .slide.back.enter .pic{animation-name:picinb}
+}
+@keyframes picin{from{opacity:0;transform:translateX(-3vw) scale(.96)}}
+@keyframes picinb{from{opacity:0;transform:translateX(3vw) scale(.96)}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+@keyframes fade{from{opacity:0}}
+
+/* панель */
+.bar{display:flex;align-items:center;gap:8px;padding:10px 16px calc(10px + env(safe-area-inset-bottom));transition:opacity .4s}
+body.idle .bar{opacity:0}
+.dots{display:flex;gap:6px;flex:1;justify-content:center;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border-radius:50%;background:#E3DAF7;transition:background .2s,transform .2s}
+.dots i.on{background:var(--p);transform:scale(1.3)}
+.tb{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px;border-radius:999px;background:var(--soft);color:var(--p);font-weight:800;font-size:15px;transition:transform .16s var(--ease),background .2s}
+.tb:active{transform:scale(.96)}
+.tb.on{background:var(--p);color:#fff}
+.tb svg{width:20px;height:20px;fill:currentColor}
+.tb.ic{width:40px;padding:0;justify-content:center}
+.count{font-weight:800;color:var(--muted);font-size:15px;min-width:52px;text-align:center}
+
+@media (max-aspect-ratio:1/1){
+  .slide{grid-template-columns:1fr;grid-template-rows:auto auto;align-content:center;text-align:center;gap:3vh;padding:3vh 6vw 1vh}
+  .pic{justify-self:center;height:auto;width:min(70vw,44vh)}
+  .zh{font-size:min(clamp(36px,10vw,90px),calc(88vw / var(--n,5)))}.py{font-size:clamp(24px,6.5vw,56px)}.ru{font-size:clamp(17px,4.4vw,32px)}
+  .parts{grid-template-columns:repeat(2,1fr)}
+  .dots{display:none}.count{flex:1}
+  .tb .lbl{display:none}.tb{padding:0;width:40px;justify-content:center}
+}
+</style></head>
+<body>
+<div class="start" id="start">
+  <div>
+    <h1 id="sTitle" lang="zh">…</h1>
+    <div class="ru" id="sRu"></div>
+    <div class="meta" id="sMeta">Новые слова — по фразе на экран</div>
+    <button class="go" id="go"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Начать показ</button>
+    <div class="keys"><kbd>→</kbd> <kbd>пробел</kbd> дальше · <kbd>←</kbd> назад · <kbd>Enter</kbd> ещё раз послушать<br>
+      <kbd>T</kbd> перевод · <kbd>G</kbd> «угадай» (сначала картинка) · <kbd>F</kbd> на весь экран</div>
+  </div>
+</div>
+<div class="deck" id="deck" hidden>
+  <div class="slide" id="slide"></div>
+  <div class="bar">
+    <button class="tb ic" id="prev" aria-label="Назад"><svg viewBox="0 0 24 24"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg></button>
+    <button class="tb ic" id="say" aria-label="Послушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button>
+    <button class="tb on" id="tRu"><span class="lbl">Перевод</span><span aria-hidden="true">Я→Р</span></button>
+    <button class="tb" id="tGuess"><span class="lbl">Угадай</span><span aria-hidden="true">?</span></button>
+    <div class="dots" id="dots"></div>
+    <span class="count" id="count"></span>
+    <button class="tb ic" id="fs" aria-label="На весь экран"><svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></button>
+    <button class="tb ic" id="next" aria-label="Дальше"><svg viewBox="0 0 24 24"><path d="M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z"/></svg></button>
+  </div>
+</div>
+<script src="../gate.js"></script>
+<script>
+const LES=(new URLSearchParams(location.search).get('l')||'').replace(/[^a-z0-9-]/g,'');
+const BASE=`../${LES}/`;
+let W=[], i=0, revealed=true, guess=false, cur=null, dir=1;
+const $=id=>document.getElementById(id);
+const slide=$('slide'), dots=$('dots');
+const audio={}; const snd=id=>(audio[id]||(audio[id]=Object.assign(new Audio(BASE+'audio/'+id+'.mp3'),{preload:'auto'})));
+function say(id,el){ if(cur){cur.pause();cur.currentTime=0;} const a=snd(id); cur=a;
+  if(el){ el.classList.add('speaking'); a.onended=()=>el.classList.remove('speaking'); }
+  a.play().catch(()=>{}); }
+const chars=s=>[...s].map((ch,k)=>`<span class="c" style="--k:${k}">${ch}</span>`).join('');
+function render(){
+  const w=W[i];
+  slide.className='slide'; void slide.offsetWidth;
+  if(w.parts){
+    slide.innerHTML=`<div class="parts">${w.parts.map((p,k)=>`<button class="part" data-id="${p.id}" style="--k:${k}"><div class="zh" lang="zh">${p.zh}</div><div class="py">${p.py}</div><div class="ru">${p.ru}</div></button>`).join('')}</div>`;
+    revealed=true;
+  } else {
+    slide.innerHTML=`<div class="pic" id="pic"><img src="${BASE}img/${w.id}.webp" alt="${w.ru}"></div>
+      <div class="txt"><div class="zh" lang="zh" style="--n:${[...w.zh].length}">${chars(w.zh)}</div><div class="py">${w.py}</div><div class="ru">${w.ru}</div></div>`;
+    revealed=!guess; slide.classList.toggle('hide',guess);
+  }
+  slide.classList.add('enter'); if(dir<0) slide.classList.add('back');
+  [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
+  $('count').textContent=`${i+1} / ${W.length}`;
+  if(revealed && !w.parts) setTimeout(()=>say(w.id,slide),380);
+  W.slice(i+1,i+3).forEach(n=>{ if(!n.parts){ new Image().src=`${BASE}img/${n.id}.webp`; snd(n.id); } });
+}
+function reveal(){ revealed=true; slide.classList.remove('hide'); say(W[i].id,slide); }
+function go(d){ if(d>0 && !revealed){ reveal(); return; } const n=i+d; if(n<0||n>=W.length) return; dir=d; i=n; render(); }
+slide.addEventListener('click',e=>{
+  const p=e.target.closest('.part'); if(p){ slide.querySelectorAll('.part').forEach(x=>x.classList.toggle('on',x===p)); say(p.dataset.id,p); return; }
+  if(!revealed){ reveal(); return; }
+  if(e.target.closest('.pic,.zh,.py')) say(W[i].id,slide);
+});
+$('prev').onclick=()=>go(-1); $('next').onclick=()=>go(1); $('say').onclick=()=>{ if(!W[i].parts) say(W[i].id,slide); };
+function toggleRu(){ document.body.classList.toggle('no-ru'); $('tRu').classList.toggle('on',!document.body.classList.contains('no-ru')); }
+function toggleGuess(){ guess=!guess; $('tGuess').classList.toggle('on',guess); render(); }
+function fullscreen(){ if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{}); }
+$('tRu').onclick=toggleRu; $('tGuess').onclick=toggleGuess; $('fs').onclick=fullscreen;
+document.addEventListener('keydown',e=>{ if($('deck').hidden){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); begin(); } return; }
+  const k=e.key.toLowerCase();
+  if(['arrowright',' ','pagedown'].includes(k)){ e.preventDefault(); go(1); }
+  else if(['arrowleft','pageup','backspace'].includes(k)){ e.preventDefault(); go(-1); }
+  else if(k==='enter'){ if(!revealed) reveal(); else if(!W[i].parts) say(W[i].id,slide); }
+  else if(k==='t'||k==='е') toggleRu(); else if(k==='g'||k==='п') toggleGuess(); else if(k==='f'||k==='а') fullscreen();
+  else if(k==='home'){ dir=-1; i=0; render(); }
+});
+let sx=null; slide.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+slide.addEventListener('touchend',e=>{ if(sx==null) return; const dx=e.changedTouches[0].clientX-sx; sx=null; if(Math.abs(dx)>50) go(dx<0?1:-1); });
+let idleT; function wake(){ document.body.classList.remove('idle'); clearTimeout(idleT); idleT=setTimeout(()=>document.body.classList.add('idle'),3000); }
+['mousemove','touchstart','keydown'].forEach(ev=>document.addEventListener(ev,wake,{passive:true}));
+function begin(){ $('start').hidden=true; $('deck').hidden=false; fullscreen(); render(); wake(); }
+$('go').onclick=begin;
+
+ZhGate.ready.then(g=>{
+  if(!LES || !g.lesson(LES)){ $('sTitle').textContent='Урок не найден'; $('go').hidden=true; return null; }
+  if(!g.isOpen(LES)){ $('sTitle').textContent='Урок ещё не открыт'; $('sRu').textContent='Слайды видит учитель (вход с кодом).'; $('go').hidden=true; return null; }
+  return fetch(BASE+'words.json',{cache:'no-cache'}).then(r=>r.json());
+}).then(d=>{ if(!d) return;
+  W=d.words; document.title=`${d.title_zh} · слайды · Speak&Smile`;
+  $('sTitle').textContent=d.title_zh; $('sRu').textContent=d.title_ru; $('sMeta').textContent=`Урок ${d.n} · ${W.length} фраз · по одной на экран`;
+  dots.innerHTML=W.map(()=>'<i></i>').join('');
+});
+</script>
+</body></html>

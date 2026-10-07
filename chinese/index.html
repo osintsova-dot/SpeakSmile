@@ -28,6 +28,7 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(30,10,70,.34
 .card.locked{background:rgba(255,255,255,.72);color:var(--muted);box-shadow:none;cursor:default}
 .card.locked .n{background:#E6DEFB;color:var(--muted)}.card.locked .zh{color:var(--muted)}.card.locked .py{color:var(--muted)}
 .card.locked .st{background:#F3EEFF;color:var(--muted)}
+.tslides{display:block;margin:-4px 0 6px 56px;font-weight:800;font-size:14px;color:#2A2140;background:#F5C842;padding:8px 14px;border-radius:999px;width:max-content;text-decoration:none}
 .card.teacher .st{background:#FFF3C4;color:#7A5A00}
 .join{display:inline-block;margin-top:26px;padding:14px 22px;border-radius:999px;background:var(--honey);color:var(--ink);font-weight:800;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.2)}
 .foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}.foot a{color:var(--honey)}
@@ -52,6 +53,7 @@ ZhGate.ready.then(g=>{
     const st = l.isOpen ? 'Пройдено · повторяй' : (g.teacher ? 'Откроется '+g.fmt(l.openDate) : 'После занятия '+g.fmt(l.openDate));
     el.innerHTML=`<div class="n">${i+1}</div><div><div class="zh" lang="zh">${l.zh}</div><div class="py">${l.py} · ${l.ru}</div><div class="ru">${l.what}</div></div><span class="st">${st}</span>`;
     list.appendChild(el);
+    if(g.teacher){ const t=document.createElement('a'); t.className='tslides'; t.href='slides/?l='+l.id; t.innerHTML='▶ Слайды новых слов — показать классу'; list.appendChild(t); }
   });
   if(g.teacher){ const b=document.createElement('div'); b.className='tbadge'; b.textContent='Режим учителя'; document.body.appendChild(b); }
 });
