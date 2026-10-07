@@ -35,7 +35,7 @@
   lyr.addEventListener('click',e=>{ const el=e.target.closest('.line'); if(!el) return; stop(); const l=LINES[+el.dataset.i]; light(+el.dataset.i); const a=snd(l.id); cur=a; a.onended=()=>light(-1); a.play().catch(()=>{}); });
   /* сцена «На весь экран»: белый фон, слова выскакивают, караоке по слогам, герой-клип; на припеве пляшут трое */
   const V=BASE+'../how-are-you/clips/', IMG=BASE+'../whats-your-name/img/';
-  const POSE={fin_thanks:V+'thanks.mp4',fin_baibai:V+'hello.mp4',fin_bye:IMG+'wave.webp',fin_tmrw:V+'happy.mp4',fin_bye1:IMG+'wave.webp'};
+  const POSE={fin_thanks:V+'thanks.mp4',fin_baibai:V+'hello.mp4',fin_bye:IMG+'../clips/wave.mp4',fin_tmrw:V+'happy.mp4',fin_bye1:IMG+'../clips/wave.mp4'};
   const SYL={fin_thanks:['Xiè','xie,','xiè','xie!'],fin_baibai:['Bái','bái,','bái','bái!'],fin_bye:['Zài','jiàn,','zài','jiàn!'],fin_tmrw:['Míng','tiān','jiàn!'],
     fin_chorus:['Xiè','xie!','Bái','bái!','Zài','jiàn!'],fin_bye1:['Zài','jiàn!']};
   const css=document.createElement('style'); css.textContent=`
