@@ -144,7 +144,7 @@ function render(){
     slide.innerHTML=`<div class="parts">${w.parts.map((p,k)=>`<button class="part" data-id="${p.id}" style="--k:${k}"><div class="zh" lang="zh">${p.zh}</div><div class="py">${p.py}</div><div class="ru">${p.ru}</div></button>`).join('')}</div>`;
     revealed=true;
   } else {
-    slide.innerHTML=`<div class="pic" id="pic"><img src="${BASE}img/${w.id}.webp?v=2" alt="${w.ru}"></div>
+    slide.innerHTML=`<div class="pic" id="pic"><img src="${BASE}img/hd/${w.id}.webp?v=3" alt="${w.ru}"></div>
       <div class="txt"><div class="zh" lang="zh" style="--n:${[...w.zh].length}">${chars(w.zh)}</div><div class="py">${w.py}</div><div class="ru">${w.ru}</div></div>`;
     revealed=!guess; slide.classList.toggle('hide',guess);
   }
@@ -152,7 +152,7 @@ function render(){
   [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
   $('count').textContent=`${i+1} / ${W.length}`;
   if(revealed && !w.parts) setTimeout(()=>say(w.id,slide),380);
-  W.slice(i+1,i+3).forEach(n=>{ if(!n.parts){ new Image().src=`${BASE}img/${n.id}.webp?v=2`; snd(n.id); } });
+  W.slice(i+1,i+3).forEach(n=>{ if(!n.parts){ new Image().src=`${BASE}img/hd/${n.id}.webp?v=3`; snd(n.id); } });
 }
 function reveal(){ revealed=true; slide.classList.remove('hide'); say(W[i].id,slide); }
 function go(d){ if(d>0 && !revealed){ reveal(); return; } const n=i+d; if(n<0||n>=W.length) return; dir=d; i=n; render(); }
