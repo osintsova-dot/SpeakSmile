@@ -19,7 +19,7 @@
     <div class="controls"><button class="btn primary" id="finPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
       <button class="btn" id="finStage" hidden><svg viewBox="0 0 24 24"><path d="M5 5h5V3H3v7h2V5zm14 0v5h2V3h-7v2h5zM5 19v-5H3v7h7v-2H5zm14 0h-5v2h7v-7h-2v5z"/></svg>На весь экран</button>
       <button class="btn" id="finStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button></div>
-    <div class="lyrics" id="finLyrics">${LINES.map((l,i)=>`<div class="line" data-i="${i}"><img src="../whats-your-name/img/wave.webp?v=2" alt=""><div><div class="zh" lang="zh">${l.zh}</div><div class="py">${l.py}</div><div class="ru">${l.ru}</div></div></div>`).join('')}</div>
+    <div class="lyrics" id="finLyrics">${LINES.map((l,i)=>`<div class="line" data-i="${i}"><img src="../whats-your-name/img/wave.webp?v=3" alt=""><div><div class="zh" lang="zh">${l.zh}</div><div class="py">${l.py}</div><div class="ru">${l.ru}</div></div></div>`).join('')}</div>
     <p class="sub" style="margin:0">Нажми «Петь» — строчки подсвечиваются под музыку.</p>
   </div></section>`;
   const lyr=document.getElementById('finLyrics'), playB=document.getElementById('finPlay'), stopB=document.getElementById('finStop');

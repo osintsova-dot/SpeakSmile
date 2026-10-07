@@ -399,7 +399,7 @@ function play(id,onend){ if(current){current.pause();current.currentTime=0;} con
 /* карточки */
 function cardHTML(w,i,withText=true){
   return `<button class="card" data-id="${w.id}" style="--i:${i}" aria-label="${w.ru}">${SPK}
-    <img src="img/${w.id}.webp?v=2" alt="" loading="lazy">
+    <img src="img/${w.id}.webp?v=3" alt="" loading="lazy">
     ${withText?`<span class="zh" lang="zh">${w.zh}</span><span class="py">${w.py}</span><span class="ru">${w.ru}</span>`:`<span class="cap"><span class="zh" lang="zh">${w.zh}</span><span class="py big">${w.py}</span><span class="ru">${w.ru}</span></span>`}
   </button>`;
 }
@@ -435,7 +435,7 @@ const lines=SONG.map(k=>EXTRA[k]||byId[k]); let lineRow=[];
   window.ROWS=rows; lineRow=new Array(lines.length); rows.forEach((r,k)=>r.idx.forEach(i=>lineRow[i]=k));
   lyricsEl.innerHTML=rows.map((r,k)=>{const w=r.w; const pic=(w.id==='song_hello'?'q_howareyou':w.id==='song_thanks'?'happy':w.id);
     const dots=r.idx.length>1?`<span class="rep" aria-label="${r.idx.length} раза">${r.idx.map(()=>'<i></i>').join('')}</span>`:'';
-    return `<div class="line" data-k="${k}"><img src="img/${pic}.webp?v=2" alt=""><div><div class="zh" lang="zh">${w.zh}${dots}</div><div class="py">${w.py}</div><div class="ru">${w.ru}</div></div></div>`;}).join('');
+    return `<div class="line" data-k="${k}"><img src="img/${pic}.webp?v=3" alt=""><div><div class="zh" lang="zh">${w.zh}${dots}</div><div class="py">${w.py}</div><div class="ru">${w.ru}</div></div></div>`;}).join('');
 })();
 const playBtn=document.getElementById('playSong'), stopBtn=document.getElementById('stopSong'), tempo=document.getElementById('tempo');
 let singing=false, songAudio=null, songTimes=null;
