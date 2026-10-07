@@ -260,10 +260,24 @@ body{
 
 /* пиньинь — Nunito: у Baloo 2 знак тона над ā съезжает вбок */
 .py,.stage .sub .s,.fstage .ksy{font-family:"Nunito","Baloo 2",system-ui,sans-serif}
+
+.homeback{position:fixed;top:calc(12px + env(safe-area-inset-top));left:12px;z-index:40;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 10px;border-radius:999px;
+  background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);color:#fff;font:800 14px/1 var(--f);text-decoration:none;
+  box-shadow:0 6px 18px rgba(42,33,64,.18);transition:transform .16s cubic-bezier(.23,1,.32,1),background .2s}
+.homeback:hover{background:rgba(255,255,255,.28)}.homeback:active{transform:scale(.96)}
+.homeback svg{width:18px;height:18px;fill:currentColor}
+@media(max-width:420px){.homeback span{display:none}.homeback{width:40px;padding:0;justify-content:center}}
+
+.slidesbtn{position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;z-index:40;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 12px;border-radius:999px;
+  background:var(--honey);color:#2A2140;font:800 14px/1 var(--f);text-decoration:none;box-shadow:0 6px 18px rgba(42,33,64,.22);transition:transform .16s cubic-bezier(.23,1,.32,1)}
+.slidesbtn[hidden]{display:none}.slidesbtn:active{transform:scale(.96)}.slidesbtn svg{width:18px;height:18px;fill:currentColor}
+@media(max-width:720px){.hero{padding-top:52px!important}}
 </style></head>
 <body>
 <div class="bubbles"><i></i><i></i><i></i><i></i><i></i></div>
 <div class="wrap">
+  <a class="homeback" href="../" aria-label="Все уроки"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg><span>Все уроки</span></a>
+  <a class="slidesbtn" id="slidesBtn" href="../slides/?l=whats-your-name" hidden><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM2 3v2h20V3zM11 18v2H8v2h8v-2h-3v-2z"/></svg><span>Слайды для класса</span></a>
   <header class="hero">
     <div class="brand">Speak<b>&</b>Smile · китайский для детей</div>
     <div class="zh">你叫什么名字？</div>
@@ -357,7 +371,7 @@ body{
 <script src="../gate.js"></script>
 <script src="hanzi-data.js"></script>
 <script>
-ZhGate.lock('how-are-you');
+ZhGate.lock('whats-your-name');
 const WORDS=[
  {id:"q_name",zh:"你叫什么名字？",py:"Nǐ jiào shénme míngzi?",ru:"Как тебя зовут?"},
  {id:"my_name",zh:"我叫……",py:"Wǒ jiào …",ru:"Меня зовут …"},
@@ -571,4 +585,5 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
 });
 const h=location.hash.slice(1); if(['game','song','hanzi'].includes(h)){document.querySelector(`.tab[data-tab="${h}"]`).click();}
 </script>
+<script>ZhGate.ready.then(g=>{ if(g.teacher) document.getElementById('slidesBtn').hidden=false; });</script>
 </body></html>
