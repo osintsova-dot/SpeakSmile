@@ -1,8 +1,8 @@
 /* Песня-прощание «谢谢，拜拜，再见» — общий блок для всех уроков (как «Thank you, take care, goodbye» в Genki).
-   Подключение на странице урока: <div id="finale"></div> + <script src="../_finale/finale.js"></script> */
+   Подключение на странице урока: <div id="finale"></div> + <script src="../finale/finale.js"></script> */
 (function(){
   const box=document.getElementById('finale'); if(!box) return;
-  const BASE=(document.currentScript&&document.currentScript.src||'').replace(/finale\.js.*$/,'')||'../_finale/';
+  const BASE=(document.currentScript&&document.currentScript.src||'').replace(/finale\.js.*$/,'')||'../finale/';
   const LINES=[
     {id:'fin_thanks',zh:'谢谢，谢谢！',py:'Xièxie, xièxie!',ru:'Спасибо, спасибо!'},
     {id:'fin_baibai',zh:'拜拜，拜拜！',py:'Bái bái, bái bái!',ru:'Пока-пока!'},
