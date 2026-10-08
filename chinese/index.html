@@ -32,6 +32,11 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(30,10,70,.34
 .join{display:inline-block;margin-top:26px;padding:14px 22px;border-radius:999px;background:var(--honey);color:var(--ink);font-weight:800;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.2)}
 .foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}.foot a{color:var(--honey)}
 @media(max-width:480px){.card{grid-template-columns:auto 1fr}.card .st{grid-column:2;justify-self:start}}
+.codecta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px;margin:-8px 0 18px;padding:12px 16px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);font-weight:700;font-size:15px}
+.codecta[hidden],.join[hidden]{display:none}
+.codecta button{border:0;border-radius:999px;padding:9px 16px;background:#fff;color:var(--p);font:800 15px/1 var(--f);cursor:pointer;transition:transform .15s var(--ease)}
+.codecta button:active{transform:scale(.96)}
+a.card.code{cursor:pointer}a.card.code:hover{transform:translateY(-2px);background:rgba(255,255,255,.85)}
 .tbadge{position:fixed;left:12px;bottom:12px;padding:6px 12px;border-radius:999px;background:var(--honey);color:var(--ink);font-weight:700;font-size:12px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
 
 /* пиньинь — Nunito: у Baloo 2 знак тона над ā съезжает вбок */
@@ -41,21 +46,28 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(30,10,70,.34
   <div class="brand">Speak<b>&</b>Smile · китайский для детей</div>
   <h1>中文</h1>
   <p class="lead">Здесь то, что мы уже прошли на занятии. Повторяй дома: слушай, играй, пой.</p>
+  <div class="codecta" id="codecta" hidden><span>Первый урок открыт всем. Остальные — для учеников группы.</span><button id="codebtn">Ввести код семьи</button></div>
   <div class="list" id="list"><p style="opacity:.8">Загружаю уроки…</p></div>
-  <a class="join" href="/chinese/start/#zapis">Записаться в группу · старт 6 октября</a>
+  <a class="join" id="join" href="/chinese/start/#zapis">Записаться в группу · старт 6 октября</a>
   <p class="foot"><a href="/">speakandsmile.ru</a> · Норильск</p>
 </div>
 <script src="gate.js"></script>
 <script>
-ZhGate.ready.then(g=>{
+function draw(g){
   const list=document.getElementById('list'); list.innerHTML='';
+  const cta=document.getElementById('codecta'); cta.hidden=g.member||g.teacher; document.getElementById('join').hidden=g.member&&!g.teacher;
   g.cfg.lessons.forEach((l,i)=>{
-    const open=g.isOpen(l.id); const el=document.createElement(open?'a':'div'); el.className='card'+(open?'':' locked')+((g.teacher&&!l.isOpen)?' teacher':''); el.style.setProperty('--i',i);
+    const open=g.isOpen(l.id), needCode=g.needCode(l.id);
+    const el=document.createElement(open||needCode?'a':'div'); el.className='card'+(open?'':' locked')+(needCode?' code':'')+((g.teacher&&!l.isOpen)?' teacher':''); el.style.setProperty('--i',i);
     if(open) el.href=l.id+'/';
-    const st = l.isOpen ? 'Пройдено · повторяй' : (g.teacher ? 'Откроется '+g.fmt(l.openDate) : 'После занятия '+g.fmt(l.openDate));
+    if(needCode){ el.href='#'; el.onclick=e=>{ e.preventDefault(); g.askCode().then(draw); }; }
+    const st = needCode ? '🔒 Ученикам группы'
+      : (l.free && !g.member && !g.teacher) ? 'Пробный · открыт всем'
+      : l.isOpen ? 'Пройдено · повторяй' : (g.teacher ? 'Откроется '+g.fmt(l.openDate) : 'После занятия '+g.fmt(l.openDate));
     el.innerHTML=`<div class="n">${i+1}</div><div><div class="zh" lang="zh">${l.zh}</div><div class="py">${l.py} · ${l.ru}</div><div class="ru">${l.what}</div></div><span class="st">${st}</span>`;
     list.appendChild(el);
   });
-  if(g.teacher){ const b=document.createElement('div'); b.className='tbadge'; b.textContent='Режим учителя'; document.body.appendChild(b); }
-});
+  if(g.teacher && !document.querySelector('.tbadge')){ const b=document.createElement('div'); b.className='tbadge'; b.textContent='Режим учителя'; document.body.appendChild(b); }
+}
+ZhGate.ready.then(g=>{ draw(g); document.getElementById('codebtn').onclick=()=>g.askCode().then(draw); });
 </script></body></html>

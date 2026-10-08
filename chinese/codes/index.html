@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Коды семей · китайский</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2A2140;--mut:#7A7196;--line:#ECE7F7;--bg:#F7F5FC;--card:#fff;--vio:#6C3FC5;--vio2:#6C3FC5;--yel:#F5C842;--ok:#1E9E62;--okb:#E3F6EC;--bad:#C2364B;--badb:#FCE8EB;--warn:#9A6A00;--warnb:#FFF4D6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#EEEAF8;--mut:#A79EC4;--line:#2E2745;--bg:#15111F;--card:#1E1830;--okb:#123526;--badb:#3A1820;--warnb:#3A2E10;--ok:#4CD394;--bad:#FF7A8E;--warn:#F5C842;--vio2:#B79BFF}}
+:root[data-theme="dark"]{--vio2:#B79BFF;--ink:#EEEAF8;--mut:#A79EC4;--line:#2E2745;--bg:#15111F;--card:#1E1830;--okb:#123526;--badb:#3A1820;--warnb:#3A2E10;--ok:#4CD394;--bad:#FF7A8E;--warn:#F5C842}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 Onest,system-ui,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 60px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:18px}
+h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--mut);font-size:14px;margin-top:4px}
+button,.btn{font:600 14px/1 Onest,system-ui,sans-serif;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:9px 12px;cursor:pointer;transition:background .15s,transform .1s}
+button:hover{background:var(--bg)} button:active{transform:scale(.97)} button[disabled]{opacity:.5;cursor:default}
+.pri{background:var(--vio);border-color:var(--vio);color:#fff} .pri:hover{background:#5A33A8}
+.grid{display:grid;gap:10px}
+.fam{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center}
+.fam.off{opacity:.72}
+.kids{font-weight:700;font-size:16px}
+.par{color:var(--mut);font-size:13px;margin-top:2px}
+.code{font:800 20px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.02em;color:var(--vio2);text-align:right}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.pill{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px}
+.p-ok{background:var(--okb);color:var(--ok)} .p-bad{background:var(--badb);color:var(--bad)} .p-warn{background:var(--warnb);color:var(--warn)}
+.dev{font-size:12px;color:var(--mut)}
+.acts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;border-top:1px dashed var(--line);padding-top:10px}
+.login{max-width:360px;margin:12vh auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.login input{width:100%;font:600 18px Onest,sans-serif;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);margin:12px 0}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.note{color:var(--mut);font-size:13px;margin-top:18px;line-height:1.5}
+.err{color:var(--bad);margin-top:8px}
+@media (max-width:560px){.fam{grid-template-columns:1fr}.code{text-align:left}}
+</style></head><body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+const $=id=>document.getElementById(id), app=$('app');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D=null, MAX=3;
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2200);}
+// оба адреса разом, первый ответ побеждает (российский бывает медленным на холодном старте)
+function api(path,params={}){
+  const t=ls.get('zhAdmin')||''; const qs=new URLSearchParams({...params,t}).toString();
+  const one=s=>fetch(`${s}/${path}?${qs}`,{cache:'no-store'}).then(async r=>{ const j=await r.json(); if(r.status===403) return {auth:1,error:j.error}; return j; });
+  return new Promise((res,rej)=>{ let left=SRV.length, err;
+    SRV.forEach(s=>one(s).then(j=>{ if(j.auth) rej(Object.assign(new Error(j.error||'код не подошёл'),{auth:1})); else res(j); },e=>{ err=e; if(--left===0) rej(err||new Error('нет связи')); })); });
+}
+function login(msg){
+  app.innerHTML=`<form class="login" id="lf"><h1>Коды семей</h1><div class="sub">Китайский · вход по коду калькулятора</div>
+  <input id="lc" type="password" placeholder="Код" autocomplete="current-password"><button class="pri" style="width:100%">Войти</button><div class="err">${esc(msg||'')}</div></form>`;
+  $('lf').onsubmit=e=>{e.preventDefault(); ls.set('zhAdmin',$('lc').value.trim()); load();};
+  $('lc').focus();
+}
+function status(f){
+  if(f.manual==='block') return ['p-bad','Закрыт вручную'];
+  if(f.manual==='allow') return ['p-warn','Открыт вручную'+(f.active?'':' · не в группе')];
+  return f.active?['p-ok','В группе · доступ есть']:['p-bad','Выбыл · доступ закрыт'];
+}
+const allowed=f=>f.manual==='allow'||(f.manual!=='block'&&f.active);
+function message(code,f){
+  const kids=(f.names||[]).map(n=>n.split(' ').slice(1).join(' ')||n).join(' и ');
+  const hi=f.parent?`Здравствуйте, ${f.parent}!`:'Здравствуйте!';
+  return `${hi} Это Speak&Smile 🐼\n\nДля ${kids||'вашего ребёнка'} открыты уроки китайского — повторять дома слова, песни и мультики:\nhttps://speakandsmile.ru/chinese/?k=${code}\n\nКод вашей семьи: ${code}\nСсылка вводит код сама. Работает на 3 устройствах (телефон, планшет, компьютер). Новый урок открывается после занятия.`;
+}
+function render(){
+  const fams=Object.entries(D.fam||{}).sort((a,b)=>(allowed(b[1])-allowed(a[1]))||String(a[1].names[0]||'').localeCompare(b[1].names[0]||'','ru'));
+  const on=fams.filter(([,f])=>allowed(f)).length;
+  const at=D.at?new Date(D.at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'}):'ещё не было';
+  app.innerHTML=`<header><div><h1>Коды семей · китайский</h1>
+    <div class="sub">В группе по CRM: ${D.inGroup??'—'} · с доступом: ${on} семей · сверка с CRM: ${at}</div></div>
+    <button class="pri" id="sync">Обновить из CRM</button></header>
+  <div class="grid">${fams.map(([c,f])=>{const [cl,txt]=status(f); const n=(f.devices||[]).length; return `
+    <div class="fam${allowed(f)?'':' off'}" data-c="${esc(c)}">
+      <div><div class="kids">${esc((f.names||[]).join(', ')||'—')}</div>
+        <div class="par">${esc(f.parent||'')}${f.phone?' · '+esc(f.phone):''}</div>
+        <div class="meta"><span class="pill ${cl}">${txt}</span><span class="dev">устройств: ${n} из ${MAX}</span></div></div>
+      <div class="code">${esc(c)}</div>
+      <div class="acts">
+        <button data-a="copy">Скопировать сообщение родителю</button>
+        ${f.manual==='block'?'':`<button data-a="block">Закрыть доступ</button>`}
+        ${!f.active&&f.manual!=='allow'?`<button data-a="allow">Открыть вопреки CRM</button>`:''}
+        ${f.manual?`<button data-a="auto">Вернуть «как в CRM»</button>`:''}
+        ${n?`<button data-a="reset">Сбросить устройства</button>`:''}
+        <button data-a="renew">Новый код</button>
+      </div></div>`}).join('')||'<div class="sub">Пока никого. Нажмите «Обновить из CRM».</div>'}</div>
+  <div class="note">Доступ дают сами: ребёнок в группе «КИТАЙСКИЙ» в CRM — код работает; открепили — код гаснет при следующей сверке (4 раза в день или кнопкой сверху). Новому ученику код появляется сам после сверки — останется скопировать сообщение.<br>
+  «Новый код» — если код ушёл в чужие руки: старый сразу перестаёт работать, семье надо отправить новый. «Сбросить устройства» — если сменили телефон.</div>`;
+  $('sync').onclick=sync;
+  app.querySelectorAll('.fam button').forEach(b=>b.onclick=()=>act(b.closest('.fam').dataset.c,b.dataset.a,b));
+}
+async function load(){
+  if(!ls.get('zhAdmin')) return login();
+  try{ const j=await api('zh-list'); if(!j.ok) return login(j.error); D=j; MAX=j.maxDev||3; render(); }
+  catch(e){ e.auth?login('Код не подошёл'):app.innerHTML=`<div class="login">Нет связи с сервером. <button onclick="load()">Ещё раз</button></div>`; }
+}
+async function sync(){
+  const b=$('sync'); b.disabled=true; b.textContent='Сверяю с CRM…';
+  try{ const j=await api('zh-sync'); if(!j.ok) throw new Error(j.error); D=j.data; render(); toast(j.added&&j.added.length?`Новых семей: ${j.added.length}`:'Состав сверен'); }
+  catch(e){ toast('Не вышло: '+e.message); b.disabled=false; b.textContent='Обновить из CRM'; }
+}
+async function act(code,a,btn){
+  const f=D.fam[code];
+  if(a==='copy'){ const t=message(code,f); try{ await navigator.clipboard.writeText(t); toast('Скопировано — вставьте в чат родителю'); }catch(e){ prompt('Скопируйте:',t); } return; }
+  if(a==='renew'&&!confirm(`Выдать новый код вместо ${code}? Старый сразу перестанет работать.`)) return;
+  if(a==='block'&&!confirm(`Закрыть доступ коду ${code}?`)) return;
+  btn.disabled=true;
+  try{ const j=await api('zh-act',{act:a,code}); if(!j.ok) throw new Error(j.error);
+    // меняем у себя сразу: хранилище сервера показывает правку другим запросам с задержкой до минуты
+    if(a==='renew'){ D.fam[j.code]={...f,devices:[]}; delete D.fam[code]; }
+    else if(a==='reset') f.devices=[];
+    else f.manual=j.manual;
+    render(); toast(a==='renew'?`Новый код: ${j.code} — отправьте семье`:a==='block'?'Доступ закрыт':a==='reset'?'Устройства сброшены':'Готово'); }
+  catch(e){ toast('Не вышло: '+e.message); btn.disabled=false; }
+}
+load();
+</script></body></html>
