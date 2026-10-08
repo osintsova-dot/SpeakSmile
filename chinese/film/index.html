@@ -59,6 +59,13 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
 .series .py2{font:800 calc(2.1*var(--u))/1.2 var(--py);color:rgba(255,255,255,.9);margin-top:calc(.6*var(--u));letter-spacing:.06em}
 .series .leaf{width:calc(5*var(--u));fill:var(--honey);margin-bottom:calc(1.2*var(--u));filter:drop-shadow(0 calc(.3*var(--u)) calc(1*var(--u)) rgba(0,0,0,.35))}
 
+/* надпись-переход между сценами («После уроков») */
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;opacity:0;transition:opacity .7s ease}
+.scene.on{opacity:1}
+.scene .t{font:800 calc(5.4*var(--u))/1.05 var(--f);color:#fff;text-shadow:0 calc(.5*var(--u)) calc(3*var(--u)) rgba(0,0,0,.5)}
+.scene .z{font:900 calc(3*var(--u))/1.2 var(--zh);color:var(--honey);letter-spacing:.14em;margin-top:calc(1*var(--u));text-shadow:0 calc(.3*var(--u)) calc(2*var(--u)) rgba(0,0,0,.5)}
+.scene .p{font:800 calc(1.9*var(--u))/1.2 var(--py);color:rgba(255,255,255,.9);margin-top:calc(.4*var(--u))}
+
 /* панель управления под видео */
 .bar{display:flex;align-items:center;gap:10px;margin-top:12px}
 .ibtn{flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;transition:transform .12s,background .2s}
@@ -90,6 +97,7 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
   <div class="frame" id="frame">
     <video id="v" playsinline preload="metadata"></video>
     <div class="series" id="series"></div>
+    <div class="scene" id="scene"></div>
     <div class="title" id="title"></div>
     <div class="subs" id="subs"></div>
     <button class="xfs" aria-label="Свернуть" onclick="this.parentNode.classList.remove('pseudo')">✕</button>
@@ -141,16 +149,17 @@ function render(t){
   $('series').classList.toggle('on', !!cs && cs.kind==='series');
   $('title').style.opacity = cs && cs.kind==='ep' ? 1 : (!T.cards && t < (T.title_until||3) ? 1 : 0);
   if(i!==cur){
-    cur=i; subs.innerHTML=''; frame.querySelector('.badge')?.remove();
+    cur=i; subs.innerHTML=''; frame.querySelector('.badge')?.remove(); $('scene').classList.remove('on');
     if(i<0) return;
     const c=cues[i], h=T.heroes[c.who];
+    if(c.kind==='scene'){ $('scene').innerHTML=`<div class="t">${c.ru}</div><div class="z">${c.zh||''}</div><div class="p">${c.py||''}</div>`; $('scene').classList.add('on'); return; }
     // в роли подсказка (иероглифы + пиньинь) видна всегда — иначе ребёнку не с чего сказать
     const role=c.kind==='role', sz=show.zh||role, sp=show.py||role, sr=show.ru;
     if(sz||sp||sr) subs.innerHTML=`<div class="who" style="background:${h.color}"><b>${h.zh}</b>${h.ru}</div>`
       +(sz?`<div class="zh">${chars(c.zh)}</div>`:'')+(sp?`<div class="py">${c.py}</div>`:'')+(sr?`<div class="ru">${c.ru}</div>`:'');
     if(c.kind==='rep'||role){ const b=document.createElement('div'); b.className='badge'; b.innerHTML=(role?'Твоя реплика!':'Повтори!')+'<i class="bb"></i>'; if(role) b.style.background=h.color; frame.appendChild(b); }
   }
-  if(cur>=0){ const c=cues[cur];
+  if(cur>=0 && cues[cur].kind!=='scene'){ const c=cues[cur];
     if(c.s0!=null){ const k=Math.max(0,Math.min(1,(t-c.s0)/(c.s1-c.s0))), ii=subs.querySelectorAll('.zh i'); ii.forEach((e,j)=>e.classList.toggle('on', c.kind!=='role' && t>=c.s0 && j < Math.ceil(k*ii.length))); }
     const bar=frame.querySelector('.badge .bb'); if(bar) bar.style.width=(100*(1-(t-c.t0)/(c.t1-c.t0)))+'%';
   }
