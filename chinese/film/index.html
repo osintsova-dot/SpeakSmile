@@ -50,6 +50,15 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
 .title .z{font:900 calc(7*var(--u))/1.15 var(--zh);-webkit-text-stroke:calc(.6*var(--u)) rgba(18,10,36,.92);paint-order:stroke fill;margin:calc(.8*var(--u)) 0}
 .title .r{font:700 calc(3*var(--u))/1 var(--ru);-webkit-text-stroke:calc(.4*var(--u)) rgba(18,10,36,.9);paint-order:stroke fill}
 
+/* заставка сериала: название проявляется над аллеей гинкго */
+.series{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;opacity:0;transition:opacity .9s ease;background:radial-gradient(60% 50% at 50% 55%,rgba(20,10,30,.35),transparent 75%)}
+.series.on{opacity:1}
+.series .pre{font:700 calc(1.9*var(--u))/1 var(--ru);letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:calc(1.6*var(--u))}
+.series .nm{font:800 calc(7.2*var(--u))/1.05 var(--f);color:#fff;letter-spacing:.01em;text-shadow:0 calc(.5*var(--u)) calc(3*var(--u)) rgba(0,0,0,.45)}
+.series .zh2{font:900 calc(3.6*var(--u))/1.2 var(--zh);color:var(--honey);margin-top:calc(1.4*var(--u));letter-spacing:.12em;text-shadow:0 calc(.3*var(--u)) calc(2*var(--u)) rgba(0,0,0,.5)}
+.series .py2{font:800 calc(2.1*var(--u))/1.2 var(--py);color:rgba(255,255,255,.9);margin-top:calc(.6*var(--u));letter-spacing:.06em}
+.series .leaf{width:calc(5*var(--u));fill:var(--honey);margin-bottom:calc(1.2*var(--u));filter:drop-shadow(0 calc(.3*var(--u)) calc(1*var(--u)) rgba(0,0,0,.35))}
+
 /* панель управления под видео */
 .bar{display:flex;align-items:center;gap:10px;margin-top:12px}
 .ibtn{flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;transition:transform .12s,background .2s}
@@ -80,6 +89,7 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
 
   <div class="frame" id="frame">
     <video id="v" playsinline preload="metadata"></video>
+    <div class="series" id="series"></div>
     <div class="title" id="title"></div>
     <div class="subs" id="subs"></div>
     <button class="xfs" aria-label="Свернуть" onclick="this.parentNode.classList.remove('pseudo')">✕</button>
@@ -127,7 +137,9 @@ function setMode(m,play){
 const chars=s=>[...s].map(c=>/[一-鿿]/.test(c)?`<i>${c}</i>`:c).join('');
 function render(t){
   const i=cues.findIndex(c=>t>=c.t0&&t<c.t1);
-  $('title').style.opacity = t < (T.title_until||3) ? 1 : 0;
+  const cs=(T.cards||[]).find(c=>t>=c.t0&&t<c.t1-.35)||null;   // гаснет чуть раньше конца плана
+  $('series').classList.toggle('on', !!cs && cs.kind==='series');
+  $('title').style.opacity = cs && cs.kind==='ep' ? 1 : (!T.cards && t < (T.title_until||3) ? 1 : 0);
   if(i!==cur){
     cur=i; subs.innerHTML=''; frame.querySelector('.badge')?.remove();
     if(i<0) return;
@@ -167,6 +179,8 @@ ZhGate.ready.then(g=> (g.teacher||g.member) ? g : g.askCode())
   T=t; heroModes();
   $('ep').textContent=t.title.ep; $('h').textContent=t.title.zh; $('hs').textContent=t.title.ru; document.title=`${t.title.ep} · ${t.title.zh} · Speak&Smile`;
   $('title').innerHTML=`<div class="e">${t.title.ep}</div><div class="z">${t.title.zh}</div><div class="r">${t.title.ru}</div>`;
+  if(t.series) $('series').innerHTML=`<svg class="leaf" viewBox="0 0 64 64"><path d="M32 60c-1 0-1.6-.8-1.6-1.8V40.5C21 38 6 31 4.3 15.6 4 13 6.6 11.7 8.6 12.9c4.6 2.8 10.6 2.3 16.4-1.4 3.2-2 4.6-5 5.4-7.8.5-1.9 2.7-1.9 3.2 0 .8 2.8 2.2 5.8 5.4 7.8 5.8 3.7 11.8 4.2 16.4 1.4 2-1.2 4.6.1 4.3 2.7C58 31 43 38 33.6 40.5v17.7c0 1-.6 1.8-1.6 1.8z"/></svg>`
+    +`<div class="pre">${t.series.pre||'Speak&amp;Smile · сериал'}</div><div class="nm">${t.series.ru}</div><div class="zh2">${t.series.zh}</div><div class="py2">${t.series.py||''}</div>`;
   v.poster=BASE+'poster.jpg'; drawChips(); setMode('watch',false); loop();
 });
 </script></body></html>
