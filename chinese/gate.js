@@ -52,7 +52,7 @@
 <form class="c"><div class="h" lang="zh">你好！</div><h1>Уроки китайского</h1>
 <p>Введите код семьи из школы — один раз, дальше телефон его запомнит.</p>
 <input name="k" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="panda-1234" value="${(ls.get('zhCode')||'').replace(/"/g,'')}">
-<button>Войти</button><div class="e">${reason&&MSG[reason]||''}</div><div class="s">Ещё не занимаетесь? <a href="${base}start/#zapis">Записаться в группу</a><br><a href="${base}" data-x>${onList?'Закрыть':'← Ко всем урокам'}</a></div></form>`;
+<button>Войти</button><div class="e">${reason&&MSG[reason]||''}</div><div class="s">Ещё не занимаетесь? <a href="${base}start/#zapis">Хочу в группу</a><br><a href="${base}" data-x>${onList?'Закрыть':'← Ко всем урокам'}</a></div></form>`;
       document.documentElement.style.overflow='hidden';
       (document.body||document.documentElement).appendChild(w);
       const f=w.querySelector('form'), inp=f.k, btn=f.querySelector('button'), err=f.querySelector('.e');
