@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Сериал · китайский · Speak&Smile</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@800;900&family=Onest:wght@500;600;700;800&family=Noto+Sans+SC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6C3FC5;--honey:#F5C842;--ink:#2A2140;--bg:#17112A;--card:#211937;--line:rgba(255,255,255,.12);--mut:rgba(255,255,255,.66);
+  --f:"Baloo 2",ui-rounded,system-ui,sans-serif;--zh:"Noto Sans SC","PingFang SC",sans-serif;--py:"Nunito","Baloo 2",system-ui,sans-serif;--ru:"Onest",system-ui,sans-serif;--ease:cubic-bezier(.2,.9,.25,1)}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;min-height:100vh;color:#fff;font-family:var(--f);background:radial-gradient(90% 60% at 50% -10%,rgba(108,63,197,.55),transparent 70%),var(--bg);padding:16px 16px 48px}
+.wrap{max-width:980px;margin:0 auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.back{color:#fff;text-decoration:none;font-weight:700;font-size:15px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid var(--line)}
+.ep{font-weight:700;font-size:14px;color:var(--honey)}
+h1{margin:4px 0 2px;font-family:var(--zh);font-weight:900;font-size:clamp(26px,5vw,40px);line-height:1.1}
+.sub{color:var(--mut);font-weight:600;margin:0 0 16px}
+
+/* ── плеер ── */
+.frame{position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 30px 60px -24px rgba(0,0,0,.7);container-type:inline-size;user-select:none;-webkit-user-select:none}
+.frame:fullscreen{border-radius:0;aspect-ratio:auto;width:100vw;height:100vh;display:grid;place-items:center}
+.frame:fullscreen video{width:100%;height:100%}
+video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.big{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(transparent 40%,rgba(0,0,0,.35));border:0;cursor:pointer;transition:opacity .25s}
+.big span{width:clamp(64px,11cqw,104px);aspect-ratio:1;border-radius:50%;background:var(--honey);display:grid;place-items:center;box-shadow:0 12px 30px rgba(0,0,0,.4);transition:transform .2s var(--ease)}
+.big:hover span{transform:scale(1.06)} .big svg{width:42%;fill:var(--ink);margin-left:8%}
+.frame.playing .big{opacity:0;pointer-events:none}
+
+/* субтитры «как в кино»: без плашки, белый текст с тёмной обводкой */
+.subs{position:absolute;left:4cqw;right:4cqw;bottom:5.5cqw;text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:.6cqw}
+.subs>*{paint-order:stroke fill;-webkit-text-stroke:.55cqw rgba(18,10,36,.92);text-shadow:0 .4cqw 1.6cqw rgba(0,0,0,.55)}
+.who{font:800 2.1cqw/1 var(--ru);padding:.55cqw 1.3cqw;border-radius:99px;color:var(--ink);-webkit-text-stroke:0!important;text-shadow:none!important;margin-bottom:.3cqw}
+.who b{font-family:var(--zh);font-weight:900;margin-right:.5cqw}
+.zh{font:900 6.2cqw/1.15 var(--zh);letter-spacing:.02em}
+.zh i{font-style:normal;transition:color .12s}
+.zh i.on{color:var(--honey)}
+.py{font:900 3.5cqw/1.15 var(--py);color:var(--honey)}
+.ru{font:700 3cqw/1.2 var(--ru);color:#fff}
+.badge{position:absolute;top:4cqw;left:50%;transform:translateX(-50%);font:800 3.4cqw/1 var(--ru);color:var(--ink);background:var(--honey);padding:1.2cqw 3cqw;border-radius:99px;box-shadow:0 1cqw 3cqw rgba(0,0,0,.35);overflow:hidden;animation:pop .35s var(--ease)}
+.badge .bb{position:absolute;left:0;bottom:0;height:.5cqw;background:rgba(42,33,64,.45)}
+@keyframes pop{from{transform:translateX(-50%) scale(.8);opacity:0}}
+.title{position:absolute;left:50%;bottom:7cqw;transform:translateX(-50%);text-align:center;pointer-events:none;transition:opacity .5s}
+.title .e{font:800 2.4cqw/1 var(--ru);color:var(--honey);-webkit-text-stroke:.35cqw rgba(18,10,36,.9);paint-order:stroke fill}
+.title .z{font:900 7cqw/1.15 var(--zh);-webkit-text-stroke:.6cqw rgba(18,10,36,.92);paint-order:stroke fill;margin:.8cqw 0}
+.title .r{font:700 3cqw/1 var(--ru);-webkit-text-stroke:.4cqw rgba(18,10,36,.9);paint-order:stroke fill}
+
+/* панель управления под видео */
+.bar{display:flex;align-items:center;gap:10px;margin-top:12px}
+.ibtn{flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;transition:transform .12s,background .2s}
+.ibtn:active{transform:scale(.94)} .ibtn:hover{background:#2c2347}
+.ibtn svg{width:20px;fill:#fff}
+.prog{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.14);cursor:pointer;position:relative}
+.prog i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--honey);width:0}
+
+.panel{margin-top:16px;display:grid;gap:14px}
+.lbl{font-weight:700;font-size:13px;color:var(--mut);margin:0 0 8px;letter-spacing:.02em}
+.modes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mode{border:1px solid var(--line);background:var(--card);color:#fff;border-radius:16px;padding:12px 10px;text-align:left;cursor:pointer;font-family:var(--f);transition:border-color .2s,background .2s,transform .12s}
+.mode:active{transform:scale(.98)}
+.mode b{display:block;font-size:16px;font-weight:800;line-height:1.1}
+.mode span{display:block;font-size:12.5px;color:var(--mut);font-weight:600;margin-top:4px;line-height:1.25}
+.mode.on{border-color:var(--honey);background:rgba(245,200,66,.12)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:#fff;border-radius:999px;padding:10px 16px;font:800 15px/1 var(--f);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .2s,border-color .2s}
+.chip .d{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.5);transition:background .2s,border-color .2s}
+.chip.on{background:rgba(245,200,66,.14);border-color:var(--honey)} .chip.on .d{background:var(--honey);border-color:var(--honey)}
+.chip .z{font-family:var(--zh);font-weight:900}
+.hint{color:var(--mut);font-size:13.5px;font-weight:600;margin:6px 0 0}
+@media(max-width:640px){.modes{grid-template-columns:1fr 1fr}.mode b{font-size:15px}}
+</style></head>
+<body><div class="wrap">
+  <div class="top"><a class="back" href="../">← Все уроки</a><span class="ep" id="ep">Сериал</span></div>
+  <h1 id="h">…</h1><p class="sub" id="hs"></p>
+
+  <div class="frame" id="frame">
+    <video id="v" playsinline preload="metadata"></video>
+    <div class="title" id="title"></div>
+    <div class="subs" id="subs"></div>
+    <button class="big" id="big" aria-label="Смотреть"><span><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span></button>
+  </div>
+  <div class="bar">
+    <button class="ibtn" id="pp" aria-label="Пауза"><svg viewBox="0 0 24 24" id="ppi"><path d="M6 4l15 8-15 8z"/></svg></button>
+    <button class="ibtn" id="rs" aria-label="Сначала"><svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg></button>
+    <div class="prog" id="prog"><i id="pg"></i></div>
+    <button class="ibtn" id="fs" aria-label="На весь экран"><svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
+  </div>
+
+  <div class="panel">
+    <div><p class="lbl">РЕЖИМ</p><div class="modes" id="modes"></div><p class="hint" id="mh"></p></div>
+    <div><p class="lbl">ТИТРЫ</p><div class="chips" id="chips"></div><p class="hint">Сначала посмотри без титров — попробуй понять на слух. Потом включи и проверь себя.</p></div>
+  </div>
+</div>
+<script src="../gate.js"></script>
+<script>
+const q=new URLSearchParams(location.search), EP=(q.get('ep')||'1').replace(/\D/g,'')||'1', BASE=`ep${EP}/`;
+const $=id=>document.getElementById(id), v=$('v'), frame=$('frame'), subs=$('subs');
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,x)=>{try{localStorage.setItem(k,x)}catch(e){}}};
+let T=null, mode='watch', cues=[], cur=-1;
+const show=JSON.parse(ls.get('zhFilmSubs')||'{"zh":false,"py":false,"ru":false}');   // по умолчанию титры выключены
+const MODES=[
+  {id:'watch',  b:'Смотрим',   s:'весь диалог',          h:'Просто смотри и слушай. Понятно без титров?'},
+  {id:'repeat', b:'Повторяем', s:'пауза после фразы',    h:'После каждой фразы — пауза. Повтори вслух так же, как герой.'},
+];
+function heroModes(){ Object.entries(T.heroes).forEach(([k,h])=>MODES.push({id:'role_'+k,b:'Озвучь '+h.ru,s:'ты говоришь за героя',h:`Голос ${h.ru} выключен — говоришь ты! Подсказка появится, когда твоя очередь.`})); }
+
+function drawModes(){
+  $('modes').innerHTML=MODES.map(m=>`<button class="mode${m.id===mode?' on':''}" data-m="${m.id}"><b>${m.b}</b><span>${m.s}</span></button>`).join('');
+  $('mh').textContent=MODES.find(m=>m.id===mode).h;
+  $('modes').querySelectorAll('.mode').forEach(b=>b.onclick=()=>setMode(b.dataset.m,true));
+}
+function drawChips(){
+  const C=[['zh','<span class="z">汉字</span>'],['py','Pīnyīn'],['ru','Перевод']];
+  $('chips').innerHTML=C.map(([k,l])=>`<button class="chip${show[k]?' on':''}" data-k="${k}"><span class="d"></span>${l}</button>`).join('');
+  $('chips').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ show[b.dataset.k]=!show[b.dataset.k]; ls.set('zhFilmSubs',JSON.stringify(show)); drawChips(); cur=-2; });
+}
+function setMode(m,play){
+  mode=m; cues=T.versions[m]; cur=-2; drawModes();
+  v.src=BASE+m+'.mp4'; v.load(); if(play) v.play().catch(()=>{});
+}
+const chars=s=>[...s].map(c=>/[一-鿿]/.test(c)?`<i>${c}</i>`:c).join('');
+function render(t){
+  const i=cues.findIndex(c=>t>=c.t0&&t<c.t1);
+  $('title').style.opacity = t < (T.title_until||3) ? 1 : 0;
+  if(i!==cur){
+    cur=i; subs.innerHTML=''; frame.querySelector('.badge')?.remove();
+    if(i<0) return;
+    const c=cues[i], h=T.heroes[c.who];
+    // в роли подсказка (иероглифы + пиньинь) видна всегда — иначе ребёнку не с чего сказать
+    const role=c.kind==='role', sz=show.zh||role, sp=show.py||role, sr=show.ru;
+    if(sz||sp||sr) subs.innerHTML=`<div class="who" style="background:${h.color}"><b>${h.zh}</b>${h.ru}</div>`
+      +(sz?`<div class="zh">${chars(c.zh)}</div>`:'')+(sp?`<div class="py">${c.py}</div>`:'')+(sr?`<div class="ru">${c.ru}</div>`:'');
+    if(c.kind==='rep'||role){ const b=document.createElement('div'); b.className='badge'; b.innerHTML=(role?'Твоя реплика!':'Повтори!')+'<i class="bb"></i>'; if(role) b.style.background=h.color; frame.appendChild(b); }
+  }
+  if(cur>=0){ const c=cues[cur];
+    if(c.s0!=null){ const k=Math.max(0,Math.min(1,(t-c.s0)/(c.s1-c.s0))), ii=subs.querySelectorAll('.zh i'); ii.forEach((e,j)=>e.classList.toggle('on', c.kind!=='role' && t>=c.s0 && j < Math.ceil(k*ii.length))); }
+    const bar=frame.querySelector('.badge .bb'); if(bar) bar.style.width=(100*(1-(t-c.t0)/(c.t1-c.t0)))+'%';
+  }
+}
+function loop(){ render(v.currentTime); $('pg').style.width=(v.duration?100*v.currentTime/v.duration:0)+'%'; requestAnimationFrame(loop); }
+const PLAY='<path d="M6 4l15 8-15 8z"/>', PAUSE='<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>';
+v.addEventListener('play',()=>{ frame.classList.add('playing'); $('ppi').innerHTML=PAUSE; });
+v.addEventListener('pause',()=>{ frame.classList.remove('playing'); $('ppi').innerHTML=PLAY; });
+v.addEventListener('ended',()=>{ frame.classList.remove('playing'); $('ppi').innerHTML=PLAY; });
+const toggle=()=>v.paused?v.play():v.pause();
+$('big').onclick=toggle; $('pp').onclick=toggle; v.onclick=toggle;
+$('rs').onclick=()=>{ v.currentTime=0; v.play(); };
+$('prog').onclick=e=>{ const r=e.currentTarget.getBoundingClientRect(); if(v.duration) v.currentTime=v.duration*(e.clientX-r.left)/r.width; };
+$('fs').onclick=()=>{ if(document.fullscreenElement) document.exitFullscreen(); else if(frame.requestFullscreen) frame.requestFullscreen(); else if(v.webkitEnterFullscreen) v.webkitEnterFullscreen(); };
+document.addEventListener('keydown',e=>{ if(e.code==='Space'){ e.preventDefault(); toggle(); } if(e.key==='f'||e.key==='F') $('fs').click(); });
+
+ZhGate.ready.then(g=> (g.teacher||g.member) ? g : g.askCode())
+.then(()=>fetch(BASE+'timeline.json',{cache:'no-cache'})).then(r=>r.json()).then(t=>{
+  T=t; heroModes();
+  $('ep').textContent=t.title.ep; $('h').textContent=t.title.zh; $('hs').textContent=t.title.ru; document.title=`${t.title.ep} · ${t.title.zh} · Speak&Smile`;
+  $('title').innerHTML=`<div class="e">${t.title.ep}</div><div class="z">${t.title.zh}</div><div class="r">${t.title.ru}</div>`;
+  v.poster=BASE+'poster.jpg'; drawChips(); setMode('watch',false); loop();
+});
+</script></body></html>
