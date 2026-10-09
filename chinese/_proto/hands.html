@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Счёт на пальцах · прототип</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@800;900&family=Noto+Sans+SC:wght@900&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6C3FC5;--honey:#F5C842;--ink:#2A2140;--skin:#FFD9B8;--skin2:#F4BE94;--line:#C98B62;--ease:cubic-bezier(.3,1.35,.5,1)}
+*{box-sizing:border-box}html,body{margin:0}
+body{min-height:100vh;font-family:"Baloo 2",system-ui,sans-serif;color:#fff;text-align:center;padding:24px 16px 40px;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),linear-gradient(180deg,#7C4DE0,#5B3FCF 55%,#4A2FB0)}
+.stage{max-width:560px;margin:0 auto;background:#fff;border-radius:32px;padding:20px 16px 18px;color:var(--ink);box-shadow:0 20px 40px rgba(30,10,70,.35)}
+.row{display:flex;align-items:center;justify-content:center;gap:10px;min-height:250px}
+.num{min-width:150px}
+.num .z{font-family:"Noto Sans SC",sans-serif;font-weight:900;font-size:96px;line-height:1;color:var(--p);transition:transform .35s var(--ease)}
+.num .py{font-family:Nunito,sans-serif;font-weight:900;font-size:34px;color:#E0A100}
+.num .d{font-weight:800;font-size:22px;color:#9A8FBF}
+.num.pop .z{animation:pop .45s var(--ease)}@keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+.hands{display:flex;gap:4px}
+svg.hand{width:150px;height:200px;overflow:visible}
+.hand .f,.hand .prox,.hand .dist{transition:transform .45s var(--ease);transform-box:view-box}
+.hand .seg{fill:var(--skin);stroke:var(--line);stroke-width:2.5}
+.hand .nail{fill:#fff;opacity:.55}
+.hand .palm{fill:var(--skin);stroke:var(--line);stroke-width:2.5}
+.hand .cuff{fill:var(--p)}
+.pad{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px}
+.pad button{width:52px;height:52px;border:0;border-radius:16px;background:#F3EEFF;color:var(--p);font:800 20px/1 "Baloo 2";cursor:pointer;transition:transform .15s}
+.pad button.on{background:var(--p);color:#fff}.pad button:active{transform:scale(.94)}
+.ctl{margin-top:12px;display:flex;justify-content:center;gap:10px}
+.ctl button{border:0;border-radius:999px;padding:12px 20px;font:800 16px/1 "Baloo 2";cursor:pointer;background:var(--honey);color:var(--ink)}
+.note{max-width:560px;margin:14px auto 0;font-weight:700;font-size:14px;opacity:.9}
+</style></head><body>
+<div class="stage">
+  <div class="row"><div class="num" id="num"></div><div class="hands" id="hands"></div></div>
+  <div class="pad" id="pad"></div>
+  <div class="ctl"><button id="auto">▶ Считать по порядку</button></div>
+</div>
+<p class="note">Прототип: рука нарисована вектором, пальцы двигаются отдельно. 6 — «телефончик», 7 — щепотка, 8 — «пистолетик», 9 — крючок, 10 — кулак. 11 и 12 — две руки: 10 + 1, 10 + 2.</p>
+<script>
+const N=[null,
+ {z:'一',p:'yī'},{z:'二',p:'èr'},{z:'三',p:'sān'},{z:'四',p:'sì'},{z:'五',p:'wǔ'},{z:'六',p:'liù'},
+ {z:'七',p:'qī'},{z:'八',p:'bā'},{z:'九',p:'jiǔ'},{z:'十',p:'shí'},{z:'十一',p:'shíyī'},{z:'十二',p:'shí\'èr'}];
+/* поза: для каждого пальца — [поворот основания°, длина 0..1, сгиб кончика°]; большой — [поворот°, длина] */
+const UP=[0,1,0], DOWN=[0,.28,0];
+const POSE={
+ 0:{i:DOWN,m:DOWN,r:DOWN,l:DOWN,t:[62,.75]},
+ 1:{i:UP,m:DOWN,r:DOWN,l:DOWN,t:[62,.75]},
+ 2:{i:[-8,1,0],m:[8,1,0],r:DOWN,l:DOWN,t:[62,.75]},
+ 3:{i:[-6,1,0],m:UP,r:[6,1,0],l:DOWN,t:[62,.75]},
+ 4:{i:[-6,1,0],m:[-2,1,0],r:[3,1,0],l:[9,1,0],t:[62,.75]},
+ 5:{i:[-9,1,0],m:[-2,1,0],r:[5,1,0],l:[14,1,0],t:[-48,1]},
+ 6:{i:DOWN,m:DOWN,r:DOWN,l:[28,1,0],t:[-62,1]},
+ 7:{i:[22,.8,18],m:[12,.85,22],r:DOWN,l:DOWN,t:[-12,1]},
+ 8:{i:UP,m:DOWN,r:DOWN,l:DOWN,t:[-82,1]},
+ 9:{i:[-4,.9,-105],m:DOWN,r:DOWN,l:DOWN,t:[62,.75]},
+ 10:{i:DOWN,m:DOWN,r:DOWN,l:DOWN,t:[62,.75]},
+};
+// пальцы: x основания, длина, ширина
+const F={i:[62,82,24],m:[89,92,24],r:[116,84,23],l:[141,64,21]};
+function handSVG(id,flip){
+  const fingers=Object.entries(F).map(([k,[x,L,w]])=>`
+    <g class="f" id="${id}${k}" style="transform-origin:${x}px 112px">
+      <g class="prox" style="transform-origin:${x}px 112px"><rect class="seg" x="${x-w/2}" y="${112-L*.62}" width="${w}" height="${L*.62+14}" rx="${w/2}"/></g>
+      <g class="dist" style="transform-origin:${x}px ${112-L*.55}px"><rect class="seg" x="${x-w/2}" y="${112-L}" width="${w}" height="${L*.5}" rx="${w/2}"/><rect class="nail" x="${x-w/2+5}" y="${112-L+4}" width="${w-10}" height="${w*.55}" rx="${(w-10)/2}"/></g>
+    </g>`).join('');
+  return `<svg class="hand" viewBox="0 0 200 260" style="${flip?'transform:scaleX(-1)':''}">
+    <rect class="cuff" x="52" y="214" width="104" height="46" rx="14"/>
+    ${fingers}
+    <rect class="palm" x="46" y="98" width="116" height="128" rx="40"/>
+    <g class="f" id="${id}t" style="transform-origin:58px 196px"><rect class="seg" x="44" y="118" width="28" height="80" rx="14"/><rect class="nail" x="50" y="122" width="16" height="14" rx="7"/></g>
+  </svg>`;
+}
+function setPose(id,n){
+  const P=POSE[n];
+  for(const k of 'imrl'){ const [rot,len,bend]=P[k], g=document.getElementById(id+k), L=F[k][1];
+    g.style.transform=`rotate(${rot}deg)`;
+    // «длина» = прячем палец за ладонь (сдвиг вниз), сгиб — поворот кончика
+    g.querySelector('.prox').style.transform=`translateY(${(1-len)*L*.9}px)`;
+    const d=g.querySelector('.dist'); d.style.transform=`translateY(${(1-len)*L*.9}px) rotate(${bend}deg)`; d.style.transition='transform .45s cubic-bezier(.3,1.35,.5,1)';
+    g.querySelector('.prox').style.transition='transform .45s cubic-bezier(.3,1.35,.5,1)'; }
+  const [tr,tl]=P.t, t=document.getElementById(id+'t'); t.style.transform=`rotate(${tr}deg) scaleY(${tl})`;
+}
+const hands=document.getElementById('hands'), num=document.getElementById('num');
+hands.innerHTML=handSVG('a')+handSVG('b',true); const hb=hands.lastElementChild;
+function show(n){
+  num.innerHTML=`<div class="z">${N[n].z}</div><div class="py">${N[n].p}</div><div class="d">${n}</div>`; num.classList.remove('pop'); void num.offsetWidth; num.classList.add('pop');
+  if(n<=10){ hb.style.display='none'; setPose('a',n); }
+  else { hb.style.display=''; setPose('a',10); setPose('b',n-10); }   // 11 = 10 + 1
+  document.querySelectorAll('.pad button').forEach(b=>b.classList.toggle('on',+b.textContent===n));
+}
+document.getElementById('pad').innerHTML=Array.from({length:12},(_,i)=>`<button>${i+1}</button>`).join('');
+document.getElementById('pad').onclick=e=>{ if(e.target.tagName==='BUTTON'){ stopAuto(); show(+e.target.textContent); } };
+let tm=null; const stopAuto=()=>{ clearInterval(tm); tm=null; document.getElementById('auto').textContent='▶ Считать по порядку'; };
+document.getElementById('auto').onclick=()=>{ if(tm) return stopAuto(); let n=1; show(n); tm=setInterval(()=>{ n=n%12+1; show(n); },1300); document.getElementById('auto').textContent='■ Стоп'; };
+setPose('b',10); show(1);
+</script>
+</body></html>
