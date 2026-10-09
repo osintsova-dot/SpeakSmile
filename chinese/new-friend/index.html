@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="apple-touch-icon" href="/chinese/icons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/chinese/icons/icon-192.png"><link rel="manifest" href="/chinese/manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="Китайский"><meta name="theme-color" content="#6C3FC5">
+<title>新朋友 Новый друг · Speak&Smile</title>
+<meta name="description" content="Китайский для 5–7 классов, урок 3: сериал «Новый друг», четыре тона, мемори «иероглиф + пиньинь», повтор всех слов.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6C3FC5; --honey:#F5C842; --violet:#8B5CF6; --sky:#63B3FF; --pink:#F17FBE; --teal:#34D3C0; --red:#F26B6B;
+  --ink:#2A2140; --muted:#6A5B9A; --paper:#FFFFFF; --soft:#F3EEFF;
+  --t1:#3E9BFF; --t2:#19B7A2; --t3:#F0A500; --t4:#F0508C;   /* цвет тона — один и тот же везде */
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,"Trebuchet MS",system-ui,sans-serif;
+  --zh:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --pyf:"Nunito","Baloo 2",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1.1); --out:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box}
+html{background:#5B3FCF}
+html,body{margin:0}
+body{font-family:var(--f);color:#fff;min-height:100vh;overflow-x:hidden;position:relative;text-align:center;padding:28px 16px 60px;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),radial-gradient(120% 90% at 100% 10%,rgba(99,179,255,.40),transparent 55%),
+  radial-gradient(140% 120% at 50% 100%,#5B34C9,transparent 60%),linear-gradient(180deg,#7C4DE0 0%,#5B3FCF 55%,#4A2FB0 100%)}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:12px}
+button{font:inherit;-webkit-tap-highlight-color:transparent}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto}
+.py{font-family:var(--pyf)}
+
+.homeback{position:fixed;top:calc(12px + env(safe-area-inset-top));left:12px;z-index:40;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 10px;border-radius:999px;
+  background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);color:#fff;font:800 14px/1 var(--f);text-decoration:none;
+  box-shadow:0 6px 18px rgba(42,33,64,.18);transition:transform .16s var(--out),background .2s}
+.homeback:active{transform:scale(.96)}.homeback svg{width:18px;height:18px;fill:currentColor}
+@media(max-width:420px){.homeback span{display:none}.homeback{width:40px;padding:0;justify-content:center}}
+
+/* ── герой ── */
+.hero{animation:pop .7s var(--ease) both}
+@media(max-width:720px){.hero{padding-top:44px}}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.brand{display:inline-flex;align-items:center;gap:8px;margin-bottom:10px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px}
+.brand b{color:var(--honey)}
+.hero .zh{font-family:var(--zh);font-weight:900;font-size:clamp(60px,17vw,100px);line-height:1;margin:6px 0 0;text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.hero .py{font-size:clamp(19px,4.8vw,25px);font-weight:800;color:var(--honey);margin:8px 0 0}
+.hero .ru{font-size:clamp(15px,3.6vw,18px);font-weight:600;opacity:.92;margin:4px 0 0}
+
+/* ── вкладки ── */
+.tabs{display:flex;justify-content:center;gap:4px;margin:24px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{appearance:none;border:0;background:transparent;color:#fff;font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .15s var(--out)}
+.tab[aria-selected="true"]{background:#fff;color:var(--p)}
+.tab:active{transform:scale(.97)}
+@media(max-width:420px){.tab{padding:10px 12px;font-size:14px}}
+
+.panel{background:var(--paper);color:var(--ink);border-radius:28px;padding:22px 18px 24px;box-shadow:0 14px 30px rgba(30,10,70,.30);animation:pop .5s var(--ease) both;text-align:center}
+.panel+.panel{margin-top:16px}
+.panel h2{margin:0 0 4px;font-size:22px;line-height:1.15}
+.sub{margin:0 auto 16px;color:var(--muted);font-weight:600;font-size:15px;line-height:1.35;max-width:46ch}
+.hint{font-weight:600;font-size:14px;opacity:.92;margin:0 0 14px}
+
+.btn{appearance:none;border:0;font-weight:800;font-size:16px;padding:14px 22px;border-radius:999px;cursor:pointer;color:var(--ink);background:var(--honey);
+  box-shadow:0 8px 20px rgba(0,0,0,.18),0 2px 0 rgba(0,0,0,.06);transition:transform .15s var(--out),box-shadow .15s;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.btn.primary{background:var(--p);color:#fff;box-shadow:0 10px 24px rgba(108,63,197,.35)}
+.btn.soft{background:var(--soft);color:var(--p);box-shadow:none}
+
+/* ── фильм ── */
+.film{position:relative;display:block;border-radius:22px;overflow:hidden;aspect-ratio:16/9;background:#17112A;box-shadow:0 20px 40px -18px rgba(30,10,70,.7);text-decoration:none}
+.film img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--out)}
+.film:hover img{transform:scale(1.03)}
+.film .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,17,42,0) 35%,rgba(23,17,42,.82))}
+.film .pl{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;background:var(--honey);display:grid;place-items:center;box-shadow:0 12px 30px rgba(0,0,0,.45);transition:transform .2s var(--out)}
+.film:active .pl{transform:translate(-50%,-50%) scale(.94)}
+.film .pl svg{width:32px;fill:var(--ink);margin-left:5px}
+.film .cap{position:absolute;left:18px;right:18px;bottom:14px;text-align:left;color:#fff}
+.film .cap>span{display:block}
+.film .cap .e{font-weight:800;font-size:13px;color:var(--honey);letter-spacing:.04em}
+.film .cap .t{font-weight:800;font-size:clamp(18px,4.6vw,24px);line-height:1.1}
+.film .cap .t b{font-family:var(--zh);font-weight:900;margin-right:8px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.mode{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px 12px;border-radius:18px;background:var(--soft);color:var(--ink);text-decoration:none;text-align:left;transition:transform .15s var(--out),background .2s}
+.mode:active{transform:scale(.97)}.mode:hover{background:#E9E0FF}
+.mode b{font-size:16px;line-height:1.1}.mode span{font-size:13px;font-weight:600;color:var(--muted);line-height:1.25}
+.mode i{font-style:normal;font-weight:900;font-size:12px;color:#fff;background:var(--p);border-radius:999px;padding:2px 8px;margin-bottom:4px}
+@media(max-width:520px){.modes{grid-template-columns:1fr}}
+.steps{display:grid;gap:8px;text-align:left;margin:4px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;font-weight:600;font-size:15px;line-height:1.35;color:var(--ink)}
+.steps li::before{counter-increment:s;content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--honey);display:grid;place-items:center;font-weight:900;font-size:15px}
+.heroes{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.hchip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;font-weight:800;font-size:14px;color:var(--ink)}
+.hchip b{font-family:var(--zh);font-weight:900}
+
+/* ── тоны: четыре дорожки ── */
+.tones{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+@media(max-width:600px){.tones{grid-template-columns:1fr 1fr}}
+.tone{--c:var(--t1);position:relative;appearance:none;border:0;cursor:pointer;background:#FBF9FF;border-radius:22px;padding:12px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink);
+  box-shadow:inset 0 0 0 2px #EEE8FA;transition:transform .16s var(--out),box-shadow .2s}
+.tone:active{transform:scale(.97)}
+.tone.on{box-shadow:inset 0 0 0 3px var(--c),0 10px 24px -10px var(--c)}
+.tone .num{font-weight:900;font-size:13px;color:#fff;background:var(--c);border-radius:999px;padding:2px 10px}
+.tone svg{width:100%;max-width:150px;aspect-ratio:3/2;display:block}
+.tone .mk{font-family:var(--pyf);font-weight:900;font-size:34px;line-height:1;color:var(--c)}
+.tone .how{font-weight:800;font-size:15px;line-height:1.15}
+.tone .feel{font-weight:600;font-size:13px;color:var(--muted);line-height:1.25;min-height:2.5em}
+.tone .ex{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+.ex .w{appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;min-width:40px;padding:5px 4px 4px;border-radius:14px;background:#fff;box-shadow:0 2px 0 #EEE8FA,0 4px 12px rgba(60,30,120,.08);color:var(--ink);transition:transform .15s var(--out)}
+.ex .w:active{transform:scale(.94)}
+.ex .w .z{font-family:var(--zh);font-weight:900;font-size:20px;line-height:1.1}
+.ex .w .p{font-family:var(--pyf);font-weight:900;font-size:13px;color:var(--c)}
+.ex .w.say{box-shadow:0 0 0 3px var(--c)}
+svg .staff line{stroke:#EEE8FA;stroke-width:1.5}
+svg .track{fill:none;stroke:var(--c);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;opacity:.22}
+svg .ink{fill:none;stroke:var(--c);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+svg .head{fill:var(--c)}
+svg .dot{fill:#fff;stroke:var(--c);stroke-width:4}
+.light{display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:16px;padding:12px 14px;border-radius:18px;background:#FFF8DE;color:#5A4300;font-weight:700;font-size:14px;line-height:1.35;text-align:left}
+.light .ex .w .p{color:#9A7A00}
+.light p{margin:0;max-width:44ch;text-align:center}
+.light .ex{display:flex;gap:6px}
+
+/* ── игра «какой тон» ── */
+.tg{display:flex;flex-direction:column;align-items:center;gap:14px}
+.tg-top{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.pill{font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--p)}
+.pill b{color:var(--ink)}
+.dots{display:flex;gap:6px}
+.dots i{width:12px;height:12px;border-radius:50%;background:#E6DEFB;transition:background .25s,transform .25s var(--ease)}
+.dots i.ok{background:var(--teal);transform:scale(1.15)}.dots i.bad{background:var(--red)}.dots i.now{box-shadow:0 0 0 3px #C9B8F5}
+.listen{appearance:none;border:0;cursor:pointer;width:120px;height:120px;border-radius:50%;background:var(--p);color:#fff;display:grid;place-items:center;
+  box-shadow:0 16px 34px -8px rgba(108,63,197,.6),inset 0 -6px 0 rgba(0,0,0,.12);transition:transform .16s var(--out)}
+.listen:active{transform:scale(.95)}
+.listen svg{width:52px;fill:currentColor}
+.listen.ring{animation:ring 1s ease-out}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(108,63,197,.45),0 16px 34px -8px rgba(108,63,197,.6)}100%{box-shadow:0 0 0 28px rgba(108,63,197,0),0 16px 34px -8px rgba(108,63,197,.6)}}
+.reveal{min-height:86px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.reveal .z{font-family:var(--zh);font-weight:900;font-size:44px;line-height:1.05}
+.reveal .p{font-family:var(--pyf);font-weight:900;font-size:24px}
+.reveal .r{font-weight:600;font-size:14px;color:var(--muted)}
+.reveal .q{font-weight:700;font-size:16px;color:var(--muted)}
+.reveal>*{animation:pop .4s var(--ease) both}
+.answers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%}
+@media(max-width:600px){.answers{grid-template-columns:1fr 1fr}}
+.ans{--c:var(--t1);appearance:none;border:0;cursor:pointer;background:#FBF9FF;border-radius:20px;padding:10px 8px 8px;box-shadow:inset 0 0 0 2px #EEE8FA;display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--ink);transition:transform .15s var(--out),box-shadow .2s,background .2s}
+.ans:active{transform:scale(.96)}
+.ans svg{width:100%;max-width:120px;aspect-ratio:3/2}
+.ans .l{font-weight:800;font-size:14px}
+.ans.right{background:#E6FAF6;box-shadow:inset 0 0 0 3px var(--teal)}
+.ans.wrong{animation:shake .4s ease;box-shadow:inset 0 0 0 3px var(--red)}
+.ans.show{box-shadow:inset 0 0 0 3px var(--c)}
+.ans[disabled]{cursor:default}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.result{display:none;flex-direction:column;align-items:center;gap:10px}
+.result.on{display:flex;animation:pop .5s var(--ease)}
+.stars{font-size:44px;letter-spacing:6px;color:var(--honey);text-shadow:0 3px 0 #D9A900}
+.stars s{text-decoration:none;color:#E6DEFB;text-shadow:none}
+.result .big{font-weight:800;font-size:24px}
+
+/* ── мемори ── */
+.mem-bar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--soft)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--p);font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.seg button.on{background:var(--p);color:#fff}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;perspective:900px}
+.mcard{position:relative;aspect-ratio:3/4;border:0;padding:0;background:none;cursor:pointer;transform-style:preserve-3d;transition:transform .45s var(--out);animation:rise-in .45s var(--ease) backwards;animation-delay:calc(var(--i)*35ms)}
+@keyframes rise-in{from{transform:translateY(14px);opacity:0}}
+.mcard.up,.mcard.done{transform:rotateY(180deg)}
+.mcard .f{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px}
+.mcard .back{background:linear-gradient(150deg,#8B5FE0,#5B34C9);box-shadow:0 8px 18px -6px rgba(60,30,120,.55),inset 0 0 0 3px rgba(255,255,255,.18)}
+.mcard .back::after{content:"";width:46%;aspect-ratio:1;background:center/contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23F5C842' d='M32 60c-1 0-1.6-.8-1.6-1.8V40.5C21 38 6 31 4.3 15.6 4 13 6.6 11.7 8.6 12.9c4.6 2.8 10.6 2.3 16.4-1.4 3.2-2 4.6-5 5.4-7.8.5-1.9 2.7-1.9 3.2 0 .8 2.8 2.2 5.8 5.4 7.8 5.8 3.7 11.8 4.2 16.4 1.4 2-1.2 4.6.1 4.3 2.7C58 31 43 38 33.6 40.5v17.7c0 1-.6 1.8-1.6 1.8z'/%3E%3C/svg%3E");opacity:.9}
+.mcard .face{transform:rotateY(180deg);background:#fff;box-shadow:inset 0 0 0 2px #EEE8FA,0 8px 18px -8px rgba(60,30,120,.4);color:var(--ink)}
+.mcard .face .z{font-family:var(--zh);font-weight:900;font-size:clamp(24px,6.4vw,40px);line-height:1.05;white-space:nowrap}
+.mcard .face .p{font-family:var(--pyf);font-weight:900;font-size:clamp(14px,3.9vw,22px);color:var(--p);line-height:1.1;word-break:break-word}
+.mcard .face .r{font-weight:700;font-size:12px;color:var(--muted);line-height:1.1;opacity:0;transition:opacity .3s}
+.mcard.done .face{background:#E6FAF6;box-shadow:inset 0 0 0 3px var(--teal)}
+.mcard.done .face .r{opacity:1}
+.mcard.miss .face{box-shadow:inset 0 0 0 3px var(--red)}
+.mem.l8{grid-template-columns:repeat(4,1fr)}
+@media(min-width:620px){.mem.l8{grid-template-columns:repeat(4,1fr)}}
+
+/* ── все слова ── */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}}
+.card{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--paper);color:var(--ink);border-radius:22px;padding:10px 10px 12px;cursor:pointer;border:0;text-align:center;
+  box-shadow:0 12px 26px rgba(30,10,70,.28);animation:rise-in .5s var(--ease) backwards;animation-delay:calc(var(--i)*45ms);transition:transform .18s var(--out)}
+.card:active{transform:scale(.97)}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;background:#fff}
+.card .cap{display:none;flex-direction:column;align-items:center;gap:2px}
+.card.right .cap{display:flex;animation:pop .45s var(--ease)}
+.card .cap .z{font-family:var(--zh);font-weight:900;font-size:clamp(20px,5.6vw,28px);line-height:1.15}
+.card .cap .p{font-family:var(--pyf);font-weight:800;font-size:15px;color:var(--p)}
+.card.right{box-shadow:0 0 0 5px var(--teal) inset,0 12px 26px rgba(30,10,70,.28)}
+.card.wrong{animation:shake .4s ease}
+.game-bar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+.score{font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)}
+.score b{color:var(--honey)}
+.btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.3);box-shadow:none}
+
+.foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}
+.foot a{color:var(--honey);text-decoration:none}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style></head>
+<body>
+<a class="homeback" href="../" aria-label="Все уроки"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg><span>Все уроки</span></a>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">Speak<b>&</b>Smile · урок 3 · повторяем</div>
+    <div class="zh" lang="zh">新朋友</div>
+    <div class="py">Xīn péngyou</div>
+    <div class="ru">Новый друг</div>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Разделы">
+    <button class="tab" role="tab" aria-selected="true" data-tab="film">Фильм</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="tones">Тоны</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="memo">Мемори</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="all">Все слова</button>
+  </div>
+
+  <!-- ФИЛЬМ -->
+  <section id="film" role="tabpanel">
+    <div class="panel">
+      <a class="film" href="../film/?ep=1">
+        <img src="../film/ep1/poster.jpg" alt="Кадр из серии «Новый друг»">
+        <span class="shade"></span><span class="pl"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+        <span class="cap"><span class="e">СЕРИАЛ «ГИНКГО В ПЕКИНЕ» · СЕРИЯ 1</span><span class="t"><b lang="zh">新朋友</b>Новый друг</span></span>
+      </a>
+      <div class="heroes">
+        <span class="hchip" style="background:#F7A8D4"><b lang="zh">美美</b>Мэймэй</span>
+        <span class="hchip" style="background:#7FE3D6"><b lang="zh">小龙</b>Сяо Лун</span>
+        <span class="hchip" style="background:#FFB36B"><b lang="zh">小明</b>Сяо Мин</span>
+      </div>
+      <div class="modes">
+        <a class="mode" href="../film/?ep=1&m=watch"><i>1</i><b>Смотрим</b><span>Сначала без титров: что поняли на слух?</span></a>
+        <a class="mode" href="../film/?ep=1&m=repeat"><i>2</i><b>Повторяем</b><span>После каждой фразы пауза — повтори вслух</span></a>
+        <a class="mode" href="../film/?ep=1&m=role_mei"><i>3</i><b>Озвучь героя</b><span>Голос героя выключен — говоришь ты</span></a>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Дома до четверга</h2>
+      <p class="sub">В четверг мы разыграем эту сцену вживую — каждый будет одним из героев.</p>
+      <ol class="steps">
+        <li>Посмотри серию два раза: один раз без титров, второй — с пиньинем.</li>
+        <li>Включи «Повторяем» и говори вслух вместе с героями.</li>
+        <li>Выбери любимого героя и озвучь его в режиме «Озвучь героя».</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ТОНЫ -->
+  <section id="tones" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Четыре тона</h2>
+      <p class="sub">В китайском важно не только <i>что</i> сказать, но и <i>как</i> пойдёт голос. Нажми на тон — услышишь пример и увидишь, куда идёт голос. Покажи рукой!</p>
+      <div class="tones" id="toneCards"></div>
+      <div class="light">
+        <div class="ex" id="lightEx"></div>
+        <p>А ещё бывают «лёгкие» слоги без тона: <b>ma, ne, le, de</b>. Их говорим коротко и тихо, будто мимоходом.</p>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Послушай и реши: какой тон?</h2>
+      <p class="sub">Слушай слово и выбирай дорожку. Можно слушать сколько угодно раз.</p>
+      <div class="tg" id="tg">
+        <div class="tg-top"><span class="pill">Раунд <b id="tgN">1</b> из 10</span><div class="dots" id="tgDots"></div></div>
+        <button class="listen" id="tgPlay" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button>
+        <div class="reveal" id="tgReveal"><div class="q">Нажми на динамик</div></div>
+        <div class="answers" id="tgAns"></div>
+      </div>
+      <div class="result" id="tgRes"><div class="stars" id="tgStars"></div><div class="big" id="tgBig"></div><p class="sub" id="tgTip" style="margin:0"></p><button class="btn primary" id="tgAgain">Ещё раз</button></div>
+    </div>
+  </section>
+
+  <!-- МЕМОРИ -->
+  <section id="memo" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Мемори: иероглиф + пиньинь</h2>
+      <p class="sub">Открывай по две карточки. Найди пару: иероглиф и как он читается. Нашёл — услышишь слово.</p>
+      <div class="mem-bar">
+        <div class="seg" id="memLvl"><button data-n="6" class="on">6 пар</button><button data-n="8">8 пар</button><button data-n="10">10 пар</button></div>
+        <span class="pill">Ходов: <b id="memMoves">0</b></span>
+      </div>
+      <div class="mem" id="mem"></div>
+      <div class="result" id="memRes" style="margin-top:16px"><div class="stars" id="memStars"></div><div class="big" id="memBig"></div><button class="btn primary" id="memAgain">Сыграть ещё</button></div>
+    </div>
+  </section>
+
+  <!-- ВСЕ СЛОВА -->
+  <section id="all" role="tabpanel" hidden>
+    <p class="hint">Все фразы уроков 1 и 2 вперемешку. Слушай и нажимай на нужную картинку.</p>
+    <div class="game-bar">
+      <button class="btn" id="askBtn"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>Слушать ещё раз</button>
+      <span class="score">Верно: <b id="score">0</b> / <span id="total">0</span></span>
+    </div>
+    <div class="grid" id="gameGrid"></div>
+  </section>
+
+  <p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
+</div>
+
+<script src="../gate.js?v=3"></script>
+<script>
+ZhGate.lock('new-friend');
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+/* ── звук: одна дорожка за раз ── */
+let cur=null;
+function play(src,onend){ if(cur){cur.pause();cur.onended=null;} const a=new Audio(src); cur=a; a.onended=onend||null; a.play().catch(()=>{}); return a; }
+
+/* ── тоны ── */
+// контур по 5-ступенчатой шкале (1 — низко, 5 — высоко): 55, 35, 214, 51
+const TONES=[
+  {n:1,mk:'ā',c:'var(--t1)',pts:[[5,5],[95,5]],how:'Ровно и высоко',feel:'как долгая нота «ля-а-а»',hand:'рука ровно вперёд'},
+  {n:2,mk:'á',c:'var(--t2)',pts:[[5,3],[95,5]],how:'Вверх',feel:'как удивлённое «Да?»',hand:'рука снизу вверх'},
+  {n:3,mk:'ǎ',c:'var(--t3)',pts:[[5,2],[42,1],[95,4]],how:'Вниз и вверх',feel:'как сомнение «Ну-у?..»',hand:'рука ныряет и выныривает'},
+  {n:4,mk:'à',c:'var(--t4)',pts:[[5,5],[95,1]],how:'Резко вниз',feel:'как строгое «Стоп!»',hand:'рука рубит вниз'},
+];
+const SYL=[ // слоги из наших слов; ru — откуда слово
+  {id:'t1_ta',z:'他',p:'tā',t:1,r:'он'},{id:'t1_kai',z:'开',p:'kāi',t:1,r:'из «开心» — весело'},{id:'t1_gao',z:'高',p:'gāo',t:1,r:'из «高兴» — рад'},{id:'t1_shi',z:'湿',p:'shī',t:1,r:'мокрый'},{id:'t1_xin',z:'心',p:'xīn',t:1,r:'сердце (из «开心»)'},
+  {id:'t2_shei',z:'谁',p:'shéi',t:2,r:'кто'},{id:'t2_ming',z:'名',p:'míng',t:2,r:'из «名字» — имя'},{id:'t2_hong',z:'红',p:'hóng',t:2,r:'красный (Сяо Хун)'},{id:'t2_long',z:'龙',p:'lóng',t:2,r:'дракон (Сяо Лун)'},{id:'t2_peng',z:'朋',p:'péng',t:2,r:'из «朋友» — друг'},
+  {id:'t3_hao',z:'好',p:'hǎo',t:3,r:'хорошо'},{id:'t3_wo',z:'我',p:'wǒ',t:3,r:'я'},{id:'t3_ke',z:'渴',p:'kě',t:3,r:'хочу пить'},{id:'t3_leng',z:'冷',p:'lěng',t:3,r:'холодно'},{id:'t3_xiao',z:'小',p:'xiǎo',t:3,r:'маленький (Сяо)'},
+  {id:'t4_lei',z:'累',p:'lèi',t:4,r:'устал'},{id:'t4_re',z:'热',p:'rè',t:4,r:'жарко'},{id:'t4_e',z:'饿',p:'è',t:4,r:'хочу есть'},{id:'t4_jiao',z:'叫',p:'jiào',t:4,r:'зовут'},{id:'t4_shi',z:'是',p:'shì',t:4,r:'это, есть'},
+];
+const EXAMPLES={1:['t1_ta','t1_kai','t1_shi'],2:['t2_shei','t2_ming','t2_long'],3:['t3_hao','t3_wo','t3_leng'],4:['t4_lei','t4_re','t4_e']};
+const SB=Object.fromEntries(SYL.map(s=>[s.id,s]));
+const au=id=>`audio/${id}.mp3`;
+const Y=v=>58-(v-1)*12.5;           // ступень → y в поле 100×66
+function pathD(pts){ const P=pts.map(([x,v])=>[x,Y(v)]); if(P.length===2) return `M${P[0]} L${P[1]}`;
+  return `M${P[0]} Q${P[1][0]},${P[1][1]+10} ${(P[1][0]+P[2][0])/2},${(P[1][1]+P[2][1])/2+4} T${P[2]}`; }
+function toneSVG(t,cls=''){ const d=pathD(t.pts); const end=t.pts[t.pts.length-1], pre=t.pts[t.pts.length-2];
+  const ang=Math.atan2(Y(end[1])-Y(pre[1]),end[0]-pre[0])*180/Math.PI;
+  return `<svg viewBox="0 0 100 66" class="${cls}" aria-hidden="true"><g class="staff">${[1,2,3,4,5].map(v=>`<line x1="0" x2="100" y1="${Y(v)}" y2="${Y(v)}"/>`).join('')}</g>
+    <path class="track" d="${d}"/><path class="ink" d="${d}"/><path class="head" d="M0,-7 L11,0 L0,7z" transform="translate(${end[0]},${Y(end[1])}) rotate(${ang})"/><circle class="dot" r="6" cx="${t.pts[0][0]}" cy="${Y(t.pts[0][1])}" opacity="0"/></svg>`; }
+// голос «едет» по дорожке, пока звучит слово
+function ride(svg,dur){ const ink=svg.querySelector('.ink'), dot=svg.querySelector('.dot'), L=ink.getTotalLength();
+  ink.style.strokeDasharray=L; ink.style.strokeDashoffset=L; dot.setAttribute('opacity',1); const t0=performance.now(), D=Math.max(.45,dur||.8)*1000;
+  (function f(now){ const k=Math.min(1,(now-t0)/D), e=1-Math.pow(1-k,2), p=ink.getPointAtLength(e*L);
+    ink.style.strokeDashoffset=L*(1-e); dot.setAttribute('cx',p.x); dot.setAttribute('cy',p.y);
+    if(k<1) requestAnimationFrame(f); else setTimeout(()=>dot.setAttribute('opacity',0),500); })(t0); }
+function sayRide(id,svg,btn){ const a=play(au(id)); if(btn){btn.classList.add('say'); a.onended=()=>btn.classList.remove('say');}
+  const go=()=>ride(svg,a.duration); if(a.readyState>=1) go(); else a.addEventListener('loadedmetadata',go,{once:true}); }
+
+$('toneCards').innerHTML=TONES.map(t=>`<div class="tone" style="--c:${t.c}" data-t="${t.n}" role="button" tabindex="0">
+  <span class="num">${t.n} тон</span>${toneSVG(t)}<span class="mk">${t.mk}</span><span class="how">${t.how}</span><span class="feel">${t.feel}<br>✋ ${t.hand}</span>
+  <span class="ex">${EXAMPLES[t.n].map(id=>`<button class="w" data-id="${id}"><span class="z" lang="zh">${SB[id].z}</span><span class="p">${SB[id].p}</span></button>`).join('')}</span></div>`).join('');
+$('toneCards').addEventListener('click',e=>{ const card=e.target.closest('.tone'); if(!card) return;
+  document.querySelectorAll('.tone').forEach(c=>c.classList.toggle('on',c===card));
+  const w=e.target.closest('.w'); const id=w?w.dataset.id:EXAMPLES[card.dataset.t][0];
+  sayRide(id,card.querySelector('svg'),w||card.querySelector('.w')); });
+$('toneCards').addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.target.click(); } });
+$('lightEx').innerHTML=[['n_ma','吗','ma'],['n_ne','呢','ne'],['n_le','了','le']].map(([id,z,p])=>`<span class="w" style="cursor:default"><span class="z" lang="zh">${z}</span><span class="p">${p}</span></span>`).join('');
+
+/* игра «какой тон»: 10 раундов, все четыре тона по 2–3 раза */
+const R=10; let tgList=[], tgI=0, tgRes=[], tgLock=false, tgItem=null;
+$('tgAns').innerHTML=TONES.map(t=>`<button class="ans" style="--c:${t.c}" data-t="${t.n}">${toneSVG(t)}<span class="l">${t.n} · ${t.how.toLowerCase()}</span></button>`).join('');
+function tgStart(){
+  const by=[1,2,3,4].map(n=>shuffle(SYL.filter(s=>s.t===n)));
+  tgList=shuffle([...by[0].slice(0,3),...by[1].slice(0,2),...by[2].slice(0,3),...by[3].slice(0,2)]).slice(0,R);
+  tgI=0; tgRes=[]; $('tgRes').classList.remove('on'); $('tg').hidden=false; tgRound();
+}
+function tgDots(){ $('tgDots').innerHTML=Array.from({length:R},(_,i)=>`<i class="${tgRes[i]===true?'ok':tgRes[i]===false?'bad':i===tgI?'now':''}"></i>`).join(''); $('tgN').textContent=Math.min(tgI+1,R); }
+function tgRound(){
+  tgItem=tgList[tgI]; tgLock=false; tgDots();
+  $('tgReveal').innerHTML='<div class="q">Какой тон ты слышишь?</div>';
+  document.querySelectorAll('.ans').forEach(b=>{ b.className='ans'; b.disabled=false; });
+  setTimeout(tgSay,350);
+}
+function tgSay(){ if(!tgItem) return; const b=$('tgPlay'); b.classList.remove('ring'); void b.offsetWidth; b.classList.add('ring'); play(au(tgItem.id)); }
+$('tgPlay').onclick=tgSay;
+$('tgAns').addEventListener('click',e=>{ const b=e.target.closest('.ans'); if(!b||tgLock) return;
+  const ok=+b.dataset.t===tgItem.t; if(tgRes[tgI]===undefined) tgRes[tgI]=ok;
+  if(ok){ tgLock=true; b.classList.add('right'); document.querySelectorAll('.ans').forEach(x=>x.disabled=true);
+    $('tgReveal').innerHTML=`<div class="z" lang="zh">${tgItem.z}</div><div class="p" style="color:${TONES[tgItem.t-1].c}">${tgItem.p}</div><div class="r">${tgItem.r}</div>`;
+    const a=play(au(tgItem.id)); const svg=b.querySelector('svg'); const go=()=>ride(svg,a.duration); a.readyState>=1?go():a.addEventListener('loadedmetadata',go,{once:true});
+    tgDots(); setTimeout(()=>{ tgI++; tgI<R?tgRound():tgEnd(); },1900);
+  } else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); tgDots(); $('tgReveal').innerHTML='<div class="q">Послушай ещё раз и покажи рукой</div>'; setTimeout(tgSay,450); }
+});
+function tgEnd(){ const n=tgRes.filter(Boolean).length; $('tg').hidden=true; const st=n>=9?3:n>=6?2:n>=3?1:0;
+  $('tgStars').innerHTML='★'.repeat(st)+'<s>'+'★'.repeat(3-st)+'</s>'; $('tgBig').textContent=`С первого раза: ${n} из ${R}`;
+  $('tgTip').textContent=n>=9?'Отличный слух! 太棒了！':n>=6?'Хорошо! Сыграй ещё раз — будет ещё лучше.':'Послушай ещё раз примеры наверху и покажи тоны рукой — потом снова в игру.';
+  $('tgRes').classList.add('on'); }
+$('tgAgain').onclick=tgStart;
+
+/* ── мемори ── */
+const MEMW=[['m_nihao','你好','nǐ hǎo','привет'],['m_laoshi','老师','lǎoshī','учитель'],['m_pengyou','朋友','péngyou','друг'],['m_mingzi','名字','míngzi','имя'],
+  ['m_kaixin','开心','kāixīn','весело'],['m_gaoxing','高兴','gāoxìng','рад'],['m_shei','谁','shéi','кто'],['m_leng','冷','lěng','холодно'],['m_re','热','rè','жарко'],
+  ['m_lei','累','lèi','устал'],['m_e','饿','è','хочу есть'],['m_ke','渴','kě','хочу пить'],['m_wo','我','wǒ','я'],['m_ta','他','tā','он'],['m_ye','也','yě','тоже'],['m_jiao','叫','jiào','зовут']];
+let memN=6, memOpen=[], memMoves=0, memDone=0, memBusy=false;
+function memStart(){
+  const pick=shuffle(MEMW).slice(0,memN);
+  const cards=shuffle(pick.flatMap(([id,z,p,r])=>[{id,k:'z',z,p,r},{id,k:'p',z,p,r}]));
+  $('mem').innerHTML=cards.map((c,i)=>`<button class="mcard" style="--i:${i}" data-id="${c.id}" aria-label="Карточка"><span class="f back"></span><span class="f face">${c.k==='z'?`<span class="z" lang="zh">${c.z}</span>`:`<span class="p">${c.p}</span>`}<span class="r">${c.r}</span></span></button>`).join('');
+  memOpen=[]; memMoves=0; memDone=0; memBusy=false; $('memMoves').textContent=0; $('memRes').classList.remove('on'); $('mem').hidden=false;
+}
+$('mem').addEventListener('click',e=>{ const c=e.target.closest('.mcard'); if(!c||memBusy||c.classList.contains('up')||c.classList.contains('done')) return;
+  c.classList.add('up'); memOpen.push(c);
+  if(memOpen.length<2) return;
+  memMoves++; $('memMoves').textContent=memMoves; const [a,b]=memOpen; memOpen=[];
+  if(a.dataset.id===b.dataset.id){ play(au(a.dataset.id)); setTimeout(()=>{ a.classList.add('done'); b.classList.add('done'); memDone++; if(memDone===memN) setTimeout(memEnd,700); },250); }
+  else { memBusy=true; setTimeout(()=>{ a.classList.add('miss'); b.classList.add('miss'); },350); setTimeout(()=>{ a.classList.remove('up','miss'); b.classList.remove('up','miss'); memBusy=false; },1100); }
+});
+function memEnd(){ const ex=memMoves-memN, st=ex<=memN*.5?3:ex<=memN?2:1;
+  $('memStars').innerHTML='★'.repeat(st)+'<s>'+'★'.repeat(3-st)+'</s>'; $('memBig').textContent=`Все пары за ${memMoves} ходов!`; $('memRes').classList.add('on'); }
+$('memAgain').onclick=memStart;
+$('memLvl').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; memN=+b.dataset.n; $('memLvl').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); memStart(); });
+
+/* ── все слова: «послушай и найди» по урокам 1 и 2 ── */
+const L1='../how-are-you/', L2='../whats-your-name/';
+const ALL=[...['q_howareyou','good','great','okay','happy','hungry','thirsty','tired','sad','hot','cold','wet'].map(id=>({id,d:L1})),
+  ...['q_name','q_hisname','his_name','her_name','nice','me_too','and_you','friend','teacher','who'].map(id=>({id,d:L2}))];
+const TXT={}; // подписи подтягиваем из words.json уроков
+Promise.all([L1,L2].map(d=>fetch(d+'words.json').then(r=>r.json()).then(j=>j.words.forEach(w=>TXT[d+w.id]=w)).catch(()=>{})));
+let target=null, score=0, total=0, locked=false;
+function newRound(){
+  const pick=shuffle(ALL).slice(0,6); target=pick[Math.random()*6|0];
+  $('gameGrid').innerHTML=pick.map((w,i)=>{ const t=TXT[w.d+w.id]||{zh:'',py:''}; return `<button class="card" style="--i:${i}" data-k="${w.d+w.id}"><img src="${w.d}img/${w.id}.webp?v=5" alt="" loading="lazy"><span class="cap"><span class="z" lang="zh">${t.zh}</span><span class="p">${t.py}</span></span></button>`; }).join('');
+  locked=false; setTimeout(()=>play(target.d+'audio/'+target.id+'.mp3'),350);
+}
+$('gameGrid').addEventListener('click',e=>{ const c=e.target.closest('.card'); if(!c||locked) return; total++; $('total').textContent=total;
+  const tk=target.d+target.id;
+  if(c.dataset.k===tk){ locked=true; score++; $('score').textContent=score; c.classList.add('right'); play(target.d+'audio/'+target.id+'.mp3',()=>setTimeout(newRound,1100)); }
+  else { c.classList.remove('wrong'); void c.offsetWidth; c.classList.add('wrong'); play(target.d+'audio/'+target.id+'.mp3'); } });
+$('askBtn').onclick=()=>target&&play(target.d+'audio/'+target.id+'.mp3');
+
+/* ── вкладки ── */
+const started={};
+function openTab(name){
+  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===name));
+  ['film','tones','memo','all'].forEach(id=>$(id).hidden=id!==name);
+  if(cur) cur.pause();
+  if(!started[name]){ started[name]=1; if(name==='tones') tgStart(); if(name==='memo') memStart(); if(name==='all') newRound(); }
+  history.replaceState(null,'',name==='film'?location.pathname+location.search:'#'+name);
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
+const h=location.hash.slice(1); if(['tones','memo','all'].includes(h)) openTab(h);
+</script>
+</body></html>

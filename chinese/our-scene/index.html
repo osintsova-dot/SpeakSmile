@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="apple-touch-icon" href="/chinese/icons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/chinese/icons/icon-192.png"><link rel="manifest" href="/chinese/manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="Китайский"><meta name="theme-color" content="#6C3FC5">
+<title>我们的对话 Наш диалог · Speak&Smile</title>
+<meta name="description" content="Китайский для 5–7 классов, урок 4: собери фразу из сериала, разыграй сцену по ролям, составь свой диалог.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6C3FC5; --honey:#F5C842; --pink:#F17FBE; --teal:#34D3C0; --red:#F26B6B;
+  --ink:#2A2140; --muted:#6A5B9A; --paper:#FFFFFF; --soft:#F3EEFF;
+  --mei:#F7A8D4; --long:#7FE3D6; --ming:#FFB36B; --tch:#C9B8F5;
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,system-ui,sans-serif;
+  --zh:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --pyf:"Nunito","Baloo 2",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1.1); --out:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box}
+html{background:#5B3FCF}
+html,body{margin:0}
+body{font-family:var(--f);color:#fff;min-height:100vh;overflow-x:hidden;text-align:center;padding:28px 16px 60px;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),radial-gradient(120% 90% at 100% 10%,rgba(99,179,255,.40),transparent 55%),
+  radial-gradient(140% 120% at 50% 100%,#5B34C9,transparent 60%),linear-gradient(180deg,#7C4DE0 0%,#5B3FCF 55%,#4A2FB0 100%)}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:12px}
+button,input{font:inherit;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:720px;margin:0 auto}
+.py{font-family:var(--pyf)}
+[hidden]{display:none!important}
+
+.homeback{position:fixed;top:calc(12px + env(safe-area-inset-top));left:12px;z-index:40;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 10px;border-radius:999px;
+  background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);color:#fff;font:800 14px/1 var(--f);text-decoration:none;box-shadow:0 6px 18px rgba(42,33,64,.18)}
+.homeback svg{width:18px;height:18px;fill:currentColor}
+@media(max-width:420px){.homeback span{display:none}.homeback{width:40px;padding:0;justify-content:center}}
+
+.hero{animation:pop .7s var(--ease) both}
+@media(max-width:720px){.hero{padding-top:44px}}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.brand{display:inline-flex;gap:8px;margin-bottom:10px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px}
+.brand b{color:var(--honey)}
+.hero .zh{font-family:var(--zh);font-weight:900;font-size:clamp(52px,14vw,92px);line-height:1;margin:6px 0 0;text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.hero .py{font-size:clamp(19px,4.8vw,25px);font-weight:800;color:var(--honey);margin:8px 0 0}
+.hero .ru{font-size:clamp(15px,3.6vw,18px);font-weight:600;opacity:.92;margin:4px 0 0}
+
+.tabs{display:flex;justify-content:center;gap:4px;margin:24px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);width:max-content;max-width:100%}
+.tab{appearance:none;border:0;background:transparent;color:#fff;font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .15s var(--out)}
+.tab[aria-selected="true"]{background:#fff;color:var(--p)}
+.tab:active{transform:scale(.97)}
+@media(max-width:420px){.tab{padding:10px 12px;font-size:14px}}
+
+.panel{background:var(--paper);color:var(--ink);border-radius:28px;padding:22px 18px 24px;box-shadow:0 14px 30px rgba(30,10,70,.30);animation:pop .5s var(--ease) both}
+.panel+.panel{margin-top:16px}
+.panel h2{margin:0 0 4px;font-size:22px;line-height:1.15}
+.sub{margin:0 auto 16px;color:var(--muted);font-weight:600;font-size:15px;line-height:1.35;max-width:46ch}
+.btn{appearance:none;border:0;font-weight:800;font-size:16px;padding:13px 20px;border-radius:999px;cursor:pointer;color:var(--ink);background:var(--honey);
+  box-shadow:0 8px 20px rgba(0,0,0,.16);transition:transform .15s var(--out);display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn:active{transform:scale(.97)}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.btn.primary{background:var(--p);color:#fff;box-shadow:0 10px 24px rgba(108,63,197,.35)}
+.btn.soft{background:var(--soft);color:var(--p);box-shadow:none}
+.pill{font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--p)}
+.pill b{color:var(--ink)}
+.who{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-weight:800;font-size:14px;color:var(--ink)}
+.who b{font-family:var(--zh);font-weight:900}
+
+/* ── собери фразу ── */
+.bf-top{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.bf-ru{font-weight:800;font-size:clamp(20px,5vw,26px);line-height:1.2;margin:10px 0 14px}
+.slots{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;min-height:84px;padding:12px;border-radius:20px;background:#FBF9FF;box-shadow:inset 0 0 0 2px #EEE8FA;transition:box-shadow .3s,background .3s}
+.slots.ok{background:#E6FAF6;box-shadow:inset 0 0 0 3px var(--teal)}
+.slot{min-width:54px;height:60px;border-radius:14px;border:2px dashed #D9CFF5}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:14px;min-height:70px}
+.tile{appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-width:54px;height:60px;padding:4px 12px;border-radius:14px;background:#fff;color:var(--ink);
+  box-shadow:0 3px 0 #E2D9F7,0 6px 14px rgba(60,30,120,.10),inset 0 0 0 2px #EEE8FA;transition:transform .15s var(--out),opacity .2s;animation:pop .35s var(--ease) backwards;animation-delay:calc(var(--i)*40ms)}
+.tile:active{transform:scale(.94)}
+.tile .z{font-family:var(--zh);font-weight:900;font-size:24px;line-height:1.1;white-space:nowrap}
+.tile .p{font-family:var(--pyf);font-weight:800;font-size:13px;color:var(--p);white-space:nowrap}
+.tile.used{opacity:0;pointer-events:none}
+.tile.placed{box-shadow:0 3px 0 #C9B8F5,inset 0 0 0 2px #C9B8F5}
+.tile.bad{animation:shake .4s ease}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.clipbox{position:relative;margin:16px auto 0;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#17112A;max-width:560px}
+.clipbox video{width:100%;height:100%;display:block;object-fit:cover}
+.clipbox .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.75);font-weight:700;font-size:15px;padding:16px;background:linear-gradient(160deg,#2A1E4A,#17112A)}
+.clipbox .ph.off{opacity:0;pointer-events:none;transition:opacity .3s}
+.bf-acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.bf-end{display:none;flex-direction:column;align-items:center;gap:10px;padding:10px 0}
+.bf-end.on{display:flex;animation:pop .5s var(--ease)}
+.bf-end .big{font-weight:800;font-size:24px}
+
+/* ── роли ── */
+.pick{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.pick button{appearance:none;border:0;cursor:pointer;padding:10px 16px;border-radius:999px;font-weight:800;font-size:15px;color:var(--ink);background:var(--soft);box-shadow:inset 0 0 0 2px transparent;transition:transform .15s var(--out),box-shadow .2s}
+.pick button b{font-family:var(--zh);font-weight:900;margin-right:6px}
+.pick button.on{box-shadow:inset 0 0 0 3px var(--ink)}
+.pick button:active{transform:scale(.96)}
+.script{display:flex;flex-direction:column;gap:8px;text-align:left}
+.ln{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:start;padding:10px 12px;border-radius:16px;background:#FBF9FF;transition:opacity .25s,background .25s,transform .25s var(--out)}
+.ln .w{font-weight:800;font-size:13px;line-height:1.2;padding:4px 8px;border-radius:10px;color:var(--ink);text-align:center;align-self:start}
+.ln .w b{display:block;font-family:var(--zh);font-weight:900;font-size:15px}
+.ln .z{font-family:var(--zh);font-weight:900;font-size:clamp(22px,5.6vw,28px);line-height:1.2}
+.ln .p{font-family:var(--pyf);font-weight:800;font-size:15px;color:var(--p)}
+.ln .r{font-weight:600;font-size:13px;color:var(--muted)}
+.ln.act{font-style:italic;color:var(--muted);font-weight:700;font-size:14px;background:none;grid-template-columns:1fr;text-align:center;padding:4px}
+.script.focus .ln:not(.mine):not(.act){opacity:.5}
+.ln.mine{background:#FFF8DE;box-shadow:inset 0 0 0 2px var(--honey)}
+.ln.mine .z{font-size:clamp(26px,6.6vw,34px)}
+@media(max-width:420px){.ln{grid-template-columns:1fr}.ln .w{justify-self:start;display:inline-flex;gap:6px;align-items:center}.ln .w b{display:inline;font-size:14px}}
+.acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* ── мой диалог ── */
+.form{display:grid;gap:14px;text-align:left}
+.fld label{display:block;font-weight:800;font-size:14px;color:var(--muted);margin-bottom:6px}
+.fld input{width:100%;padding:12px 14px;border-radius:14px;border:2px solid #E2DBF5;font-weight:700;font-size:18px;color:var(--ink);outline:none;background:#fff}
+.fld input:focus{border-color:var(--p);box-shadow:0 0 0 4px rgba(108,63,197,.15)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.two{grid-template-columns:1fr}}
+.moods{display:flex;flex-wrap:wrap;gap:6px}
+.mood{appearance:none;border:0;cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:999px;background:var(--soft);color:var(--ink);font-weight:700;font-size:13px;box-shadow:inset 0 0 0 2px transparent;transition:box-shadow .2s,transform .15s var(--out)}
+.mood img{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#fff}
+.mood .z{font-family:var(--zh);font-weight:900;font-size:14px}
+.mood.on{box-shadow:inset 0 0 0 3px var(--p);background:#fff}
+.mood:active{transform:scale(.96)}
+.seg{display:inline-flex;padding:4px;border-radius:999px;background:var(--soft)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--p);font-weight:800;font-size:15px;padding:8px 14px;border-radius:999px;cursor:pointer}
+.seg button b{font-family:var(--zh);font-weight:900;margin-right:4px}
+.seg button.on{background:var(--p);color:#fff}
+.mine-out{margin-top:18px}
+
+/* ── сцена на весь экран (суфлёр) ── */
+.stage{position:fixed;inset:0;z-index:60;background:#17112A;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:max(20px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));cursor:pointer;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}}
+.stage .x{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font:700 22px/1 system-ui;cursor:pointer}
+.stage .cnt{position:absolute;top:max(22px,env(safe-area-inset-top));left:20px;font-weight:800;font-size:14px;color:rgba(255,255,255,.6)}
+.stage .who{font-size:clamp(16px,3vw,24px);padding:8px 18px}
+.stage .z{font-family:var(--zh);font-weight:900;font-size:clamp(44px,9vw,110px);line-height:1.15;text-align:center}
+.stage .p{font-family:var(--pyf);font-weight:900;font-size:clamp(22px,4vw,48px);color:var(--honey);text-align:center}
+.stage .r{font-weight:700;font-size:clamp(16px,2.6vw,28px);color:rgba(255,255,255,.75);text-align:center}
+.stage .act{font-style:italic;font-weight:700;font-size:clamp(20px,3.4vw,36px);color:rgba(255,255,255,.8)}
+.stage .card{display:flex;flex-direction:column;align-items:center;gap:12px;animation:pop .35s var(--ease)}
+.stage .nav{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:12px}
+.stage .nav button{appearance:none;border:0;cursor:pointer;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font:800 24px/1 var(--f)}
+.stage .tip{position:absolute;bottom:max(86px,calc(env(safe-area-inset-bottom) + 70px));font-weight:600;font-size:13px;color:rgba(255,255,255,.5)}
+
+.foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}
+.foot a{color:var(--honey);text-decoration:none}
+
+/* печать: карточки ролей */
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff!important;color:#000;padding:0}
+  .homeback,.hero,.tabs,.foot,#build,#mine,.pick,.acts,.sub,.panel h2,[id^=tbadge],body>div[style*="position:fixed"]{display:none!important}
+  #roles{display:block!important}.panel{box-shadow:none;padding:0}
+  .print-role{page-break-after:always}
+  .ln{break-inside:avoid;background:#fff;border:1px solid #ddd}
+  .ln.mine{background:#FFF3C4!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.print-wrap{display:none}
+@media print{.script-screen{display:none!important}.print-wrap{display:block}.print-role h3{font-size:22px;margin:0 0 10px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style></head>
+<body>
+<a class="homeback" href="../" aria-label="Все уроки"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg><span>Все уроки</span></a>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">Speak<b>&</b>Smile · урок 4 · говорим сами</div>
+    <div class="zh" lang="zh">我们的对话</div>
+    <div class="py">Wǒmen de duìhuà</div>
+    <div class="ru">Наш диалог</div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-tab="build">Собери</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="roles">Сцена</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="mine">Мой диалог</button>
+  </div>
+
+  <!-- СОБЕРИ ФРАЗУ -->
+  <section id="build" role="tabpanel">
+    <div class="panel">
+      <div id="bfGame">
+        <div class="bf-top"><span class="pill">Фраза <b id="bfN">1</b> из <span id="bfT"></span></span><span class="who" id="bfWho"></span></div>
+        <div class="bf-ru" id="bfRu"></div>
+        <div class="slots" id="bfSlots"></div>
+        <div class="tiles" id="bfTiles"></div>
+        <div class="clipbox"><video id="bfVid" playsinline preload="metadata" src="../film/ep1/watch.mp4"></video><div class="ph" id="bfPh">Собери фразу — и герой её скажет</div></div>
+        <div class="bf-acts"><button class="btn soft" id="bfHint">Подсказка</button><button class="btn soft" id="bfReplay" hidden>Ещё раз</button><button class="btn primary" id="bfNext" hidden>Дальше →</button></div>
+      </div>
+      <div class="bf-end" id="bfEnd"><div class="big">Все фразы собраны! 太棒了！</div><p class="sub" style="margin:0">Теперь ты знаешь всю сцену. Переходи к «Сцена по ролям».</p><button class="btn primary" id="bfAgain">Собрать ещё раз</button></div>
+    </div>
+  </section>
+
+  <!-- СЦЕНА ПО РОЛЯМ -->
+  <section id="roles" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Сцена по ролям</h2>
+      <p class="sub">Выбери героя — твои реплики подсветятся. Учитель может вывести сцену на экран и листать по репликам.</p>
+      <div class="pick" id="rolePick"></div>
+      <div class="script script-screen" id="roleScript"></div>
+      <div class="print-wrap" id="printWrap"></div>
+      <div class="acts"><button class="btn primary" id="roleStage">На весь экран</button><button class="btn soft" id="rolePrint">Распечатать роли</button><a class="btn soft" href="../film/?ep=1&m=role_mei">Озвучить в фильме</a></div>
+    </div>
+  </section>
+
+  <!-- МОЙ ДИАЛОГ -->
+  <section id="mine" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Мой диалог</h2>
+      <p class="sub">Та же сцена — но про тебя и твоего друга. Впиши имена, выбери настроение — и разыграйте в парах.</p>
+      <div class="form">
+        <div class="two">
+          <div class="fld"><label for="nA">Я — меня зовут</label><input id="nA" placeholder="Маша" maxlength="20" autocomplete="off"></div>
+          <div class="fld"><label for="nB">Мой собеседник</label><input id="nB" placeholder="Дима" maxlength="20" autocomplete="off"></div>
+        </div>
+        <div class="fld"><label>Как дела у меня?</label><div class="moods" id="moodA"></div></div>
+        <div class="fld"><label>Как дела у собеседника?</label><div class="moods" id="moodB"></div></div>
+        <div class="two">
+          <div class="fld"><label>Кто подходит?</label><div class="seg" id="sx"><button data-v="m" class="on"><b>他</b>он</button><button data-v="f"><b>她</b>она</button></div></div>
+          <div class="fld"><label>Это…</label><div class="seg" id="rel"><button data-v="f" class="on"><b>朋友</b>друг</button><button data-v="t"><b>老师</b>учитель</button></div></div>
+        </div>
+        <div class="fld"><label for="nC">Как его/её зовут</label><input id="nC" placeholder="Саша" maxlength="20" autocomplete="off"></div>
+      </div>
+      <div class="mine-out"><div class="script" id="mineScript"></div>
+        <div class="acts"><button class="btn primary" id="mineStage">На весь экран</button></div></div>
+    </div>
+  </section>
+
+  <p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
+</div>
+
+<div class="stage" id="stage" hidden><span class="cnt" id="stCnt"></span><button class="x" id="stX" aria-label="Закрыть">✕</button><div id="stCard"></div>
+  <div class="tip">Нажми на экран — следующая реплика</div><div class="nav"><button id="stPrev" aria-label="Назад">←</button><button id="stNext" aria-label="Дальше">→</button></div></div>
+
+<script src="../gate.js?v=3"></script>
+<script>
+ZhGate.lock('our-scene');
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const H={mei:{zh:'美美',ru:'Мэймэй',c:'var(--mei)'},long:{zh:'小龙',ru:'Сяо Лун',c:'var(--long)'},ming:{zh:'小明',ru:'Сяо Мин',c:'var(--ming)'},tch:{zh:'老师',ru:'Учительница',c:'var(--tch)'}};
+const who=k=>`<span class="who" style="background:${H[k].c}"><b lang="zh">${H[k].zh}</b>${H[k].ru}</span>`;
+
+/* сцена из серии 1; t — фраза в watch.mp4 (из timeline.json), w — кусочки для «Собери фразу» */
+const SCENE=[
+ {k:'mei', zh:'你好！你叫什么名字？', py:'Nǐ hǎo! Nǐ jiào shénme míngzi?', ru:'Привет! Как тебя зовут?', t:[9.4,12.6],
+  w:[['你好！','nǐ hǎo'],['你','nǐ'],['叫','jiào'],['什么','shénme'],['名字？','míngzi']]},
+ {k:'long',zh:'我叫小龙。你呢？', py:'Wǒ jiào Xiǎo Lóng. Nǐ ne?', ru:'Меня зовут Сяо Лун. А тебя?', t:[12.6,15.25],
+  w:[['我','wǒ'],['叫','jiào'],['小龙。','Xiǎo Lóng'],['你呢？','nǐ ne']]},
+ {k:'mei', zh:'我叫美美。很高兴认识你！', py:'Wǒ jiào Měiměi. Hěn gāoxìng rènshi nǐ!', ru:'Меня зовут Мэймэй. Очень приятно!', t:[15.25,18.85],
+  w:[['我','wǒ'],['叫','jiào'],['美美。','Měiměi'],['很高兴','hěn gāoxìng'],['认识你！','rènshi nǐ']]},
+ {k:'long',zh:'我也是！你好吗？', py:'Wǒ yě shì! Nǐ hǎo ma?', ru:'Мне тоже! Как дела?', t:[18.85,21.17],
+  w:[['我','wǒ'],['也是！','yě shì'],['你好','nǐ hǎo'],['吗？','ma']]},
+ {k:'mei', zh:'我很好！你呢？', py:'Wǒ hěn hǎo! Nǐ ne?', ru:'Хорошо! А у тебя?', t:[21.17,23.17],
+  w:[['我','wǒ'],['很','hěn'],['好！','hǎo'],['你呢？','nǐ ne']]},
+ {k:'long',zh:'我饿了！', py:'Wǒ è le!', ru:'Я хочу есть!', t:[23.17,26.09], w:[['我','wǒ'],['饿','è'],['了！','le']]},
+ {act:'Подходит Сяо Мин'},
+ {k:'mei', zh:'他是谁？你的朋友？', py:'Tā shì shéi? Nǐ de péngyou?', ru:'Кто это? Твой друг?', t:[27.45,30.05],
+  w:[['他','tā'],['是','shì'],['谁？','shéi'],['你的','nǐ de'],['朋友？','péngyou']]},
+ {k:'long',zh:'他是我的朋友。他叫小明。', py:'Tā shì wǒ de péngyou. Tā jiào Xiǎo Míng.', ru:'Это мой друг. Его зовут Сяо Мин.', t:[30.05,33.37],
+  w:[['他','tā'],['是','shì'],['我的','wǒ de'],['朋友。','péngyou'],['他叫','tā jiào'],['小明。','Xiǎo Míng']]},
+ {k:'ming',zh:'你好！', py:'Nǐ hǎo!', ru:'Привет!', t:[33.37,34.65]},
+ {k:'mei', zh:'你好，小明！', py:'Nǐ hǎo, Xiǎo Míng!', ru:'Привет, Сяо Мин!', t:[34.65,36.78]},
+ {act:'Проходит учительница'},
+ {k:'mei', zh:'她是谁？', py:'Tā shì shéi?', ru:'А это кто?', t:[39.78,41.3], w:[['她','tā'],['是','shì'],['谁？','shéi']]},
+ {k:'long',zh:'她是我的老师。', py:'Tā shì wǒ de lǎoshī.', ru:'Это моя учительница.', t:[41.3,43.27], w:[['她','tā'],['是','shì'],['我的','wǒ de'],['老师。','lǎoshī']]},
+ {k:'mei', zh:'老师，你好！', py:'Lǎoshī, nǐ hǎo!', ru:'Здравствуйте, учитель!', t:[43.27,46.07], w:[['老师，','lǎoshī'],['你好！','nǐ hǎo']]},
+ {k:'long',zh:'走吧！走吧！', py:'Zǒu ba! Zǒu ba!', ru:'Пойдём! Пойдём!', t:[46.07,47.91]},
+];
+
+/* ── собери фразу ── */
+const BF=SCENE.filter(s=>s.w); let bi=0, need=0, placed=[];
+const vid=$('bfVid'); let stopAt=0;
+vid.addEventListener('timeupdate',()=>{ if(stopAt && vid.currentTime>=stopAt){ vid.pause(); stopAt=0; } });
+function playLine(s){ $('bfPh').classList.add('off'); vid.currentTime=s.t[0]; stopAt=s.t[1]; vid.play().catch(()=>{ $('bfPh').classList.remove('off'); }); }
+function bfRound(){
+  const s=BF[bi]; need=0; placed=[];
+  $('bfN').textContent=bi+1; $('bfT').textContent=BF.length; $('bfWho').outerHTML=`<span class="who" id="bfWho" style="background:${H[s.k].c}"><b lang="zh">${H[s.k].zh}</b>${H[s.k].ru}</span>`;
+  $('bfRu').textContent='«'+s.ru+'»';
+  $('bfSlots').className='slots'; $('bfSlots').innerHTML=s.w.map(()=>'<span class="slot"></span>').join('');
+  let order=shuffle(s.w.map((w,i)=>i)); if(order.every((v,i)=>v===i)&&order.length>1) order.reverse();
+  $('bfTiles').innerHTML=order.map((i,n)=>`<button class="tile" style="--i:${n}" data-i="${i}"><span class="z" lang="zh">${s.w[i][0]}</span><span class="p">${s.w[i][1]}</span></button>`).join('');
+  $('bfNext').hidden=true; $('bfReplay').hidden=true; $('bfHint').hidden=false; $('bfPh').classList.remove('off'); vid.pause(); stopAt=0;
+}
+$('bfTiles').addEventListener('click',e=>{ const t=e.target.closest('.tile'); if(!t) return; const s=BF[bi];
+  if(+t.dataset.i===need){ const slot=$('bfSlots').children[need]; const c=t.cloneNode(true); c.classList.add('placed'); c.style.animationDelay='0ms'; slot.replaceWith(c); t.classList.add('used'); need++;
+    if(need===s.w.length){ $('bfSlots').classList.add('ok'); $('bfHint').hidden=true; $('bfReplay').hidden=false; $('bfNext').hidden=false; playLine(s); } }
+  else { t.classList.remove('bad'); void t.offsetWidth; t.classList.add('bad'); } });
+$('bfHint').onclick=()=>{ const t=$('bfTiles').querySelector(`.tile[data-i="${need}"]`); if(t){ t.classList.remove('bad'); t.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:500}); } };
+$('bfReplay').onclick=()=>playLine(BF[bi]);
+$('bfNext').onclick=()=>{ bi++; if(bi<BF.length) bfRound(); else { $('bfGame').hidden=true; $('bfEnd').classList.add('on'); vid.pause(); } };
+$('bfAgain').onclick=()=>{ bi=0; $('bfGame').hidden=false; $('bfEnd').classList.remove('on'); bfRound(); };
+
+/* ── сцена по ролям ── */
+let role=null;
+const lineHTML=(s,mine)=> s.act?`<div class="ln act">— ${s.act} —</div>`
+  :`<div class="ln${mine?' mine':''}"><span class="w" style="background:${H[s.k].c}"><b lang="zh">${H[s.k].zh}</b>${H[s.k].ru}</span><div><div class="z" lang="zh">${s.zh}</div><div class="p">${s.py}</div><div class="r">${s.ru}</div></div></div>`;
+function drawRoles(){
+  $('rolePick').innerHTML=['all','mei','long','ming'].map(k=>`<button data-k="${k}" class="${(role||'all')===k?'on':''}" style="${k!=='all'?'background:'+H[k].c:''}">${k==='all'?'Вся сцена':`<b lang="zh">${H[k].zh}</b>${H[k].ru}`}</button>`).join('');
+  $('roleScript').className='script script-screen'+(role?' focus':'');
+  $('roleScript').innerHTML=SCENE.map(s=>lineHTML(s,role&&s.k===role)).join('');
+}
+$('rolePick').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; role=b.dataset.k==='all'?null:b.dataset.k; drawRoles(); });
+$('rolePrint').onclick=()=>{ $('printWrap').innerHTML=['mei','long','ming'].map(k=>`<div class="print-role"><h3>Твоя роль: ${H[k].ru} (${H[k].zh})</h3><div class="script">${SCENE.map(s=>lineHTML(s,s.k===k)).join('')}</div></div>`).join(''); window.print(); };
+$('roleStage').onclick=()=>stage(SCENE,role);
+
+/* ── мой диалог ── */
+const MOODS=[['good','我很好！','Wǒ hěn hǎo!','хорошо'],['great','太棒了！','Tài bàng le!','отлично'],['okay','还可以。','Hái kěyǐ.','нормально'],['happy','我很开心！','Wǒ hěn kāixīn!','весело'],
+  ['hungry','我饿了。','Wǒ è le.','хочу есть'],['thirsty','我渴了。','Wǒ kě le.','хочу пить'],['tired','我累了。','Wǒ lèi le.','устал(а)'],['sad','我很难过。','Wǒ hěn nánguò.','грустно'],['hot','我很热！','Wǒ hěn rè!','жарко'],['cold','我很冷！','Wǒ hěn lěng!','холодно']];
+const MY={a:'good',b:'hungry',sx:'m',rel:'f'};
+function moodsHTML(sel){ return MOODS.map(([id,z,,ru])=>`<button class="mood${id===sel?' on':''}" data-id="${id}"><img src="../how-are-you/img/${id}.webp" alt=""><span class="z" lang="zh">${z.replace(/[！。]/,'')}</span>${ru}</button>`).join(''); }
+let snd=null; const say=id=>{ if(snd) snd.pause(); snd=new Audio(`../how-are-you/audio/${id}.mp3`); snd.play().catch(()=>{}); };
+function mineScript(){
+  const A=esc($('nA').value.trim()||'Маша'), B=esc($('nB').value.trim()||'Дима'), C=esc($('nC').value.trim()||'Саша');
+  const ma=MOODS.find(m=>m[0]===MY.a), mb=MOODS.find(m=>m[0]===MY.b);
+  const ta=MY.sx==='m'?['他','Tā']:['她','Tā'], rz=MY.rel==='f'?['朋友','péngyou']:['老师','lǎoshī'];
+  const ruWho=MY.sx==='m'?['Кто он?','Это мой ','Его зовут ']:['Кто она?','Это моя ','Её зовут '];
+  const ruRel=MY.rel==='f'?(MY.sx==='m'?'друг':'подруга'):(MY.sx==='m'?'учитель':'учительница');
+  return [
+   {s:'A',zh:'你好！你叫什么名字？',py:'Nǐ hǎo! Nǐ jiào shénme míngzi?',ru:'Привет! Как тебя зовут?'},
+   {s:'B',zh:`我叫 ${B}。你呢？`,py:`Wǒ jiào ${B}. Nǐ ne?`,ru:`Меня зовут ${B}. А тебя?`},
+   {s:'A',zh:`我叫 ${A}。很高兴认识你！`,py:`Wǒ jiào ${A}. Hěn gāoxìng rènshi nǐ!`,ru:`Меня зовут ${A}. Очень приятно!`},
+   {s:'B',zh:'我也是！你好吗？',py:'Wǒ yě shì! Nǐ hǎo ma?',ru:'Мне тоже! Как дела?'},
+   {s:'A',zh:ma[1]+'你呢？',py:ma[2]+' Nǐ ne?',ru:ma[3][0].toUpperCase()+ma[3].slice(1)+'! А у тебя?'},
+   {s:'B',zh:mb[1],py:mb[2],ru:mb[3][0].toUpperCase()+mb[3].slice(1)+'!'},
+   {act:`Подходит ${C}`},
+   {s:'A',zh:`${ta[0]}是谁？`,py:`${ta[1]} shì shéi?`,ru:ruWho[0]},
+   {s:'B',zh:`${ta[0]}是我的${rz[0]}。${ta[0]}叫 ${C}。`,py:`${ta[1]} shì wǒ de ${rz[1]}. ${ta[1]} jiào ${C}.`,ru:`${ruWho[1]}${ruRel}. ${ruWho[2]}${C}.`},
+   {s:'A',zh:MY.rel==='t'?'老师，你好！':`你好，${C}！`,py:MY.rel==='t'?'Lǎoshī, nǐ hǎo!':`Nǐ hǎo, ${C}!`,ru:MY.rel==='t'?'Здравствуйте!':`Привет, ${C}!`},
+  ].map(l=>l.act?l:{...l,name:l.s==='A'?A:B,c:l.s==='A'?'var(--honey)':'var(--long)'});
+}
+const myLine=l=>l.act?`<div class="ln act">— ${l.act} —</div>`:`<div class="ln"><span class="w" style="background:${l.c}">${l.name}</span><div><div class="z" lang="zh">${l.zh}</div><div class="p">${l.py}</div><div class="r">${l.ru}</div></div></div>`;
+function drawMine(){
+  $('moodA').innerHTML=moodsHTML(MY.a); $('moodB').innerHTML=moodsHTML(MY.b);
+  $('mineScript').innerHTML=mineScript().map(myLine).join('');
+}
+['nA','nB','nC'].forEach(id=>$(id).addEventListener('input',()=>{ $('mineScript').innerHTML=mineScript().map(myLine).join(''); }));
+$('moodA').addEventListener('click',e=>{ const b=e.target.closest('.mood'); if(!b) return; MY.a=b.dataset.id; say(b.dataset.id); drawMine(); });
+$('moodB').addEventListener('click',e=>{ const b=e.target.closest('.mood'); if(!b) return; MY.b=b.dataset.id; say(b.dataset.id); drawMine(); });
+[['sx','sx'],['rel','rel']].forEach(([id,key])=>$(id).addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; MY[key]=b.dataset.v; $(id).querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); drawMine(); }));
+$('mineStage').onclick=()=>stage(mineScript().map(l=>l.act?l:{...l,custom:true}),null);
+
+/* ── суфлёр на весь экран ── */
+let SL=[], si=0, sRole=null;
+function stage(lines,r){ SL=lines; si=0; sRole=r; $('stage').hidden=false; document.documentElement.style.overflow='hidden'; drawStage(); }
+function drawStage(){ const s=SL[si]; $('stCnt').textContent=`${si+1} / ${SL.length}`;
+  if(s.act){ $('stCard').innerHTML=`<div class="card"><div class="act">— ${s.act} —</div></div>`; return; }
+  const badge=s.custom?`<span class="who" style="background:${s.c}">${s.name}</span>`:`<span class="who" style="background:${H[s.k].c}"><b lang="zh">${H[s.k].zh}</b>${H[s.k].ru}${sRole===s.k?' · ТВОЯ РЕПЛИКА':''}</span>`;
+  $('stCard').innerHTML=`<div class="card">${badge}<div class="z" lang="zh">${s.zh}</div><div class="p">${s.py}</div><div class="r">${s.ru}</div></div>`; }
+const stGo=d=>{ si=Math.max(0,Math.min(SL.length-1,si+d)); drawStage(); };
+const stClose=()=>{ $('stage').hidden=true; document.documentElement.style.overflow=''; };
+$('stage').addEventListener('click',e=>{ if(e.target.closest('#stX')) return stClose(); if(e.target.closest('#stPrev')) return stGo(-1); if(si===SL.length-1&&!e.target.closest('#stNext')) return stClose(); stGo(1); });
+document.addEventListener('keydown',e=>{ if($('stage').hidden) return; if(e.key==='Escape') stClose(); if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); stGo(1); } if(e.key==='ArrowLeft') stGo(-1); });
+
+/* ── вкладки ── */
+function openTab(n){ document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===n)); ['build','roles','mine'].forEach(id=>$(id).hidden=id!==n); vid.pause();
+  history.replaceState(null,'',n==='build'?location.pathname+location.search:'#'+n); }
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
+bfRound(); drawRoles(); drawMine();
+const h0=location.hash.slice(1); if(['roles','mine'].includes(h0)) openTab(h0);
+</script>
+</body></html>

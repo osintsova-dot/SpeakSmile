@@ -191,6 +191,6 @@ ZhGate.ready.then(g=> (g.teacher||g.member) ? g : g.askCode())
   $('title').innerHTML=`<div class="e">${t.title.ep}</div><div class="z">${t.title.zh}</div><div class="r">${t.title.ru}</div>`;
   if(t.series) $('series').innerHTML=`<svg class="leaf" viewBox="0 0 64 64"><path d="M32 60c-1 0-1.6-.8-1.6-1.8V40.5C21 38 6 31 4.3 15.6 4 13 6.6 11.7 8.6 12.9c4.6 2.8 10.6 2.3 16.4-1.4 3.2-2 4.6-5 5.4-7.8.5-1.9 2.7-1.9 3.2 0 .8 2.8 2.2 5.8 5.4 7.8 5.8 3.7 11.8 4.2 16.4 1.4 2-1.2 4.6.1 4.3 2.7C58 31 43 38 33.6 40.5v17.7c0 1-.6 1.8-1.6 1.8z"/></svg>`
     +`<div class="pre">${t.series.pre||'Speak&amp;Smile · сериал'}</div><div class="nm">${t.series.ru}</div><div class="zh2">${t.series.zh}</div><div class="py2">${t.series.py||''}</div>`;
-  v.poster=BASE+'poster.jpg'; drawChips(); setMode('watch',false); loop();
+  v.poster=BASE+'poster.jpg'; drawChips(); const m0=q.get('m'); setMode(m0&&t.versions[m0]?m0:'watch',false); loop();
 });
 </script></body></html>
