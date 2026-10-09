@@ -176,8 +176,8 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
     <div class="grid" id="grid"></div>
     <div class="note">В Китае до 10 считают на <b>одной руке</b>: 6 — «телефончик», 7 — щепотка, 8 — «пистолетик», 9 — крючок, 10 — кулак. А дальше — как говорим: 11 = <b>десять и один</b> (十一 shíyī), 15 = <b>десять и пять</b> (十五 shíwǔ), а 20 = <b>два десятка</b> (二十 èrshí).</div>
     <div class="panel" style="margin-top:16px">
-      <h2>你几岁？ Сколько тебе лет?</h2>
-      <p class="sub">几 <b class="py">jǐ</b> — «сколько», 岁 <b class="py">suì</b> — «лет». Ответ: 我 + число + 岁. Нажми — услышишь.</p>
+      <h2>你多大？ Сколько тебе лет?</h2>
+      <p class="sub">多大 <b class="py">duō dà</b> — дословно «насколько большой», 岁 <b class="py">suì</b> — «лет». Ответ: 我 + число + 岁. Нажми — услышишь.</p>
       <div class="dlg" id="ageDlg"></div>
       <div class="ages" id="ages"></div>
     </div>
@@ -201,7 +201,7 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
 
   <section id="hz" role="tabpanel" hidden>
     <div class="panel">
-      <h2>Иероглифы-цифры + 几 и 岁</h2>
+      <h2>Иероглифы-цифры + 多 大 岁</h2>
       <p class="sub">Самые простые знаки в китайском. Нажми на цифру — посмотри, как она пишется, и обведи пальцем.</p>
       <div class="hzrow" id="hzRow"></div>
       <div class="hzmain">
@@ -242,8 +242,8 @@ $('grid').innerHTML=Array.from({length:20},(_,k)=>{const n=k+1;return `<button c
 $('grid').addEventListener('click',e=>{ const c=e.target.closest('.ncard'); if(!c) return; document.querySelectorAll('.ncard').forEach(x=>x.classList.remove('say')); c.classList.add('say'); play(+c.dataset.n,()=>setTimeout(()=>c.classList.remove('say'),300)); });
 
 /* сколько тебе лет */
-const playId=(id,onend)=>{ if(cur){cur.pause();cur.onended=null;} const a=new Audio(`audio/${id}.mp3`); cur=a; a.onended=onend||null; a.play().catch(()=>{}); return a; };
-$('ageDlg').innerHTML=[['a','q_age','你几岁？','Nǐ jǐ suì?','Сколько тебе лет?'],['b','age12','我十二岁。','Wǒ shí\'èr suì.','Мне двенадцать лет.'],['a','q_age_ta','他几岁？','Tā jǐ suì?','Сколько ему лет?'],['b','ta_age','他十二岁。','Tā shí\'èr suì.','Ему двенадцать лет.']]
+const playId=(id,onend)=>{ if(cur){cur.pause();cur.onended=null;} const a=new Audio(`audio/${id}.mp3?v=2`); cur=a; a.onended=onend||null; a.play().catch(()=>{}); return a; };
+$('ageDlg').innerHTML=[['a','q_age','你多大？','Nǐ duō dà?','Сколько тебе лет?'],['b','age12','我十二岁。','Wǒ shí\'èr suì.','Мне двенадцать лет.'],['a','q_age_ta','他多大？','Tā duō dà?','Сколько ему лет?'],['b','ta_age','他十二岁。','Tā shí\'èr suì.','Ему двенадцать лет.']]
   .map(([w,id,z,p,r])=>`<button class="${w}" data-id="${id}"><span class="w">${w==='a'?'вопрос':'ответ'}</span><span><span class="z" lang="zh">${z}</span><br><span class="p">${p}</span> <span class="r">— ${r}</span></span></button>`).join('');
 $('ages').innerHTML=[10,11,12,13,14].map(n=>`<button data-id="age${n}"><span class="z" lang="zh">我${NUM[n][0]}岁</span><span class="p">${n} лет</span></button>`).join('');
 ['ageDlg','ages'].forEach(id=>$(id).addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; document.querySelectorAll('.dlg button,.ages button').forEach(x=>x.classList.remove('say')); b.classList.add('say'); playId(b.dataset.id,()=>setTimeout(()=>b.classList.remove('say'),300)); }));
@@ -256,7 +256,7 @@ function pick4(t,max=20){ return shuffle([t,...shuffle(Array.from({length:max},(
 function round(){
   lock=false; const A=$('gArea');
   if(G==='age'){ target=10+(Math.random()*5|0);
-    A.innerHTML=bar()+`<div class="q"><button class="listen" id="gL" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button></div><p class="sub" style="margin:0 auto 10px">你几岁？ Сколько лет говорящему?</p><div class="opts">${shuffle([target,...shuffle([10,11,12,13,14].filter(x=>x!==target)).slice(0,3)]).map(n=>`<button class="opt" data-n="${n}"><span class="z" lang="zh">${NUM[n][0]}岁</span><span class="p">${n} лет</span></button>`).join('')}</div>`;
+    A.innerHTML=bar()+`<div class="q"><button class="listen" id="gL" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button></div><p class="sub" style="margin:0 auto 10px">你多大？ Сколько лет говорящему?</p><div class="opts">${shuffle([target,...shuffle([10,11,12,13,14].filter(x=>x!==target)).slice(0,3)]).map(n=>`<button class="opt" data-n="${n}"><span class="z" lang="zh">${NUM[n][0]}岁</span><span class="p">${n} лет</span></button>`).join('')}</div>`;
     $('gL').onclick=()=>playId('age'+target); setTimeout(()=>playId('age'+target),300); }
   if(G==='listen'){ target=1+(Math.random()*20|0);
     A.innerHTML=bar()+`<div class="q"><button class="listen" id="gL" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button></div><div class="opts">${pick4(target).map(n=>optHTML(n)).join('')}</div>`;
@@ -339,7 +339,7 @@ function drawHz(animate){ const h=HANZI[hzI], box=$('hzSvg'); box.innerHTML='';
   box.appendChild(svg); an.forEach(p=>{ const L=p.getTotalLength()+40; p.style.strokeDasharray=L; p.style.strokeDashoffset=animate?L:0; });
   if(animate) an.forEach((p,i)=>setTimeout(()=>p.style.strokeDashoffset=0,220+i*420)); }
 function showHz(i,animate=true){ hzI=i; const h=HANZI[i]; $('hzRow').querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
-  $('hzBig').textContent=h.ch; $('hzPy').textContent=h.py; $('hzRu').textContent=h.ru+(h.n?' · '+h.n:''); $('hzStory').innerHTML=h.story+(h.n?`<br><img src="img/h${h.n}.webp" alt="">`:`<br><b lang="zh" style="font-family:var(--zh);color:var(--ink)">你几岁？</b> — сколько тебе лет?`);
+  $('hzBig').textContent=h.ch; $('hzPy').textContent=h.py; $('hzRu').textContent=h.ru+(h.n?' · '+h.n:''); $('hzStory').innerHTML=h.story+(h.n?`<br><img src="img/h${h.n}.webp" alt="">`:`<br><b lang="zh" style="font-family:var(--zh);color:var(--ink)">你多大？</b> — сколько тебе лет?`);
   $('quiz').classList.remove('show'); $('pad').innerHTML=''; drawHz(animate); }
 const hzSay=h=> h.n? play(h.n) : playId(h.audio||'q_age');
 $('hzRow').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ showHz(+b.dataset.i); hzSay(HANZI[+b.dataset.i]); } });
