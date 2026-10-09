@@ -61,7 +61,7 @@
       f.onsubmit=async ev=>{ ev.preventDefault(); const code=inp.value.trim(); if(!code){ inp.focus(); return; }
         btn.disabled=true; btn.textContent='Проверяем…'; err.textContent='';
         // учительский код в том же поле — включает режим учителя на этом устройстве
-        const tc=await fetch(base+'lessons.json',{cache:'no-store'}).then(r=>r.json()).then(c=>c.teacherCode).catch(()=>null);
+        const tc=await loadCfg().then(c=>c.teacherCode).catch(()=>null);
         if(tc && code===tc){ ls.set('zhTeacher','1'); location.reload(); return; }
         const j=await ask(code); btn.disabled=false; btn.textContent='Войти';
         if(j.ok&&j.teacher){ ls.set('zhTeacher','1'); location.reload(); return; }
@@ -86,8 +86,13 @@
     return {member:false, reason:j.reason};
   }
 
+  // список уроков: ждём не дольше 8 с, две попытки; не вышло — последняя сохранённая копия (у iPhone-приложения бывает «зависшая» сеть)
+  function getCfg(){ const ctl=new AbortController(); const tm=setTimeout(()=>ctl.abort(),8000);
+    return fetch(base+'lessons.json',{cache:'no-store',signal:ctl.signal}).then(r=>{ clearTimeout(tm); if(!r.ok) throw 0; return r.json(); }); }
+  function loadCfg(){ return getCfg().catch(()=>getCfg()).then(c=>{ ls.set('zhCfg',JSON.stringify(c)); return c; })
+    .catch(()=>{ const c=JSON.parse(ls.get('zhCfg')||'null'); if(c) return c; throw new Error('net'); }); }
   window.ZhGate={
-    ready: fetch(base+'lessons.json',{cache:'no-store'}).then(r=>r.json()).then(async cfg=>{
+    ready: loadCfg().then(async cfg=>{
       if(q.has('t')){ if(q.get('t')===cfg.teacherCode){ ls.set('zhTeacher','1'); } else { ls.del('zhTeacher'); } }
       const teacher=ls.get('zhTeacher')==='1';
       const a=teacher?{member:true}:await access();

@@ -52,7 +52,7 @@ a.card.code{cursor:pointer}a.card.code:hover{transform:translateY(-2px);backgrou
   <a class="join" id="join" href="/chinese/start/#zapis">Хочу в группу</a>
   <p class="foot"><a href="/">speakandsmile.ru</a> · Норильск</p>
 </div>
-<script src="gate.js?v=3"></script>
+<script src="gate.js?v=4"></script>
 <script>
 function draw(g){
   const list=document.getElementById('list'); list.innerHTML='';
@@ -70,5 +70,5 @@ function draw(g){
   });
   if(g.teacher && !document.querySelector('.tbadge')){ const b=document.createElement('div'); b.className='tbadge'; b.textContent='Режим учителя'; document.body.appendChild(b); }
 }
-ZhGate.ready.then(g=>{ draw(g); document.getElementById('codebtn').onclick=()=>g.askCode().then(draw); });
+ZhGate.ready.then(g=>{ draw(g); document.getElementById('codebtn').onclick=()=>g.askCode().then(draw); }).catch(()=>{ document.getElementById('list').innerHTML='<p style="font-weight:700">Не получилось загрузить уроки — похоже, пропала связь.</p><button onclick="location.reload()" style="border:0;border-radius:999px;padding:12px 20px;background:#fff;color:#6C3FC5;font:800 16px/1 var(--f);cursor:pointer">Попробовать ещё раз</button>'; });
 </script></body></html>
