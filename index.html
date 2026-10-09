@@ -763,6 +763,28 @@
     </div>
   </section>
 
+  <!-- ======== 6d · КИТАЙСКИЙ (5–7 классы) — кадры сериала «Гинкго в Пекине» ======== -->
+  <section id="chinese" class="cube" data-poster="url('assets/web/zh_poster.jpg')"
+           style="background-image:url('assets/web/zh_poster.jpg')">
+    <video class="bg" autoplay muted loop playsinline preload="metadata"
+           poster="assets/web/zh_poster.jpg">
+      <source media="(max-width:768px)" src="assets/web/zh_9x16.mp4" type="video/mp4">
+      <source src="assets/web/zh_16x9.mp4" type="video/mp4">
+    </video>
+    <div class="tint"></div>
+    <div class="scrim"></div>
+
+    <div class="over reveal"><i></i>Новое · 5–7 классы · китайский язык</div>
+    <div class="block">
+      <h2 class="headline reveal r2">Китайский —<br>с первого урока вслух</h2>
+      <p class="sub reveal r3">Разговорный курс для 5–7 классов: говорим с первого занятия, а дома — интерактивные уроки с озвучкой, играми, песнями и собственным сериалом про школьников из Пекина.</p>
+      <div class="reveal r4" style="display:flex;flex-wrap:wrap;gap:12px">
+        <a class="cta" href="#final" data-course="zh">Записаться</a>
+        <a class="cta ghost" href="/chinese/start/">Подробнее о курсе</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ======== 7 · ОГЭ/ЕГЭ — собственный ИИ-тренажёр ======== -->
   <section id="exam" class="cube exampage">
     <div class="grad dawn"></div>
@@ -833,13 +855,19 @@
           <input id="f-phone" type="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" inputmode="tel">
         </div>
         <div class="field">
+          <label for="f-course">Язык</label>
+          <select id="f-course">
+            <option value="en">Английский</option>
+            <option value="zh">Китайский (5–7 класс)</option>
+          </select>
+        </div>
+        <div class="field">
           <label for="f-age">Возраст ребёнка</label>
           <select id="f-age">
             <option>3–6 лет (дошкольник)</option>
             <option>7–10 лет (1–4 класс)</option>
             <option>11–13 лет (5–7 класс)</option>
             <option>14–18 лет (ОГЭ / ЕГЭ)</option>
-            <option>Взрослый</option>
           </select>
         </div>
         <button type="submit" class="cta big leadbtn" id="f-btn">Перезвоните мне</button>
@@ -862,6 +890,7 @@
         <a href="/angliyskiy-podrostki/">Подросткам</a><span class="sep">·</span>
         <a href="/oge-angliyskiy/">Подготовка к ОГЭ</a><span class="sep">·</span>
         <a href="/ege-angliyskiy/">Подготовка к ЕГЭ</a><span class="sep">·</span>
+        <a href="/chinese/start/">Китайский 5–7 класс</a><span class="sep">·</span>
         <a href="/tseny/">Цены</a>
       </div>
       ул. Богдана Хмельницкого, 19, офис 26 · Норильск ·
@@ -886,6 +915,7 @@
     <button class="tick"        data-sec="tots"    style="--tc:#D8446F"><span class="lbl">Малыши</span></button>
     <button class="tick"        data-sec="kids"    style="--tc:#E75C70"><span class="lbl">Дети</span></button>
     <button class="tick"        data-sec="teens"   style="--tc:#EE7B5C"><span class="lbl">Подростки</span></button>
+    <button class="tick"        data-sec="chinese" style="--tc:#F08A55"><span class="lbl">Китайский</span></button>
     <button class="tick lt"     data-sec="exam"    style="--tc:#F39A4E"><span class="lbl">ОГЭ · ЕГЭ</span></button>
     <button class="tick lt"     data-sec="reviews" style="--tc:#F4B646"><span class="lbl">Отзывы</span></button>
     <button class="tick lt"     data-sec="final"   style="--tc:#F5C842"><span class="lbl">Записаться</span></button>
@@ -955,6 +985,16 @@
     window.addEventListener('load', function(){ layoutRail(); onScroll(); });
     layoutRail(); onScroll();
 
+    // «Записаться» в блоке китайского: выбрать язык в форме и прокрутить к ней
+    document.querySelectorAll('[data-course]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var sel=document.getElementById('f-course'); if(sel) sel.value=a.dataset.course;
+        var age=document.getElementById('f-age'); if(age && a.dataset.course==='zh') age.selectedIndex=2;
+        var f=document.getElementById('final'); if(f) railGoto(f);
+      });
+    });
+
     // Форма заявки → Telegram-бот
     (function(){
       var form = document.getElementById('leadform');
@@ -970,6 +1010,7 @@
         var name = document.getElementById('f-name').value.trim();
         var phone = document.getElementById('f-phone').value.trim();
         var age = document.getElementById('f-age').value;
+        if(document.getElementById('f-course').value==='zh') age = 'КИТАЙСКИЙ · ' + age;
         if(!name || !phone){ show('Пожалуйста, заполните имя и телефон', false); return; }
         btn.disabled = true; btn.textContent = 'Отправляем…';
         fetch('https://ss-lead.o-sintsova.workers.dev/', {
