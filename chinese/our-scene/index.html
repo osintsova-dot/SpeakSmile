@@ -127,6 +127,14 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent}
 .seg button b{font-family:var(--zh);font-weight:900;margin-right:4px}
 .seg button.on{background:var(--p);color:#fff}
 .mine-out{margin-top:18px}
+.names{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.nm{appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;padding:6px 10px 5px;border-radius:14px;background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 2px transparent;transition:box-shadow .2s,transform .15s var(--out)}
+.nm .z{font-family:var(--zh);font-weight:900;font-size:18px;line-height:1.15}
+.nm .p{font-family:var(--pyf);font-weight:800;font-size:12px;color:var(--p)}
+.nm .r{font-weight:700;font-size:12px;color:var(--muted)}
+.nm.on{background:#fff;box-shadow:inset 0 0 0 3px var(--p)}
+.nm:active{transform:scale(.96)}
+.fld input{font-size:16px}
 
 /* ── сцена на весь экран (суфлёр) ── */
 .stage{position:fixed;inset:0;z-index:60;background:#17112A;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:max(20px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));cursor:pointer;animation:fade .3s ease}
@@ -207,19 +215,17 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent}
   <section id="mine" role="tabpanel" hidden>
     <div class="panel">
       <h2>Мой диалог</h2>
-      <p class="sub">Та же сцена — но про тебя и твоего друга. Впиши имена, выбери настроение — и разыграйте в парах.</p>
+      <p class="sub">Та же сцена — но про тебя и твоего друга. Выбери имена, настроение — и разыграйте в парах.</p>
       <div class="form">
-        <div class="two">
-          <div class="fld"><label for="nA">Я — меня зовут</label><input id="nA" placeholder="Маша" maxlength="20" autocomplete="off"></div>
-          <div class="fld"><label for="nB">Мой собеседник</label><input id="nB" placeholder="Дима" maxlength="20" autocomplete="off"></div>
-        </div>
+        <div class="fld"><label>Я — меня зовут</label><div class="names" id="pickA"></div><input id="nA" placeholder="или впиши своё имя" maxlength="20" autocomplete="off"></div>
+        <div class="fld"><label>Мой собеседник</label><div class="names" id="pickB"></div><input id="nB" placeholder="или впиши имя" maxlength="20" autocomplete="off"></div>
         <div class="fld"><label>Как дела у меня?</label><div class="moods" id="moodA"></div></div>
         <div class="fld"><label>Как дела у собеседника?</label><div class="moods" id="moodB"></div></div>
+        <div class="fld"><label>Кто к вам подходит?</label><div class="names" id="pickC"></div><input id="nC" placeholder="или впиши имя" maxlength="20" autocomplete="off"></div>
         <div class="two">
-          <div class="fld"><label>Кто подходит?</label><div class="seg" id="sx"><button data-v="m" class="on"><b>他</b>он</button><button data-v="f"><b>她</b>она</button></div></div>
+          <div class="fld"><label>Он или она?</label><div class="seg" id="sx"><button data-v="m" class="on"><b>他</b>он</button><button data-v="f"><b>她</b>она</button></div></div>
           <div class="fld"><label>Это…</label><div class="seg" id="rel"><button data-v="f" class="on"><b>朋友</b>друг</button><button data-v="t"><b>老师</b>учитель</button></div></div>
         </div>
-        <div class="fld"><label for="nC">Как его/её зовут</label><input id="nC" placeholder="Саша" maxlength="20" autocomplete="off"></div>
       </div>
       <div class="mine-out"><div class="script" id="mineScript"></div>
         <div class="acts"><button class="btn primary" id="mineStage">На весь экран</button></div></div>
@@ -307,34 +313,48 @@ $('roleStage').onclick=()=>stage(SCENE,role);
 /* ── мой диалог ── */
 const MOODS=[['good','我很好！','Wǒ hěn hǎo!','хорошо'],['great','太棒了！','Tài bàng le!','отлично'],['okay','还可以。','Hái kěyǐ.','нормально'],['happy','我很开心！','Wǒ hěn kāixīn!','весело'],
   ['hungry','我饿了。','Wǒ è le.','хочу есть'],['thirsty','我渴了。','Wǒ kě le.','хочу пить'],['tired','我累了。','Wǒ lèi le.','устал(а)'],['sad','我很难过。','Wǒ hěn nánguò.','грустно'],['hot','我很热！','Wǒ hěn rè!','жарко'],['cold','我很冷！','Wǒ hěn lěng!','холодно']];
-const MY={a:'good',b:'hungry',sx:'m',rel:'f'};
+const MY={a:'good',b:'hungry',sx:'m',rel:'f',A:'Маша',B:'Настя',C:'Сава'};
+/* имена группы по-китайски: так русские имена записывают в Китае — по звучанию, девочкам «девичьи» знаки 娜/娅/莎 */
+const NAMES=[
+ {ru:'Маша',zh:'玛莎',py:'Mǎshā',g:'f'},{ru:'Настя',zh:'娜斯佳',py:'Nàsījiā',g:'f'},{ru:'Сава',zh:'萨瓦',py:'Sàwǎ',g:'m'},
+ {ru:'Аня',zh:'安娜',py:'Ānnà',g:'f'},{ru:'Арина',zh:'阿琳娜',py:'Ālínnà',g:'f'},{ru:'Надя',zh:'娜佳',py:'Nàjiā',g:'f'},{ru:'Даша',zh:'达莎',py:'Dáshā',g:'f'}];
+const TEACHER={ru:'Ксения',zh:'克谢尼娅',py:'Kèxièníyà',g:'f',t:1};
+function nameOf(k){ const typed=$('n'+k).value.trim(); if(typed) return {ru:esc(typed),zh:esc(typed),py:esc(typed)};
+  return [...NAMES,TEACHER].find(n=>n.ru===MY[k]); }
+function drawNames(){ ['A','B','C'].forEach(k=>{ const list=k==='C'?[...NAMES,TEACHER]:NAMES;
+  $('pick'+k).innerHTML=list.map(n=>`<button class="nm${MY[k]===n.ru&&!$('n'+k).value.trim()?' on':''}" data-n="${n.ru}"><span class="z" lang="zh">${n.zh}</span><span class="p">${n.py}</span><span class="r">${n.ru}${n.t?' · учитель':''}</span></button>`).join(''); }); }
+['A','B','C'].forEach(k=>$('pick'+k).addEventListener('click',e=>{ const b=e.target.closest('.nm'); if(!b) return; MY[k]=b.dataset.n; $('n'+k).value='';
+  if(k==='C'){ const n=[...NAMES,TEACHER].find(x=>x.ru===MY.C); MY.sx=n.g; MY.rel=n.t?'t':'f';
+    $('sx').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v===MY.sx)); $('rel').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.v===MY.rel)); }
+  drawMine(); }));
 function moodsHTML(sel){ return MOODS.map(([id,z,,ru])=>`<button class="mood${id===sel?' on':''}" data-id="${id}"><img src="../how-are-you/img/${id}.webp" alt=""><span class="z" lang="zh">${z.replace(/[！。]/,'')}</span>${ru}</button>`).join(''); }
 let snd=null; const say=id=>{ if(snd) snd.pause(); snd=new Audio(`../how-are-you/audio/${id}.mp3`); snd.play().catch(()=>{}); };
 function mineScript(){
-  const A=esc($('nA').value.trim()||'Маша'), B=esc($('nB').value.trim()||'Дима'), C=esc($('nC').value.trim()||'Саша');
+  const A=nameOf('A'), B=nameOf('B'), C=nameOf('C');
   const ma=MOODS.find(m=>m[0]===MY.a), mb=MOODS.find(m=>m[0]===MY.b);
   const ta=MY.sx==='m'?['他','Tā']:['她','Tā'], rz=MY.rel==='f'?['朋友','péngyou']:['老师','lǎoshī'];
   const ruWho=MY.sx==='m'?['Кто он?','Это мой ','Его зовут ']:['Кто она?','Это моя ','Её зовут '];
   const ruRel=MY.rel==='f'?(MY.sx==='m'?'друг':'подруга'):(MY.sx==='m'?'учитель':'учительница');
   return [
    {s:'A',zh:'你好！你叫什么名字？',py:'Nǐ hǎo! Nǐ jiào shénme míngzi?',ru:'Привет! Как тебя зовут?'},
-   {s:'B',zh:`我叫 ${B}。你呢？`,py:`Wǒ jiào ${B}. Nǐ ne?`,ru:`Меня зовут ${B}. А тебя?`},
-   {s:'A',zh:`我叫 ${A}。很高兴认识你！`,py:`Wǒ jiào ${A}. Hěn gāoxìng rènshi nǐ!`,ru:`Меня зовут ${A}. Очень приятно!`},
+   {s:'B',zh:`我叫${B.zh}。你呢？`,py:`Wǒ jiào ${B.py}. Nǐ ne?`,ru:`Меня зовут ${B.ru}. А тебя?`},
+   {s:'A',zh:`我叫${A.zh}。很高兴认识你！`,py:`Wǒ jiào ${A.py}. Hěn gāoxìng rènshi nǐ!`,ru:`Меня зовут ${A.ru}. Очень приятно!`},
    {s:'B',zh:'我也是！你好吗？',py:'Wǒ yě shì! Nǐ hǎo ma?',ru:'Мне тоже! Как дела?'},
    {s:'A',zh:ma[1]+'你呢？',py:ma[2]+' Nǐ ne?',ru:ma[3][0].toUpperCase()+ma[3].slice(1)+'! А у тебя?'},
    {s:'B',zh:mb[1],py:mb[2],ru:mb[3][0].toUpperCase()+mb[3].slice(1)+'!'},
-   {act:`Подходит ${C}`},
+   {act:`Подходит ${C.ru}`},
    {s:'A',zh:`${ta[0]}是谁？`,py:`${ta[1]} shì shéi?`,ru:ruWho[0]},
-   {s:'B',zh:`${ta[0]}是我的${rz[0]}。${ta[0]}叫 ${C}。`,py:`${ta[1]} shì wǒ de ${rz[1]}. ${ta[1]} jiào ${C}.`,ru:`${ruWho[1]}${ruRel}. ${ruWho[2]}${C}.`},
-   {s:'A',zh:MY.rel==='t'?'老师，你好！':`你好，${C}！`,py:MY.rel==='t'?'Lǎoshī, nǐ hǎo!':`Nǐ hǎo, ${C}!`,ru:MY.rel==='t'?'Здравствуйте!':`Привет, ${C}!`},
-  ].map(l=>l.act?l:{...l,name:l.s==='A'?A:B,c:l.s==='A'?'var(--honey)':'var(--long)'});
+   {s:'B',zh:`${ta[0]}是我的${rz[0]}。${ta[0]}叫${C.zh}。`,py:`${ta[1]} shì wǒ de ${rz[1]}. ${ta[1]} jiào ${C.py}.`,ru:`${ruWho[1]}${ruRel}. ${ruWho[2]}${C.ru}.`},
+   {s:'A',zh:MY.rel==='t'?'老师，你好！':`你好，${C.zh}！`,py:MY.rel==='t'?'Lǎoshī, nǐ hǎo!':`Nǐ hǎo, ${C.py}!`,ru:MY.rel==='t'?'Здравствуйте!':`Привет, ${C.ru}!`},
+  ].map(l=>l.act?l:{...l,name:l.s==='A'?A.ru:B.ru,c:l.s==='A'?'var(--honey)':'var(--long)'});
 }
 const myLine=l=>l.act?`<div class="ln act">— ${l.act} —</div>`:`<div class="ln"><span class="w" style="background:${l.c}">${l.name}</span><div><div class="z" lang="zh">${l.zh}</div><div class="p">${l.py}</div><div class="r">${l.ru}</div></div></div>`;
 function drawMine(){
+  drawNames();
   $('moodA').innerHTML=moodsHTML(MY.a); $('moodB').innerHTML=moodsHTML(MY.b);
   $('mineScript').innerHTML=mineScript().map(myLine).join('');
 }
-['nA','nB','nC'].forEach(id=>$(id).addEventListener('input',()=>{ $('mineScript').innerHTML=mineScript().map(myLine).join(''); }));
+['nA','nB','nC'].forEach(id=>$(id).addEventListener('input',()=>{ drawNames(); $('mineScript').innerHTML=mineScript().map(myLine).join(''); }));
 $('moodA').addEventListener('click',e=>{ const b=e.target.closest('.mood'); if(!b) return; MY.a=b.dataset.id; say(b.dataset.id); drawMine(); });
 $('moodB').addEventListener('click',e=>{ const b=e.target.closest('.mood'); if(!b) return; MY.b=b.dataset.id; say(b.dataset.id); drawMine(); });
 [['sx','sx'],['rel','rel']].forEach(([id,key])=>$(id).addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; MY[key]=b.dataset.v; $(id).querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); drawMine(); }));
