@@ -326,7 +326,7 @@ const SYL=[ // слоги из наших слов; ru — откуда слов
 ];
 const EXAMPLES={1:['t1_ta','t1_kai','t1_shi'],2:['t2_shei','t2_ming','t2_long'],3:['t3_hao','t3_wo','t3_leng'],4:['t4_lei','t4_re','t4_e']};
 const SB=Object.fromEntries(SYL.map(s=>[s.id,s]));
-const au=id=>`audio/${id}.mp3`;
+const au=id=>`audio/${id}.mp3?v=2`;
 const Y=v=>58-(v-1)*12.5;           // ступень → y в поле 100×66
 function pathD(pts){ const P=pts.map(([x,v])=>[x,Y(v)]); if(P.length===2) return `M${P[0]} L${P[1]}`;
   return `M${P[0]} Q${P[1][0]},${P[1][1]+10} ${(P[1][0]+P[2][0])/2},${(P[1][1]+P[2][1])/2+4} T${P[2]}`; }
