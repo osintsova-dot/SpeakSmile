@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="apple-touch-icon" href="/chinese/icons/apple-touch-icon.png?v=2"><link rel="icon" type="image/png" sizes="192x192" href="/chinese/icons/icon-192.png?v=2"><link rel="manifest" href="/chinese/manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="Китайский"><meta name="theme-color" content="#6C3FC5">
+<title>一二三！ Считаем до 12 · Speak&Smile</title>
+<meta name="description" content="Китайский для 5–7 классов, урок 5: числа от 1 до 12, счёт на пальцах по-китайски, игры, песня-считалка и иероглифы-цифры.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6C3FC5;--honey:#F5C842;--pink:#F17FBE;--teal:#34D3C0;--red:#F26B6B;--sky:#63B3FF;--ink:#2A2140;--muted:#6A5B9A;--paper:#fff;--soft:#F3EEFF;
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,system-ui,sans-serif;--zh:"Noto Sans SC","PingFang SC","Hiragino Sans GB",sans-serif;--pyf:"Nunito","Baloo 2",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1.1);--out:cubic-bezier(.23,1,.32,1);--spring:cubic-bezier(.3,1.5,.5,1)}
+*{box-sizing:border-box}html{background:#5B3FCF}html,body{margin:0}
+body{font-family:var(--f);color:#fff;min-height:100vh;overflow-x:hidden;text-align:center;padding:28px 16px 60px;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),radial-gradient(120% 90% at 100% 10%,rgba(99,179,255,.40),transparent 55%),
+  radial-gradient(140% 120% at 50% 100%,#5B34C9,transparent 60%),linear-gradient(180deg,#7C4DE0 0%,#5B3FCF 55%,#4A2FB0 100%)}
+::selection{background:var(--honey);color:var(--ink)}:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:12px}
+button{font:inherit;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:760px;margin:0 auto}.py{font-family:var(--pyf)}[hidden]{display:none!important}
+.homeback{position:fixed;top:calc(12px + env(safe-area-inset-top));left:12px;z-index:40;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 14px 0 10px;border-radius:999px;
+  background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);color:#fff;font:800 14px/1 var(--f);text-decoration:none}
+.homeback svg{width:18px;height:18px;fill:currentColor}
+@media(max-width:420px){.homeback span{display:none}.homeback{width:40px;padding:0;justify-content:center}}
+.hero{animation:pop .7s var(--ease) both}@media(max-width:760px){.hero{padding-top:44px}}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.brand{display:inline-flex;gap:8px;margin-bottom:10px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px}.brand b{color:var(--honey)}
+.hero .zh{font-family:var(--zh);font-weight:900;font-size:clamp(60px,17vw,104px);line-height:1;margin:6px 0 0;text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.hero .py{font-size:clamp(19px,4.8vw,25px);font-weight:800;color:var(--honey);margin:8px 0 0}.hero .ru{font-size:clamp(15px,3.6vw,18px);font-weight:600;opacity:.92;margin:4px 0 0}
+.tabs{display:flex;justify-content:center;gap:4px;margin:24px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tab{appearance:none;border:0;background:transparent;color:#fff;font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .15s var(--out)}
+.tab[aria-selected="true"]{background:#fff;color:var(--p)}.tab:active{transform:scale(.97)}
+@media(max-width:420px){.tab{padding:10px 12px;font-size:14px}}
+.panel{background:var(--paper);color:var(--ink);border-radius:28px;padding:22px 18px 24px;box-shadow:0 14px 30px rgba(30,10,70,.30);animation:pop .5s var(--ease) both}
+.panel+.panel{margin-top:16px}.panel h2{margin:0 0 4px;font-size:22px;line-height:1.15}
+.sub{margin:0 auto 16px;color:var(--muted);font-weight:600;font-size:15px;line-height:1.35;max-width:46ch}
+.hint{font-weight:600;font-size:14px;opacity:.92;margin:0 0 14px}
+.btn{appearance:none;border:0;font-weight:800;font-size:16px;padding:13px 20px;border-radius:999px;cursor:pointer;color:var(--ink);background:var(--honey);box-shadow:0 8px 20px rgba(0,0,0,.16);transition:transform .15s var(--out);display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:active{transform:scale(.97)}.btn svg{width:20px;height:20px;fill:currentColor}
+.btn.primary{background:var(--p);color:#fff;box-shadow:0 10px 24px rgba(108,63,197,.35)}.btn.soft{background:var(--soft);color:var(--p);box-shadow:none}
+.pill{font-weight:800;font-size:14px;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--p)}.pill b{color:var(--ink)}
+
+/* ── числа ── */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:10px}}
+.ncard{position:relative;appearance:none;border:0;cursor:pointer;background:#fff;color:var(--ink);border-radius:22px;padding:10px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;
+  box-shadow:0 12px 26px rgba(30,10,70,.28);animation:rise .5s var(--ease) backwards;animation-delay:calc(var(--i)*40ms);transition:transform .18s var(--out)}
+@keyframes rise{from{transform:translateY(14px);opacity:0}}
+.ncard:active{transform:scale(.96)}
+.ncard .hands{display:flex;justify-content:center;width:100%;height:clamp(84px,22vw,120px)}
+.ncard .hands img{height:100%;width:auto;max-width:100%;object-fit:contain;transition:transform .45s var(--spring)}
+.ncard .hands.two img{max-width:50%}
+.ncard .z{font-family:var(--zh);font-weight:900;font-size:clamp(30px,8vw,44px);line-height:1.05}
+.ncard .p{font-family:var(--pyf);font-weight:900;font-size:clamp(16px,4.4vw,20px);color:var(--p)}
+.ncard .d{position:absolute;top:8px;left:10px;font-weight:800;font-size:13px;color:#B5ADC9}
+.ncard.say{box-shadow:0 0 0 4px var(--honey) inset,0 12px 26px rgba(30,10,70,.28)}
+.ncard.say .hands img{transform:scale(1.12) rotate(-4deg)}
+.note{margin-top:14px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);font-weight:600;font-size:14px;line-height:1.4;text-align:left}
+.note b{color:var(--honey)}
+
+/* ── игры ── */
+.seg{display:inline-flex;flex-wrap:wrap;justify-content:center;padding:4px;border-radius:22px;background:var(--soft);margin-bottom:14px;gap:2px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--p);font-weight:800;font-size:14px;padding:8px 12px;border-radius:999px;cursor:pointer}
+.seg button.on{background:var(--p);color:#fff}
+.g-top{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.q{min-height:150px;display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px}
+.q img{height:150px;width:auto;animation:pop .4s var(--spring)}
+.q .big{font-family:var(--zh);font-weight:900;font-size:72px;color:var(--p);line-height:1}
+.q .plus{font-weight:900;font-size:40px;color:var(--muted)}
+.listen{appearance:none;border:0;cursor:pointer;width:110px;height:110px;border-radius:50%;background:var(--p);color:#fff;display:grid;place-items:center;box-shadow:0 16px 34px -8px rgba(108,63,197,.6);transition:transform .16s var(--out)}
+.listen:active{transform:scale(.95)}.listen svg{width:48px;fill:currentColor}
+.opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media(max-width:520px){.opts{grid-template-columns:repeat(2,1fr)}}
+.opt{appearance:none;border:0;cursor:pointer;background:#FBF9FF;border-radius:18px;padding:10px 6px;box-shadow:inset 0 0 0 2px #EEE8FA;color:var(--ink);transition:transform .15s var(--out),box-shadow .2s,background .2s;display:flex;flex-direction:column;align-items:center}
+.opt .z{font-family:var(--zh);font-weight:900;font-size:34px;line-height:1.1}.opt .p{font-family:var(--pyf);font-weight:800;font-size:15px;color:var(--p)}
+.opt img{height:92px;width:auto}
+.opt:active{transform:scale(.96)}
+.opt.right{background:#E6FAF6;box-shadow:inset 0 0 0 3px var(--teal)}
+.opt.wrong{animation:shake .4s ease;box-shadow:inset 0 0 0 3px var(--red)}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.race{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.race button{appearance:none;border:0;cursor:pointer;aspect-ratio:1;border-radius:20px;background:#FBF9FF;box-shadow:inset 0 0 0 2px #EEE8FA;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink);transition:transform .15s var(--out),opacity .3s}
+.race button .z{font-family:var(--zh);font-weight:900;font-size:clamp(24px,7vw,42px);line-height:1;white-space:nowrap}.race button .p{font-family:var(--pyf);font-weight:800;font-size:13px;color:var(--p)}
+.race button.done{opacity:.25;transform:scale(.9)}
+.race button.bad{animation:shake .4s ease;box-shadow:inset 0 0 0 3px var(--red)}
+.timer{font-family:var(--pyf);font-weight:900;font-size:28px;color:var(--p);min-width:90px}
+.best{font-weight:700;color:var(--muted);font-size:14px}
+.res{display:none;flex-direction:column;align-items:center;gap:10px;margin-top:12px}.res.on{display:flex;animation:pop .5s var(--ease)}
+.res .big2{font-weight:800;font-size:24px}
+
+/* ── песня ── */
+.lines{display:grid;gap:4px;text-align:left;margin:14px 0 16px;max-height:420px;overflow:auto;padding-right:4px}
+.ln{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;padding:7px 10px;border-radius:14px;transition:background .25s,transform .25s}
+.ln .who{font-weight:800;font-size:12px;text-align:center;border-radius:999px;padding:3px 0}
+.ln .who{background:var(--soft);color:var(--p)}
+.ln .z{font-family:var(--zh);font-weight:900;font-size:clamp(17px,4.4vw,22px);letter-spacing:.04em}
+.ln.on{background:linear-gradient(90deg,#FFF3C4,#FFFAE6);transform:translateX(4px)}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* сцена песни на весь экран: белый фон, большая рука, цифры выскакивают по одной */
+.stage{position:fixed;inset:0;z-index:60;background:#fff;color:var(--ink);display:grid;grid-template-rows:auto 1fr auto;padding:max(14px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));cursor:pointer;animation:fade .35s ease;overflow:hidden}
+@keyframes fade{from{opacity:0}}
+.stage .x{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:52px;height:52px;border-radius:50%;border:0;background:var(--soft);color:var(--p);font:700 22px/1 system-ui;cursor:pointer;z-index:3}
+.stage .badge{justify-self:center;margin-top:6px;padding:10px 22px;border-radius:999px;font-weight:800;font-size:clamp(16px,2.6vw,26px);transition:background .3s,color .3s,transform .3s var(--spring)}
+.stage .badge.solo{background:var(--p);color:#fff}.stage .badge.choir{background:var(--honey);color:var(--ink);transform:scale(1.06)}
+.stage .badge.intro{background:var(--soft);color:var(--p)}
+.stage .mid{display:grid;grid-template-columns:1fr 1fr;align-items:center;justify-items:center;gap:2vw;min-height:0}
+@media(max-aspect-ratio:1/1){.stage .mid{grid-template-columns:1fr;grid-template-rows:1fr auto}}
+.stage .hand{height:min(52vh,48vw);display:flex;justify-content:center;align-items:flex-end}
+.stage .hand img{height:100%;width:auto;max-width:48vw}
+.stage .hand img.in{animation:handIn .38s var(--spring)}
+@keyframes handIn{0%{transform:scale(.75) rotate(-8deg);opacity:.2}100%{transform:none;opacity:1}}
+.stage .now{text-align:center}
+.stage .now .z{font-family:var(--zh);font-weight:900;font-size:min(30vh,26vw);line-height:1;color:var(--p)}
+.stage .now .p{font-family:var(--pyf);font-weight:900;font-size:min(9vh,8vw);color:#E0A100;line-height:1.1}
+.stage .now .z.in{animation:numIn .32s var(--spring)}
+@keyframes numIn{0%{transform:scale(.5);opacity:0}100%{transform:none;opacity:1}}
+.stage .row{display:flex;flex-wrap:wrap;justify-content:center;gap:.6vw;margin:0 auto;max-width:96vw}
+.stage .row span{display:flex;flex-direction:column;align-items:center;min-width:min(7vw,58px);padding:.6vh .5vw;border-radius:14px;background:#FBF9FF;opacity:.25;transition:opacity .2s,background .2s,transform .25s var(--spring)}
+.stage .row span b{font-family:var(--zh);font-weight:900;font-size:min(5vh,4.4vw);line-height:1.1}
+.stage .row span i{font-style:normal;font-family:var(--pyf);font-weight:800;font-size:min(2.4vh,2vw);color:var(--p)}
+.stage .row span.on{opacity:1}.stage .row span.cur{background:var(--honey);transform:scale(1.12)}
+.stage .bar{position:absolute;left:0;bottom:0;height:5px;background:var(--honey);width:0}
+.stage .tip{position:absolute;bottom:max(10px,env(safe-area-inset-bottom));left:16px;font-weight:700;font-size:12px;color:#B5ADC9}
+
+/* ── иероглиф ── */
+.hzrow{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.hzrow button{appearance:none;border:0;cursor:pointer;width:46px;height:46px;border-radius:14px;background:var(--soft);color:var(--p);font-family:var(--zh);font-weight:900;font-size:22px;transition:transform .15s var(--out)}
+.hzrow button.on{background:var(--p);color:#fff}.hzrow button:active{transform:scale(.94)}
+.hzmain{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:18px;align-items:center}
+@media(max-width:560px){.hzmain{grid-template-columns:1fr;justify-items:center}}
+.hzsvg{width:100%;max-width:260px;aspect-ratio:1;border-radius:24px;background:#FBF9FF;border:2px dashed #E6DEFB;cursor:pointer;position:relative}
+.hzsvg svg{width:100%;height:100%;display:block}
+.hzsvg .grid line{stroke:#EDE7FA;stroke-width:6;stroke-dasharray:18 18}.hzsvg .under path{fill:#EEE8FA}
+.hzsvg .stroke{fill:none;stroke:var(--p);stroke-width:210;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dashoffset .38s ease-out}
+.hzword{text-align:left}@media(max-width:560px){.hzword{text-align:center}}
+.hzword .big{font-family:var(--zh);font-weight:900;font-size:56px;line-height:1;color:var(--p)}
+.hzword .p{font-family:var(--pyf);font-weight:900;font-size:22px;color:var(--pink);margin-top:4px}
+.hzword .r{font-weight:800;font-size:17px}.hzword .story{margin-top:10px;font-size:15px;line-height:1.35;color:var(--muted);font-weight:600}
+.hzword img{height:90px;width:auto;margin-top:8px}
+.hzacts{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}@media(max-width:560px){.hzacts{justify-content:center}}
+.quiz{margin-top:16px;display:none;flex-direction:column;align-items:center;gap:10px}.quiz.show{display:flex}
+.quiz .pad{width:min(300px,84vw);aspect-ratio:1;border-radius:24px;background:#FBF9FF;border:2px dashed #C9B8F5;touch-action:none}
+.quiz .msg{font-weight:700;color:var(--muted);font-size:14px;min-height:20px}
+
+.foot{margin-top:30px;font-size:13px;opacity:.85;font-weight:600}.foot a{color:var(--honey);text-decoration:none}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style></head>
+<body>
+<a class="homeback" href="../" aria-label="Все уроки"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg><span>Все уроки</span></a>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">Speak<b>&</b>Smile · урок 5 · числа</div>
+    <div class="zh" lang="zh">一二三！</div>
+    <div class="py">Yī, èr, sān!</div>
+    <div class="ru">Считаем до 12</div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-tab="nums">Числа</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="games">Игры</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="song">Песня</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="hz">Иероглиф</button>
+  </div>
+
+  <section id="nums" role="tabpanel">
+    <p class="hint">Нажми на число — услышишь его. Покажи на пальцах, как в Китае!</p>
+    <div class="grid" id="grid"></div>
+    <div class="note">В Китае до 10 считают на <b>одной руке</b>: 6 — «телефончик», 7 — щепотка, 8 — «пистолетик», 9 — крючок, 10 — кулак. А 11 и 12 — как говорим: <b>десять и один</b> (十一), <b>десять и два</b> (十二).</div>
+  </section>
+
+  <section id="games" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="seg" id="gseg"><button data-g="listen" class="on">Послушай и найди</button><button data-g="hand">Что на пальцах?</button><button data-g="sum">Собери число</button><button data-g="race">По порядку</button></div>
+      <div id="gArea"></div>
+    </div>
+  </section>
+
+  <section id="song" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Считалка 数字</h2>
+      <p class="sub">Хип-хоп по-китайски: каждый раз на одно число больше. Пой вместе с хором и показывай числа на пальцах! Нажми на строчку — песня начнётся с неё.</p>
+      <div class="controls"><button class="btn primary" id="sPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button><button class="btn" id="sStage"><svg viewBox="0 0 24 24"><path d="M5 5h5V3H3v7h2V5zm14 0v5h2V3h-7v2h5zM5 19v-5H3v7h7v-2H5zm14 0h-5v2h7v-7h-2v5z"/></svg>На весь экран</button></div>
+      <div class="lines" id="lines"></div>
+    </div>
+  </section>
+
+  <section id="hz" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Иероглифы-цифры</h2>
+      <p class="sub">Самые простые знаки в китайском. Нажми на цифру — посмотри, как она пишется, и обведи пальцем.</p>
+      <div class="hzrow" id="hzRow"></div>
+      <div class="hzmain">
+        <div class="hzsvg" id="hzSvg" title="Нажми — напишу ещё раз"></div>
+        <div class="hzword"><div class="big" id="hzBig" lang="zh"></div><div class="p" id="hzPy"></div><div class="r" id="hzRu"></div><div class="story" id="hzStory"></div>
+          <div class="hzacts"><button class="btn" id="hzWrite">Написать</button><button class="btn soft" id="hzTry">Обвести пальцем</button></div></div>
+      </div>
+      <div class="quiz" id="quiz"><div class="pad" id="pad"></div><div class="msg" id="qmsg">Веди пальцем по серым чертам по порядку</div></div>
+    </div>
+  </section>
+
+  <p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
+</div>
+
+<div class="stage" id="stage" hidden>
+  <button class="x" id="stX" aria-label="Закрыть">✕</button>
+  <div class="badge intro" id="stBadge">Приготовились!</div>
+  <div class="mid"><div class="hand" id="stHand"></div><div class="now" id="stNow"></div></div>
+  <div class="row" id="stRow"></div>
+  <div class="tip">Нажми на экран — пауза</div><div class="bar" id="stBar"></div>
+</div>
+
+<script src="../gate.js?v=4"></script>
+<script src="hanzi-data.js"></script>
+<script>
+ZhGate.lock('numbers');
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+const NUM=[null,['一','yī'],['二','èr'],['三','sān'],['四','sì'],['五','wǔ'],['六','liù'],['七','qī'],['八','bā'],['九','jiǔ'],['十','shí'],['十一','shíyī'],['十二','shí\'èr']];
+const ru=n=>['','один','два','три','четыре','пять','шесть','семь','восемь','девять','десять','одиннадцать','двенадцать'][n];
+const handImgs=n=> n<=10?[`img/h${n}.webp`]:['img/h10.webp',`img/h${n-10}.webp`];
+const handsHTML=n=>`<span class="hands${n>10?' two':''}">${handImgs(n).map(s=>`<img src="${s}" alt="" loading="lazy">`).join('')}</span>`;
+let cur=null; const play=(n,onend)=>{ if(cur){cur.pause();cur.onended=null;} const a=new Audio(`audio/n${n}.mp3`); cur=a; a.onended=onend||null; a.play().catch(()=>{}); return a; };
+
+/* числа */
+$('grid').innerHTML=Array.from({length:12},(_,k)=>{const n=k+1;return `<button class="ncard" style="--i:${k}" data-n="${n}" aria-label="${ru(n)}"><span class="d">${n}</span>${handsHTML(n)}<span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span></button>`;}).join('');
+$('grid').addEventListener('click',e=>{ const c=e.target.closest('.ncard'); if(!c) return; document.querySelectorAll('.ncard').forEach(x=>x.classList.remove('say')); c.classList.add('say'); play(+c.dataset.n,()=>setTimeout(()=>c.classList.remove('say'),300)); });
+
+/* игры */
+let G='listen', score=0, total=0, target=0, lock=false;
+const optHTML=(n,withHand)=>`<button class="opt" data-n="${n}">${withHand?handsHTML(n).replace('class="hands','class="hands" style="height:92px;display:flex;justify-content:center"').replace('" style','" style'):''}${withHand?'':`<span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span>`}</button>`;
+function bar(){ return `<div class="g-top"><span class="pill">Верно: <b id="gs">${score}</b> / ${total}</span></div>`; }
+function pick4(t,max=12){ return shuffle([t,...shuffle(Array.from({length:max},(_,i)=>i+1).filter(x=>x!==t)).slice(0,3)]); }
+function round(){
+  lock=false; const A=$('gArea');
+  if(G==='listen'){ target=1+(Math.random()*12|0);
+    A.innerHTML=bar()+`<div class="q"><button class="listen" id="gL" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button></div><div class="opts">${pick4(target).map(n=>optHTML(n)).join('')}</div>`;
+    $('gL').onclick=()=>play(target); setTimeout(()=>play(target),300); }
+  if(G==='hand'){ target=1+(Math.random()*12|0);
+    A.innerHTML=bar()+`<div class="q">${handImgs(target).map(s=>`<img src="${s}" alt="">`).join('')}</div><p class="sub" style="margin:0 auto 10px">Какое число показывает рука?</p><div class="opts">${pick4(target).map(n=>optHTML(n)).join('')}</div>`; }
+  if(G==='sum'){ const b=1+(Math.random()*2|0); target=10+b;
+    if(Math.random()<.5){ target=1+(Math.random()*12|0); }
+    const t=target, parts= t>10?[10,t-10]: (t>5?[5,t-5]:[t-1>0?t-1:1, t-1>0?1:0]);
+    A.innerHTML=bar()+`<div class="q"><span class="big" lang="zh">${NUM[parts[0]][0]}</span>${parts[1]?`<span class="plus">+</span><span class="big" lang="zh">${NUM[parts[1]][0]}</span>`:''}<span class="plus">=</span><span class="big">?</span></div><p class="sub" style="margin:0 auto 10px">${NUM[parts[0]][1]} + ${parts[1]?NUM[parts[1]][1]:''} = ?</p><div class="opts">${pick4(t).map(n=>optHTML(n)).join('')}</div>`; }
+  if(G==='race'){ raceStart(); }
+}
+$('gArea').addEventListener('click',e=>{ const b=e.target.closest('.opt'); if(!b||lock) return; total++;
+  if(+b.dataset.n===target){ lock=true; score++; b.classList.add('right'); play(target,()=>setTimeout(round,700)); }
+  else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); if(G==='listen') setTimeout(()=>play(target),400); }
+  const s=$('gs'); if(s){ s.textContent=score; s.parentNode.lastChild.textContent=' / '+total; } });
+$('gseg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; G=b.dataset.g; score=0; total=0; $('gseg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); clearInterval(rTimer); round(); });
+// по порядку на скорость
+let rNext=1, rT0=0, rTimer=null;
+const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+function raceStart(){ rNext=1; clearInterval(rTimer); const best=+ls.get('zhRaceBest')||0;
+  $('gArea').innerHTML=`<div class="g-top"><span class="timer" id="rt">0.0</span><span class="best">${best?`Рекорд: ${best.toFixed(1)} с`:'Нажимай числа по порядку: 一, 二, 三…'}</span></div><div class="race" id="race">${shuffle(Array.from({length:12},(_,i)=>i+1)).map(n=>`<button data-n="${n}"><span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span></button>`).join('')}</div><div class="res" id="rres"><div class="big2" id="rbig"></div><button class="btn primary" id="ragain">Ещё раз</button></div>`;
+  $('race').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b||b.classList.contains('done')) return;
+    if(+b.dataset.n===rNext){ if(rNext===1){ rT0=performance.now(); rTimer=setInterval(()=>$('rt').textContent=((performance.now()-rT0)/1000).toFixed(1),100); }
+      b.classList.add('done'); play(rNext); rNext++;
+      if(rNext>12){ clearInterval(rTimer); const t=(performance.now()-rT0)/1000; $('rt').textContent=t.toFixed(1); const best=+ls.get('zhRaceBest')||0; const rec=!best||t<best; if(rec) ls.set('zhRaceBest',t.toFixed(1));
+        $('rbig').textContent=rec?`Новый рекорд: ${t.toFixed(1)} с! 太棒了！`:`${t.toFixed(1)} с. Рекорд — ${best.toFixed(1)} с`; $('rres').classList.add('on'); $('ragain').onclick=raceStart; } }
+    else { b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); } });
+}
+
+/* песня: song.json — {intro:[{t,label}], lines:[{who,n,t:[время каждой цифры]}], end} */
+let S=null, song=null, sRaf=0, stageOn=false;
+fetch('song.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{ if(!j) return; S=j; song=new Audio('song.mp3'); song.preload='auto';
+  $('lines').innerHTML=S.lines.map((l,k)=>`<div class="ln ${l.who}" data-k="${k}"><span class="who">до ${l.n}</span><span class="z" lang="zh">${Array.from({length:l.n},(_,i)=>NUM[i+1][0]).join(' ')}</span></div>`).join('');
+  song.addEventListener('ended',()=>{ stopSong(); }); });
+function lineAt(t){ let k=-1; S.lines.forEach((l,i)=>{ if(t>=l.t[0]-0.15) k=i; }); return k; }
+function numAt(l,t){ let j=-1; l.t.forEach((x,i)=>{ if(t>=x-0.06) j=i; }); return j; }
+let lastLine=-2, lastNum=-2;
+function tick(){ if(!song||song.paused) return; const t=song.currentTime, k=lineAt(t);
+  if(k!==lastLine){ document.querySelectorAll('.ln').forEach((e,i)=>e.classList.toggle('on',i===k)); const el=document.querySelector(`.ln[data-k="${k}"]`); if(el&&!stageOn) el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+  if(stageOn) stageDraw(t,k);
+  lastLine=k; sRaf=requestAnimationFrame(tick); }
+function playSong(){ if(!song) return; song.currentTime=0; song.play().catch(()=>{}); lastLine=-2; lastNum=-2; $('sPlay').lastChild.textContent='Стоп'; tick(); }
+function stopSong(){ if(song){ song.pause(); } cancelAnimationFrame(sRaf); document.querySelectorAll('.ln').forEach(e=>e.classList.remove('on')); $('sPlay').lastChild.textContent='Петь'; if(stageOn) closeStage(); }
+$('sPlay').onclick=()=>{ if(song&&!song.paused) stopSong(); else playSong(); };
+// сцена
+function stageDraw(t,k){
+  $('stBar').style.width=(t/(song.duration||70)*100)+'%';
+  if(k<0){ const it=(S.intro||[]).filter(x=>t>=x.t).pop(); const lab=it?it.label:'Приготовились!';
+    if($('stBadge').textContent!==lab){ $('stBadge').className='badge intro'; $('stBadge').textContent=lab; $('stNow').innerHTML=it&&it.zh?`<div class="z in" lang="zh" style="font-size:min(22vh,18vw)">${it.zh}</div><div class="p">${it.py||''}</div>`:''; $('stHand').innerHTML=''; $('stRow').innerHTML=''; }
+    return; }
+  const l=S.lines[k];
+  if(k!==lastLine){ $('stBadge').className='badge '+(k%2?'choir':'solo'); $('stBadge').textContent=`Считаем до ${l.n}!`;
+    $('stRow').innerHTML=Array.from({length:l.n},(_,i)=>`<span><b lang="zh">${NUM[i+1][0]}</b><i>${NUM[i+1][1]}</i></span>`).join(''); lastNum=-2; }
+  const j=numAt(l,t);
+  if(j!==lastNum){ lastNum=j; const spans=$('stRow').children; [...spans].forEach((s,i)=>{ s.classList.toggle('on',i<=j); s.classList.toggle('cur',i===j); });
+    if(j>=0){ const n=j+1; $('stNow').innerHTML=`<div class="z in" lang="zh">${NUM[n][0]}</div><div class="p">${NUM[n][1]}</div>`;
+      $('stHand').innerHTML=handImgs(n).map(s=>`<img class="in" src="${s}" alt="">`).join(''); } }
+}
+function openStage(){ if(!song) return; stageOn=true; $('stage').hidden=false; document.documentElement.style.overflow='hidden';
+  if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
+  for(let n=1;n<=10;n++){ const im=new Image(); im.src=`img/h${n}.webp`; }
+  $('stBadge').className='badge intro'; $('stBadge').textContent='Приготовились!'; $('stNow').innerHTML=''; $('stHand').innerHTML=''; $('stRow').innerHTML=''; playSong(); }
+function closeStage(){ stageOn=false; $('stage').hidden=true; document.documentElement.style.overflow=''; if(song&&!song.paused){ song.pause(); song.currentTime=0; } cancelAnimationFrame(sRaf); $('sPlay').lastChild.textContent='Петь'; if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }
+$('sStage').onclick=openStage;
+$('stage').addEventListener('click',e=>{ if(e.target.closest('#stX')) return closeStage(); if(!song) return; if(song.paused){ song.play().catch(()=>{}); tick(); } else song.pause(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&stageOn) closeStage(); });
+$('lines').addEventListener('click',e=>{ const el=e.target.closest('.ln'); if(!el||!song) return; const l=S.lines[+el.dataset.k]; song.currentTime=Math.max(0,l.t[0]-0.3); if(song.paused){ song.play().catch(()=>{}); $('sPlay').lastChild.textContent='Стоп'; tick(); } });
+
+/* иероглифы-цифры */
+let hzI=0; const SV='http://www.w3.org/2000/svg', mk=(t,a={})=>{const e=document.createElementNS(SV,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+$('hzRow').innerHTML=HANZI.map((h,i)=>`<button data-i="${i}" lang="zh">${h.ch}</button>`).join('');
+function drawHz(animate){ const h=HANZI[hzI], box=$('hzSvg'); box.innerHTML='';
+  const svg=mk('svg',{viewBox:'0 0 1024 1024'}); const defs=mk('defs'); svg.appendChild(defs);
+  const g=mk('g',{class:'grid'}); [[512,0,512,1024],[0,512,1024,512],[0,0,1024,1024],[1024,0,0,1024]].forEach(([x1,y1,x2,y2])=>g.appendChild(mk('line',{x1,y1,x2,y2}))); svg.appendChild(g);
+  const root=mk('g',{transform:'scale(1,-1) translate(0,-900)'}); svg.appendChild(root); const under=mk('g',{class:'under'}); h.strokes.forEach(d=>under.appendChild(mk('path',{d}))); root.appendChild(under);
+  const an=[]; h.strokes.forEach((d,i)=>{ const id='hc'+i; const cp=mk('clipPath',{id}); cp.appendChild(mk('path',{d})); defs.appendChild(cp);
+    const p=mk('path',{class:'stroke',d:'M'+h.medians[i].map(q=>q.join(' ')).join(' L'),'clip-path':`url(#${id})`}); root.appendChild(p); an.push(p); });
+  box.appendChild(svg); an.forEach(p=>{ const L=p.getTotalLength()+40; p.style.strokeDasharray=L; p.style.strokeDashoffset=animate?L:0; });
+  if(animate) an.forEach((p,i)=>setTimeout(()=>p.style.strokeDashoffset=0,220+i*420)); }
+function showHz(i,animate=true){ hzI=i; const h=HANZI[i]; $('hzRow').querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  $('hzBig').textContent=h.ch; $('hzPy').textContent=h.py; $('hzRu').textContent=h.ru+' · '+h.n; $('hzStory').innerHTML=h.story+`<br><img src="img/h${h.n}.webp" alt="">`;
+  $('quiz').classList.remove('show'); $('pad').innerHTML=''; drawHz(animate); }
+$('hzRow').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ showHz(+b.dataset.i); play(HANZI[+b.dataset.i].n); } });
+$('hzWrite').onclick=()=>drawHz(true); $('hzSvg').onclick=()=>drawHz(true);
+$('hzTry').onclick=()=>{ const q=$('quiz'); q.classList.add('show'); $('pad').innerHTML=''; const h=HANZI[hzI];
+  const go=()=>{ const w=HanziWriter.create($('pad'),h.ch,{width:300,height:300,padding:14,showCharacter:false,showOutline:true,outlineColor:'#DDD3F7',strokeColor:'#6C3FC5',drawingColor:'#F17FBE',drawingWidth:22,showHintAfterMisses:2,charDataLoader:(c,ok)=>ok({strokes:h.strokes,medians:h.medians})});
+    $('qmsg').textContent='Веди пальцем по серым чертам по порядку';
+    w.quiz({onMistake:()=>$('qmsg').textContent='Почти! Попробуй эту черту ещё раз.',onCorrectStroke:d=>$('qmsg').textContent=`Черта ${d.strokeNum+1} из ${d.strokeNum+d.strokesRemaining+1} — да!`,onComplete:()=>{ $('qmsg').textContent='对了！Получилось!'; play(h.n); }});
+    q.scrollIntoView({block:'nearest',behavior:'smooth'}); };
+  if(window.HanziWriter) go(); else { $('qmsg').textContent='Загружаю…'; const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js'; s.onload=go; document.head.appendChild(s); } };
+
+/* вкладки */
+const started={};
+function openTab(n){ document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===n)); ['nums','games','song','hz'].forEach(id=>$(id).hidden=id!==n);
+  if(n!=='song'&&song&&!song.paused) stopSong();
+  if(!started[n]){ started[n]=1; if(n==='games') round(); if(n==='hz') showHz(0); }
+  history.replaceState(null,'',n==='nums'?location.pathname+location.search:'#'+n); }
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
+const h0=location.hash.slice(1); if(['games','song','hz'].includes(h0)) openTab(h0);
+</script>
+</body></html>
