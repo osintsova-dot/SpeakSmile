@@ -64,6 +64,7 @@
         const tc=await fetch(base+'lessons.json',{cache:'no-store'}).then(r=>r.json()).then(c=>c.teacherCode).catch(()=>null);
         if(tc && code===tc){ ls.set('zhTeacher','1'); location.reload(); return; }
         const j=await ask(code); btn.disabled=false; btn.textContent='Войти';
+        if(j.ok&&j.teacher){ ls.set('zhTeacher','1'); location.reload(); return; }
         if(j.ok){ ls.set('zhCode',j.code||code); ls.set('zhOk',JSON.stringify({code:j.code||code,at:Date.now()})); w.remove(); document.documentElement.style.overflow=''; done(j); }
         else { err.innerHTML=MSG[j.reason]||MSG.unknown; if(j.reason!=='net') ls.del('zhOk'); }
       };
