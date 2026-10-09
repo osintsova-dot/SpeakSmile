@@ -419,10 +419,14 @@ function memStart(){
 }
 $('mem').addEventListener('click',e=>{ const c=e.target.closest('.mcard'); if(!c||memBusy||c.classList.contains('up')||c.classList.contains('done')) return;
   c.classList.add('up'); memOpen.push(c);
+  const a0=play(au(c.dataset.id));   // каждую открытую карточку озвучиваем: слышат то, что видят
   if(memOpen.length<2) return;
   memMoves++; $('memMoves').textContent=memMoves; const [a,b]=memOpen; memOpen=[];
-  if(a.dataset.id===b.dataset.id){ play(au(a.dataset.id)); setTimeout(()=>{ a.classList.add('done'); b.classList.add('done'); memDone++; if(memDone===memN) setTimeout(memEnd,700); },250); }
-  else { memBusy=true; setTimeout(()=>{ a.classList.add('miss'); b.classList.add('miss'); },350); setTimeout(()=>{ a.classList.remove('up','miss'); b.classList.remove('up','miss'); memBusy=false; },1100); }
+  if(a.dataset.id===b.dataset.id){ setTimeout(()=>{ a.classList.add('done'); b.classList.add('done'); memDone++; if(memDone===memN) setTimeout(memEnd,900); },250); }
+  else { memBusy=true; setTimeout(()=>{ a.classList.add('miss'); b.classList.add('miss'); },350);
+    // закрываем, когда слово дозвучит (но не дольше 2,5 с)
+    let shut=false; const close=()=>{ if(shut) return; shut=true; setTimeout(()=>{ a.classList.remove('up','miss'); b.classList.remove('up','miss'); memBusy=false; },450); };
+    a0.addEventListener('ended',close,{once:true}); setTimeout(close,2500); }
 });
 function memEnd(){ const ex=memMoves-memN, st=ex<=memN*.5?3:ex<=memN?2:1;
   $('memStars').innerHTML='★'.repeat(st)+'<s>'+'★'.repeat(3-st)+'</s>'; $('memBig').textContent=`Все пары за ${memMoves} ходов!`; $('memRes').classList.add('on'); }
