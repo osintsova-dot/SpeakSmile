@@ -2,8 +2,8 @@
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="apple-touch-icon" href="/chinese/icons/apple-touch-icon.png?v=2"><link rel="icon" type="image/png" sizes="192x192" href="/chinese/icons/icon-192.png?v=2"><link rel="manifest" href="/chinese/manifest.webmanifest"><meta name="apple-mobile-web-app-title" content="Китайский"><meta name="theme-color" content="#6C3FC5">
-<title>一二三！ Считаем до 12 · Speak&Smile</title>
-<meta name="description" content="Китайский для 5–7 классов, урок 5: числа от 1 до 12, счёт на пальцах по-китайски, игры, песня-считалка и иероглифы-цифры.">
+<title>一二三！ Считаем до 20 · Speak&Smile</title>
+<meta name="description" content="Китайский для 5–7 классов, урок 5: числа от 1 до 20, «сколько тебе лет?», счёт на пальцах по-китайски, игры, песня-считалка и иероглифы-цифры.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@700;800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -56,6 +56,15 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
 .ncard.say .hands img{transform:scale(1.12) rotate(-4deg)}
 .note{margin-top:14px;padding:12px 14px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);font-weight:600;font-size:14px;line-height:1.4;text-align:left}
 .note b{color:var(--honey)}
+.dlg{display:grid;gap:8px;max-width:440px;margin:0 auto 14px;text-align:left}
+.dlg button{appearance:none;border:0;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding:10px 14px;border-radius:18px;background:#FBF9FF;box-shadow:inset 0 0 0 2px #EEE8FA;color:var(--ink);text-align:left;transition:transform .15s var(--out)}
+.dlg button:active{transform:scale(.98)} .dlg button.say{box-shadow:inset 0 0 0 3px var(--honey)}
+.dlg .w{font-weight:800;font-size:12px;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--p)} .dlg .b .w{background:#FFF3C4;color:#7A5A00}
+.dlg .z{font-family:var(--zh);font-weight:900;font-size:24px;line-height:1.15} .dlg .p{font-family:var(--pyf);font-weight:800;font-size:14px;color:var(--p)} .dlg .r{font-size:13px;color:var(--muted);font-weight:600}
+.ages{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.ages button{appearance:none;border:0;cursor:pointer;padding:8px 14px;border-radius:16px;background:var(--soft);color:var(--ink);display:flex;flex-direction:column;align-items:center;transition:transform .15s var(--out)}
+.ages button .z{font-family:var(--zh);font-weight:900;font-size:20px} .ages button .p{font-family:var(--pyf);font-weight:800;font-size:12px;color:var(--p)}
+.ages button.say{background:var(--honey)} .ages button:active{transform:scale(.95)}
 
 /* ── игры ── */
 .seg{display:inline-flex;flex-wrap:wrap;justify-content:center;padding:4px;border-radius:22px;background:var(--soft);margin-bottom:14px;gap:2px}
@@ -152,7 +161,7 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
     <div class="brand">Speak<b>&</b>Smile · урок 5 · числа</div>
     <div class="zh" lang="zh">一二三！</div>
     <div class="py">Yī, èr, sān!</div>
-    <div class="ru">Считаем до 12</div>
+    <div class="ru">Считаем до 20 · сколько тебе лет?</div>
   </header>
 
   <div class="tabs" role="tablist">
@@ -165,12 +174,18 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
   <section id="nums" role="tabpanel">
     <p class="hint">Нажми на число — услышишь его. Покажи на пальцах, как в Китае!</p>
     <div class="grid" id="grid"></div>
-    <div class="note">В Китае до 10 считают на <b>одной руке</b>: 6 — «телефончик», 7 — щепотка, 8 — «пистолетик», 9 — крючок, 10 — кулак. А 11 и 12 — как говорим: <b>десять и один</b> (十一), <b>десять и два</b> (十二).</div>
+    <div class="note">В Китае до 10 считают на <b>одной руке</b>: 6 — «телефончик», 7 — щепотка, 8 — «пистолетик», 9 — крючок, 10 — кулак. А дальше — как говорим: 11 = <b>десять и один</b> (十一 shíyī), 15 = <b>десять и пять</b> (十五 shíwǔ), а 20 = <b>два десятка</b> (二十 èrshí).</div>
+    <div class="panel" style="margin-top:16px">
+      <h2>你几岁？ Сколько тебе лет?</h2>
+      <p class="sub">几 <b class="py">jǐ</b> — «сколько», 岁 <b class="py">suì</b> — «лет». Ответ: 我 + число + 岁. Нажми — услышишь.</p>
+      <div class="dlg" id="ageDlg"></div>
+      <div class="ages" id="ages"></div>
+    </div>
   </section>
 
   <section id="games" role="tabpanel" hidden>
     <div class="panel">
-      <div class="seg" id="gseg"><button data-g="listen" class="on">Послушай и найди</button><button data-g="hand">Что на пальцах?</button><button data-g="sum">Собери число</button><button data-g="race">По порядку</button></div>
+      <div class="seg" id="gseg"><button data-g="listen" class="on">Послушай и найди</button><button data-g="hand">Что на пальцах?</button><button data-g="sum">Собери число</button><button data-g="age">Сколько лет?</button><button data-g="race">По порядку</button></div>
       <div id="gArea"></div>
     </div>
   </section>
@@ -186,7 +201,7 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
 
   <section id="hz" role="tabpanel" hidden>
     <div class="panel">
-      <h2>Иероглифы-цифры</h2>
+      <h2>Иероглифы-цифры + 几 и 岁</h2>
       <p class="sub">Самые простые знаки в китайском. Нажми на цифру — посмотри, как она пишется, и обведи пальцем.</p>
       <div class="hzrow" id="hzRow"></div>
       <div class="hzmain">
@@ -215,48 +230,60 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
 ZhGate.lock('numbers');
 const $=id=>document.getElementById(id);
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
-const NUM=[null,['一','yī'],['二','èr'],['三','sān'],['四','sì'],['五','wǔ'],['六','liù'],['七','qī'],['八','bā'],['九','jiǔ'],['十','shí'],['十一','shíyī'],['十二','shí\'èr']];
-const ru=n=>['','один','два','три','четыре','пять','шесть','семь','восемь','девять','десять','одиннадцать','двенадцать'][n];
-const handImgs=n=> n<=10?[`img/h${n}.webp`]:['img/h10.webp',`img/h${n-10}.webp`];
+const NUM=[null,['一','yī'],['二','èr'],['三','sān'],['四','sì'],['五','wǔ'],['六','liù'],['七','qī'],['八','bā'],['九','jiǔ'],['十','shí'],['十一','shíyī'],['十二','shí\'èr'],
+  ['十三','shísān'],['十四','shísì'],['十五','shíwǔ'],['十六','shíliù'],['十七','shíqī'],['十八','shíbā'],['十九','shíjiǔ'],['二十','èrshí']];
+const ru=n=>['','один','два','три','четыре','пять','шесть','семь','восемь','девять','десять','одиннадцать','двенадцать','тринадцать','четырнадцать','пятнадцать','шестнадцать','семнадцать','восемнадцать','девятнадцать','двадцать'][n];
+const handImgs=n=> n<=10?[`img/h${n}.webp`]: n<20?['img/h10.webp',`img/h${n-10}.webp`]:['img/h2.webp','img/h10.webp'];   // 20 = «два десятка»
 const handsHTML=n=>`<span class="hands${n>10?' two':''}">${handImgs(n).map(s=>`<img src="${s}" alt="" loading="lazy">`).join('')}</span>`;
 let cur=null; const play=(n,onend)=>{ if(cur){cur.pause();cur.onended=null;} const a=new Audio(`audio/n${n}.mp3`); cur=a; a.onended=onend||null; a.play().catch(()=>{}); return a; };
 
 /* числа */
-$('grid').innerHTML=Array.from({length:12},(_,k)=>{const n=k+1;return `<button class="ncard" style="--i:${k}" data-n="${n}" aria-label="${ru(n)}"><span class="d">${n}</span>${handsHTML(n)}<span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span></button>`;}).join('');
+$('grid').innerHTML=Array.from({length:20},(_,k)=>{const n=k+1;return `<button class="ncard" style="--i:${k}" data-n="${n}" aria-label="${ru(n)}"><span class="d">${n}</span>${handsHTML(n)}<span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span></button>`;}).join('');
 $('grid').addEventListener('click',e=>{ const c=e.target.closest('.ncard'); if(!c) return; document.querySelectorAll('.ncard').forEach(x=>x.classList.remove('say')); c.classList.add('say'); play(+c.dataset.n,()=>setTimeout(()=>c.classList.remove('say'),300)); });
+
+/* сколько тебе лет */
+const playId=(id,onend)=>{ if(cur){cur.pause();cur.onended=null;} const a=new Audio(`audio/${id}.mp3`); cur=a; a.onended=onend||null; a.play().catch(()=>{}); return a; };
+$('ageDlg').innerHTML=[['a','q_age','你几岁？','Nǐ jǐ suì?','Сколько тебе лет?'],['b','age12','我十二岁。','Wǒ shí\'èr suì.','Мне двенадцать лет.'],['a','q_age_ta','他几岁？','Tā jǐ suì?','Сколько ему лет?'],['b','ta_age','他十二岁。','Tā shí\'èr suì.','Ему двенадцать лет.']]
+  .map(([w,id,z,p,r])=>`<button class="${w}" data-id="${id}"><span class="w">${w==='a'?'вопрос':'ответ'}</span><span><span class="z" lang="zh">${z}</span><br><span class="p">${p}</span> <span class="r">— ${r}</span></span></button>`).join('');
+$('ages').innerHTML=[10,11,12,13,14].map(n=>`<button data-id="age${n}"><span class="z" lang="zh">我${NUM[n][0]}岁</span><span class="p">${n} лет</span></button>`).join('');
+['ageDlg','ages'].forEach(id=>$(id).addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; document.querySelectorAll('.dlg button,.ages button').forEach(x=>x.classList.remove('say')); b.classList.add('say'); playId(b.dataset.id,()=>setTimeout(()=>b.classList.remove('say'),300)); }));
 
 /* игры */
 let G='listen', score=0, total=0, target=0, lock=false;
 const optHTML=(n,withHand)=>`<button class="opt" data-n="${n}">${withHand?handsHTML(n).replace('class="hands','class="hands" style="height:92px;display:flex;justify-content:center"').replace('" style','" style'):''}${withHand?'':`<span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span>`}</button>`;
 function bar(){ return `<div class="g-top"><span class="pill">Верно: <b id="gs">${score}</b> / ${total}</span></div>`; }
-function pick4(t,max=12){ return shuffle([t,...shuffle(Array.from({length:max},(_,i)=>i+1).filter(x=>x!==t)).slice(0,3)]); }
+function pick4(t,max=20){ return shuffle([t,...shuffle(Array.from({length:max},(_,i)=>i+1).filter(x=>x!==t)).slice(0,3)]); }
 function round(){
   lock=false; const A=$('gArea');
-  if(G==='listen'){ target=1+(Math.random()*12|0);
+  if(G==='age'){ target=10+(Math.random()*5|0);
+    A.innerHTML=bar()+`<div class="q"><button class="listen" id="gL" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button></div><p class="sub" style="margin:0 auto 10px">你几岁？ Сколько лет говорящему?</p><div class="opts">${shuffle([target,...shuffle([10,11,12,13,14].filter(x=>x!==target)).slice(0,3)]).map(n=>`<button class="opt" data-n="${n}"><span class="z" lang="zh">${NUM[n][0]}岁</span><span class="p">${n} лет</span></button>`).join('')}</div>`;
+    $('gL').onclick=()=>playId('age'+target); setTimeout(()=>playId('age'+target),300); }
+  if(G==='listen'){ target=1+(Math.random()*20|0);
     A.innerHTML=bar()+`<div class="q"><button class="listen" id="gL" aria-label="Слушать"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg></button></div><div class="opts">${pick4(target).map(n=>optHTML(n)).join('')}</div>`;
     $('gL').onclick=()=>play(target); setTimeout(()=>play(target),300); }
-  if(G==='hand'){ target=1+(Math.random()*12|0);
+  if(G==='hand'){ target=1+(Math.random()*20|0);
     A.innerHTML=bar()+`<div class="q">${handImgs(target).map(s=>`<img src="${s}" alt="">`).join('')}</div><p class="sub" style="margin:0 auto 10px">Какое число показывает рука?</p><div class="opts">${pick4(target).map(n=>optHTML(n)).join('')}</div>`; }
-  if(G==='sum'){ const b=1+(Math.random()*2|0); target=10+b;
-    if(Math.random()<.5){ target=1+(Math.random()*12|0); }
-    const t=target, parts= t>10?[10,t-10]: (t>5?[5,t-5]:[t-1>0?t-1:1, t-1>0?1:0]);
+  if(G==='sum'){ target=Math.random()<.65 ? 11+(Math.random()*9|0) : 2+(Math.random()*9|0);
+    const t=target, parts= t>10?[10,t-10]: (t>5?[5,t-5]:[t-1,1]);
     A.innerHTML=bar()+`<div class="q"><span class="big" lang="zh">${NUM[parts[0]][0]}</span>${parts[1]?`<span class="plus">+</span><span class="big" lang="zh">${NUM[parts[1]][0]}</span>`:''}<span class="plus">=</span><span class="big">?</span></div><p class="sub" style="margin:0 auto 10px">${NUM[parts[0]][1]} + ${parts[1]?NUM[parts[1]][1]:''} = ?</p><div class="opts">${pick4(t).map(n=>optHTML(n)).join('')}</div>`; }
   if(G==='race'){ raceStart(); }
 }
 $('gArea').addEventListener('click',e=>{ const b=e.target.closest('.opt'); if(!b||lock) return; total++;
-  if(+b.dataset.n===target){ lock=true; score++; b.classList.add('right'); play(target,()=>setTimeout(round,700)); }
-  else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); if(G==='listen') setTimeout(()=>play(target),400); }
+  if(+b.dataset.n===target){ lock=true; score++; b.classList.add('right'); const nx=()=>setTimeout(round,700); G==='age'?playId('age'+target,nx):play(target,nx); }
+  else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); if(G==='listen') setTimeout(()=>play(target),400); if(G==='age') setTimeout(()=>playId('age'+target),400); }
   const s=$('gs'); if(s){ s.textContent=score; s.parentNode.lastChild.textContent=' / '+total; } });
 $('gseg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; G=b.dataset.g; score=0; total=0; $('gseg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); clearInterval(rTimer); round(); });
 // по порядку на скорость
 let rNext=1, rT0=0, rTimer=null;
 const ls={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
-function raceStart(){ rNext=1; clearInterval(rTimer); const best=+ls.get('zhRaceBest')||0;
-  $('gArea').innerHTML=`<div class="g-top"><span class="timer" id="rt">0.0</span><span class="best">${best?`Рекорд: ${best.toFixed(1)} с`:'Нажимай числа по порядку: 一, 二, 三…'}</span></div><div class="race" id="race">${shuffle(Array.from({length:12},(_,i)=>i+1)).map(n=>`<button data-n="${n}"><span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span></button>`).join('')}</div><div class="res" id="rres"><div class="big2" id="rbig"></div><button class="btn primary" id="ragain">Ещё раз</button></div>`;
+let rMax=12;
+function raceStart(){ rNext=1; clearInterval(rTimer); const BK='zhRaceBest'+(rMax===20?'20':''); const best=+ls.get(BK)||0;
+  $('gArea').innerHTML=`<div class="g-top"><div class="seg" id="rmax" style="margin:0"><button data-m="12" class="${rMax===12?'on':''}">до 12</button><button data-m="20" class="${rMax===20?'on':''}">до 20</button></div><span class="timer" id="rt">0.0</span><span class="best">${best?`Рекорд: ${best.toFixed(1)} с`:'Нажимай числа по порядку: 一, 二, 三…'}</span></div><div class="race" id="race">${shuffle(Array.from({length:rMax},(_,i)=>i+1)).map(n=>`<button data-n="${n}"><span class="z" lang="zh">${NUM[n][0]}</span><span class="p">${NUM[n][1]}</span></button>`).join('')}</div><div class="res" id="rres"><div class="big2" id="rbig"></div><button class="btn primary" id="ragain">Ещё раз</button></div>`;
+  $('rmax').onclick=e=>{ const b=e.target.closest('button'); if(b){ rMax=+b.dataset.m; raceStart(); } };
   $('race').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b||b.classList.contains('done')) return;
     if(+b.dataset.n===rNext){ if(rNext===1){ rT0=performance.now(); rTimer=setInterval(()=>$('rt').textContent=((performance.now()-rT0)/1000).toFixed(1),100); }
       b.classList.add('done'); play(rNext); rNext++;
-      if(rNext>12){ clearInterval(rTimer); const t=(performance.now()-rT0)/1000; $('rt').textContent=t.toFixed(1); const best=+ls.get('zhRaceBest')||0; const rec=!best||t<best; if(rec) ls.set('zhRaceBest',t.toFixed(1));
+      if(rNext>rMax){ clearInterval(rTimer); const t=(performance.now()-rT0)/1000; $('rt').textContent=t.toFixed(1); const best=+ls.get(BK)||0; const rec=!best||t<best; if(rec) ls.set(BK,t.toFixed(1));
         $('rbig').textContent=rec?`Новый рекорд: ${t.toFixed(1)} с! 太棒了！`:`${t.toFixed(1)} с. Рекорд — ${best.toFixed(1)} с`; $('rres').classList.add('on'); $('ragain').onclick=raceStart; } }
     else { b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); } });
 }
@@ -312,14 +339,15 @@ function drawHz(animate){ const h=HANZI[hzI], box=$('hzSvg'); box.innerHTML='';
   box.appendChild(svg); an.forEach(p=>{ const L=p.getTotalLength()+40; p.style.strokeDasharray=L; p.style.strokeDashoffset=animate?L:0; });
   if(animate) an.forEach((p,i)=>setTimeout(()=>p.style.strokeDashoffset=0,220+i*420)); }
 function showHz(i,animate=true){ hzI=i; const h=HANZI[i]; $('hzRow').querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
-  $('hzBig').textContent=h.ch; $('hzPy').textContent=h.py; $('hzRu').textContent=h.ru+' · '+h.n; $('hzStory').innerHTML=h.story+`<br><img src="img/h${h.n}.webp" alt="">`;
+  $('hzBig').textContent=h.ch; $('hzPy').textContent=h.py; $('hzRu').textContent=h.ru+(h.n?' · '+h.n:''); $('hzStory').innerHTML=h.story+(h.n?`<br><img src="img/h${h.n}.webp" alt="">`:`<br><b lang="zh" style="font-family:var(--zh);color:var(--ink)">你几岁？</b> — сколько тебе лет?`);
   $('quiz').classList.remove('show'); $('pad').innerHTML=''; drawHz(animate); }
-$('hzRow').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ showHz(+b.dataset.i); play(HANZI[+b.dataset.i].n); } });
+const hzSay=h=> h.n? play(h.n) : playId(h.audio||'q_age');
+$('hzRow').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b){ showHz(+b.dataset.i); hzSay(HANZI[+b.dataset.i]); } });
 $('hzWrite').onclick=()=>drawHz(true); $('hzSvg').onclick=()=>drawHz(true);
 $('hzTry').onclick=()=>{ const q=$('quiz'); q.classList.add('show'); $('pad').innerHTML=''; const h=HANZI[hzI];
   const go=()=>{ const w=HanziWriter.create($('pad'),h.ch,{width:300,height:300,padding:14,showCharacter:false,showOutline:true,outlineColor:'#DDD3F7',strokeColor:'#6C3FC5',drawingColor:'#F17FBE',drawingWidth:22,showHintAfterMisses:2,charDataLoader:(c,ok)=>ok({strokes:h.strokes,medians:h.medians})});
     $('qmsg').textContent='Веди пальцем по серым чертам по порядку';
-    w.quiz({onMistake:()=>$('qmsg').textContent='Почти! Попробуй эту черту ещё раз.',onCorrectStroke:d=>$('qmsg').textContent=`Черта ${d.strokeNum+1} из ${d.strokeNum+d.strokesRemaining+1} — да!`,onComplete:()=>{ $('qmsg').textContent='对了！Получилось!'; play(h.n); }});
+    w.quiz({onMistake:()=>$('qmsg').textContent='Почти! Попробуй эту черту ещё раз.',onCorrectStroke:d=>$('qmsg').textContent=`Черта ${d.strokeNum+1} из ${d.strokeNum+d.strokesRemaining+1} — да!`,onComplete:()=>{ $('qmsg').textContent='对了！Получилось!'; hzSay(h); }});
     q.scrollIntoView({block:'nearest',behavior:'smooth'}); };
   if(window.HanziWriter) go(); else { $('qmsg').textContent='Загружаю…'; const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js'; s.onload=go; document.head.appendChild(s); } };
 
