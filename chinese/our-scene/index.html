@@ -43,7 +43,7 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent}
 .hero .py{font-size:clamp(19px,4.8vw,25px);font-weight:800;color:var(--honey);margin:8px 0 0}
 .hero .ru{font-size:clamp(15px,3.6vw,18px);font-weight:600;opacity:.92;margin:4px 0 0}
 
-.tabs{display:flex;justify-content:center;gap:4px;margin:24px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);width:max-content;max-width:100%}
+.tabs{display:flex;justify-content:center;gap:4px;margin:24px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .tab{appearance:none;border:0;background:transparent;color:#fff;font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .15s var(--out)}
 .tab[aria-selected="true"]{background:#fff;color:var(--p)}
 .tab:active{transform:scale(.97)}
@@ -136,13 +136,39 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent}
 .nm:active{transform:scale(.96)}
 .fld input{font-size:16px}
 
+/* ── группы ── */
+.here{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:12px}
+.kid{appearance:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;min-width:86px;padding:8px 12px 6px;border-radius:16px;background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 3px var(--p);transition:opacity .2s,box-shadow .2s,transform .15s var(--out)}
+.kid .z{font-family:var(--zh);font-weight:900;font-size:20px;line-height:1.1}.kid .r{font-weight:800;font-size:14px}
+.kid.off{opacity:.4;box-shadow:inset 0 0 0 2px #E2DBF5;background:#fff}.kid.off .r{text-decoration:line-through}
+.kid:active{transform:scale(.96)}
+.teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.team{background:var(--paper);color:var(--ink);border-radius:28px;padding:18px 16px 18px;box-shadow:0 14px 30px rgba(30,10,70,.30);animation:pop .45s var(--ease) both;animation-delay:calc(var(--i)*120ms)}
+.team h3{margin:0 0 12px;font-size:22px}
+.team h3 span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--honey);margin-right:8px;font-size:18px}
+.seat{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:10px 12px;border-radius:18px;background:#FBF9FF;margin-bottom:8px;text-align:left}
+.seat .nm2{font-weight:800;font-size:clamp(22px,4.4vw,30px);line-height:1.1}
+.seat .nm2 small{display:block;font-family:var(--zh);font-weight:900;font-size:15px;color:var(--muted)}
+.seat .role{display:inline-flex;font-family:var(--f);align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-weight:800;font-size:15px;color:var(--ink);white-space:nowrap}
+.seat .role b{font-family:var(--zh);font-weight:900}
+.seat.spin .nm2{animation:flick .09s steps(1) infinite}
+@keyframes flick{50%{opacity:.55}}
+.seat.land{animation:land .45s var(--ease)}
+@keyframes land{0%{transform:scale(.9)}60%{transform:scale(1.04)}}
+.team .go{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.team .go .btn{padding:12px 10px;font-size:15px}
+.stage .ttl{position:absolute;top:max(22px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);font-weight:800;font-size:14px;color:var(--honey);white-space:nowrap}
+.stage .kidn{font-weight:900;font-size:clamp(26px,5vw,56px);line-height:1;color:#fff}
+.stage .next{position:absolute;top:max(50px,calc(env(safe-area-inset-top) + 34px));font-weight:700;font-size:clamp(13px,1.8vw,18px);color:rgba(255,255,255,.45)}
+.stage .next b{font-family:var(--zh)}
+
 /* ── сцена на весь экран (суфлёр) ── */
 .stage{position:fixed;inset:0;z-index:60;background:#17112A;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:max(20px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));cursor:pointer;animation:fade .3s ease}
 @keyframes fade{from{opacity:0}}
 .stage .x{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font:700 22px/1 system-ui;cursor:pointer}
 .stage .cnt{position:absolute;top:max(22px,env(safe-area-inset-top));left:20px;font-weight:800;font-size:14px;color:rgba(255,255,255,.6)}
 .stage .who{font-size:clamp(16px,3vw,24px);padding:8px 18px}
-.stage .z{font-family:var(--zh);font-weight:900;font-size:clamp(44px,9vw,110px);line-height:1.15;text-align:center}
+.stage .z{font-family:var(--zh);font-weight:900;font-size:clamp(40px,7.4vw,96px);line-height:1.15;text-align:center}
 .stage .p{font-family:var(--pyf);font-weight:900;font-size:clamp(22px,4vw,48px);color:var(--honey);text-align:center}
 .stage .r{font-weight:700;font-size:clamp(16px,2.6vw,28px);color:rgba(255,255,255,.75);text-align:center}
 .stage .act{font-style:italic;font-weight:700;font-size:clamp(20px,3.4vw,36px);color:rgba(255,255,255,.8)}
@@ -182,6 +208,7 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent}
     <button class="tab" role="tab" aria-selected="true" data-tab="build">Собери</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="roles">Сцена</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="mine">Мой диалог</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="groups" id="groupsTab" hidden>Группы</button>
   </div>
 
   <!-- СОБЕРИ ФРАЗУ -->
@@ -232,10 +259,21 @@ button,input{font:inherit;-webkit-tap-highlight-color:transparent}
     </div>
   </section>
 
+  <!-- ГРУППЫ (учителю, на экран) -->
+  <section id="groups" role="tabpanel" hidden>
+    <div class="panel">
+      <h2>Кто с кем играет сцену</h2>
+      <p class="sub">Снимите тех, кого сегодня нет. Компьютер случайно разделит класс на группы и раздаст роли. Если в группе четверо, четвёртый — ведущий и учительница (без китайских реплик).</p>
+      <div class="here" id="here"></div>
+      <div class="acts" style="margin-top:4px"><button class="btn primary" id="grGo"><svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4V8h-3.6l-2.3 2.9-1.3-1.6L12.4 6H17zM3 6h4.6l8.8 11H17v-3l4 4-4 4v-3h-1.6L6.6 8H3zm0 10h3.6l2.3-2.9 1.3 1.6L8.6 18H3z"/></svg>Разделить на группы</button></div>
+    </div>
+    <div class="teams" id="teams"></div>
+  </section>
+
   <p class="foot"><a href="../">← Все уроки</a> · <a href="/">speakandsmile.ru</a></p>
 </div>
 
-<div class="stage" id="stage" hidden><span class="cnt" id="stCnt"></span><button class="x" id="stX" aria-label="Закрыть">✕</button><div id="stCard"></div>
+<div class="stage" id="stage" hidden><span class="cnt" id="stCnt"></span><span class="ttl" id="stTtl"></span><span class="next" id="stNext2"></span><button class="x" id="stX" aria-label="Закрыть">✕</button><div id="stCard"></div>
   <div class="tip">Нажми на экран — следующая реплика</div><div class="nav"><button id="stPrev" aria-label="Назад">←</button><button id="stNext" aria-label="Дальше">→</button></div></div>
 
 <script src="../gate.js?v=3"></script>
@@ -362,9 +400,11 @@ $('mineStage').onclick=()=>stage(mineScript().map(l=>l.act?l:{...l,custom:true})
 
 /* ── суфлёр на весь экран ── */
 let SL=[], si=0, sRole=null;
-function stage(lines,r){ SL=lines; si=0; sRole=r; $('stage').hidden=false; document.documentElement.style.overflow='hidden'; drawStage(); }
+function stage(lines,r,ttl){ SL=lines; si=0; sRole=r; $('stTtl').textContent=ttl||''; $('stage').hidden=false; document.documentElement.style.overflow='hidden'; drawStage(); }
 function drawStage(){ const s=SL[si]; $('stCnt').textContent=`${si+1} / ${SL.length}`;
+  const nx=SL.slice(si+1).find(x=>!x.act); $('stNext2').innerHTML=nx&&nx.kid?`Дальше говорит: ${nx.kid}`:'';
   if(s.act){ $('stCard').innerHTML=`<div class="card"><div class="act">— ${s.act} —</div></div>`; return; }
+  if(s.kid){ $('stCard').innerHTML=`<div class="card"><div class="kidn">${s.kid}</div><span class="who" style="background:${s.c}">${s.roleHTML}</span><div class="z" lang="zh">${s.zh}</div><div class="p">${s.py}</div><div class="r">${s.ru}</div></div>`; return; }
   const badge=s.custom?`<span class="who" style="background:${s.c}">${s.name}</span>`:`<span class="who" style="background:${H[s.k].c}"><b lang="zh">${H[s.k].zh}</b>${H[s.k].ru}${sRole===s.k?' · ТВОЯ РЕПЛИКА':''}</span>`;
   $('stCard').innerHTML=`<div class="card">${badge}<div class="z" lang="zh">${s.zh}</div><div class="p">${s.py}</div><div class="r">${s.ru}</div></div>`; }
 const stGo=d=>{ si=Math.max(0,Math.min(SL.length-1,si+d)); drawStage(); };
@@ -372,8 +412,57 @@ const stClose=()=>{ $('stage').hidden=true; document.documentElement.style.overf
 $('stage').addEventListener('click',e=>{ if(e.target.closest('#stX')) return stClose(); if(e.target.closest('#stPrev')) return stGo(-1); if(si===SL.length-1&&!e.target.closest('#stNext')) return stClose(); stGo(1); });
 document.addEventListener('keydown',e=>{ if($('stage').hidden) return; if(e.key==='Escape') stClose(); if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); stGo(1); } if(e.key==='ArrowLeft') stGo(-1); });
 
+/* ── группы на экран ── */
+const KIDS=NAMES.map(n=>({...n,here:true}));   // кого нет — снять нажатием
+const ROLES=['mei','long','ming'];
+let TEAMS=[];
+function drawHere(){ $('here').innerHTML=KIDS.map((k,i)=>`<button class="kid${k.here?'':' off'}" data-i="${i}"><span class="z" lang="zh">${k.zh}</span><span class="r">${k.ru}</span></button>`).join(''); }
+$('here').addEventListener('click',e=>{ const b=e.target.closest('.kid'); if(!b) return; KIDS[+b.dataset.i].here=!KIDS[+b.dataset.i].here; drawHere(); });
+function split(list){ const n=list.length, g=Math.max(1,Math.round(n/3)); const t=Array.from({length:g},()=>[]); list.forEach((k,i)=>t[i%g].push(k)); return t; }
+function roleOf(i){ return ROLES[i] || 'host'; }  // четвёртый в группе — ведущий: читает ремарки
+const roleBadge=r=>r==='host'?'🎬 Ведущий':`<b lang="zh">${H[r].zh}</b>${H[r].ru}`;
+const roleColor=r=>r==='host'?'#E6DEFB':H[r].c;
+function drawTeams(spin){
+  $('teams').innerHTML=TEAMS.map((t,gi)=>`<div class="team" style="--i:${gi}"><h3><span>${gi+1}</span>Группа ${gi+1}</h3>
+    ${t.map((k,i)=>`<div class="seat${spin?' spin':''}"><div class="nm2">${k.ru}<small>${k.zh} · <span class="py">${k.py}</span></small></div><span class="role" style="background:${roleColor(roleOf(i))}">${roleBadge(roleOf(i))}</span></div>`).join('')}
+    <div class="go"><button class="btn primary" data-g="${gi}" data-v="film">Сцена из фильма</button><button class="btn" data-g="${gi}" data-v="us">Сцена про нас</button></div></div>`).join(''); }
+$('grGo').onclick=()=>{
+  const here=KIDS.filter(k=>k.here); if(here.length<2) return;
+  const fin=split(shuffle(here)); let n=0;
+  const tick=setInterval(()=>{ TEAMS=split(shuffle(here)); drawTeams(true); if(++n>=14){ clearInterval(tick); TEAMS=fin; drawTeams(false); document.querySelectorAll('.seat').forEach((s,i)=>{ s.style.animationDelay=(i*90)+'ms'; s.classList.add('land'); }); } },90);
+  $('grGo').lastChild.textContent='Перемешать ещё раз';
+};
+// сцена из фильма: реплики героя говорит ребёнок, которому досталась роль
+function filmLines(t){ const by={}; t.forEach((k,i)=>by[roleOf(i)]=k);
+  return SCENE.map(s=>s.act?{act:by.host?`${by.host.ru} объявляет: «${s.act}»${/учительниц/.test(s.act)?` — и проходит мимо, ${by.host.ru} — учительница`:''}`:s.act}:{...s,kid:(by[s.k]||{}).ru||H[s.k].ru,c:H[s.k].c,roleHTML:roleBadge(s.k)}); }
+// сцена про нас: A знакомится с B, B представляет C — со своими именами
+function usLines(t){ const [A,B,C]=t, mood=MOODS[Math.random()*MOODS.length|0], pr=x=>x&&x.g==='m'?['他','Tā','Кто он?','Это мой друг. Его зовут ']:['她','Tā','Кто она?','Это моя подруга. Её зовут '];
+  const L=(k,c,zh,py,ru)=>({kid:k.ru,c,roleHTML:`<b lang="zh">${k.zh}</b><span class="py">${k.py}</span>`,zh,py,ru});
+  const a='var(--honey)', b='var(--long)', c='var(--mei)';
+  const out=[L(A,a,'你好！你叫什么名字？','Nǐ hǎo! Nǐ jiào shénme míngzi?','Привет! Как тебя зовут?'),
+    L(B,b,`我叫${B.zh}。你呢？`,`Wǒ jiào ${B.py}. Nǐ ne?`,`Меня зовут ${B.ru}. А тебя?`),
+    L(A,a,`我叫${A.zh}。很高兴认识你！`,`Wǒ jiào ${A.py}. Hěn gāoxìng rènshi nǐ!`,`Меня зовут ${A.ru}. Очень приятно!`),
+    L(B,b,'我也是！你好吗？','Wǒ yě shì! Nǐ hǎo ma?','Мне тоже! Как дела?'),
+    L(A,a,'我很好！你呢？','Wǒ hěn hǎo! Nǐ ne?','Хорошо! А у тебя?'),
+    L(B,b,mood[1],mood[2],mood[3][0].toUpperCase()+mood[3].slice(1)+'!')];
+  if(C){ const p=pr(C); out.push({act:`Подходит ${C.ru}`},
+    L(A,a,`${p[0]}是谁？你的朋友？`,`${p[1]} shì shéi? Nǐ de péngyou?`,p[2]+' Твой друг?'),
+    L(B,b,`${p[0]}是我的朋友。${p[0]}叫${C.zh}。`,`${p[1]} shì wǒ de péngyou. ${p[1]} jiào ${C.py}.`,p[3]+C.ru+'.'),
+    L(C,c,'你好！','Nǐ hǎo!','Привет!'),
+    L(A,a,`你好，${C.zh}！`,`Nǐ hǎo, ${C.py}!`,`Привет, ${C.ru}!`)); }
+  out.push({act:t[3]?`Ведущий ${t[3].ru} объявляет: «Проходит учительница»`:'Проходит учительница'},
+    L(A,a,'她是谁？','Tā shì shéi?','А это кто?'),
+    L(B,b,'她是我的老师。','Tā shì wǒ de lǎoshī.','Это моя учительница.'),
+    {kid:'Все вместе',c:'#fff',roleHTML:'👋',zh:'老师，你好！',py:'Lǎoshī, nǐ hǎo!',ru:'Здравствуйте, учитель!'},
+    L(B,b,'走吧！走吧！','Zǒu ba! Zǒu ba!','Пойдём! Пойдём!'));
+  return out; }
+$('teams').addEventListener('click',e=>{ const b=e.target.closest('[data-g]'); if(!b) return; const t=TEAMS[+b.dataset.g];
+  stage(b.dataset.v==='film'?filmLines(t):usLines(t),null,`Группа ${+b.dataset.g+1} · ${b.dataset.v==='film'?'сцена из фильма':'сцена про нас'}`); });
+drawHere();
+ZhGate.ready.then(g=>{ if(g.teacher) $('groupsTab').hidden=false; if(g.teacher&&location.hash==='#groups') openTab('groups'); });
+
 /* ── вкладки ── */
-function openTab(n){ document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===n)); ['build','roles','mine'].forEach(id=>$(id).hidden=id!==n); vid.pause();
+function openTab(n){ document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===n)); ['build','roles','mine','groups'].forEach(id=>$(id).hidden=id!==n); vid.pause();
   history.replaceState(null,'',n==='build'?location.pathname+location.search:'#'+n); }
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
 bfRound(); drawRoles(); drawMine();
