@@ -1,0 +1,302 @@
+{
+ "title_zh": "一二三！",
+ "title_ru": "Считаем до 20 · сколько тебе лет?",
+ "n": 5,
+ "words": [
+  {
+   "div": true,
+   "zh": "一二三！",
+   "py": "Yī, èr, sān!",
+   "ru": "Считаем до 20"
+  },
+  {
+   "id": "n1",
+   "zh": "一",
+   "py": "yī",
+   "ru": "1",
+   "imgs": [
+    "img/h1.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n2",
+   "zh": "二",
+   "py": "èr",
+   "ru": "2",
+   "imgs": [
+    "img/h2.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n3",
+   "zh": "三",
+   "py": "sān",
+   "ru": "3",
+   "imgs": [
+    "img/h3.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n4",
+   "zh": "四",
+   "py": "sì",
+   "ru": "4",
+   "imgs": [
+    "img/h4.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n5",
+   "zh": "五",
+   "py": "wǔ",
+   "ru": "5",
+   "imgs": [
+    "img/h5.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n6",
+   "zh": "六",
+   "py": "liù",
+   "ru": "6",
+   "imgs": [
+    "img/h6.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n7",
+   "zh": "七",
+   "py": "qī",
+   "ru": "7",
+   "imgs": [
+    "img/h7.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n8",
+   "zh": "八",
+   "py": "bā",
+   "ru": "8",
+   "imgs": [
+    "img/h8.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n9",
+   "zh": "九",
+   "py": "jiǔ",
+   "ru": "9",
+   "imgs": [
+    "img/h9.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n10",
+   "zh": "十",
+   "py": "shí",
+   "ru": "10",
+   "imgs": [
+    "img/h10.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n11",
+   "zh": "十一",
+   "py": "shíyī",
+   "ru": "11",
+   "imgs": [
+    "img/h10.webp",
+    "img/h1.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n12",
+   "zh": "十二",
+   "py": "shí'èr",
+   "ru": "12",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n13",
+   "zh": "十三",
+   "py": "shísān",
+   "ru": "13",
+   "imgs": [
+    "img/h10.webp",
+    "img/h3.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n14",
+   "zh": "十四",
+   "py": "shísì",
+   "ru": "14",
+   "imgs": [
+    "img/h10.webp",
+    "img/h4.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n15",
+   "zh": "十五",
+   "py": "shíwǔ",
+   "ru": "15",
+   "imgs": [
+    "img/h10.webp",
+    "img/h5.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n16",
+   "zh": "十六",
+   "py": "shíliù",
+   "ru": "16",
+   "imgs": [
+    "img/h10.webp",
+    "img/h6.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n17",
+   "zh": "十七",
+   "py": "shíqī",
+   "ru": "17",
+   "imgs": [
+    "img/h10.webp",
+    "img/h7.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n18",
+   "zh": "十八",
+   "py": "shíbā",
+   "ru": "18",
+   "imgs": [
+    "img/h10.webp",
+    "img/h8.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n19",
+   "zh": "十九",
+   "py": "shíjiǔ",
+   "ru": "19",
+   "imgs": [
+    "img/h10.webp",
+    "img/h9.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "n20",
+   "zh": "二十",
+   "py": "èrshí",
+   "ru": "20",
+   "imgs": [
+    "img/h2.webp",
+    "img/h10.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "div": true,
+   "zh": "你多大？",
+   "py": "Nǐ duō dà?",
+   "ru": "Сколько тебе лет?",
+   "audio": "q_age"
+  },
+  {
+   "id": "age10",
+   "zh": "我十岁。",
+   "py": "Wǒ shí suì.",
+   "ru": "Мне 10 лет.",
+   "imgs": [
+    "img/h10.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "age11",
+   "zh": "我十一岁。",
+   "py": "Wǒ shíyī suì.",
+   "ru": "Мне 11 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h1.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "age12",
+   "zh": "我十二岁。",
+   "py": "Wǒ shí'èr suì.",
+   "ru": "Мне 12 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "age13",
+   "zh": "我十三岁。",
+   "py": "Wǒ shísān suì.",
+   "ru": "Мне 13 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h3.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "age14",
+   "zh": "我十四岁。",
+   "py": "Wǒ shísì suì.",
+   "ru": "Мне 14 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h4.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "div": true,
+   "zh": "他多大？",
+   "py": "Tā duō dà?",
+   "ru": "Сколько ему лет?",
+   "audio": "q_age_ta"
+  },
+  {
+   "id": "ta_age",
+   "zh": "他十二岁。",
+   "py": "Tā shí'èr suì.",
+   "ru": "Ему двенадцать лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain"
+  }
+ ]
+}

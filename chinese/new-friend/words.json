@@ -1,0 +1,213 @@
+{
+ "title_zh": "新朋友",
+ "title_ru": "Новый друг — повторяем уроки 1–2",
+ "n": 3,
+ "words": [
+  {
+   "div": true,
+   "zh": "你好吗？",
+   "ru": "Урок 1 · Как дела?",
+   "py": ""
+  },
+  {
+   "id": "q_howareyou",
+   "zh": "你好吗？",
+   "py": "Nǐ hǎo ma?",
+   "ru": "Как дела?",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "good",
+   "zh": "我很好！",
+   "py": "Wǒ hěn hǎo!",
+   "ru": "Хорошо!",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "great",
+   "zh": "太棒了！",
+   "py": "Tài bàng le!",
+   "ru": "Отлично!",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "okay",
+   "zh": "还可以。",
+   "py": "Hái kěyǐ.",
+   "ru": "Нормально.",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "happy",
+   "zh": "我很开心！",
+   "py": "Wǒ hěn kāixīn!",
+   "ru": "Мне весело!",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "hungry",
+   "zh": "我饿了。",
+   "py": "Wǒ è le.",
+   "ru": "Я хочу есть.",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "thirsty",
+   "zh": "我渴了。",
+   "py": "Wǒ kě le.",
+   "ru": "Я хочу пить.",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "tired",
+   "zh": "我累了。",
+   "py": "Wǒ lèi le.",
+   "ru": "Я устал(а).",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "sad",
+   "zh": "我很难过。",
+   "py": "Wǒ hěn nánguò.",
+   "ru": "Мне грустно.",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "hot",
+   "zh": "我很热！",
+   "py": "Wǒ hěn rè!",
+   "ru": "Мне жарко!",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "cold",
+   "zh": "我很冷！",
+   "py": "Wǒ hěn lěng!",
+   "ru": "Мне холодно!",
+   "src": "../how-are-you/"
+  },
+  {
+   "id": "wet",
+   "zh": "我湿了！",
+   "py": "Wǒ shī le!",
+   "ru": "Я промок(ла)!",
+   "src": "../how-are-you/"
+  },
+  {
+   "div": true,
+   "zh": "你叫什么名字？",
+   "ru": "Урок 2 · Как тебя зовут?",
+   "py": ""
+  },
+  {
+   "id": "q_name",
+   "zh": "你叫什么名字？",
+   "py": "Nǐ jiào shénme míngzi?",
+   "ru": "Как тебя зовут?",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "my_name",
+   "zh": "我叫……",
+   "py": "Wǒ jiào …",
+   "ru": "Меня зовут …",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "q_hisname",
+   "zh": "他叫什么名字？",
+   "py": "Tā jiào shénme míngzi?",
+   "ru": "Как его зовут?",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "his_name",
+   "zh": "他叫小明。",
+   "py": "Tā jiào Xiǎo Míng.",
+   "ru": "Его зовут Сяо Мин.",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "her_name",
+   "zh": "她叫小红。",
+   "py": "Tā jiào Xiǎo Hóng.",
+   "ru": "Её зовут Сяо Хун.",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "nice",
+   "zh": "很高兴认识你！",
+   "py": "Hěn gāoxìng rènshi nǐ!",
+   "ru": "Очень приятно!",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "me_too",
+   "zh": "我也是！",
+   "py": "Wǒ yě shì!",
+   "ru": "Мне тоже!",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "and_you",
+   "zh": "你呢？",
+   "py": "Nǐ ne?",
+   "ru": "А ты?",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "friend",
+   "zh": "他是我的朋友。",
+   "py": "Tā shì wǒ de péngyou.",
+   "ru": "Он мой друг.",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "teacher",
+   "zh": "她是我的老师。",
+   "py": "Tā shì wǒ de lǎoshī.",
+   "ru": "Она моя учительница.",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "who",
+   "zh": "他是谁？",
+   "py": "Tā shì shéi?",
+   "ru": "Кто он?",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "pronouns",
+   "zh": "我 · 你 · 他 · 她",
+   "py": "wǒ · nǐ · tā · tā",
+   "ru": "я · ты · он · она",
+   "parts": [
+    {
+     "id": "pr_wo",
+     "zh": "我",
+     "py": "wǒ",
+     "ru": "я"
+    },
+    {
+     "id": "pr_ni",
+     "zh": "你",
+     "py": "nǐ",
+     "ru": "ты"
+    },
+    {
+     "id": "pr_ta_m",
+     "zh": "他",
+     "py": "tā",
+     "ru": "он"
+    },
+    {
+     "id": "pr_ta_f",
+     "zh": "她",
+     "py": "tā",
+     "ru": "она"
+    }
+   ],
+   "src": "../whats-your-name/"
+  }
+ ]
+}

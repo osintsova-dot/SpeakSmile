@@ -40,6 +40,12 @@ a.card:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(30,10,70,.34
 a.card.code{cursor:pointer}a.card.code:hover{transform:translateY(-2px);background:rgba(255,255,255,.85)}
 .tbadge{position:fixed;left:12px;bottom:12px;padding:6px 12px;border-radius:999px;background:var(--honey);color:var(--ink);font-weight:700;font-size:12px;box-shadow:0 6px 16px rgba(0,0,0,.2)}
 
+.songs{display:flex;align-items:center;gap:14px;margin-top:14px;padding:14px 16px;border-radius:22px;text-decoration:none;color:var(--ink);text-align:left;
+  background:linear-gradient(135deg,#FFF6D6,#fff);box-shadow:0 12px 26px rgba(30,10,70,.28);transition:transform .18s var(--ease)}
+.songs:hover{transform:translateY(-3px)}
+.songs .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--p);color:#fff;flex:none}
+.songs .ic svg{width:24px;height:24px;fill:currentColor}
+.songs b{display:block;font-weight:800;font-size:17px;line-height:1.15}.songs span{font-weight:600;color:var(--muted);font-size:13px}
 /* пиньинь — Nunito: у Baloo 2 знак тона над ā съезжает вбок */
 .py,.stage .sub .s,.fstage .ksy{font-family:"Nunito","Baloo 2",system-ui,sans-serif}
 </style></head>
@@ -49,6 +55,7 @@ a.card.code{cursor:pointer}a.card.code:hover{transform:translateY(-2px);backgrou
   <p class="lead">Здесь то, что мы уже прошли на занятии. Повторяй дома: слушай, играй, пой.</p>
   <div class="codecta" id="codecta" hidden><span>Первый урок открыт всем. Остальные — для учеников группы.</span><button id="codebtn">Ввести код семьи</button></div>
   <div class="list" id="list"><p style="opacity:.8">Загружаю уроки…</p></div>
+  <a class="songs" href="songs/"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v10.6A4 4 0 1 0 14 17V7h4V3z"/></svg></span><span><b>Наши песни <span lang="zh" style="font-family:var(--zh);font-weight:900;color:var(--p);font-size:15px">我们的歌</span></b><span>Все песни по порядку — слушай подряд, как плейлист</span></span></a>
   <a class="join" id="join" href="/chinese/start/#zapis">Хочу в группу</a>
   <p class="foot"><a href="/">speakandsmile.ru</a> · Норильск<span id="tl"> · <a href="#" id="tlogin">Вход для учителя</a></span></p>
 </div>
