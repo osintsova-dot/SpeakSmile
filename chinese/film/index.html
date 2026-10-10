@@ -127,7 +127,7 @@ const MODES=[
   {id:'watch',  b:'Смотрим',   s:'весь диалог',          h:'Просто смотри и слушай. Понятно без титров?'},
   {id:'repeat', b:'Повторяем', s:'пауза после фразы',    h:'После каждой фразы — пауза. Повтори вслух так же, как герой.'},
 ];
-function heroModes(){ Object.entries(T.heroes).forEach(([k,h])=>MODES.push({id:'role_'+k,b:'Озвучь '+h.ru,s:'ты говоришь за героя',h:`Голос ${h.ru} выключен — говоришь ты! Подсказка появится, когда твоя очередь.`})); }
+function heroModes(){ (T.roles||Object.keys(T.heroes)).map(k=>[k,T.heroes[k]]).forEach(([k,h])=>MODES.push({id:'role_'+k,b:'Озвучь '+h.ru,s:'ты говоришь за героя',h:`Голос ${h.ru} выключен — говоришь ты! Подсказка появится, когда твоя очередь.`})); }
 
 function drawModes(){
   $('modes').innerHTML=MODES.map(m=>`<button class="mode${m.id===mode?' on':''}" data-m="${m.id}"><b>${m.b}</b><span>${m.s}</span></button>`).join('');
