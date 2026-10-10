@@ -191,7 +191,7 @@ body{
   background:#F3EEFF;color:var(--p);display:grid;place-items:center;cursor:pointer;z-index:3;box-shadow:0 6px 16px rgba(60,30,120,.18)}
 .stage .close svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
 .stage .title{font-weight:800;font-size:13px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
-.stage .scene{flex:1;width:100%;max-width:820px;position:relative;display:grid;grid-template-columns:1fr;grid-template-areas:"kin" "sub";align-content:center;justify-items:center;min-height:0;row-gap:10px}
+.stage .scene{flex:1;width:100%;max-width:820px;position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"kin" "sub";align-content:center;justify-items:center;min-height:0;row-gap:10px}
 .stage .kin{grid-area:kin}.stage .sub{grid-area:sub}.stage .clip{grid-area:clip}
 .stage .scene.split{grid-template-columns:1.1fr 1fr;grid-template-rows:auto auto;grid-template-areas:"kin clip" "sub clip";column-gap:12px;align-content:center}
 .stage .scene.split.flip{grid-template-columns:1fr 1.1fr;grid-template-areas:"clip kin" "clip sub"}
