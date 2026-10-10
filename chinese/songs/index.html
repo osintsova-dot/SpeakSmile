@@ -111,10 +111,10 @@ const mm=s=>isFinite(s)?`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart
 const ICON={play:'<path d="M8 5v14l11-7z"/>',pause:'<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>'};
 
 function draw(g){
-  L=SONGS.map(s=>({...s,open:g.isOpen(s.l)}));
+  L=SONGS.map(s=>({...s,open:g.isOpen(s.l),code:g.needCode(s.l)}));
   const les=id=>(g.cfg.lessons.findIndex(x=>x.id===id)+1);
   $('list').innerHTML=L.map((s,i)=>`<button class="tr${s.open?'':' lock'}" data-i="${i}" style="--i:${i};--c1:${s.c[0]};--c2:${s.c[1]}" ${s.open?'':'disabled'}>
-    <span class="no">${s.open?i+1:'🔒'}</span><span><span class="z" lang="zh">${s.zh}</span><br><span class="r">${s.ru} · ${s.open?s.les:'откроется после урока '+les(s.l)}</span></span><span class="d" id="d${i}"></span></button>`).join('');
+    <span class="no">${s.open?i+1:'🔒'}</span><span><span class="z" lang="zh">${s.zh}</span><br><span class="r">${s.ru} · ${s.open?s.les:s.code?'для учеников группы':'откроется после урока '+les(s.l)}</span></span><span class="d" id="d${i}"></span></button>`).join('');
   L.forEach((s,i)=>{ if(!s.open) return; const m=new Audio(); m.preload='metadata'; m.src=s.src; m.onloadedmetadata=()=>{ $('d'+i).textContent=mm(m.duration); }; });
   const first=L.findIndex(s=>s.open); if(first>=0) load(first,false); else { $('nT').textContent='Песни откроются после первого урока'; }
   if(g.teacher && !document.querySelector('.tbadge')){ const b=document.createElement('div'); b.className='tbadge'; b.textContent='Режим учителя'; document.body.appendChild(b); }
