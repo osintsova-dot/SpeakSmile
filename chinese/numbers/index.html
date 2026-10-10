@@ -128,6 +128,12 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
 .stage .row span b{font-family:var(--zh);font-weight:900;font-size:min(5vh,4.4vw);line-height:1.1}
 .stage .row span i{font-style:normal;font-family:var(--pyf);font-weight:800;font-size:min(2.4vh,2vw);color:var(--p)}
 .stage .row span.on{opacity:1}.stage .row span.cur{background:var(--honey);transform:scale(1.12)}
+.stage .now .ru2{font-weight:800;font-size:min(4.5vh,4.4vw);color:var(--muted);margin-top:.6vh}
+.stage.s2 .now .z{font-size:min(19vh,15vw);white-space:nowrap}
+@media(min-aspect-ratio:1/1){.stage.s2 .now .z{font-size:min(19vh,8.6vw)}}
+.stage .qmark{font-family:var(--pyf);font-weight:900;font-size:min(40vh,38vw);line-height:1;color:var(--honey);text-shadow:0 8px 0 rgba(108,63,197,.15)}
+.stage .qmark.in{animation:numIn .32s var(--spring)}
+.stage.s2 .row span{min-width:min(13vw,110px)}
 .stage .bar{position:absolute;left:0;bottom:0;height:5px;background:var(--honey);width:0}
 .stage .tip{position:absolute;bottom:max(10px,env(safe-area-inset-bottom));left:16px;font-weight:700;font-size:12px;color:#B5ADC9}
 
@@ -167,7 +173,7 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" aria-selected="true" data-tab="nums">Числа</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="games">Игры</button>
-    <button class="tab" role="tab" aria-selected="false" data-tab="song">Песня</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="song">Песни</button>
     <button class="tab" role="tab" aria-selected="false" data-tab="hz">Иероглиф</button>
   </div>
 
@@ -196,6 +202,12 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
       <p class="sub">Хип-хоп по-китайски: каждый раз на одно число больше. Пой вместе с хором и показывай числа на пальцах! Нажми на строчку — песня начнётся с неё.</p>
       <div class="controls"><button class="btn primary" id="sPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button><button class="btn" id="sStage"><svg viewBox="0 0 24 24"><path d="M5 5h5V3H3v7h2V5zm14 0v5h2V3h-7v2h5zM5 19v-5H3v7h7v-2H5zm14 0h-5v2h7v-7h-2v5z"/></svg>На весь экран</button></div>
       <div class="lines" id="lines"></div>
+    </div>
+    <div class="panel">
+      <h2>Сколько тебе лет? 你多大？</h2>
+      <p class="sub">Песня-вопрос: все спрашивают <b lang="zh">你多大？</b> <span class="py">Nǐ duō dà?</span>, а солист отвечает — от 9 до 14 лет, хор повторяет. Покажи возраст на пальцах! Нажми на строчку — песня начнётся с неё.</p>
+      <div class="controls"><button class="btn primary" id="sPlay2"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button><button class="btn" id="sStage2"><svg viewBox="0 0 24 24"><path d="M5 5h5V3H3v7h2V5zm14 0v5h2V3h-7v2h5zM5 19v-5H3v7h7v-2H5zm14 0h-5v2h7v-7h-2v5z"/></svg>На весь экран</button></div>
+      <div class="lines" id="lines2"></div>
     </div>
   </section>
 
@@ -288,21 +300,28 @@ function raceStart(){ rNext=1; clearInterval(rTimer); const BK='zhRaceBest'+(rMa
     else { b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); } });
 }
 
-/* песня: song.json — {intro:[{t,label}], lines:[{who,n,t:[время каждой цифры]}], end} */
-let S=null, song=null, sRaf=0, stageOn=false;
-fetch('song.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{ if(!j) return; S=j; song=new Audio('song.mp3'); song.preload='auto';
-  $('lines').innerHTML=S.lines.map((l,k)=>`<div class="ln ${l.who}" data-k="${k}"><span class="who">до ${l.n}</span><span class="z" lang="zh">${Array.from({length:l.n},(_,i)=>NUM[i+1][0]).join(' ')}</span></div>`).join('');
-  song.addEventListener('ended',()=>{ stopSong(); }); });
-function lineAt(t){ let k=-1; S.lines.forEach((l,i)=>{ if(t>=l.t[0]-0.15) k=i; }); return k; }
+/* песни: song.json — считалка {intro,lines:[{who,n,t[]}]}; song2.json — «你多大？» {cues:[{t,k:q|a|choir|hook|intro|break|end,age}]} */
+const SONGS={}; let act=1, S=null, song=null, sRaf=0, stageOn=false;
+function loadSong(k,json,mp3,list){ fetch(json,{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{ if(!j) return; const a=new Audio(mp3); a.preload='auto'; SONGS[k]={S:j,a};
+  a.addEventListener('ended',()=>{ if(act===k) stopSong(); }); if(act===k){ S=j; song=a; } $(list).innerHTML=k===1
+  ? j.lines.map((l,i)=>`<div class="ln ${l.who}" data-k="${i}"><span class="who">до ${l.n}</span><span class="z" lang="zh">${Array.from({length:l.n},(_,x)=>NUM[x+1][0]).join(' ')}</span></div>`).join('')
+  : AGES.map((n,i)=>`<div class="ln" data-k="${i}"><span class="who">${n} лет</span><span class="z" lang="zh">你多大？ 我${NUM[n][0]}岁！</span></div>`).join(''); }); }
+const AGES=[9,10,11,12,13,14];
+loadSong(1,'song.json','song.mp3','lines'); loadSong(2,'song2.json','song2.mp3?v=1','lines2');
+const pBtn=()=>$(act===1?'sPlay':'sPlay2'), lBox=()=>$(act===1?'lines':'lines2');
+function use(k){ if(act===k) return; if(song&&!song.paused) stopSong(); act=k; if(SONGS[k]){ S=SONGS[k].S; song=SONGS[k].a; } else { S=null; song=null; } }
+function lineAt(t){ let k=-1; if(act===1) S.lines.forEach((l,i)=>{ if(t>=l.t[0]-0.15) k=i; }); else S.cues.forEach((c,i)=>{ if(t>=c.t-0.1) k=i; }); return k; }
 function numAt(l,t){ let j=-1; l.t.forEach((x,i)=>{ if(t>=x-0.06) j=i; }); return j; }
 let lastLine=-2, lastNum=-2;
+function rowOf(k){ if(act===1) return k; const c=S.cues[k]; return c&&c.age?AGES.indexOf(c.age):-1; }
 function tick(){ if(!song||song.paused) return; const t=song.currentTime, k=lineAt(t);
-  if(k!==lastLine){ document.querySelectorAll('.ln').forEach((e,i)=>e.classList.toggle('on',i===k)); const el=document.querySelector(`.ln[data-k="${k}"]`); if(el&&!stageOn) el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
-  if(stageOn) stageDraw(t,k);
+  if(k!==lastLine){ const r=rowOf(k); lBox().querySelectorAll('.ln').forEach((e,i)=>e.classList.toggle('on',i===r)); const el=lBox().querySelector(`.ln[data-k="${r}"]`); if(el&&!stageOn) el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+  if(stageOn) (act===1?stageDraw:stageDraw2)(t,k);
   lastLine=k; sRaf=requestAnimationFrame(tick); }
-function playSong(){ if(!song) return; song.currentTime=0; song.play().catch(()=>{}); lastLine=-2; lastNum=-2; $('sPlay').lastChild.textContent='Стоп'; tick(); }
-function stopSong(){ if(song){ song.pause(); } cancelAnimationFrame(sRaf); document.querySelectorAll('.ln').forEach(e=>e.classList.remove('on')); $('sPlay').lastChild.textContent='Петь'; if(stageOn) closeStage(); }
-$('sPlay').onclick=()=>{ if(song&&!song.paused) stopSong(); else playSong(); };
+function playSong(){ if(!song) return; song.currentTime=0; song.play().catch(()=>{}); lastLine=-2; lastNum=-2; pBtn().lastChild.textContent='Стоп'; tick(); }
+function stopSong(){ if(song){ song.pause(); } cancelAnimationFrame(sRaf); document.querySelectorAll('.ln').forEach(e=>e.classList.remove('on')); $('sPlay').lastChild.textContent='Петь'; $('sPlay2').lastChild.textContent='Петь'; if(stageOn) closeStage(); }
+$('sPlay').onclick=()=>{ use(1); if(song&&!song.paused) stopSong(); else playSong(); };
+$('sPlay2').onclick=()=>{ use(2); if(song&&!song.paused) stopSong(); else playSong(); };
 // сцена
 function stageDraw(t,k){
   $('stBar').style.width=(t/(song.duration||70)*100)+'%';
@@ -317,15 +336,34 @@ function stageDraw(t,k){
     if(j>=0){ const n=j+1; $('stNow').innerHTML=`<div class="z in" lang="zh">${NUM[n][0]}</div><div class="p">${NUM[n][1]}</div>`;
       $('stHand').innerHTML=handImgs(n).map(s=>`<img class="in" src="${s}" alt="">`).join(''); } }
 }
-function openStage(){ if(!song) return; stageOn=true; $('stage').hidden=false; document.documentElement.style.overflow='hidden';
+// сцена второй песни: вопрос — ответ — хор, возраст на пальцах
+const Q2=`<div class="z in q2" lang="zh">你多大？</div><div class="p">Nǐ duō dà?</div><div class="ru2">Сколько тебе лет?</div>`;
+function stageDraw2(t,k){
+  $('stBar').style.width=(t/(song.duration||98)*100)+'%';
+  if(k===lastLine) return;
+  const c=S.cues[k]||{k:'intro',label:'Приготовились!'}, n=c.age, row=$('stRow');
+  if(!row.children.length) row.innerHTML=AGES.map(a=>`<span><b lang="zh">${NUM[a][0]}岁</b><i>${a} лет</i></span>`).join('');
+  [...row.children].forEach((s,i)=>{ s.classList.toggle('on',!!n&&AGES[i]<=n); s.classList.toggle('cur',AGES[i]===n&&c.k!=='q'); });
+  const B=(cls,txt)=>{ $('stBadge').className='badge '+cls; $('stBadge').textContent=txt; };
+  const hand=x=>$('stHand').innerHTML=x?handImgs(x).map(s=>`<img class="in" src="${s}" alt="">`).join(''):'<div class="qmark in">?</div>';
+  if(c.k==='q'||c.k==='hook'){ B('solo',c.k==='q'?'Вопрос':'Поём все вместе!'); $('stNow').innerHTML=Q2; hand(0); }
+  else if(c.k==='a'){ B('intro','Ответ'); $('stNow').innerHTML=`<div class="z in a2" lang="zh">我${NUM[n][0]}岁！</div><div class="p">Wǒ ${NUM[n][1]} suì!</div><div class="ru2">Мне ${n} лет!</div>`; hand(n); }
+  else if(c.k==='choir'){ B('choir','Хор!'); $('stNow').innerHTML=`<div class="z in a2" lang="zh">${NUM[n][0]}岁！</div><div class="p">${NUM[n][1]} suì!</div><div class="ru2">${n} лет!</div>`; hand(n); }
+  else if(c.k==='end'){ B('choir','Молодцы!'); $('stNow').innerHTML=`<div class="z in a2" lang="zh">太棒了！</div><div class="p">Tài bàng le!</div><div class="ru2">Супер!</div>`; $('stHand').innerHTML=''; }
+  else { B('intro',c.label||''); $('stNow').innerHTML=c.k==='intro'&&k<=0?Q2:''; $('stHand').innerHTML=''; }
+}
+function openStage(k){ use(k); if(!song) return; stageOn=true; $('stage').hidden=false; $('stage').classList.toggle('s2',k===2); document.documentElement.style.overflow='hidden';
   if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
   for(let n=1;n<=10;n++){ const im=new Image(); im.src=`img/h${n}.webp`; }
   $('stBadge').className='badge intro'; $('stBadge').textContent='Приготовились!'; $('stNow').innerHTML=''; $('stHand').innerHTML=''; $('stRow').innerHTML=''; playSong(); }
-function closeStage(){ stageOn=false; $('stage').hidden=true; document.documentElement.style.overflow=''; if(song&&!song.paused){ song.pause(); song.currentTime=0; } cancelAnimationFrame(sRaf); $('sPlay').lastChild.textContent='Петь'; if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }
-$('sStage').onclick=openStage;
+function closeStage(){ stageOn=false; $('stage').hidden=true; document.documentElement.style.overflow=''; if(song&&!song.paused){ song.pause(); song.currentTime=0; } cancelAnimationFrame(sRaf); $('sPlay').lastChild.textContent='Петь'; $('sPlay2').lastChild.textContent='Петь'; if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); }
+$('sStage').onclick=()=>openStage(1); $('sStage2').onclick=()=>openStage(2);
 $('stage').addEventListener('click',e=>{ if(e.target.closest('#stX')) return closeStage(); if(!song) return; if(song.paused){ song.play().catch(()=>{}); tick(); } else song.pause(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&stageOn) closeStage(); });
-$('lines').addEventListener('click',e=>{ const el=e.target.closest('.ln'); if(!el||!song) return; const l=S.lines[+el.dataset.k]; song.currentTime=Math.max(0,l.t[0]-0.3); if(song.paused){ song.play().catch(()=>{}); $('sPlay').lastChild.textContent='Стоп'; tick(); } });
+function lineJump(k,e){ const el=e.target.closest('.ln'); if(!el) return; use(k); if(!song) return; const i=+el.dataset.k;
+  const t=k===1?S.lines[i].t[0]:S.cues.find(c=>c.age===AGES[i]).t; song.currentTime=Math.max(0,t-0.3); lastLine=-2;
+  if(song.paused){ song.play().catch(()=>{}); pBtn().lastChild.textContent='Стоп'; tick(); } }
+$('lines').addEventListener('click',e=>lineJump(1,e)); $('lines2').addEventListener('click',e=>lineJump(2,e));
 
 /* иероглифы-цифры */
 let hzI=0; const SV='http://www.w3.org/2000/svg', mk=(t,a={})=>{const e=document.createElementNS(SV,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
