@@ -437,7 +437,7 @@ const lines=SONG.map(k=>EXTRA[k]||byId[k]); let lineRow=[];
 })();
 const playBtn=document.getElementById('playSong'), stopBtn=document.getElementById('stopSong'), tempo=document.getElementById('tempo');
 let singing=false, songAudio=null, songTimes=null;
-fetch('song.json').then(r=>r.ok?r.json():null).then(j=>{if(j){songTimes=j;songAudio=new Audio('song.mp3');songAudio.preload='auto';stageBtn.hidden=false;songAudio.addEventListener('ended',()=>{ if(stageOn) closeStage(); });}}).catch(()=>{});
+fetch('song.json').then(r=>r.ok?r.json():null).then(j=>{if(j){songTimes=j;songAudio=new Audio('song.mp3?v=2');songAudio.preload='auto';stageBtn.hidden=false;songAudio.addEventListener('ended',()=>{ if(stageOn) closeStage(); });}}).catch(()=>{});
 function light(i){ const k=i<0?-1:lineRow[i];
   [...lyricsEl.children].forEach((el,r)=>{ el.classList.toggle('on',r===k);
     const dots=el.querySelectorAll('.rep i'); const row=ROWS[r]; dots.forEach((d,n)=>d.classList.toggle('done', i>=0 && row.idx[n]<=i && r===k)); if(r!==k) dots.forEach(d=>d.classList.remove('done')); });
