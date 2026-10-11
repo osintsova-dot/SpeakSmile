@@ -419,10 +419,16 @@ const fimg=f=>'img/f'+f+'.jpg';
 // ── звук ──
 const cache={}; function snd(id){ if(!cache[id]){ const a=new Audio('audio/'+id+'.mp3'); a.preload='auto'; cache[id]=a; } return cache[id]; }
 let current=null, playToken=0;
-function play(id,onend){ stopAll(); const a=snd(id); a.muted=false; a.currentTime=0; current=a; a._stop=false; a.onpause=()=>{ if(current===a&&!a._stop&&!a.ended&&!(a.duration&&a.currentTime>=a.duration-0.05)) a.play().catch(()=>{}); }; a.onended=()=>{ if(current===a) current=null; onend&&onend(); }; a.play().catch(()=>{ onend&&onend(); }); return a; }
+function start(a,onend){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; try{ a.currentTime=0; }catch(e){} a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+  let lastCt=-1, lastMove=Date.now();
+  a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); }
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(Date.now()-lastMove>4000)) done(); },200);
+  const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
+function play(id,onend){ stopAll(); const a=snd(id); return start(a,onend); }
 function playP(id){ return new Promise(res=>play(id,res)); }
-function playTok(id,tok){ return new Promise(res=>{ const a=snd(id); stopAll(); playToken=tok; a.muted=false; a.currentTime=0; current=a; a._stop=false; a.onpause=()=>{ if(current===a&&!a._stop&&!a.ended&&!(a.duration&&a.currentTime>=a.duration-0.05)) a.play().catch(()=>{}); }; a.onended=()=>{ if(current===a) current=null; res(); }; a.play().catch(res); }); }
-function stopAll(){ playToken++; if(current){ current._stop=true; current.pause(); current.onended=null; current=null; } const v=$('#vid'); if(v&&!v.paused) v.pause(); }
+function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(snd(id),res); }); }
+function stopAll(){ playToken++; if(current){ const c=current; current=null; c._stop=true; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } const v=$('#vid'); if(v&&!v.paused) v.pause(); }
 [...LINES.map(l=>l.a),'full',...TF.map(t=>t.a),'fb_yes','fb_no','letter'].forEach(snd);
 let unlocked=false;
 function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; try{ a.muted=false; a.load(); const p=a.play(); if(p&&p.catch) p.catch(()=>{}); a.pause(); a.currentTime=0; }catch(e){} }); }

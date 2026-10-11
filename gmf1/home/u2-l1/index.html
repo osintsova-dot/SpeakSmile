@@ -407,8 +407,14 @@ const save=()=>{ls.set('home:'+LESSON,P);paint();};
 // ── звук ──
 const cache={}; function snd(id){ if(!cache[id]){ const a=new Audio('audio/'+id+'.mp3'); a.preload='auto'; cache[id]=a; } return cache[id]; }
 let current=null;
-function play(id,onend){ stopAll(); const a=snd(id); a.muted=false; a.currentTime=0; a.playbackRate=1; current=a; a._stop=false; a.onpause=()=>{ if(current===a&&!a._stop&&!a.ended&&!(a.duration&&a.currentTime>=a.duration-0.05)) a.play().catch(()=>{}); }; a.onended=()=>{current=null; onend&&onend();}; a.play().catch(()=>{}); return a; }
-function stopAll(){ if(current){ current._stop=true; current.pause(); current.onended=null; current=null; } }
+function start(a,onend){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; try{ a.currentTime=0; }catch(e){} a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+  let lastCt=-1, lastMove=Date.now();
+  a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); }
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(Date.now()-lastMove>4000)) done(); },200);
+  const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
+function play(id,onend){ stopAll(); const a=snd(id); a.playbackRate=1; return start(a,onend); }
+function stopAll(){ if(current){ const c=current; current=null; c._stop=true; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } }
 WORDS.forEach(w=>snd(w.id));
 // iOS: звук разрешён только элементам, которые хоть раз запустили по касанию — разблокируем все при первом касании
 let unlocked=false;

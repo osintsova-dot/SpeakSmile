@@ -316,9 +316,15 @@ const save=()=>{ls.set('home:'+LESSON,P);paint();};
 // ── звук ──
 const cache={}; function snd(id){ if(!cache[id]){ const a=new Audio('audio/'+id+'.mp3'); a.preload='auto'; cache[id]=a; } return cache[id]; }
 let current=null, playToken=0;
-function play(id,onend){ stopAll(); const a=snd(id); a.muted=false; a.currentTime=0; current=a; a._stop=false; a.onpause=()=>{ if(current===a&&!a._stop&&!a.ended&&!(a.duration&&a.currentTime>=a.duration-0.05)) a.play().catch(()=>{}); }; a.onended=()=>{ if(current===a) current=null; onend&&onend(); }; a.play().catch(()=>{ onend&&onend(); }); return a; }
+function start(a,onend){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; try{ a.currentTime=0; }catch(e){} a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+  let lastCt=-1, lastMove=Date.now();
+  a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); }
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(Date.now()-lastMove>4000)) done(); },200);
+  const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
+function play(id,onend){ stopAll(); const a=snd(id); return start(a,onend); }
 function playP(id){ return new Promise(res=>play(id,res)); }
-function stopAll(){ playToken++; if(current){ current._stop=true; current.pause(); current.onended=null; current=null; } }
+function stopAll(){ playToken++; if(current){ const c=current; current=null; c._stop=true; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } }
 ['d1','d2','d3','d4','d5','what','yes','no','fantastic',...WORDS.map(w=>'isit_'+w.id),'isit_bike','circle1','circle2','circle3','circle4'].forEach(snd);
 let unlocked=false;
 function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; try{ a.muted=false; a.load(); const p=a.play(); if(p&&p.catch) p.catch(()=>{}); a.pause(); a.currentTime=0; }catch(e){} }); }
@@ -350,7 +356,7 @@ function dLight(k){ $$('#chat .bub').forEach((b,i)=>b.classList.toggle('on',i===
 async function dPlayAll(){ if(dBusy) return; dBusy=true; const tok=++playToken; $('#dMsg').textContent='';
   for(let i=0;i<DIALOG.length;i++){ if(playToken!==tok) break; const l=DIALOG[i]; dLight(i);
     if(role&&role===l.who){ $('#dMsg').textContent='Твоя реплика: '+l.en; await sleep(Math.max(2200,l.en.length*90)); $('#dMsg').textContent=''; }
-    else { await new Promise(res=>{ const a=snd(l.a); stopAll(); playToken=tok; a.muted=false; a.currentTime=0; current=a; a._stop=false; a.onpause=()=>{ if(current===a&&!a._stop&&!a.ended&&!(a.duration&&a.currentTime>=a.duration-0.05)) a.play().catch(()=>{}); }; a.onended=()=>{ if(current===a) current=null; res(); }; a.play().catch(res); }); await sleep(350); } }
+    else { await new Promise(res=>{ stopAll(); playToken=tok; start(snd(l.a),res); }); await sleep(350); } }
   dLight(-1); dBusy=false; if(playToken===tok){ if(role){ P.role=1; $('#dMsg').textContent='Отлично сыграно! 🎭'; } else { P.dialog=1; $('#dMsg').textContent='Теперь выбери роль и сыграй сам!'; } save(); burst(); } }
 $('#dAll').onclick=()=>{ if(dBusy){ stopAll(); dBusy=false; dLight(-1); return; } dPlayAll(); };
 function setRole(r){ role=role===r?null:r; $('#dGirl').setAttribute('aria-pressed',role==='g'); $('#dBoy').setAttribute('aria-pressed',role==='b'); dRender(); $('#dMsg').textContent=role?'Нажми «Слушать всё» — свои реплики говори сам':''; $('#dAll').innerHTML=`<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>${role?'Играем!':'Слушать всё'}`; }
@@ -397,7 +403,7 @@ function convRender(){ const A=convA?BY[convA].en:'______', B=convB?BY[convB].en
   $('#choose').innerHTML=''; CONV_SET.forEach(id=>{ const c=cardEl(BY[id]); if(id===convA||id===convB) c.classList.add('used'); c.onclick=()=>{ if(!convA){ convA=id; play('isit_'+id); } else if(!convB){ convB=id; play('isit_'+id); } convRender(); }; $('#choose').appendChild(c); });
   $('#convPlay').hidden=!(convA&&convB); $('#convMsg').textContent=!convA?'Выбери первую игрушку — мимо':!convB?'Теперь вторую — ту, что в подарке':'Готово! Послушай и разыграй'; }
 async function convPlay(){ if(convBusy||!(convA&&convB)) return; convBusy=true; const tok=++playToken; const seq=[[0,'what'],[0,'isit_'+convA],[1,'no'],[2,'isit_'+convB],[3,'yes'],[4,'fantastic']];
-  for(const [i,a] of seq){ if(playToken!==tok) break; $$('#conv .bub').forEach((b,j)=>b.classList.toggle('on',j===i)); await new Promise(res=>{ const el=snd(a); stopAll(); playToken=tok; el.muted=false; el.currentTime=0; current=el; el._stop=false; el.onpause=()=>{ if(current===el&&!el._stop&&!el.ended&&!(el.duration&&el.currentTime>=el.duration-0.05)) el.play().catch(()=>{}); }; el.onended=()=>{ if(current===el) current=null; res(); }; el.play().catch(res); }); await sleep(250); }
+  for(const [i,a] of seq){ if(playToken!==tok) break; $$('#conv .bub').forEach((b,j)=>b.classList.toggle('on',j===i)); await new Promise(res=>{ stopAll(); playToken=tok; start(snd(a),res); }); await sleep(250); }
   $$('#conv .bub').forEach(b=>b.classList.remove('on')); convBusy=false; if(playToken===tok){ P.conv=1; save(); burst(); $('#convMsg').textContent='Теперь разыграйте вдвоём: ты спрашиваешь, кто-то отвечает 🎭'; } }
 $('#convPlay').onclick=convPlay; $('#convReset').onclick=()=>{ convA=convB=null; stopAll(); convRender(); }; convRender();
 
