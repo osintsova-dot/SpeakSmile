@@ -1,0 +1,383 @@
+{
+ "title_zh": "生日快乐！",
+ "title_ru": "С днём рождения — повторяем уроки 5–6",
+ "n": 7,
+ "words": [
+  {
+   "div": true,
+   "zh": "一二三！",
+   "ru": "Урок 5 · Числа и возраст",
+   "py": ""
+  },
+  {
+   "id": "n1",
+   "zh": "一",
+   "py": "yī",
+   "ru": "1",
+   "imgs": [
+    "img/h1.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n2",
+   "zh": "二",
+   "py": "èr",
+   "ru": "2",
+   "imgs": [
+    "img/h2.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n3",
+   "zh": "三",
+   "py": "sān",
+   "ru": "3",
+   "imgs": [
+    "img/h3.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n4",
+   "zh": "四",
+   "py": "sì",
+   "ru": "4",
+   "imgs": [
+    "img/h4.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n5",
+   "zh": "五",
+   "py": "wǔ",
+   "ru": "5",
+   "imgs": [
+    "img/h5.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n6",
+   "zh": "六",
+   "py": "liù",
+   "ru": "6",
+   "imgs": [
+    "img/h6.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n7",
+   "zh": "七",
+   "py": "qī",
+   "ru": "7",
+   "imgs": [
+    "img/h7.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n8",
+   "zh": "八",
+   "py": "bā",
+   "ru": "8",
+   "imgs": [
+    "img/h8.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n9",
+   "zh": "九",
+   "py": "jiǔ",
+   "ru": "9",
+   "imgs": [
+    "img/h9.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n10",
+   "zh": "十",
+   "py": "shí",
+   "ru": "10",
+   "imgs": [
+    "img/h10.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n11",
+   "zh": "十一",
+   "py": "shíyī",
+   "ru": "11",
+   "imgs": [
+    "img/h10.webp",
+    "img/h1.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n12",
+   "zh": "十二",
+   "py": "shí'èr",
+   "ru": "12",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n13",
+   "zh": "十三",
+   "py": "shísān",
+   "ru": "13",
+   "imgs": [
+    "img/h10.webp",
+    "img/h3.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n14",
+   "zh": "十四",
+   "py": "shísì",
+   "ru": "14",
+   "imgs": [
+    "img/h10.webp",
+    "img/h4.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n15",
+   "zh": "十五",
+   "py": "shíwǔ",
+   "ru": "15",
+   "imgs": [
+    "img/h10.webp",
+    "img/h5.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n16",
+   "zh": "十六",
+   "py": "shíliù",
+   "ru": "16",
+   "imgs": [
+    "img/h10.webp",
+    "img/h6.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n17",
+   "zh": "十七",
+   "py": "shíqī",
+   "ru": "17",
+   "imgs": [
+    "img/h10.webp",
+    "img/h7.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n18",
+   "zh": "十八",
+   "py": "shíbā",
+   "ru": "18",
+   "imgs": [
+    "img/h10.webp",
+    "img/h8.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n19",
+   "zh": "十九",
+   "py": "shíjiǔ",
+   "ru": "19",
+   "imgs": [
+    "img/h10.webp",
+    "img/h9.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "n20",
+   "zh": "二十",
+   "py": "èrshí",
+   "ru": "20",
+   "imgs": [
+    "img/h2.webp",
+    "img/h10.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "age10",
+   "zh": "我十岁。",
+   "py": "Wǒ shí suì.",
+   "ru": "Мне 10 лет.",
+   "imgs": [
+    "img/h10.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "age11",
+   "zh": "我十一岁。",
+   "py": "Wǒ shíyī suì.",
+   "ru": "Мне 11 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h1.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "age12",
+   "zh": "我十二岁。",
+   "py": "Wǒ shí'èr suì.",
+   "ru": "Мне 12 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "age13",
+   "zh": "我十三岁。",
+   "py": "Wǒ shísān suì.",
+   "ru": "Мне 13 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h3.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "age14",
+   "zh": "我十四岁。",
+   "py": "Wǒ shísì suì.",
+   "ru": "Мне 14 лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h4.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "id": "ta_age",
+   "zh": "他十二岁。",
+   "py": "Tā shí'èr suì.",
+   "ru": "Ему двенадцать лет.",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain",
+   "src": "../numbers/"
+  },
+  {
+   "div": true,
+   "zh": "今天天气怎么样？",
+   "ru": "Урок 6 · Погода",
+   "py": ""
+  },
+  {
+   "id": "q_weather",
+   "zh": "今天天气怎么样？",
+   "py": "Jīntiān tiānqì zěnmeyàng?",
+   "ru": "Какая сегодня погода?",
+   "src": "../weather/"
+  },
+  {
+   "id": "sunny",
+   "zh": "晴天！",
+   "py": "Qíngtiān!",
+   "ru": "Солнечно!",
+   "src": "../weather/"
+  },
+  {
+   "id": "cloudy",
+   "zh": "阴天。",
+   "py": "Yīntiān.",
+   "ru": "Пасмурно.",
+   "src": "../weather/"
+  },
+  {
+   "id": "rainy",
+   "zh": "下雨了！",
+   "py": "Xià yǔ le!",
+   "ru": "Идёт дождь!",
+   "src": "../weather/"
+  },
+  {
+   "id": "windy",
+   "zh": "刮风了！",
+   "py": "Guā fēng le!",
+   "ru": "Ветрено!",
+   "src": "../weather/"
+  },
+  {
+   "id": "snowy",
+   "zh": "下雪了！",
+   "py": "Xià xuě le!",
+   "ru": "Идёт снег!",
+   "src": "../weather/"
+  },
+  {
+   "id": "cold_today",
+   "zh": "今天很冷！",
+   "py": "Jīntiān hěn lěng!",
+   "ru": "Сегодня холодно!",
+   "src": "../weather/"
+  },
+  {
+   "id": "hot_today",
+   "zh": "今天很热！",
+   "py": "Jīntiān hěn rè!",
+   "ru": "Сегодня жарко!",
+   "src": "../weather/"
+  },
+  {
+   "id": "too_cold",
+   "zh": "太冷了！",
+   "py": "Tài lěng le!",
+   "ru": "Слишком холодно!",
+   "src": "../weather/"
+  }
+ ]
+}
