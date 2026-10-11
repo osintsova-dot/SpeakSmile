@@ -337,7 +337,9 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <p class="hint">Теперь как в классе — с книгой и наклейками.</p>
     <div class="task"><div class="ic">📖</div><div><h3>Pupil's Book, стр. 18, задание 1</h3><p>Включи песню ещё раз и показывай игрушки на картинке, когда их поют.</p><label><input type="checkbox" data-task="t1">Сделано</label></div></div>
     <div class="task"><div class="ic">⭐</div><div><h3>Pupil's Book, стр. 18, задание 2</h3><p>Найди 10 наклеек Unit 2 в конце книги и наклей их в кружочки. Назови каждую игрушку вслух.</p><label><input type="checkbox" data-task="t2">Сделано</label></div></div>
-    <div class="task"><div class="ic">✏️</div><div><h3>Activity Book, стр. 25</h3><p>Spelling: обведи и допиши слова-игрушки.</p><label><input type="checkbox" data-task="t3">Сделано</label></div></div>
+    <div class="task"><div class="ic">🖍️</div><div><h3>Activity Book, стр. 16, задание 1</h3><p>Read, find and colour: найди на картинке и раскрась — a blue ball, a red train, a brown teddy, a green kite, a yellow car, an orange scooter.</p><label><input type="checkbox" data-task="t3">Сделано</label></div></div>
+    <div class="task"><div class="ic">✏️</div><div><h3>Activity Book, стр. 16, задание 2</h3><p>Circle and write: в «поезде» из букв обведи 6 слов и впиши их в строчки 1–6. Первое уже сделано: computer game.</p><label><input type="checkbox" data-task="t4">Сделано</label></div></div>
+    <div class="task"><div class="ic">📝</div><div><h3>Activity Book, стр. 25</h3><p>Spelling: обведи и допиши слова-игрушки (из «Learning to learn» на стр. 18 учебника).</p><label><input type="checkbox" data-task="t5">Сделано</label></div></div>
   </section>
 
   <!-- финиш -->
@@ -521,7 +523,7 @@ $$('[data-task]').forEach(cb=>{ cb.checked=P.tasks.includes(cb.dataset.task); cb
 
 // ── прогресс ──
 const KEYS=['words','find','chant','song','know','memo','ttt','spell','book'];
-function doneMap(){ return {words:P.heard.length>=10, find:P.find>=8, chant:P.chant, song:P.song, know:P.know>=8, memo:P.memo, ttt:P.ttt>=1, spell:P.spell>=1, book:P.tasks.length>=3}; }
+function doneMap(){ return {words:P.heard.length>=10, find:P.find>=8, chant:P.chant, song:P.song, know:P.know>=8, memo:P.memo, ttt:P.ttt>=1, spell:P.spell>=1, book:P.tasks.length>=4}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); });
   $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); $('#stars').innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); }
 paint(); paintNav();
