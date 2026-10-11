@@ -407,12 +407,12 @@ const save=()=>{ls.set('home:'+LESSON,P);paint();};
 // ── звук ──
 const cache={}; function snd(id){ if(!cache[id]){ const a=new Audio('audio/'+id+'.mp3'); a.preload='auto'; cache[id]=a; } return cache[id]; }
 let current=null;
-function play(id,onend){ stopAll(); const a=snd(id); a.currentTime=0; a.playbackRate=1; current=a; a.onended=()=>{current=null; onend&&onend();}; a.play().catch(()=>{}); return a; }
+function play(id,onend){ stopAll(); const a=snd(id); a.muted=false; a.currentTime=0; a.playbackRate=1; current=a; a.onended=()=>{current=null; onend&&onend();}; a.play().catch(()=>{}); return a; }
 function stopAll(){ if(current){ current.pause(); current.onended=null; current=null; } }
 WORDS.forEach(w=>snd(w.id));
 // iOS: звук разрешён только элементам, которые хоть раз запустили по касанию — разблокируем все при первом касании
 let unlocked=false;
-function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; a.muted=true; const p=a.play(); if(p&&p.then) p.then(()=>{ a.pause(); a.currentTime=0; a.muted=false; }).catch(()=>{ a.muted=false; }); else { a.pause(); a.muted=false; } }); }
+function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; a.muted=true; const p=a.play(); if(p&&p.then) p.then(()=>{ a.muted=false; if(a===current) return; a.pause(); a.currentTime=0; }).catch(()=>{ a.muted=false; }); else { a.pause(); a.muted=false; } }); }
 ['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
 
 // ── слайды ──
