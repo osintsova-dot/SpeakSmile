@@ -385,6 +385,10 @@ let current=null;
 function play(id,onend){ stopAll(); const a=snd(id); a.currentTime=0; a.playbackRate=1; current=a; a.onended=()=>{current=null; onend&&onend();}; a.play().catch(()=>{}); return a; }
 function stopAll(){ if(current){ current.pause(); current.onended=null; current=null; } }
 WORDS.forEach(w=>snd(w.id));
+// iOS: звук разрешён только элементам, которые хоть раз запустили по касанию — разблокируем все при первом касании
+let unlocked=false;
+function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; a.muted=true; const p=a.play(); if(p&&p.then) p.then(()=>{ a.pause(); a.currentTime=0; a.muted=false; }).catch(()=>{ a.muted=false; }); else { a.pause(); a.muted=false; } }); }
+['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
 
 // ── слайды ──
 const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
@@ -449,7 +453,7 @@ $('#tempo').oninput=e=>{ if(current&&(current===cache.song||current===cache.kara
 let Q=[], kTotal=0, kDone=0, kCur=null, kFlipped=false, kFirst={};
 function kStart(){ Q=shuffle(WORDS); kTotal=Q.length; kDone=0; kFirst={}; $('#kStartWrap').hidden=true; $('#kMsg').textContent=''; $('#fc').hidden=false; kNext(); }
 function kNext(){ if(!Q.length) return kFinish(); kCur=Q.shift(); kFlipped=false; const fc=$('#fc'); fc.className='fc'; void fc.offsetWidth; fc.classList.add('in');
-  $('#fFront').innerHTML=`<img src="img/${kCur.id}.png" alt=""><div class="q">Скажи по-английски вслух, потом переверни</div>`;
+  $('#fFront').innerHTML=`<img src="img/${kCur.id}.png" alt=""><div class="q">Скажи по-английски вслух, потом переверни</div><button class="btn" data-say>${SPK}Послушать</button>`;
   $('#fBack').innerHTML=`<div class="big">${kCur.en}</div><div class="ru">${kCur.ru}</div><button class="btn" data-say>${SPK}Ещё раз</button>`;
   $('#ans').innerHTML='<button class="btn" id="aShow">Перевернуть</button>'; $('#kProg').style.width=(kDone/kTotal*100)+'%'; }
 function kFlip(){ if(kFlipped) return; kFlipped=true; $('#fc').classList.add('flip'); play(kCur.id); $('#ans').innerHTML='<button class="btn no" id="aNo">✗ Не знаю</button><button class="btn yes" id="aYes">✓ Знаю</button>'; }
@@ -465,8 +469,8 @@ let mOpen=[], mLock=false, mPairs=0;
 function memoStart(){ const pick=shuffle(WORDS).slice(0,6); const cards=shuffle([...pick.map(w=>({w,t:'pic'})),...pick.map(w=>({w,t:'word'}))]); mOpen=[]; mLock=false; mPairs=0; $('#memoScore').textContent=0; $('#memoStart').textContent='Заново';
   $('#memo').innerHTML=cards.map((c,i)=>`<button class="mc ${c.t}" data-id="${c.w.id}" data-i="${i}"><div class="in"><div class="f">${c.t==='pic'?'🎁':'Aa'}</div><div class="b">${c.t==='pic'?`<img src="img/${c.w.id}.png" alt="">`:c.w.en}</div></div></button>`).join('');
   $$('#memo .mc').forEach(b=>b.onclick=()=>memoTap(b)); }
-function memoTap(b){ if(mLock||b.classList.contains('open')||b.classList.contains('hit')) return; b.classList.add('open'); mOpen.push(b); if(mOpen.length<2) return; mLock=true; const [a,c]=mOpen;
-  if(a.dataset.id===c.dataset.id){ play(a.dataset.id); setTimeout(()=>{ a.classList.add('hit'); c.classList.add('hit'); a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; mPairs++; $('#memoScore').textContent=mPairs; if(mPairs===6){ P.memo=true; save(); burst(); } },500); }
+function memoTap(b){ if(mLock||b.classList.contains('open')||b.classList.contains('hit')) return; b.classList.add('open'); play(b.dataset.id); mOpen.push(b); if(mOpen.length<2) return; mLock=true; const [a,c]=mOpen;
+  if(a.dataset.id===c.dataset.id){ setTimeout(()=>{ a.classList.add('hit'); c.classList.add('hit'); a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; mPairs++; $('#memoScore').textContent=mPairs; if(mPairs===6){ P.memo=true; save(); burst(); } },500); }
   else setTimeout(()=>{ a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; },800); }
 $('#memoStart').onclick=memoStart;
 
