@@ -606,7 +606,7 @@ const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return
 const P=Object.assign({top:0,listen:0,words:0,fav:0,song:0,ab1:0,ab2:0,ladder:0,match:0,light:{},tasks:[]},ls.get('home:'+LESSON)||{});
 const save=()=>{ls.set('home:'+LESSON,P);paint();};
 const toy=id=>TOYS.find(t=>t.id===id);
-const img=n=>'img/'+n+'.jpg';
+const img=n=>'img/'+n+'.jpg?v=2';
 
 // ── звук: пул разблокированных элементов (как html5-пул howler.js), файлы грузятся по требованию ──
 const POOL=[], POOL_N=4; let current=null, playToken=0, unlocked=false;
