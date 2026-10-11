@@ -267,7 +267,6 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <p class="hint">Теперь с книгой и тетрадью.</p>
     <div class="task"><div class="ic">🗣️</div><div><h3>Pupil's Book, стр. 19, задание 1</h3><p>Разыграй диалог с мамой, папой или братом: один спрашивает, другой отвечает. Поменяйтесь ролями.</p><label><input type="checkbox" data-task="t1">Сделано</label></div></div>
     <div class="task"><div class="ic">⭕</div><div><h3>Pupil's Book, стр. 19, задание 2</h3><p>Обведи в книге те подарки, которые угадал на слайде 3: ball, teddy, train, dinosaur.</p><label><input type="checkbox" data-task="t2">Сделано</label></div></div>
-    <div class="task"><div class="ic">⭐</div><div><h3>Pupil's Book, стр. 19, наклейки</h3><p>Наклей 5 наклеек: robot, scooter, teddy, dinosaur, computer game. Назови каждую: «It's a robot!»</p><label><input type="checkbox" data-task="t3">Сделано</label></div></div>
     <div class="task"><div class="ic">🧩</div><div><h3>Activity Book, стр. 17, задание 1</h3><p>Read, follow and circle: пройди по лабиринту от вопроса к игрушке и обведи ответ — Yes, it is. или No, it isn't.</p><label><input type="checkbox" data-task="t4">Сделано</label></div></div>
     <div class="task"><div class="ic">✏️</div><div><h3>Activity Book, стр. 17, задание 2</h3><p>Talk Partners: впиши в облачка те игрушки, что выбрал на слайде 5, и разыграй.</p><label><input type="checkbox" data-task="t5">Сделано</label></div></div>
   </section>
@@ -407,7 +406,7 @@ $$('[data-task]').forEach(cb=>{ cb.checked=P.tasks.includes(cb.dataset.task); cb
 
 // ── прогресс ──
 const KEYS=['dialog','present','circle','yesno','conv','book'];
-function doneMap(){ return {dialog:P.dialog>=1&&P.role>=1, present:P.present>=5, circle:P.circle>=3, yesno:P.yesno>=8, conv:P.conv>=1, book:P.tasks.length>=4}; }
+function doneMap(){ return {dialog:P.dialog>=1&&P.role>=1, present:P.present>=5, circle:P.circle>=3, yesno:P.yesno>=8, conv:P.conv>=1, book:P.tasks.length>=3}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); });
   $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); $('#stars').innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); }
 paint(); paintNav();
