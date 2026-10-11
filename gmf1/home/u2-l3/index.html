@@ -37,8 +37,8 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 /* ── колода слайдов ── */
 .deck{position:relative;z-index:1;display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .deck::-webkit-scrollbar{display:none}
-.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;overflow-x:hidden;padding:64px 16px 96px;display:flex;flex-direction:column;align-items:center}
-.slide>*{max-width:640px;width:100%}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;overflow-x:hidden;padding:64px 16px calc(118px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center}
+.slide>*{max-width:640px;width:100%;flex-shrink:0}
 .slide h2{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 4px;font-size:clamp(24px,6.4vw,32px);line-height:1.1}
 .slide h2 .n{width:34px;height:34px;border-radius:50%;background:var(--honey);color:var(--pd);display:grid;place-items:center;font-size:17px;flex:none}
 .slide.done h2 .n{background:var(--good);color:#fff}
@@ -201,7 +201,9 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 
 /* ── по порядку ── */
 .slots,.tray,.pick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-.slot{aspect-ratio:3/4;border:3px dashed rgba(255,255,255,.55);border-radius:14px;position:relative;background:rgba(255,255,255,.08);transition:background .2s}
+.slots .slot,.tray .fr{aspect-ratio:4/5}
+.obtns .btn{padding:10px 13px;font-size:15px;min-width:0}
+.slot{aspect-ratio:4/5;border:3px dashed rgba(255,255,255,.55);border-radius:14px;position:relative;background:rgba(255,255,255,.08);transition:background .2s}
 .slot .num{position:absolute;top:-10px;left:-6px;width:26px;height:26px;border-radius:50%;background:var(--honey);color:var(--pd);font-weight:800;font-size:14px;display:grid;place-items:center;z-index:2;box-shadow:0 3px 8px rgba(0,0,0,.25)}
 .slot.hint{background:rgba(245,200,66,.25)}
 .slot .fr{position:absolute;inset:-3px}
@@ -213,7 +215,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .fr.lit{outline-color:var(--honey);transform:scale(1.07);z-index:3;box-shadow:0 0 0 6px rgba(245,200,66,.35),0 16px 30px rgba(30,10,70,.4)}
 .fr.right{outline-color:var(--good);animation:bounce .5s var(--ease)}
 .fr.wrong{outline-color:var(--red);animation:shake .4s}
-.tray{margin-top:14px;min-height:40px}
+.tray{margin-top:12px;min-height:40px}
 .tray:empty::after{content:"Все кадры разложены — нажми «Проверить»";grid-column:1/-1;font-weight:700;font-size:14px;opacity:.85;padding:10px}
 
 /* ── правда или нет ── */
@@ -288,8 +290,8 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <!-- по порядку -->
   <section class="slide" data-key="order">
     <h2><span class="n"><span>3</span></span>По порядку</h2>
-    <p class="hint">Как вклейка в тетради. Слушай историю и расставь кадры по порядку: нажми на кадр внизу — он встанет в свободное окошко. Нажми на кадр в окошке — вернётся вниз.</p>
-    <div class="btns"><button class="btn primary" id="oListen"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать историю</button><button class="btn" id="oCheck">✅ Проверить</button><button class="btn ghost" id="oReset">Заново</button></div>
+    <p class="hint" style="margin-bottom:8px">Слушай историю и расставь кадры по порядку: тап по кадру внизу — в окошко, тап по окошку — обратно.</p>
+    <div class="btns obtns" style="margin-bottom:10px"><button class="btn primary" id="oListen"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать</button><button class="btn" id="oCheck">✅ Проверить</button><button class="btn ghost" id="oReset" aria-label="Заново">↺</button></div>
     <div class="slots" id="slots"></div>
     <div class="tray" id="tray"></div>
     <div class="say" id="oMsg"></div>
@@ -483,7 +485,7 @@ async function oCheck(){ if(oBusy) return; let all=true, good=true; const bad=[]
   $('#oMsg').textContent='Всё по порядку! 🎉 Слушай и смотри'; P.order=1; save(); burst(); oBusy=true; const tok=++playToken;
   for(let i=0;i<LINES.length;i++){ if(playToken!==tok) break; $$('#slots .fr').forEach(b=>b.classList.toggle('lit',+b.dataset.f===LINES[i].f)); await playTok(LINES[i].a,tok); await sleep(250); }
   $$('#slots .fr').forEach(b=>b.classList.remove('lit')); oBusy=false; }
-$('#oListen').onclick=()=>{ if(current===snd('full')){ stopAll(); $('#oListen').innerHTML=PLAY+'Слушать историю'; return; } $('#oListen').innerHTML='⏹ Стоп'; play('full',()=>{ $('#oListen').innerHTML=PLAY+'Слушать историю'; }); };
+$('#oListen').onclick=()=>{ if(current===snd('full')){ stopAll(); $('#oListen').innerHTML=PLAY+'Слушать'; return; } $('#oListen').innerHTML='⏹ Стоп'; play('full',()=>{ $('#oListen').innerHTML=PLAY+'Слушать'; }); };
 $('#oCheck').onclick=oCheck; $('#oReset').onclick=()=>{ stopAll(); oBusy=false; oBuild(); }; oBuild();
 
 // ── 3 какой кадр ──
