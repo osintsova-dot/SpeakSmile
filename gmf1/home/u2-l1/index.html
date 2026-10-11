@@ -200,6 +200,20 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .tile.used{visibility:hidden}
 .tile.bad{animation:shake .4s;background:var(--red);color:#fff}
 
+/* ── поезд слов ── */
+.trains{display:flex;flex-direction:column;gap:14px;margin:6px 0 10px}
+.train{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:10px 8px;border-radius:22px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);touch-action:none;user-select:none;-webkit-user-select:none}
+.train .loco{font-size:30px;margin-right:4px;line-height:1}
+.lt{width:clamp(26px,7.2vw,36px);height:clamp(38px,10.5vw,50px);border-radius:10px;background:#fff;color:var(--ink);display:grid;place-items:center;font-weight:800;font-size:clamp(18px,5.4vw,26px);box-shadow:0 4px 0 rgba(0,0,0,.18);transition:background .15s,transform .15s;pointer-events:auto}
+.lt.sel{background:var(--honey);transform:translateY(-3px)}
+.lt.got{background:var(--teal);color:#fff;box-shadow:0 4px 0 #1f9f90}
+.lt.got.c2{background:var(--sky);box-shadow:0 4px 0 #3b86d6}
+.lt.got.c3{background:var(--pink);box-shadow:0 4px 0 #c75a97}
+.lt.bad{animation:shake .4s;background:var(--red);color:#fff}
+.found{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.found .fw{padding:10px 6px;border-radius:14px;background:rgba(255,255,255,.12);border:2px dashed rgba(255,255,255,.45);font-weight:800;font-size:clamp(14px,4vw,18px);min-height:44px;display:grid;place-items:center;overflow-wrap:anywhere}
+.found .fw.on{background:#fff;color:var(--p);border-style:solid;border-color:#fff;animation:bounce .4s var(--ease)}
+
 /* ── учебник ── */
 .task{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;background:var(--paper);color:var(--ink);border-radius:20px;padding:12px;margin:8px 0}
 .task .ic{width:48px;height:48px;border-radius:14px;background:#F3EEFF;display:grid;place-items:center;font-size:24px}
@@ -331,9 +345,18 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <div class="say" id="sMsg"></div>
   </section>
 
-  <!-- 9 учебник -->
+  <!-- 9 поезд слов -->
+  <section class="slide" data-key="train">
+    <h2><span class="n"><span>9</span></span>Поезд слов</h2>
+    <p class="hint">В каждом поезде спрятаны три слова. Проведи пальцем по буквам от первой до последней — слово выйдет из вагона.</p>
+    <div class="trains" id="trains"></div>
+    <div class="found" id="found"></div>
+    <div class="say" id="trMsg"></div>
+  </section>
+
+  <!-- 10 учебник -->
   <section class="slide" data-key="book">
-    <h2><span class="n"><span>9</span></span>В учебнике</h2>
+    <h2><span class="n"><span>10</span></span>В учебнике</h2>
     <p class="hint">Теперь как в классе — с книгой и наклейками.</p>
     <div class="task"><div class="ic">📖</div><div><h3>Pupil's Book, стр. 18, задание 1</h3><p>Включи песню ещё раз и показывай игрушки на картинке, когда их поют.</p><label><input type="checkbox" data-task="t1">Сделано</label></div></div>
     <div class="task"><div class="ic">⭐</div><div><h3>Pupil's Book, стр. 18, задание 2</h3><p>Найди 10 наклеек Unit 2 в конце книги и наклей их в кружочки. Назови каждую игрушку вслух.</p><label><input type="checkbox" data-task="t2">Сделано</label></div></div>
@@ -394,7 +417,7 @@ function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forE
 
 // ── слайды ──
 const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
-const TITLES={cover:'Старт',words:'Слова',find:'Найди',chant:'Чант',song:'Песня',know:'Знаю',memo:'Мемо',ttt:'Крестики',spell:'Буквы',book:'Учебник',finish:'Финиш'};
+const TITLES={cover:'Старт',words:'Слова',find:'Найди',chant:'Чант',song:'Песня',know:'Знаю',memo:'Мемо',ttt:'Крестики',spell:'Буквы',train:'Поезд',book:'Учебник',finish:'Финиш'};
 $('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]}"></button>`).join('');
 $('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]}</span>`).join('');
 function go(i){ i=Math.max(0,Math.min(N-1,i)); deck.scrollTo({left:i*deck.clientWidth,behavior:'smooth'}); }
@@ -518,12 +541,34 @@ function sFinish(){ $('#sProg').style.width='100%'; $('#slots').innerHTML=''; $(
   const ok=sErr<=5; $('#sMsg').textContent=ok?'🏆 Все десять слов сложены!':`Сложил все слова, ошибок: ${sErr}. Попробуй ещё!`; if(ok) P.spell=1; save(); if(ok) burst(); }
 $('#sStart').onclick=sStart; $('#spellPic').onclick=()=>sCur&&play(sCur.id);
 
-// ── 9 учебник ──
+// ── 9 поезд слов: провести пальцем по буквам ──
+const TRAINS=[{letters:'computergamerobotcar',words:['computergame','robot','car']},{letters:'traindolldinosaur',words:['train','doll','dinosaur']}];
+const TR_IDS={computergame:'computergame',robot:'robot',car:'car',train:'train',doll:'doll',dinosaur:'dinosaur'};
+let trFound=new Set(P.trainFound||[]);
+function trRender(){ $('#trains').innerHTML=TRAINS.map((t,ti)=>`<div class="train" data-t="${ti}"><span class="loco">🚂</span>${[...t.letters].map((ch,i)=>`<span class="lt" data-i="${i}">${ch}</span>`).join('')}</div>`).join('');
+  $('#found').innerHTML=TRAINS.flatMap(t=>t.words).map(w=>`<div class="fw" data-w="${w}">${trFound.has(w)?BY[TR_IDS[w]].en:'?'}</div>`).join('');
+  trFound.forEach(w=>trPaint(w));
+  $$('.train').forEach(tr=>{ let a=null,b=null;
+    const at=e=>{ const el=document.elementFromPoint(e.clientX,e.clientY); const lt=el&&el.closest('.lt'); return lt&&lt.parentElement===tr?+lt.dataset.i:null; };
+    const show=()=>{ tr.querySelectorAll('.lt').forEach(l=>l.classList.toggle('sel',a!==null&&b!==null&&+l.dataset.i>=Math.min(a,b)&&+l.dataset.i<=Math.max(a,b))); };
+    tr.addEventListener('pointerdown',e=>{ const i=at(e); if(i===null) return; e.preventDefault(); tr.setPointerCapture(e.pointerId); a=b=i; show(); });
+    tr.addEventListener('pointermove',e=>{ if(a===null) return; const i=at(e); if(i!==null&&i!==b){ b=i; show(); } });
+    const up=()=>{ if(a===null) return; trCheck(+tr.dataset.t,Math.min(a,b),Math.max(a,b)); a=b=null; tr.querySelectorAll('.lt').forEach(l=>l.classList.remove('sel')); };
+    tr.addEventListener('pointerup',up); tr.addEventListener('pointercancel',up); }); }
+function trPaint(w){ const ti=TRAINS.findIndex(t=>t.words.includes(w)); const t=TRAINS[ti]; const s=t.letters.indexOf(w); const wi=t.words.indexOf(w);
+  const lts=$$('.train')[ti].querySelectorAll('.lt'); for(let i=s;i<s+w.length;i++) lts[i].classList.add('got','c'+(wi+1));
+  const fw=$(`.fw[data-w="${w}"]`); fw.textContent=BY[TR_IDS[w]].en; fw.classList.add('on'); }
+function trCheck(ti,s,e){ const t=TRAINS[ti]; const sub=t.letters.slice(s,e+1); const w=t.words.find(x=>x===sub);
+  if(w){ if(!trFound.has(w)){ trFound.add(w); P.trainFound=[...trFound]; trPaint(w); play(TR_IDS[w]); $('#trMsg').textContent=BY[TR_IDS[w]].en+'!'; if(trFound.size===6){ P.train=1; $('#trMsg').textContent='🏆 Все слова вышли из поезда!'; burst(); } save(); } else play(TR_IDS[w]); }
+  else if(e>s){ const lts=$$('.train')[ti].querySelectorAll('.lt'); for(let i=s;i<=e;i++){ lts[i].classList.add('bad'); } setTimeout(()=>lts.forEach(l=>l.classList.remove('bad')),450); } }
+trRender();
+
+// ── 10 учебник ──
 $$('[data-task]').forEach(cb=>{ cb.checked=P.tasks.includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
 
 // ── прогресс ──
-const KEYS=['words','find','chant','song','know','memo','ttt','spell','book'];
-function doneMap(){ return {words:P.heard.length>=10, find:P.find>=8, chant:P.chant, song:P.song, know:P.know>=8, memo:P.memo, ttt:P.ttt>=1, spell:P.spell>=1, book:P.tasks.length>=4}; }
+const KEYS=['words','find','chant','song','know','memo','ttt','spell','train','book'];
+function doneMap(){ return {words:P.heard.length>=10, find:P.find>=8, chant:P.chant, song:P.song, know:P.know>=8, memo:P.memo, ttt:P.ttt>=1, spell:P.spell>=1, train:P.train>=1, book:P.tasks.length>=4}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); });
   $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); $('#stars').innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); }
 paint(); paintNav();
