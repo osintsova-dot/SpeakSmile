@@ -417,22 +417,26 @@ const save=()=>{ls.set('home:'+LESSON,P);paint();};
 const fimg=f=>'img/f'+f+'.jpg';
 
 // ── звук ──
-const cache={}; function snd(id){ if(!cache[id]){ const a=new Audio('audio/'+id+'.mp3'); a.preload='auto'; cache[id]=a; } return cache[id]; }
-let current=null, playToken=0;
-function start(a,onend){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
-  a.muted=false; try{ a.currentTime=0; }catch(e){} a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+const POOL=[], POOL_N=4; let current=null, playToken=0, unlocked=false;
+function mkNode(){ const a=new Audio(); a.preload='auto'; POOL.push(a); return a; }
+function unlock(){ if(unlocked) return; unlocked=true; while(POOL.length<POOL_N){ const a=mkNode(); try{ a.load(); }catch(e){} } }
+['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
+function getNode(id){ let a=POOL.find(x=>x!==current&&x._src===id); if(!a) a=POOL.find(x=>x!==current&&!x._src); if(!a) a=POOL.find(x=>x!==current); if(!a) a=mkNode();
+  if(a._src!==id){ a._src=id; a.src='audio/'+id+'.mp3'; a.load(); } return a; }
+function isCur(id){ return !!current&&current._src===id; }
+function start(a,onend,at){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+  const seek=()=>{ try{ a.currentTime=at||0; }catch(e){} };
+  if(a.readyState>=1) seek(); else a.addEventListener('loadedmetadata',seek,{once:true});
   let lastCt=-1, lastMove=Date.now();
   a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); }
-    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(Date.now()-lastMove>4000)) done(); },200);
+    const started=ct>(at||0)+0.05;
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(started&&Date.now()-lastMove>4000)||(!started&&Date.now()-t0>25000)||(a.error)) done(); },200);
   const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
-function play(id,onend){ stopAll(); const a=snd(id); return start(a,onend); }
+function play(id,onend,at){ stopAll(); const a=getNode(id); a.playbackRate=1; return start(a,onend,at); }
 function playP(id){ return new Promise(res=>play(id,res)); }
-function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(snd(id),res); }); }
-function stopAll(){ playToken++; if(current){ const c=current; current=null; c._stop=true; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } const v=$('#vid'); if(v&&!v.paused) v.pause(); }
-[...LINES.map(l=>l.a),'full',...TF.map(t=>t.a),'fb_yes','fb_no','letter'].forEach(snd);
-let unlocked=false;
-function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; try{ a.muted=false; a.load(); const p=a.play(); if(p&&p.catch) p.catch(()=>{}); a.pause(); a.currentTime=0; }catch(e){} }); }
-['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
+function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(getNode(id),res); }); }
+function stopAll(){ playToken++; if(current){ const c=current; current=null; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } const v=$('#vid'); if(v&&!v.paused) v.pause(); }
 
 // ── видео: слайд только если файл задан ──
 if(VIDEO){ $('#vid').src=VIDEO; $('#vid').addEventListener('timeupdate',()=>{ const v=$('#vid'); if(v.duration&&v.currentTime/v.duration>.85&&!P.video){ P.video=1; save(); $('#vMsg').textContent='Посмотрел! Теперь по кадрам →'; burst(); } }); }
@@ -487,7 +491,7 @@ async function oCheck(){ oBusy=true; const bad=[]; $$('#ogrid .fr').forEach(b=>{
   $('#oMsg').textContent='Всё по порядку! 🎉 Слушай и смотри'; P.order=1; save(); burst(); const tok=++playToken;
   for(let i=0;i<LINES.length;i++){ if(playToken!==tok) break; $$('#ogrid .fr').forEach(b=>b.classList.toggle('lit',+b.dataset.f===LINES[i].f)); await playTok(LINES[i].a,tok); await sleep(250); }
   $$('#ogrid .fr').forEach(b=>b.classList.remove('lit')); oBusy=false; }
-$('#oListen').onclick=()=>{ if(current===snd('full')){ stopAll(); $('#oListen').innerHTML=PLAY+'Слушать'; return; } $('#oListen').innerHTML='⏹ Стоп'; play('full',()=>{ $('#oListen').innerHTML=PLAY+'Слушать'; }); };
+$('#oListen').onclick=()=>{ if(isCur('full')){ stopAll(); $('#oListen').innerHTML=PLAY+'Слушать'; return; } $('#oListen').innerHTML='⏹ Стоп'; play('full',()=>{ $('#oListen').innerHTML=PLAY+'Слушать'; }); };
 $('#oReset').onclick=()=>{ stopAll(); oBusy=false; oBuild(); }; oBuild();
 
 // ── 3 какой кадр ──

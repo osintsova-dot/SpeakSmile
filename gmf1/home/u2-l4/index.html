@@ -505,22 +505,26 @@ const P=Object.assign({heard:[],find:0,song:0,dialog:0,role:0,match:0,mine:0,twH
 const save=()=>{ls.set('home:'+LESSON,P);paint();};
 
 // ── звук ──
-const cache={}; function snd(id){ if(!cache[id]){ const a=new Audio('audio/'+id+'.mp3'); a.preload='auto'; cache[id]=a; } return cache[id]; }
-let current=null, playToken=0;
-function start(a,onend){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
-  a.muted=false; try{ a.currentTime=0; }catch(e){} a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+const POOL=[], POOL_N=4; let current=null, playToken=0, unlocked=false;
+function mkNode(){ const a=new Audio(); a.preload='auto'; POOL.push(a); return a; }
+function unlock(){ if(unlocked) return; unlocked=true; while(POOL.length<POOL_N){ const a=mkNode(); try{ a.load(); }catch(e){} } }
+['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
+function getNode(id){ let a=POOL.find(x=>x!==current&&x._src===id); if(!a) a=POOL.find(x=>x!==current&&!x._src); if(!a) a=POOL.find(x=>x!==current); if(!a) a=mkNode();
+  if(a._src!==id){ a._src=id; a.src='audio/'+id+'.mp3'; a.load(); } return a; }
+function isCur(id){ return !!current&&current._src===id; }
+function start(a,onend,at){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+  const seek=()=>{ try{ a.currentTime=at||0; }catch(e){} };
+  if(a.readyState>=1) seek(); else a.addEventListener('loadedmetadata',seek,{once:true});
   let lastCt=-1, lastMove=Date.now();
   a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); }
-    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(Date.now()-lastMove>4000)) done(); },200);
+    const started=ct>(at||0)+0.05;
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(started&&Date.now()-lastMove>4000)||(!started&&Date.now()-t0>25000)||(a.error)) done(); },200);
   const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
-function play(id,onend){ stopAll(); const a=snd(id); a.playbackRate=1; return start(a,onend); }
+function play(id,onend,at){ stopAll(); const a=getNode(id); a.playbackRate=1; return start(a,onend,at); }
 function playP(id){ return new Promise(res=>play(id,res)); }
-function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(snd(id),res); }); }
-function stopAll(){ playToken++; if(current){ const c=current; current=null; c._stop=true; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } }
-[...ADJ.map(a=>a.id),'song','q_fav','a_ball_old','match1','match2','match3','match4','fr_my','fr_its','fr_and',...MINE_TOYS,'tw_slow','twister',...SW.map(w=>'w_'+w.id),'num1','num2','num3','num4','num_full',...GUESS.map(g=>'isit_'+g.id),...ADJ.map(a=>'clue_'+a.id),'yes','no','fb_yes','fb_no','fb_super','sss'].forEach(snd);
-let unlocked=false;
-function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; try{ a.muted=false; a.load(); const p=a.play(); if(p&&p.catch) p.catch(()=>{}); a.pause(); a.currentTime=0; }catch(e){} }); }
-['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
+function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(getNode(id),res); }); }
+function stopAll(){ playToken++; if(current){ const c=current; current=null; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } }
 
 // ── слайды ──
 const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
@@ -559,15 +563,15 @@ $('#fStart').onclick=fStart; $('#fAgain').onclick=()=>fCur&&play(fCur); fRender(
 
 // ── 3 песня ──
 SONG.forEach(([t,txt,im],i)=>{ const b=document.createElement('button'); b.className='line'; b.innerHTML=(im?`<img src="${img(im)}" alt="">`:'')+txt;
-  b.onclick=()=>{ songStop(); const a=play('song'); a.currentTime=t; const end=SONG[i+1]?SONG[i+1][0]:SONG_END; const tm=setInterval(()=>{ if(a.currentTime>=end||a.paused){ clearInterval(tm); if(!a.paused) a.pause(); light(-1); } },60); light(i); };
+  b.onclick=()=>{ songStop(); const a=play('song',null,t); const end=SONG[i+1]?SONG[i+1][0]:SONG_END; const tm=setInterval(()=>{ if(a.currentTime>=end||a.paused){ clearInterval(tm); if(!a.paused) a.pause(); light(-1); } },60); light(i); };
   $('#lyrics').appendChild(b); });
 function light(k){ $$('#lyrics .line').forEach((l,i)=>l.classList.toggle('on',i===k)); }
 let songTimer=null;
-function songStop(){ clearInterval(songTimer); if(current===cache.song) stopAll(); $('#songPlay').hidden=false; $('#songStop').hidden=true; light(-1); }
+function songStop(){ clearInterval(songTimer); if(isCur('song')) stopAll(); $('#songPlay').hidden=false; $('#songStop').hidden=true; light(-1); }
 $('#songPlay').onclick=()=>{ const a=play('song',()=>{ songStop(); P.song=1; save(); burst(); }); a.playbackRate=+$('#tempo').value; $('#songPlay').hidden=true; $('#songStop').hidden=false;
   songTimer=setInterval(()=>{ const t=a.currentTime; let k=-1; SONG.forEach(([at],i)=>{ if(t>=at) k=i; }); if(t>=SONG_END) k=-1; light(k); },80); };
 $('#songStop').onclick=songStop;
-$('#tempo').oninput=e=>{ if(current===cache.song) current.playbackRate=+e.target.value; };
+$('#tempo').oninput=e=>{ if(isCur('song')) current.playbackRate=+e.target.value; };
 
 // ── 4 диалог ──
 const chat=$('#chat'); let role=null, dBusy=false;
@@ -631,7 +635,7 @@ async function nTap(c){ if(nBusy) return; const id=c.dataset.id; if(nNum[id]){ d
   if(!nFree()){ nBusy=true; const bad=[]; $$('#ngrid .card').forEach(c=>{ const x=NUM.find(y=>y.id===c.dataset.id); if(nNum[x.id]===x.n) c.classList.add('ok'); else { c.classList.add('no'); bad.push(c); } });
     if(bad.length){ $('#nMsg').textContent='Красные — не на месте. Послушай ещё раз'; play('fb_no'); await sleep(1200); bad.forEach(c=>{ delete nNum[c.dataset.id]; c.classList.remove('no'); }); nPaint(); nBusy=false; return; }
     $('#nMsg').textContent='Верно: 1 scooter · 2 train · 3 dinosaur · 4 doll 🎉'; P.number=1; save(); play('fb_super'); burst(); nBusy=false; } }
-$('#nListen').onclick=()=>{ if(current===snd('num_full')){ stopAll(); $('#nListen').innerHTML=PLAY+'Слушать'; return; } $('#nListen').innerHTML='⏹ Стоп'; play('num_full',()=>{ $('#nListen').innerHTML=PLAY+'Слушать'; }); };
+$('#nListen').onclick=()=>{ if(isCur('num_full')){ stopAll(); $('#nListen').innerHTML=PLAY+'Слушать'; return; } $('#nListen').innerHTML='⏹ Стоп'; play('num_full',()=>{ $('#nListen').innerHTML=PLAY+'Слушать'; }); };
 $('#nReset').onclick=()=>{ stopAll(); nBusy=false; nBuild(); }; nBuild();
 
 // ── 10 угадай ──
