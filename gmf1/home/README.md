@@ -1,13 +1,3 @@
----
-name: gmf1-home-lesson-recipe
-description: "Рецепт «Урок дома» для Lesson 1 (Vocabulary) любого юнита GMF1 — по образцу выложенного U2 L1 Toys; что взять, где лежит, что заменить, грабли"
-metadata:
-  node_type: memory
-  type: project
-  originSessionId: cfe96385-e618-41fd-872b-64db7752bcd7
-  modified: 2026-10-11T10:52:24.001Z
----
-
 # Рецепт: «Урок дома» · GMF1 · Unit N · Lesson 1 (Vocabulary)
 
 Эталон: `speak-smile-site/gmf1/home/u2-l1/` (index.html + audio/ + img/) → speakandsmile.ru/gmf1/home/u2-l1/. Структура Lesson 1 у всех юнитов GMF1 одинаковая: 10 слов → песня юнита → чант со словами → наклейки в PB → AB стр. (раскрась + поезд слов) → Spelling в AB. Поэтому новый юнит = **копия папки u2-l1 → u{N}-l1 и замена данных**, движок не трогать.
@@ -37,3 +27,9 @@ metadata:
 - Гейта пока нет (только noindex). Когда уроков станет несколько — гейт по коду семьи как `chinese/gate.js` + `lessons.json` с датами.
 - Длинные слова (computer game) в мемо: `word-break:keep-all`, перенос только по пробелу.
 - Следующий шаг после 2–3 уроков руками — генератор: `lessons/u{N}-l1.json` → index.html (данные уже вынесены в константы в начале `<script>`).
+
+## 5. Lesson 2 (Grammar) — эталон `u2-l2/` (2026-10-11)
+Структура L2 у всех юнитов: PB «Listen and repeat. Act out» (диалог 5 реплик, CD1·NN_dialog1–5 по одной) + Grammar-box + «Listen and circle» (CD1·NN_part1–4, 4 пары завёрнутых подарков); **наклейки НЕ включать — все наклейки клеят на Lesson 1 (Оксана, 2026-10-11)**; AB: №1 лабиринт «Read, follow and circle», №2 Talk Partners «Choose and write a conversation».
+Колода (8 слайдов, 6 шагов): 1 диалог (облачка 👧🏾/👦, тап = реплика; «Слушать всё»; роли «Я — девочка/мальчик» — свои реплики говорит сам, пауза по длине) → 2 «Что в подарке?» (🎁 прячет игрушку; тап по игрушке = `isit_<id>.mp3` вопрос, ответ `yes`/`no` Macmillan, открытие + `fantastic`) → 3 «Послушай и обведи» (пары серые с 🎀, трек partN, тап = ответ) → 4 «Yes или No?» (картинка + вопрос про ту же/другую игрушку, 10 раундов, ≥8) → 5 «Собери диалог» (AB №2: выбрать 2 игрушки из 6, диалог собирается, проигрывается цепочкой what→isit_A→no→isit_B→yes→fantastic) → 6 учебник (4 задания, ≥3) → финиш.
+Аудио: реплики диалога = `dialogN.mp3` целиком (trim тишины, apad 0.15); `what`/`no`/`yes` — первые 2.6–3 с dialog1/2/4; вопросы «Is it a X?» ×11 (вкл. bike) — Gemini TTS Kore на VPS (429 квота бывает — retry); ответы «Listen and circle» узнать whisper'ом по partN (U2: ball, teddy, train, dinosaur). Картинки — `../u2-l1/img/` (не дублировать), bike.png из memo.
+Список уроков: `gmf1/home/index.html` (карточки L1/L2/…, «скоро»).
