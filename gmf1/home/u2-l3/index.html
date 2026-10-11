@@ -200,23 +200,20 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .vid{width:100%;aspect-ratio:16/9;border-radius:20px;background:#000;box-shadow:0 14px 30px rgba(30,10,70,.35);display:block}
 
 /* ── по порядку ── */
-.slots,.tray,.pick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-.slots .slot,.tray .fr{aspect-ratio:4/5}
+.pick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.ogrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .obtns .btn{padding:10px 13px;font-size:15px;min-width:0}
-.slot{aspect-ratio:4/5;border:3px dashed rgba(255,255,255,.55);border-radius:14px;position:relative;background:rgba(255,255,255,.08);transition:background .2s}
-.slot .num{position:absolute;top:-10px;left:-6px;width:26px;height:26px;border-radius:50%;background:var(--honey);color:var(--pd);font-weight:800;font-size:14px;display:grid;place-items:center;z-index:2;box-shadow:0 3px 8px rgba(0,0,0,.25)}
-.slot.hint{background:rgba(245,200,66,.25)}
-.slot .fr{position:absolute;inset:-3px}
-.fr{border-radius:14px;overflow:hidden;box-shadow:0 8px 18px rgba(30,10,70,.3);background:#fff;aspect-ratio:3/4;cursor:pointer;outline:4px solid transparent;transition:transform .18s var(--ease),outline-color .2s;border:0;padding:0;font:inherit}
-.fr img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.fr{position:relative;border-radius:14px;overflow:visible;box-shadow:0 8px 18px rgba(30,10,70,.3);background:#fff;aspect-ratio:3/4;cursor:pointer;outline:4px solid transparent;transition:transform .18s var(--ease),outline-color .2s;border:0;padding:0;font:inherit}
+.fr img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:14px}
 .fr:active{transform:scale(.95)}
+.fr .num{position:absolute;top:-10px;left:-8px;width:40px;height:40px;border-radius:50%;background:var(--honey);color:var(--pd);font-weight:800;font-size:22px;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.3);animation:pop .3s var(--ease);z-index:2}
+.fr.ok .num{background:var(--good);color:#fff}
 .fr.ok{outline-color:var(--good)}
 .fr.no{outline-color:var(--red);animation:shake .4s}
-.fr.lit{outline-color:var(--honey);transform:scale(1.07);z-index:3;box-shadow:0 0 0 6px rgba(245,200,66,.35),0 16px 30px rgba(30,10,70,.4)}
+.fr.lit{outline-color:var(--honey);transform:scale(1.05);z-index:3;box-shadow:0 0 0 6px rgba(245,200,66,.35),0 16px 30px rgba(30,10,70,.4)}
 .fr.right{outline-color:var(--good);animation:bounce .5s var(--ease)}
 .fr.wrong{outline-color:var(--red);animation:shake .4s}
-.tray{margin-top:12px;min-height:40px}
-.tray:empty::after{content:"Все кадры разложены — нажми «Проверить»";grid-column:1/-1;font-weight:700;font-size:14px;opacity:.85;padding:10px}
+@keyframes pop{from{transform:scale(.3)}}
 
 /* ── правда или нет ── */
 .tfpic{width:min(230px,58vw);aspect-ratio:3/4;object-fit:cover;border-radius:20px;box-shadow:0 12px 26px rgba(30,10,70,.3);margin:0 auto 8px;display:block;background:#fff}
@@ -290,10 +287,9 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <!-- по порядку -->
   <section class="slide" data-key="order">
     <h2><span class="n"><span>3</span></span>По порядку</h2>
-    <p class="hint" style="margin-bottom:8px">Слушай историю и расставь кадры по порядку: тап по кадру внизу — в окошко, тап по окошку — обратно.</p>
-    <div class="btns obtns" style="margin-bottom:10px"><button class="btn primary" id="oListen"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать</button><button class="btn" id="oCheck">✅ Проверить</button><button class="btn ghost" id="oReset" aria-label="Заново">↺</button></div>
-    <div class="slots" id="slots"></div>
-    <div class="tray" id="tray"></div>
+    <p class="hint" style="margin-bottom:8px">Слушай историю. Нажми на кадр, который был первым — на нём появится 1. Потом второй, третий… Нажал не туда — нажми ещё раз, номер снимется.</p>
+    <div class="btns obtns" style="margin-bottom:10px"><button class="btn primary" id="oListen"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать</button><span class="score">Номер: <b id="oNext">1</b> / 8</span><button class="btn ghost" id="oReset" aria-label="Заново">↺</button></div>
+    <div class="ogrid" id="ogrid"></div>
     <div class="say" id="oMsg"></div>
   </section>
 
@@ -470,23 +466,23 @@ $('#sPrev').onclick=()=>{ if(sF>1){ stopAll(); sBusy=false; sF--; sRender(); } }
 $('#sAll').onclick=sAll; $('#sScore').textContent=P.heard.length; sRender();
 
 // ── 2 по порядку ──
-let placed=[], oBusy=false;
-function frEl(f){ const b=document.createElement('button'); b.className='fr'; b.dataset.f=f; b.innerHTML=`<img src="${fimg(f)}" alt="кадр">`; b.onclick=()=>oMove(b); return b; }
-function oBuild(){ placed=new Array(NF).fill(null); $('#oMsg').textContent=''; $('#slots').innerHTML=''; $('#tray').innerHTML='';
-  for(let s=0;s<NF;s++){ const d=document.createElement('div'); d.className='slot'; d.dataset.s=s; d.innerHTML=`<span class="num">${s+1}</span>`; $('#slots').appendChild(d); }
-  let order=shuffle([...Array(NF).keys()].map(i=>i+1)); if(order.every((v,i)=>v===i+1)) order.reverse(); order.forEach(f=>$('#tray').appendChild(frEl(f))); }
-function oMove(b){ if(oBusy) return; b.classList.remove('ok','no'); const f=+b.dataset.f;
-  if(b.parentNode.classList.contains('slot')){ placed[+b.parentNode.dataset.s]=null; $('#tray').appendChild(b); }
-  else { const s=placed.indexOf(null); if(s<0) return; placed[s]=f; $(`.slot[data-s="${s}"]`).appendChild(b); } }
-async function oCheck(){ if(oBusy) return; let all=true, good=true; const bad=[];
-  for(let s=0;s<NF;s++){ const b=$(`.slot[data-s="${s}"] .fr`); if(!b){ all=false; continue; } if(+b.dataset.f===s+1){ b.classList.add('ok'); b.classList.remove('no'); } else { b.classList.add('no'); b.classList.remove('ok'); good=false; bad.push(b); } }
-  if(!all){ $('#oMsg').textContent='Разложи все 8 кадров'; return; }
-  if(!good){ $('#oMsg').textContent='Красные — не на месте. Послушай ещё раз и поправь'; await sleep(700); bad.forEach(oMove); return; }
-  $('#oMsg').textContent='Всё по порядку! 🎉 Слушай и смотри'; P.order=1; save(); burst(); oBusy=true; const tok=++playToken;
-  for(let i=0;i<LINES.length;i++){ if(playToken!==tok) break; $$('#slots .fr').forEach(b=>b.classList.toggle('lit',+b.dataset.f===LINES[i].f)); await playTok(LINES[i].a,tok); await sleep(250); }
-  $$('#slots .fr').forEach(b=>b.classList.remove('lit')); oBusy=false; }
+let oNum={}, oBusy=false;   // oNum[f] = номер, поставленный на кадр f
+function frEl(f){ const b=document.createElement('button'); b.className='fr'; b.dataset.f=f; b.innerHTML=`<img src="${fimg(f)}" alt="кадр">`; return b; }
+function oBuild(){ oNum={}; $('#oMsg').textContent=''; $('#ogrid').innerHTML=''; let order=shuffle([...Array(NF).keys()].map(i=>i+1)); if(order.every((v,i)=>v===i+1)) order.reverse();
+  order.forEach(f=>{ const b=frEl(f); b.onclick=()=>oTap(b); $('#ogrid').appendChild(b); }); oPaint(); }
+function oFree(){ const used=Object.values(oNum); for(let n=1;n<=NF;n++) if(!used.includes(n)) return n; return null; }
+function oPaint(){ $$('#ogrid .fr').forEach(b=>{ const f=+b.dataset.f; const n=oNum[f]; let el=b.querySelector('.num'); if(n){ if(!el){ el=document.createElement('span'); el.className='num'; b.appendChild(el); } el.textContent=n; } else if(el) el.remove(); }); const nx=oFree(); $('#oNext').textContent=nx||'✓'; }
+async function oTap(b){ if(oBusy) return; const f=+b.dataset.f;
+  if(oNum[f]){ delete oNum[f]; b.classList.remove('ok','no'); oPaint(); return; }
+  const n=oFree(); if(!n) return; oNum[f]=n; oPaint(); b.classList.add('lit'); setTimeout(()=>b.classList.remove('lit'),250);
+  if(!oFree()) await oCheck(); }
+async function oCheck(){ oBusy=true; const bad=[]; $$('#ogrid .fr').forEach(b=>{ const f=+b.dataset.f; if(oNum[f]===f){ b.classList.add('ok'); } else { b.classList.add('no'); bad.push(b); } });
+  if(bad.length){ $('#oMsg').textContent='Красные — не на месте. Послушай ещё раз и поставь им номера заново'; play('fb_no'); await sleep(1200); bad.forEach(b=>{ delete oNum[+b.dataset.f]; b.classList.remove('no'); }); oPaint(); oBusy=false; return; }
+  $('#oMsg').textContent='Всё по порядку! 🎉 Слушай и смотри'; P.order=1; save(); burst(); const tok=++playToken;
+  for(let i=0;i<LINES.length;i++){ if(playToken!==tok) break; $$('#ogrid .fr').forEach(b=>b.classList.toggle('lit',+b.dataset.f===LINES[i].f)); await playTok(LINES[i].a,tok); await sleep(250); }
+  $$('#ogrid .fr').forEach(b=>b.classList.remove('lit')); oBusy=false; }
 $('#oListen').onclick=()=>{ if(current===snd('full')){ stopAll(); $('#oListen').innerHTML=PLAY+'Слушать'; return; } $('#oListen').innerHTML='⏹ Стоп'; play('full',()=>{ $('#oListen').innerHTML=PLAY+'Слушать'; }); };
-$('#oCheck').onclick=oCheck; $('#oReset').onclick=()=>{ stopAll(); oBusy=false; oBuild(); }; oBuild();
+$('#oReset').onclick=()=>{ stopAll(); oBusy=false; oBuild(); }; oBuild();
 
 // ── 3 какой кадр ──
 let wQ=[], wCur=null, wScore=0, wDone=0, wLock=true;
