@@ -266,7 +266,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <section class="slide" data-key="video">
     <h2><span class="n"><span>1</span></span>Мультик</h2>
     <p class="hint">Посмотри историю целиком. Потом разберём её по кадрам.</p>
-    <video class="vid" id="vid" controls playsinline preload="metadata"></video>
+    <video class="vid" id="vid" controls playsinline preload="metadata" poster="img/f1.jpg"></video>
     <div class="say" id="vMsg"></div>
   </section>
 
@@ -374,7 +374,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 
 <script>
 const LESSON='gmf1-u2-l3';
-const VIDEO='';            // имя файла мультика в папке урока, напр. 'story.mp4'; пусто — слайда нет
+const VIDEO='story.mp4';            // имя файла мультика в папке урока, напр. 'story.mp4'; пусто — слайда нет
 const NF=8;
 // who: b = Beth, f = друзья (Jake и Molly); f = номер кадра 1..8
 const LINES=[
