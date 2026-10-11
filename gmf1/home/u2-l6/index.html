@@ -385,24 +385,24 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 /* ── урок 6 review ── */
 .tgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .tgrid .card{padding:4px;border-radius:14px;gap:2px;overflow:visible}
-.tgrid .card img{aspect-ratio:1;object-fit:cover;border-radius:10px}
+.tgrid .card img{aspect-ratio:1;object-fit:contain;border-radius:10px}
 .tgrid .card .en{font-size:10px;line-height:1;min-height:10px}
 .tgrid .card .num,.grid3 .card .num{position:absolute;top:-9px;left:-7px;width:30px;height:30px;border-radius:50%;background:var(--honey);color:var(--pd);font-weight:800;font-size:16px;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.3);animation:pop .3s var(--ease);z-index:2}
 .card.ok{outline-color:var(--good)}.card.ok .num{background:var(--good);color:#fff}
-.tfpic.sq{aspect-ratio:1;width:min(220px,56vw)}
+.tfpic.sq{aspect-ratio:1;width:min(220px,56vw);object-fit:contain}
 .tfpic.ink{object-fit:contain;padding:8px;box-sizing:border-box}
 .tfpic.wide.ink{width:min(300px,78vw);aspect-ratio:3/2}
 .sent{width:100%;border:0;font-family:inherit;cursor:pointer}
 .sent small{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-top:4px}
 .sent.cue{animation:bounce .5s var(--ease)}
 .grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
-.grid4 .card img{aspect-ratio:4/3;object-fit:cover}
+.grid4 .card img{aspect-ratio:1;object-fit:contain}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .grid3 .card{overflow:visible}
 .hifive{font-size:54px;text-align:center;opacity:.25;transform:scale(.8);transition:all .3s var(--ease);margin-top:6px}
 .hifive.on{opacity:1;transform:scale(1.25) rotate(-10deg)}
 .ladbox{display:flex;gap:12px;align-items:flex-start;background:#fff;color:var(--ink);border-radius:20px;padding:14px;box-shadow:0 12px 26px rgba(30,10,70,.3)}
-.ladbox img{width:88px;height:88px;object-fit:cover;border-radius:12px;flex:none;background:#fff}
+.ladbox img{width:88px;height:88px;object-fit:contain;border-radius:12px;flex:none;background:#fff}
 .ladder{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
 .ladder .step{margin:0;opacity:1;font-weight:800;font-size:clamp(15px,4.2vw,19px);letter-spacing:.06em;padding:3px 10px;border-radius:8px;color:var(--muted);border-bottom:2px dashed #e4dcf7;text-align:left;min-height:1.5em;overflow-wrap:anywhere}
 .ladder .step span{color:#cfc6e8}
