@@ -425,7 +425,7 @@ function playTok(id,tok){ return new Promise(res=>{ const a=snd(id); stopAll(); 
 function stopAll(){ playToken++; if(current){ current._stop=true; current.pause(); current.onended=null; current=null; } const v=$('#vid'); if(v&&!v.paused) v.pause(); }
 [...LINES.map(l=>l.a),'full',...TF.map(t=>t.a),'fb_yes','fb_no','letter'].forEach(snd);
 let unlocked=false;
-function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; a.muted=true; const p=a.play(); if(p&&p.then) p.then(()=>{ a.muted=false; if(a===current) return; a.pause(); a.currentTime=0; }).catch(()=>{ a.muted=false; }); else { a.pause(); a.muted=false; } }); }
+function unlock(){ if(unlocked) return; unlocked=true; Object.values(cache).forEach(a=>{ if(a===current) return; try{ a.muted=false; a.load(); const p=a.play(); if(p&&p.catch) p.catch(()=>{}); a.pause(); a.currentTime=0; }catch(e){} }); }
 ['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
 
 // ── видео: слайд только если файл задан ──
