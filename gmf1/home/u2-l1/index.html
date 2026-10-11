@@ -149,18 +149,43 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .mc.open .in,.mc.hit .in{transform:rotateY(180deg)}
 .mc .f,.mc .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:grid;place-items:center}
 .mc .f{background:linear-gradient(135deg,var(--honey),#f7d978);box-shadow:0 8px 18px rgba(30,10,70,.3);font-size:30px}
-.mc .b{background:#fff;color:var(--p);transform:rotateY(180deg);font-weight:800;font-size:clamp(14px,3.8vw,18px);padding:6px;overflow-wrap:anywhere;line-height:1.05}
+.mc.word .f{background:linear-gradient(135deg,#63B3FF,#34D3C0)}
+.mc .b{background:#fff;color:var(--p);transform:rotateY(180deg);font-weight:800;font-size:clamp(17px,4.8vw,26px);padding:4px;overflow-wrap:normal;word-break:keep-all;hyphens:none;line-height:1.05;text-align:center}
 .mc .b img{width:84%;aspect-ratio:1;object-fit:contain}
 .mc.hit .b{background:#E6F7EC;box-shadow:0 0 0 3px var(--good) inset}
 .mc.hit{pointer-events:none}
 
 /* ── крестики-нолики ── */
+.players{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;width:min(360px,90vw);margin:4px auto 8px}
+.pl{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:18px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);transition:all .25s var(--ease)}
+.pl.turn{background:rgba(255,255,255,.22);border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.pl .face{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden;font-size:30px}
+.pl .face img{width:100%;height:100%;object-fit:cover;object-position:top}
+.pl .nm{font-weight:800;font-size:15px}
+.pl .mk{width:40px;height:42px}
+.pl .mk svg{width:100%;height:100%}
+.vs{font-weight:800;font-size:18px;opacity:.7}
+.pickwrap{margin:6px 0 10px}
+.pick{display:flex;gap:12px;justify-content:center}
+.pick button{width:84px;height:88px;border-radius:20px;border:3px solid rgba(255,255,255,.4);background:rgba(255,255,255,.14);cursor:pointer;padding:6px;transition:all .2s var(--ease)}
+.pick button:active{transform:scale(.95)}
+.pick button svg{width:100%;height:100%}
 .ttt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:min(330px,84vw);margin:6px auto}
 .cell{position:relative;aspect-ratio:1;border:0;border-radius:18px;background:#fff;padding:8px;cursor:pointer;box-shadow:0 8px 18px rgba(30,10,70,.3);font:inherit;overflow:hidden}
 .cell img{width:100%;height:100%;object-fit:contain;transition:opacity .3s}
-.cell.me img,.cell.ai img{opacity:.22}
-.cell .mark{position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(34px,10vw,48px);animation:bounce .4s var(--ease)}
-.cell.win{outline:4px solid var(--good)}
+.cell.filled img{opacity:.18}
+.cell .mark{position:absolute;inset:6%;transform-origin:center bottom}
+.cell .mark svg{width:100%;height:100%;display:block}
+.cell .mark.arriving{animation:hopIn .55s cubic-bezier(.2,1.35,.4,1) both}
+@keyframes hopIn{0%{transform:translateY(-130%) scale(.55);opacity:0}55%{transform:translateY(6%) scale(1.1);opacity:1}72%{transform:translateY(-3%) scale(.96)}100%{transform:translateY(0) scale(1)}}
+.mark .legs{display:none}
+.mark.arriving .legs{display:block}
+.mark.arriving .leg{transform-origin:top center;animation:legwig .16s ease-in-out 5}
+.mark.arriving .leg.r{animation-delay:.08s}
+@keyframes legwig{0%,100%{transform:rotate(-22deg)}50%{transform:rotate(22deg)}}
+.eye{animation:blink 3.2s infinite;transform-origin:50px 40px}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.15)}}
+.cell.win{background:#fff7d6;box-shadow:inset 0 0 0 3px var(--honey),0 0 22px var(--honey)}
 .turn{font-weight:800;font-size:17px;min-height:26px;color:var(--honey)}
 
 /* ── сложи слово ── */
@@ -282,10 +307,16 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <!-- 7 крестики-нолики -->
   <section class="slide" data-key="ttt">
     <h2><span class="n"><span>7</span></span>Крестики-нолики</h2>
-    <p class="hint">Ты против Спики. Нажми клетку, послушай и скажи слово — клетка твоя ⭐. Три в ряд — победа!</p>
+    <p class="hint">Ты против Спики. Нажми клетку, послушай и скажи слово — клетка твоя. Три в ряд — победа!</p>
+    <div class="players">
+      <div class="pl" id="plMe"><div class="face">🧒</div><div class="nm">Я</div><div class="mk" id="mkMe"></div></div>
+      <div class="vs">vs</div>
+      <div class="pl" id="plAi"><div class="face"><img src="img/speaky.png" alt=""></div><div class="nm">Спики</div><div class="mk" id="mkAi"></div></div>
+    </div>
+    <div class="pickwrap" id="pickwrap"><div class="hint" style="margin:0 0 6px">Чем играешь? Выбери:</div><div class="pick"><button id="pickX" aria-label="Крестик"></button><button id="pickO" aria-label="Нолик"></button></div></div>
     <div class="turn" id="turn"></div>
     <div class="ttt" id="ttt"></div>
-    <div class="btns"><button class="btn primary" id="tttStart">Играть</button><span class="score">Побед: <b id="tttWins">0</b></span></div>
+    <div class="btns"><button class="btn primary" id="tttStart" hidden>Заново</button><span class="score">Счёт: <b id="tttWins">0</b> : <b id="tttLoss">0</b></span></div>
   </section>
 
   <!-- 8 сложи слово -->
@@ -432,28 +463,39 @@ $('#ans').addEventListener('click',e=>{ if(e.target.id==='aShow') kFlip(); if(e.
 // ── 6 мемо: слово ↔ картинка, 6 пар ──
 let mOpen=[], mLock=false, mPairs=0;
 function memoStart(){ const pick=shuffle(WORDS).slice(0,6); const cards=shuffle([...pick.map(w=>({w,t:'pic'})),...pick.map(w=>({w,t:'word'}))]); mOpen=[]; mLock=false; mPairs=0; $('#memoScore').textContent=0; $('#memoStart').textContent='Заново';
-  $('#memo').innerHTML=cards.map((c,i)=>`<button class="mc" data-id="${c.w.id}" data-i="${i}"><div class="in"><div class="f">🎁</div><div class="b">${c.t==='pic'?`<img src="img/${c.w.id}.png" alt="">`:c.w.en}</div></div></button>`).join('');
+  $('#memo').innerHTML=cards.map((c,i)=>`<button class="mc ${c.t}" data-id="${c.w.id}" data-i="${i}"><div class="in"><div class="f">${c.t==='pic'?'🎁':'Aa'}</div><div class="b">${c.t==='pic'?`<img src="img/${c.w.id}.png" alt="">`:c.w.en}</div></div></button>`).join('');
   $$('#memo .mc').forEach(b=>b.onclick=()=>memoTap(b)); }
 function memoTap(b){ if(mLock||b.classList.contains('open')||b.classList.contains('hit')) return; b.classList.add('open'); mOpen.push(b); if(mOpen.length<2) return; mLock=true; const [a,c]=mOpen;
   if(a.dataset.id===c.dataset.id){ play(a.dataset.id); setTimeout(()=>{ a.classList.add('hit'); c.classList.add('hit'); a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; mPairs++; $('#memoScore').textContent=mPairs; if(mPairs===6){ P.memo=true; save(); burst(); } },500); }
   else setTimeout(()=>{ a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; },800); }
 $('#memoStart').onclick=memoStart;
 
-// ── 7 крестики-нолики против Спики ──
+// ── 7 крестики-нолики против Спики (фигурки как в gmf1/games/toys-ttt) ──
 const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-let board=[], tLock=true, tCells=[];
+function eyeSVG(){ return '<g class="eye"><circle cx="41" cy="39" r="6.5" fill="#fff"/><circle cx="59" cy="39" r="6.5" fill="#fff"/><circle cx="42.5" cy="40.5" r="3" fill="#1a1a2a"/><circle cx="60.5" cy="40.5" r="3" fill="#1a1a2a"/></g>'; }
+function legsSVG(c){ return '<g class="legs" stroke="'+c+'" stroke-width="5" stroke-linecap="round"><line class="leg l" x1="42" y1="82" x2="36" y2="96"/><line class="leg r" x1="58" y1="82" x2="64" y2="96"/></g>'; }
+function markSVG(kind){ const c=kind==='X'?'#3f86ff':'#ff5147';
+  const sh=kind==='X'?'<line x1="30" y1="34" x2="70" y2="74" stroke="'+c+'" stroke-width="20" stroke-linecap="round"/><line x1="70" y1="34" x2="30" y2="74" stroke="'+c+'" stroke-width="20" stroke-linecap="round"/>'
+    :'<circle cx="50" cy="55" r="26" fill="none" stroke="'+c+'" stroke-width="19"/>';
+  return '<svg viewBox="0 0 100 105">'+legsSVG(c)+sh+eyeSVG()+'</svg>'; }
+$('#pickX').innerHTML=markSVG('X'); $('#pickO').innerHTML=markSVG('O');
+let board=[], tLock=true, tCells=[], KIND={me:'X',ai:'O'};
+function tPick(k){ KIND={me:k,ai:k==='X'?'O':'X'}; $('#mkMe').innerHTML=markSVG(KIND.me); $('#mkAi').innerHTML=markSVG(KIND.ai); $('#pickwrap').hidden=true; $('#tttStart').hidden=false; tttStart(); }
+$('#pickX').onclick=()=>tPick('X'); $('#pickO').onclick=()=>tPick('O');
 function tttStart(){ board=Array(9).fill(null); tLock=false; const ws=shuffle(WORDS).slice(0,9); tCells=ws.map(w=>w.id);
   $('#ttt').innerHTML=ws.map((w,i)=>`<button class="cell" data-i="${i}"><img src="img/${w.id}.png" alt=""></button>`).join('');
-  $$('#ttt .cell').forEach(b=>b.onclick=()=>tTap(+b.dataset.i)); $('#turn').textContent='Твой ход — нажми и скажи слово'; $('#tttStart').textContent='Заново'; }
-function mark(i,who){ board[i]=who; const c=$$('#ttt .cell')[i]; c.classList.add(who); c.insertAdjacentHTML('beforeend',`<span class="mark">${who==='me'?'⭐':'🦝'}</span>`); play(tCells[i]); }
+  $$('#ttt .cell').forEach(b=>b.onclick=()=>tTap(+b.dataset.i)); setTurn('me'); $('#turn').textContent='Твой ход — нажми и скажи слово'; }
+function setTurn(who){ $('#plMe').classList.toggle('turn',who==='me'); $('#plAi').classList.toggle('turn',who==='ai'); }
+function mark(i,who){ board[i]=who; const c=$$('#ttt .cell')[i]; c.classList.add('filled',who); c.insertAdjacentHTML('beforeend',`<span class="mark arriving">${markSVG(KIND[who])}</span>`); play(tCells[i]); }
 function winner(b){ for(const l of LINES){ if(b[l[0]]&&b[l[0]]===b[l[1]]&&b[l[0]]===b[l[2]]) return l; } return null; }
-function tTap(i){ if(tLock||board[i]) return; tLock=true; mark(i,'me'); if(tEnd()) return; $('#turn').textContent='Спики думает…';
+function tTap(i){ if(tLock||board[i]) return; tLock=true; mark(i,'me'); if(tEnd()) return; setTurn('ai'); $('#turn').textContent='Спики думает…';
   setTimeout(()=>{ const free=board.map((v,j)=>v?null:j).filter(v=>v!==null); let pick=null;
     for(const who of ['ai','me']){ for(const j of free){ const b=[...board]; b[j]=who; if(winner(b)){ pick=j; break; } } if(pick!==null) break; }
-    if(pick===null) pick=free.includes(4)?4:free[Math.floor(Math.random()*free.length)]; mark(pick,'ai'); if(tEnd()) return; tLock=false; $('#turn').textContent='Твой ход'; },1400); }
-function tEnd(){ const w=winner(board); if(w){ w.forEach(j=>$$('#ttt .cell')[j].classList.add('win')); const me=board[w[0]]==='me'; $('#turn').textContent=me?'🎉 Ты победил!':'Спики победил — попробуй ещё!'; if(me){ P.ttt++; $('#tttWins').textContent=P.ttt; save(); burst(); } tLock=true; return true; }
-  if(board.every(Boolean)){ $('#turn').textContent='Ничья! Ещё разок?'; tLock=true; return true; } return false; }
-$('#tttStart').onclick=tttStart; $('#tttWins').textContent=P.ttt;
+    if(pick===null) pick=free.includes(4)?4:free[Math.floor(Math.random()*free.length)]; mark(pick,'ai'); if(tEnd()) return; tLock=false; setTurn('me'); $('#turn').textContent='Твой ход'; },1400); }
+function tEnd(){ const w=winner(board); if(w){ w.forEach(j=>$$('#ttt .cell')[j].classList.add('win')); const me=board[w[0]]==='me'; $('#turn').textContent=me?'🎉 Ты победил!':'Спики победил — попробуй ещё!';
+    if(me){ P.ttt++; $('#tttWins').textContent=P.ttt; save(); burst(); } else { P.tttL=(P.tttL||0)+1; $('#tttLoss').textContent=P.tttL; save(); } tLock=true; setTurn(null); return true; }
+  if(board.every(Boolean)){ $('#turn').textContent='Ничья! Ещё разок?'; tLock=true; setTurn(null); return true; } return false; }
+$('#tttStart').onclick=tttStart; $('#tttWins').textContent=P.ttt; $('#tttLoss').textContent=P.tttL||0;
 
 // ── 8 сложи слово из букв ──
 let sQ=[], sCur=null, sPos=0, sDone=0, sTotal=0, sErr=0;
