@@ -26,6 +26,8 @@ button{font:inherit;cursor:pointer}
 @keyframes rise{to{transform:translateY(-130vh) rotate(25deg)}}
 
 .brand{position:absolute;left:3vw;top:2.6vh;font-weight:700;font-size:2.4vh;letter-spacing:.2px;opacity:.9}
+.back{position:absolute;left:3vw;top:7vh;padding:.8vh 1.8vh;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);color:#fff;text-decoration:none;font-weight:600;font-size:2.1vh;z-index:7;opacity:.85;transition:background .2s,opacity .2s}
+.back:hover{background:rgba(255,255,255,.26);opacity:1}
 .brand b{color:var(--honey)}
 .chip{position:absolute;right:3vw;top:2.4vh;padding:.7vh 1.6vh;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);font-weight:600;font-size:2.2vh;opacity:0;transition:opacity .3s}
 .chip.on{opacity:1}
@@ -111,6 +113,7 @@ button{font:inherit;cursor:pointer}
 /* ---------- portrait (phones) ---------- */
 @media (orientation:portrait){
   .brand{font-size:4.2vw;top:2vh}
+  .back{top:6.5vh;font-size:3.6vw;padding:1vh 3vw}
   .chip{font-size:3.6vw;padding:1vh 3vw}
   .mascot{left:4vw;bottom:19vh;width:30vw;height:40vw}
   .bubble{left:36vw;bottom:26vh;font-size:7vw;padding:2vw 4vw;border-radius:5vw;min-width:30vw}
@@ -147,6 +150,7 @@ button{font:inherit;cursor:pointer}
   <div class="glow"></div>
   <div class="floaters" id="floaters"></div>
   <div class="brand">Speak<b>&amp;</b>Smile</div>
+  <a class="back" href="../../gmf1/phonics/">← Phonics Hub</a>
   <div class="chip" id="chip"></div>
 
   <div class="mascot" id="mascot"><img src="speaky.png" alt=""></div>
@@ -169,6 +173,7 @@ button{font:inherit;cursor:pointer}
 </div>
 
 <div class="overlay" id="overlay">
+  <a class="back" href="../../gmf1/phonics/">← Phonics Hub</a>
   <h1>The <b>Alphabet</b> Game</h1>
   <p>Сначала звуки <b>a–z</b>, потом названия букв <b>A–Zed</b>. Слушаем, показываем, поём!</p>
   <button class="play" id="play">▶ Поехали!</button>
