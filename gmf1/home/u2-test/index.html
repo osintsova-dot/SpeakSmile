@@ -123,6 +123,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .stars{font-size:26px;letter-spacing:1px;margin:4px 0 8px}
 .stars i{font-style:normal;opacity:.25;transition:opacity .3s,transform .3s var(--ease);display:inline-block}
 .stars i.on{opacity:1;transform:scale(1.15)}
+.rrow.sub{font-size:13px;opacity:.75}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
 .confetti i{position:absolute;top:-10px;width:10px;height:14px;border-radius:3px;animation:fall 2.6s ease-in forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
@@ -450,7 +451,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <div class="book"><svg viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 18H6V4h5v8l2.5-1.5L16 12V4h2z"/></svg>5 заданий · проверка сразу · результат уходит учителю</div>
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать тест →</button></div>
-    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 50 баллов, он отправится учителю. Аудио можно слушать два раза, как на уроке.</p>
+    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 50 баллов за пять письменных заданий, он отправится учителю. Шестое задание, Speaking (ещё 10 баллов, всего 60), учитель проверит на уроке. Аудио можно слушать два раза, как на уроке.</p>
   </section>
 
   <!-- 1 listen and match -->
@@ -646,7 +647,7 @@ function total(){ return [1,2,3,4,5].reduce((n,k)=>n+(P.score[k]||0),0); }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); });
   $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan]));
   const names={1:'Listen and match',2:'Listen and tick',3:'Read and circle',4:'Look and write',5:'Read and write'}; const t=total(), all=[1,2,3,4,5].every(k=>P.done[k]);
-  $('#result').innerHTML=[1,2,3,4,5].map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow tot"><span>Всего</span><b>${t} / 50</b></div>`+(all?`<div class="grade">${t>=45?'🌟 Отлично!':t>=35?'👍 Хорошо!':t>=25?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все пять заданий</div>'); }
+  $('#result').innerHTML=[1,2,3,4,5].map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>6. Speaking</span><b>${P.speak?'🎤 проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 50</b></div><div class="rrow sub"><span>+ Speaking у учителя</span><b>до 10 · из 60</b></div>`+(all?`<div class="grade">${t>=45?'🌟 Отлично!':t>=35?'👍 Хорошо!':t>=25?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все пять заданий</div>'); }
 paint(); paintNav(); r1(); r2(); r3(); r4(); r5();
 
 // ── отправка ──
@@ -654,7 +655,7 @@ $('#kidName').value=ls.get('home:name')||'';
 $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя 🙂'; $('#kidName').focus(); return; } ls.set('home:name',n);
   const d=doneMap(), cnt=[1,2,3,4,5].filter(k=>P.done[k]).length; if(cnt<5){ m.textContent='Сначала сделай все пять заданий.'; return; }
   m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
-  const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${total()}&m=50&f=${[1,2,3,4,5].map(k=>P.score[k]).join('-')}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
+  const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${total()}&m=50&f=${[1,2,3,4,5].map(k=>P.score[k]).join('-')}${P.speak?'-S':''}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
   const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
   try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); }
   catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
