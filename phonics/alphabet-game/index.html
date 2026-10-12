@@ -107,6 +107,38 @@ button{font:inherit;cursor:pointer}
 .ctl button{width:5.2vh;height:5.2vh;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;font-size:2.4vh;backdrop-filter:blur(6px)}
 .paused-badge{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8vh;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s;z-index:6;text-shadow:0 1vh 3vh rgba(0,0,0,.5)}
 .stage.paused~.paused-badge{opacity:1}
+
+/* ---------- portrait (phones) ---------- */
+@media (orientation:portrait){
+  .brand{font-size:4.2vw;top:2vh}
+  .chip{font-size:3.6vw;padding:1vh 3vw}
+  .mascot{left:4vw;bottom:19vh;width:30vw;height:40vw}
+  .bubble{left:36vw;bottom:26vh;font-size:7vw;padding:2vw 4vw;border-radius:5vw;min-width:30vw}
+  .bubble small{font-size:3vw}
+  .bubble::after{left:6vw;bottom:-2.6vw;border-width:1.6vw}
+  .card{right:auto;left:50%;top:14vh;width:76vw;height:76vw;transform:translateX(-50%) scale(.7) rotate(-6deg);border-radius:12vw}
+  .card.on{transform:translateX(-50%)}
+  @keyframes cpop{0%{transform:translateX(-50%) scale(.86) rotate(-4deg)}60%{transform:translateX(-50%) scale(1.05) rotate(1deg)}100%{transform:translateX(-50%)}}
+  .card .pair{font-size:44vw}
+  .card .mini{font-size:3.6vw;top:4vw}
+  .lyrics{left:7vw;right:7vw;top:12vh;bottom:46vh;gap:2.4vh}
+  .line{font-size:5.6vw}
+  .line.cur{font-size:7.6vw;transform:none}
+  .line .hint{display:block;width:max-content;margin:1vh 0 0;font-size:3.6vw}
+  .big h1{font-size:18vw}
+  .big p{font-size:5.5vw}
+  .strip{left:4vw;right:4vw;bottom:3vh;grid-template-columns:repeat(13,1fr);gap:1.4vw}
+  .strip i{font-size:4.4vw;border-radius:2vw}
+  .strip i.cur{transform:translateY(-1vh) scale(1.2)}
+  .grid{left:5vw;right:5vw;bottom:3vh;grid-template-columns:repeat(7,1fr);gap:1.6vw}
+  .grid i{font-size:6vw;border-radius:3vw}
+  .overlay h1{font-size:13vw}
+  .overlay p{font-size:4.4vw;max-width:86vw}
+  .play{font-size:6.5vw;padding:3vh 10vw}
+  .keys{display:none}
+  .ctl{bottom:auto;top:9vh;right:3vw;opacity:.5}
+  .ctl button{width:9vw;height:9vw;font-size:4vw}
+}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
 </style>
 </head>
@@ -188,7 +220,7 @@ function setPhase(p,chipText){
   $('#count').style.display='none';
   if(p.startsWith('chorus')||p==='outro'){renderLyrics(p==='outro'?'outro':p); $('#lyrics').classList.add('on');}
   if(p==='sounds'||p==='names'){ $('#strip').classList.add('on'); $('#strip').querySelectorAll('i').forEach(e=>e.classList.remove('done','cur')); }
-  if(p==='outro'){ showGrid(); confetti(); $('#lyrics').style.bottom='36vh'; } else { $('#lyrics').style.bottom=''; }
+  if(p==='outro'){ showGrid(); confetti(); $('#lyrics').style.bottom=matchMedia('(orientation:portrait)').matches?'52vh':'36vh'; } else { $('#lyrics').style.bottom=''; }
 }
 function pop(el,cls){el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls);}
 function showLetter(i,mode){
