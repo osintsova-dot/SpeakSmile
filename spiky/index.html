@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Где вам удобнее — Speak &amp; Smile</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/web/logo_sm.png">
+<link rel="apple-touch-icon" href="/assets/web/logo_sm.png">
+<style>
+  :root{
+    --violet:#6C3FC5; --violet-ink:#3B1F78; --honey:#F5C842;
+    --bg:#F7F4FC; --card:#FFFFFF; --ink:#1E1630; --muted:#6B6280; --line:#E7E1F2;
+    --vk:#0077FF; --max:#7B3FF2; --tg:#229ED9;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{background:var(--bg)}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);
+       min-height:100svh;display:flex;justify-content:center;padding:28px 16px calc(28px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+  main{width:100%;max-width:420px;display:flex;flex-direction:column;gap:22px}
+  .hero{display:flex;align-items:center;gap:14px}
+  .hero img{width:64px;height:64px;object-fit:contain;flex:none;filter:drop-shadow(0 6px 14px rgba(108,63,197,.25))}
+  .brand{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--violet)}
+  h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.01em;color:var(--violet-ink);text-wrap:balance}
+  p.lead{font-size:16px;line-height:1.5;color:var(--muted)}
+  .opts{display:flex;flex-direction:column;gap:12px}
+  a.opt{display:flex;align-items:center;gap:14px;text-decoration:none;color:#fff;border-radius:18px;padding:16px 18px;
+        font-size:18px;font-weight:700;min-height:64px;box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 8px 20px -10px rgba(30,22,48,.45);
+        transition:transform .15s ease, filter .15s ease}
+  a.opt:active{transform:scale(.98);filter:brightness(.95)}
+  a.opt .ic{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.18);display:grid;place-items:center;flex:none}
+  a.opt .ic svg{width:22px;height:22px;fill:#fff}
+  a.opt small{display:block;font-size:13px;font-weight:500;opacity:.85;margin-top:2px}
+  a.opt .arr{margin-left:auto;opacity:.8;font-size:22px}
+  .vk{background:var(--vk)} .max{background:linear-gradient(135deg,#4C6FFF,var(--max))} .tg{background:var(--tg)}
+  .note{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:14px;line-height:1.5;color:var(--muted)}
+  .note b{color:var(--ink)}
+  footer{font-size:12px;color:#9a92ad;text-align:center}
+  @media (prefers-reduced-motion:reduce){a.opt{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <img src="/assets/speaky.png" alt="">
+    <div>
+      <div class="brand">Speak &amp; Smile</div>
+      <h1>Где вам удобнее получать новости школы?</h1>
+    </div>
+  </div>
+
+  <p class="lead">Нажмите на мессенджер, которым пользуетесь. Школа будет писать вам туда: напоминания об уроках и отработках, новости группы, монеты Спики.</p>
+
+  <div class="opts">
+    <a class="opt vk" id="vk" href="https://vk.me/speaksmile2013">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12.8 17.5c-5.5 0-8.6-3.8-8.7-10h2.8c.1 4.6 2.1 6.5 3.7 6.9V7.5h2.6v3.9c1.6-.2 3.3-2 3.8-3.9h2.6c-.4 2.4-2.2 4.2-3.4 4.9 1.2.6 3.2 2.1 4 5.1h-2.9c-.6-2-2.2-3.5-4.2-3.7v3.7h-.3z"/></svg></span>
+      <span>ВКонтакте<small>бот Спики в сообществе школы</small></span><span class="arr">›</span>
+    </a>
+    <a class="opt max" id="max" href="https://max.ru/id245718463277_bot">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3zm0 4.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6z"/></svg></span>
+      <span>MAX<small>работает без VPN</small></span><span class="arr">›</span>
+    </a>
+    <a class="opt tg" id="tg" href="https://t.me/SPeakSmilebot">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M20.7 4.3 3.4 11c-1.2.5-1.2 1.2-.2 1.5l4.4 1.4 1.7 5.2c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.1-2 4.4 3.2c.8.4 1.4.2 1.6-.8l2.9-13.6c.3-1.2-.4-1.7-1.3-1.4zM9 13.6l9.4-5.9c.4-.3.9-.1.5.3l-8 7.3-.3 3.3L9 13.6z"/></svg></span>
+      <span>Telegram<small>бот Speak&amp;Smile Helper</small></span><span class="arr">›</span>
+    </a>
+  </div>
+
+  <div class="note" id="note"><b>Ссылка личная.</b> Номер вводить не нужно: Спики сразу поймёт, что это вы. После перехода нажмите «Начать» или напишите боту любое слово.</div>
+
+  <footer>Speak &amp; Smile, Норильск · с 2013 года</footer>
+</main>
+<script>
+  (function () {
+    var f = (new URLSearchParams(location.search).get('f') || '').toLowerCase();
+    if (!/^f[a-z0-9]{6}$/.test(f)) { document.getElementById('note').style.display = 'none'; return; }
+    document.getElementById('vk').href = 'https://vk.me/speaksmile2013?ref=' + f;
+    document.getElementById('max').href = 'https://r.bothelp.io/max?domain=id245718463277_bot&start=c1774930641859-ds&utm_source=bigben&utm_medium=famlink&utm_content=' + f;
+    document.getElementById('tg').href = 'https://r.bothelp.io/tg?domain=SPeakSmilebot&start=c1769052444306-ds&utm_source=bigben&utm_medium=famlink&utm_content=' + f;
+  })();
+</script>
+</body>
+</html>
