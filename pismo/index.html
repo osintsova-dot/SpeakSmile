@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Письмо группе — Speak &amp; Smile</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/web/logo_sm.png">
+<style>
+  :root{--violet:#6C3FC5;--violet-ink:#3B1F78;--honey:#F5C842;--bg:#F7F4FC;--card:#fff;--ink:#1E1630;--muted:#6B6280;--line:#E2D8F5;--ok:#1F7A45;--err:#B3261E}
+  *{box-sizing:border-box;margin:0}
+  html,body{background:var(--bg)}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;
+       min-height:100svh;display:flex;justify-content:center;padding:28px 16px calc(28px + env(safe-area-inset-bottom))}
+  main{width:100%;max-width:640px;display:flex;flex-direction:column;gap:18px}
+  .hero{display:flex;align-items:center;gap:14px}
+  .hero img{width:56px;height:56px;object-fit:contain;flex:none}
+  .brand{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--violet)}
+  h1{font-size:26px;line-height:1.15;font-weight:800;color:var(--violet-ink)}
+  p.lead{font-size:15px;line-height:1.5;color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+  label{font-size:13px;font-weight:700;color:var(--violet-ink);display:block;margin-bottom:6px}
+  select,input,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px}
+  select:focus,input:focus,textarea:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px rgba(108,63,197,.15)}
+  textarea{min-height:260px;line-height:1.5;resize:vertical}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px}
+  button{font:inherit;font-size:16px;font-weight:700;color:#fff;background:var(--violet);border:none;border-radius:14px;padding:14px 18px;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+  button:active{transform:scale(.98)} button:disabled{opacity:.55;cursor:default}
+  #msg{font-size:14px;line-height:1.5;white-space:pre-line}
+  #msg.ok{color:var(--ok)} #msg.err{color:var(--err)}
+  @media (prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <img src="/assets/speaky.png" alt="">
+    <div><div class="brand">Speak &amp; Smile · для учителей</div><h1>Письмо группе</h1></div>
+  </div>
+  <p class="lead">Письмо в начале юнита. Вставьте текст и нажмите «Отправить». Оксана Владимировна или Наталья Александровна проверят его, и после их «да» письмо получит каждая семья группы в своём мессенджере. Подпись с вашим именем добавится сама.</p>
+
+  <div class="card">
+    <div><label for="grp">Группа</label><select id="grp"><option value="">Загружаю группы…</option></select></div>
+    <div><label for="txt">Текст письма</label><textarea id="txt" placeholder="Скопируйте письмо из файла на Drive и вставьте сюда"></textarea>
+      <div class="hint">Ссылки в тексте останутся ссылками.</div></div>
+    <div><label for="code">Код учителя</label><input id="code" autocomplete="off" placeholder="Например: ksenia-…"></div>
+    <button id="send" disabled>Отправить</button>
+    <div id="msg"></div>
+  </div>
+</main>
+<script>
+(function(){
+  var URLS=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net/nihao/reports/submit','https://nihao-bot.o-sintsova.workers.dev/reports/submit'];
+  var $=function(id){return document.getElementById(id);};
+  var grp=$('grp'),txt=$('txt'),code=$('code'),btn=$('send'),msg=$('msg');
+  var want=new URLSearchParams(location.search).get('g')||'';
+  var bid='',sent=false;
+  try{code.value=localStorage.getItem('ss_tcode')||'';}catch(e){}
+  function newBid(){bid='L'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);sent=false;}
+  newBid();
+  function norm(s){return String(s||'').toLowerCase().replace(/ё/g,'е').replace(/give me five/g,'gmf').replace(/get involved/g,'gi')
+    .replace(/[авсеокрхтмн]/g,function(c){return {'а':'a','в':'b','с':'c','е':'e','о':'o','к':'k','р':'p','х':'x','т':'t','м':'m','н':'h'}[c];}).replace(/[^a-z0-9а-я]/g,'');}
+  function post(i,body){
+    if(i>=URLS.length) return Promise.reject(new Error('net'));
+    var ctl=window.AbortController?new AbortController():null; var tm=setTimeout(function(){ctl&&ctl.abort();},25000);
+    return fetch(URLS[i],{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body),signal:ctl&&ctl.signal})
+      .then(function(r){clearTimeout(tm);return r.json();}).catch(function(){clearTimeout(tm);return post(i+1,body);});
+  }
+  function say(t,cls){msg.className=cls||'';msg.textContent=t;}
+  function loadGroups(){
+    var c=code.value.trim(); if(!c){grp.innerHTML='<option value="">Сначала введите код учителя</option>';btn.disabled=true;return;}
+    grp.innerHTML='<option value="">Загружаю группы…</option>';
+    post(0,{code:c,groups:1}).then(function(d){
+      if(!d||!d.ok){grp.innerHTML='<option value="">—</option>';say((d&&d.error)||'Не получилось загрузить группы.','err');btn.disabled=true;return;}
+      try{localStorage.setItem('ss_tcode',c);}catch(e){}
+      var k=norm(want),pick='';
+      d.groups.forEach(function(g){if(g.key===k)pick=g.name;});
+      if(!pick&&k) d.groups.forEach(function(g){if(!pick&&g.key===k.replace(/[a-z]$/,''))pick=g.name;});
+      if(!pick&&k){var base=k.replace(/[0-9].*$/,'');if(base.length>=4)d.groups.forEach(function(g){if(!pick&&g.key.indexOf(base)===0)pick=g.name;});}
+      grp.innerHTML='<option value="">Выберите группу</option>'+d.groups.map(function(g){return '<option'+(g.name===pick?' selected':'')+' value="'+g.name.replace(/"/g,'&quot;')+'">'+g.name+' · '+g.n+' уч.</option>';}).join('');
+      btn.disabled=false; say('Вы вошли как '+d.name+'.');
+    }).catch(function(){say('Нет связи с сервером. Проверьте интернет и обновите страницу.','err');});
+  }
+  code.addEventListener('change',loadGroups);
+  grp.addEventListener('change',newBid); txt.addEventListener('input',function(){if(sent){newBid();btn.disabled=false;btn.textContent='Отправить';}});
+  loadGroups();
+  btn.addEventListener('click',function(){
+    if(sent) return;
+    var g=grp.value,t=txt.value.trim(),c=code.value.trim();
+    if(!g){say('Выберите группу.','err');return;} if(t.length<10){say('Вставьте текст письма.','err');txt.focus();return;}
+    btn.disabled=true;btn.textContent='Отправляю…';say('');
+    post(0,{code:c,kind:'letter',group:g,text:t,bid:bid}).then(function(d){
+      if(!d||!d.ok){btn.disabled=false;btn.textContent='Отправить';say((d&&d.error)||'Не получилось, попробуйте ещё раз.','err');return;}
+      sent=true;btn.textContent='✓ Отправлено на проверку';
+      say('Готово: письмо №'+d.n+' для группы '+d.group+' ('+d.found+' семей) ждёт проверки. Родителям уйдёт после «да» администратора.','ok');
+    }).catch(function(){btn.disabled=false;btn.textContent='Отправить';say('Нет связи с сервером. Проверьте интернет и нажмите ещё раз.','err');});
+  });
+})();
+</script>
+</body>
+</html>
