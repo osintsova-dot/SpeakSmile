@@ -289,6 +289,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 </div>
 
 <script>
+window.addEventListener('error',e=>{ let d=document.getElementById('jserr'); if(!d){ d=document.createElement('div'); d.id='jserr'; d.style.cssText='position:fixed;left:8px;right:8px;bottom:120px;z-index:99;background:#c0392b;color:#fff;font:700 13px/1.3 system-ui;padding:8px 10px;border-radius:10px;word-break:break-word'; document.body.appendChild(d); } d.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?'); });
 const LESSON='gmf1-u2-l2', IMG='../u2-l1/img/';
 const WORDS=[
   {id:'ball',en:'ball',ru:'мяч'},{id:'train',en:'train',ru:'поезд'},{id:'car',en:'car',ru:'машинка'},{id:'doll',en:'doll',ru:'кукла'},{id:'kite',en:'kite',ru:'воздушный змей'},
@@ -340,7 +341,10 @@ const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
 const TITLES={cover:'Старт',dialog:'Диалог',present:'Подарок',circle:'Обведи',yesno:'Yes/No',conv:'Диалог сам',book:'Учебник',finish:'Финиш'};
 $('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]}"></button>`).join('');
 $('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]}</span>`).join('');
-function go(i){ i=Math.max(0,Math.min(N-1,i)); deck.scrollTo({left:i*deck.clientWidth,behavior:'smooth'}); }
+let goT=null;
+function go(i){ i=Math.max(0,Math.min(N-1,i)); const x=slides[i].offsetLeft; clearInterval(goT);
+  deck.style.scrollSnapType='none'; deck.scrollTo({left:x,behavior:'smooth'}); const t0=Date.now();
+  goT=setInterval(()=>{ const near=Math.abs(deck.scrollLeft-x)<=2; if(near||Date.now()-t0>900){ clearInterval(goT); goT=null; if(!near){ deck.style.scrollBehavior='auto'; deck.scrollLeft=x; } deck.style.scrollSnapType=''; deck.style.scrollBehavior=''; onSlide(i); } },60); }
 function onSlide(i){ if(i===cur) return; cur=i; stopAll(); slides[i].scrollTop=0; paintNav(); }
 deck.addEventListener('scroll',()=>{ onSlide(Math.round(deck.scrollLeft/deck.clientWidth)); },{passive:true});
 $('#prevBtn').onclick=()=>go(cur-1); $('#nextBtn').onclick=()=>go(cur+1);
