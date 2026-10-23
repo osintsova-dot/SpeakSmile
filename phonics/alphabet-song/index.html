@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The Alphabet · песня</title>
+<meta name="description" content="Песня «The alphabet» из Give Me Five! 2: буквы загораются под песню, нажми на букву — услышишь её название.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#6C3FC5; --deep:#3d1b86; --ink:#2a1253; --honey:#F5C842; --white:#fff;
+  --c1:#F5C842; --c2:#4ADE80; --c3:#60A5FA; --c4:#F472B6; --c5:#FB923C; --c6:#A78BFA;
+  --ease:cubic-bezier(.2,.9,.3,1.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{min-height:100%;overflow-x:hidden;background:var(--deep);color:#fff;font-family:Fredoka,"Nunito","Segoe UI Rounded","Arial Rounded MT Bold",system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer;color:inherit}
+
+/* ---------- stage ---------- */
+.stage{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 90% at 50% 110%,#8a5cf0 0%,#5a2fc0 35%,#3b1a86 70%,#2b1265 100%)}
+.glow{position:absolute;inset:-20%;background:radial-gradient(40% 40% at 50% 50%,rgba(245,200,66,.18),transparent 70%);opacity:0;transition:opacity .35s;pointer-events:none}
+body.singing .glow{opacity:1}
+.floaters{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.floaters span{position:absolute;bottom:-12vh;font-weight:700;font-size:var(--s);color:rgba(255,255,255,.07);animation:rise var(--d) linear infinite;animation-delay:var(--dl)}
+@keyframes rise{to{transform:translateY(-130vh) rotate(25deg)}}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:10px;padding:max(12px,env(safe-area-inset-top)) 16px 0;max-width:1180px;margin:0 auto;flex-wrap:wrap}
+.brand{font-weight:700;font-size:clamp(15px,2.2vh,20px);letter-spacing:.2px;opacity:.9}
+.brand b{color:var(--honey)}
+.back{padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);color:#fff;text-decoration:none;font-weight:600;font-size:clamp(13px,2vh,17px);opacity:.85;transition:background .2s,opacity .2s}
+.back:hover{background:rgba(255,255,255,.26);opacity:1}
+.chip{margin-left:auto;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(6px);font-weight:600;font-size:clamp(12px,1.9vh,16px);opacity:.85}
+
+/* ---------- content ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(10px,2.4vh,26px) 16px max(24px,env(safe-area-inset-bottom))}
+.head{display:flex;align-items:flex-end;gap:16px;margin-bottom:clamp(10px,2vh,20px)}
+.head img{width:clamp(56px,10vh,96px);height:auto;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35));animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px) rotate(-2deg)}}
+.head h1{font-weight:700;font-size:clamp(28px,6vh,56px);line-height:1;text-shadow:0 .5vh 0 rgba(0,0,0,.18)}
+.head h1 b{color:var(--honey)}
+.head p{font-size:clamp(14px,2.2vh,19px);opacity:.85;margin-top:6px;max-width:60ch}
+
+.abc{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:clamp(5px,1vh,10px);margin:clamp(8px,1.6vh,16px) 0}
+.abc button{--k:0;position:relative;min-width:0;aspect-ratio:1;border:0;border-radius:clamp(10px,1.8vh,18px);background:rgba(255,255,255,.12);display:flex;align-items:baseline;justify-content:center;gap:.08em;font-weight:700;font-size:clamp(22px,4.6vh,54px);line-height:1;color:#fff;box-shadow:inset 0 -.35em 0 rgba(0,0,0,.08);transition:transform .25s var(--ease),background .25s,color .25s,box-shadow .25s;animation:gpop .5s var(--ease) both;animation-delay:calc(var(--k)*25ms)}
+.abc button small{font-size:.58em;font-weight:700;opacity:.65}
+.abc button:hover{background:rgba(255,255,255,.22)}
+.abc button.heard{background:var(--tc);color:var(--ink);box-shadow:inset 0 -.35em 0 rgba(0,0,0,.12)}
+.abc button.heard small{opacity:.75}
+.abc button.on{background:#fff!important;color:var(--ink);transform:translateY(-.25em) scale(1.18);box-shadow:0 1.2vh 3vh rgba(0,0,0,.4);z-index:2}
+@keyframes gpop{from{transform:scale(0) rotate(-20deg);opacity:0}}
+
+.btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:clamp(10px,2vh,20px) 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:clamp(10px,1.6vh,15px) clamp(18px,3vh,28px);border:0;border-radius:999px;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);font-weight:700;font-size:clamp(15px,2.4vh,21px);transition:transform .2s var(--ease),background .2s}
+.btn svg{width:1.1em;height:1.1em;fill:currentColor}
+.btn:hover{transform:scale(1.04);background:rgba(255,255,255,.26)}
+.btn.primary{background:var(--honey);color:var(--ink);box-shadow:0 1vh 3vh rgba(0,0,0,.35)}
+.btn.primary:hover{background:#ffd75a}
+.btn.stop{background:#fff;color:#c0392b}
+.btn[hidden]{display:none}
+.keys{font-size:clamp(11px,1.7vh,14px);opacity:.55;margin-left:auto}
+
+.prog{height:6px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin:4px 0 clamp(8px,1.6vh,16px)}
+.prog i{display:block;height:100%;width:0;background:var(--honey);border-radius:999px;transition:width .25s linear}
+
+.lyrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(6px,1.2vh,12px)}
+.line{border:0;border-radius:clamp(12px,2vh,20px);padding:clamp(9px,1.6vh,16px) clamp(12px,2vh,20px);background:rgba(255,255,255,.10);font-weight:700;font-size:clamp(16px,3vh,30px);line-height:1.15;letter-spacing:.06em;text-align:center;color:#fff;transition:all .25s var(--ease)}
+.line:hover{background:rgba(255,255,255,.18)}
+.line.chorus{grid-column:1/-1;opacity:.8;font-size:clamp(14px,2.4vh,22px);letter-spacing:0;font-weight:600}
+.line.on{background:#fff;color:var(--purple);transform:scale(1.03);box-shadow:0 1.2vh 3vh rgba(30,10,70,.4);opacity:1}
+.line.gone{opacity:.5}
+
+.msg{min-height:1.6em;margin-top:clamp(8px,1.6vh,16px);font-weight:700;font-size:clamp(16px,2.6vh,24px);color:var(--honey);text-align:center;transition:opacity .3s}
+
+/* ---------- confetti ---------- */
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+.confetti i{position:absolute;top:-4vh;width:1.4vh;height:2.2vh;border-radius:.3vh;animation:fall 3.2s linear forwards;animation-delay:var(--dl)}
+@keyframes fall{to{transform:translateY(115vh) rotate(720deg);opacity:.9}}
+
+/* ---------- pause ---------- */
+.paused-badge{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);font-size:9vh;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s;z-index:6;text-shadow:0 1vh 3vh rgba(0,0,0,.5)}
+body.paused .paused-badge{opacity:1}
+
+/* ---------- phones / narrow ---------- */
+@media (max-width:900px){ .abc{grid-template-columns:repeat(9,minmax(0,1fr))} .abc button{font-size:clamp(20px,6.6vw,44px)} }
+@media (max-width:600px){
+  .abc{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px} .abc button{font-size:clamp(22px,8.6vw,40px);border-radius:12px}
+  .lyrics{grid-template-columns:1fr} .line{font-size:clamp(16px,5vw,22px)} .line.chorus{font-size:15px}
+  .keys,#bFull{display:none} .head img{width:52px} .head h1{font-size:clamp(26px,8vw,36px)} .head p{font-size:14px}
+  .btn{padding:11px 18px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="stage"><div class="glow"></div><div class="floaters" id="floaters"></div></div>
+
+<div class="top">
+  <div class="brand">Speak<b>&amp;</b>Smile</div>
+  <a class="back" href="../../gmf1/phonics/">← Phonics Hub</a>
+  <div class="chip">Give Me Five! 2 · Starter · CD1·8</div>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <img src="speaky.png" alt="">
+    <div>
+      <h1>The <b>alphabet</b></h1>
+      <p>Нажми на букву — услышишь её название. Нажми «Петь» — буквы загораются под песню. Следи за g / j и e / i!</p>
+    </div>
+  </div>
+
+  <div class="abc" id="abc"></div>
+
+  <div class="btns">
+    <button class="btn primary" id="songPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
+    <button class="btn stop" id="songStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
+    <button class="btn" id="abcSay"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>Просто алфавит</button>
+    <button class="btn" id="bFull" title="Во весь экран (F)">⛶</button>
+    <span class="keys">пробел — пауза · F — во весь экран · буква на клавиатуре — её название</span>
+  </div>
+  <div class="prog"><i id="prog"></i></div>
+
+  <div class="lyrics" id="lyrics"></div>
+  <div class="msg" id="msg"></div>
+</div>
+
+<div class="confetti" id="confetti"></div>
+<div class="paused-badge">⏸</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+window.addEventListener('error',e=>{ let d=document.getElementById('jserr'); if(!d){ d=document.createElement('div'); d.id='jserr'; d.style.cssText='position:fixed;left:8px;right:8px;bottom:12px;z-index:99;background:#c0392b;color:#fff;font:700 13px/1.3 system-ui;padding:8px 10px;border-radius:10px;word-break:break-word'; document.body.appendChild(d); } d.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?'); });
+
+const ABC='abcdefghijklmnopqrstuvwxyz';
+const COLS=['#F5C842','#4ADE80','#60A5FA','#F472B6','#FB923C','#A78BFA'];
+const col=i=>COLS[i%COLS.length];
+// Give Me Five! 2 · Starter · CD1·8 «The alphabet»
+const SONG=[[9.7,"Let's say the alphabet. Say it with me!",'c'],[18.5,'A B C D E F G'],[22.5,'H I J K L M N'],[26.6,'O P Q R S T'],[30.8,'U V W X Y Z'],[36.8,"That's the end. Let's start again!",'c'],[45.7,'A B C D E F G'],[49.8,'H I J K L M N'],[53.8,'O P Q R S T'],[58.0,'U V W X Y Z']], SONG_END=63.5;
+const LT1=[18.54,19.56,20.08,20.7,21.32,21.82,22.16,22.52,23.88,24.6,24.96,25.76,26.02,26.3,26.68,26.82,27.26,28.62,29.14,30.3,30.88,31.42,32.52,33.26,34.3,34.84];
+const LT2=[45.78,46.72,47.06,47.84,48.46,48.98,49.3,49.84,51.26,51.72,52.34,52.94,53.2,53.5,53.8,53.98,54.7,55.78,56.34,57.46,58.04,58.58,59.44,60.64,61.46,62.0];
+
+// фон: плывущие буквы
+(function(){ const f=$('#floaters'); for(let i=0;i<22;i++){ const s=document.createElement('span'); s.textContent=ABC[i%26].toUpperCase(); s.style.left=(Math.random()*100)+'vw'; s.style.setProperty('--s',(3+Math.random()*7)+'vh'); s.style.setProperty('--d',(14+Math.random()*16)+'s'); s.style.setProperty('--dl',(-Math.random()*30)+'s'); f.appendChild(s);} })();
+
+// память «какие буквы слушал»
+let heard=[]; try{ heard=JSON.parse(localStorage.getItem('abcsong:heard')||'[]'); }catch(e){}
+function saveHeard(){ try{ localStorage.setItem('abcsong:heard',JSON.stringify(heard)); }catch(e){} }
+
+// звук: одна дорожка для песни/алфавита + отдельная для букв
+const track=new Audio(); track.preload='auto';
+const letA=new Audio(); letA.preload='auto';
+let letEnd=null;
+function playLetter(ch,done){ track.pause(); songStop(); letA.onended=null; letA.src='audio/let_'+ch+'.mp3'; letA.currentTime=0; letEnd=done||null; letA.onended=()=>{ if(letEnd) letEnd(); letEnd=null; }; letA.play().catch(()=>{ if(letEnd) letEnd(); }); }
+
+// буквы
+$('#abc').innerHTML=[...ABC].map((ch,i)=>`<button data-ch="${ch}" style="--k:${i};--tc:${col(i)}" class="${heard.includes(ch)?'heard':''}" aria-label="${ch.toUpperCase()}">${ch.toUpperCase()}<small>${ch}</small></button>`).join('');
+const LB=$$('#abc button');
+function litLetter(k){ LB.forEach((b,i)=>b.classList.toggle('on',i===k)); }
+function tapLetter(ch){ const b=LB[ABC.indexOf(ch)]; if(!b) return; litLetter(ABC.indexOf(ch)); playLetter(ch,()=>b.classList.remove('on')); if(!heard.includes(ch)){ heard.push(ch); b.classList.add('heard'); saveHeard(); } }
+LB.forEach(b=>b.onclick=()=>tapLetter(b.dataset.ch));
+
+// слова песни
+SONG.forEach(([t,txt,ch],i)=>{ const b=document.createElement('button'); b.className='line'+(ch?' chorus':''); b.textContent=txt;
+  b.onclick=()=>{ songStop(); const end=SONG[i+1]?SONG[i+1][0]:SONG_END; startTrack('audio/abc_song.mp3',t,end,false); light(i); };
+  $('#lyrics').appendChild(b); });
+function light(k){ $$('#lyrics .line').forEach((l,i)=>{ l.classList.toggle('on',i===k); l.classList.toggle('gone',k>=0&&i<k); }); }
+function letterSync(t){ const run=t<40?LT1:LT2; let k=-1; run.forEach((at,i)=>{ if(t>=at&&t<at+1.3) k=i; }); if(t>=35.6&&t<45.7) k=-1; litLetter(k); }
+
+let timer=null, mode=null; // mode: 'song' | 'part' | 'say'
+function startTrack(src,from,until,full){ letA.pause(); mode=full?'song':'part'; document.body.classList.add('singing'); document.body.classList.remove('paused');
+  if(!track.src.endsWith(src)) track.src=src; track.currentTime=from||0; track.play().catch(()=>{});
+  $('#songPlay').hidden=true; $('#songStop').hidden=false; $('#msg').textContent='';
+  clearInterval(timer); timer=setInterval(()=>{ const t=track.currentTime; if(track.ended||(until&&t>=until)){ if(full) finish(); else songStop(); return; }
+    let k=-1; SONG.forEach(([at],i)=>{ if(t>=at) k=i; }); if(t>=SONG_END) k=-1; light(k); letterSync(t); $('#prog').style.width=Math.min(100,t/SONG_END*100)+'%'; },60); }
+function songStop(){ clearInterval(timer); timer=null; if(mode){ track.pause(); } mode=null; document.body.classList.remove('singing','paused'); $('#songPlay').hidden=false; $('#songStop').hidden=true; light(-1); litLetter(-1); $('#prog').style.width='0'; }
+function finish(){ songStop(); $('#prog').style.width='100%'; $('#msg').textContent='Now I know my ABC! 🎉'; LB.forEach((b,i)=>{ b.classList.add('heard'); if(!heard.includes(ABC[i])) heard.push(ABC[i]); }); saveHeard(); confetti(); }
+$('#songPlay').onclick=()=>startTrack('audio/abc_song.mp3',0,null,true);
+$('#songStop').onclick=songStop;
+$('#abcSay').onclick=()=>{ songStop(); letA.pause(); mode='say'; track.src='audio/abc_say.mp3'; track.currentTime=0; track.play().catch(()=>{}); $('#msg').textContent='Слушай и показывай буквы пальцем ☝️'; track.onended=()=>{ if(mode==='say'){ mode=null; $('#msg').textContent=''; } }; };
+track.addEventListener('ended',()=>{ if(mode==='song') finish(); });
+
+function togglePause(){ if(!mode) return; if(track.paused){ track.play().catch(()=>{}); document.body.classList.remove('paused'); } else { track.pause(); document.body.classList.add('paused'); } }
+function full(){ const d=document.documentElement; if(!document.fullscreenElement){ (d.requestFullscreen||d.webkitRequestFullscreen||function(){}).call(d); } else { (document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document); } }
+$('#bFull').onclick=full;
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return;
+  if(e.code==='Space'){ e.preventDefault(); togglePause(); return; }
+  if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А'){ full(); return; }
+  if(e.key==='Escape'){ songStop(); return; }
+  const ch=(e.key||'').toLowerCase(); if(ch.length===1&&ABC.includes(ch)&&!e.metaKey&&!e.ctrlKey&&!e.altKey) tapLetter(ch); });
+
+function confetti(){ const c=$('#confetti'); c.innerHTML=''; for(let i=0;i<120;i++){ const p=document.createElement('i'); p.style.left=Math.random()*100+'vw'; p.style.background=col(i); p.style.setProperty('--dl',(Math.random()*1.2)+'s'); p.style.transform=`rotate(${Math.random()*360}deg)`; c.appendChild(p);} setTimeout(()=>{ c.innerHTML=''; },4800); }
+</script>
+</body>
+</html>
