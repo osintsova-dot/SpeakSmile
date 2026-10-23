@@ -181,6 +181,10 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .choose .card .en{font-size:13px}
 .choose .card.used{opacity:.35;pointer-events:none}
 
+#toast{position:fixed;left:50%;bottom:calc(126px + env(safe-area-inset-bottom));transform:translate(-50%,16px);z-index:60;background:#fff;color:var(--pd);font-weight:800;font-size:15px;padding:10px 18px;border-radius:999px;box-shadow:0 12px 26px rgba(30,10,70,.35);opacity:0;pointer-events:none;transition:all .25s var(--ease);white-space:nowrap}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.btn.copy{margin-top:12px;font-size:14px;padding:9px 16px}.btn.copy.ok{background:#fff;color:#1e9e6a;border-color:#fff}
+.btn.copy svg{width:17px;height:17px;fill:currentColor}
 </style></head>
 <body>
 <div class="bubbles"><i></i><i></i><i></i><i></i><i></i></div>
@@ -200,6 +204,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <div class="book"><svg viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 18H6V4h5v8l2.5-1.5L16 12V4h2z"/></svg>Открой Pupil's Book на стр. 19</div>
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
+    <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на урок"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку на урок</button></div>
     <p class="parent">Для родителей: это пропущенный урок группы, 15–20 минут. Сегодня — вопрос «Что это? Это …?» и ответы «да / нет». Листайте свайпом или кнопками внизу.</p>
   </section>
 
@@ -436,6 +441,11 @@ $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('
   try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Молодец! Учитель уже знает.'; burst(); burst(); }
   catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
 
+function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
+  const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
+let toastT=null; function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; document.body.appendChild(t); } t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
+$('#copyLink').onclick=()=>copyLink($('#copyLink'),location.origin+location.pathname);
 function burst(){ const c=document.createElement('div'); c.className='confetti'; const cols=['#F5C842','#F17FBE','#63B3FF','#34D3C0','#fff']; for(let i=0;i<40;i++){ const p=document.createElement('i'); p.style.left=Math.random()*100+'vw'; p.style.background=cols[i%5]; p.style.animationDelay=(Math.random()*.6)+'s'; c.appendChild(p); } document.body.appendChild(c); setTimeout(()=>c.remove(),3200); }
 </script>
 </body></html>
