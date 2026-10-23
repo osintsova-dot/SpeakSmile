@@ -72,3 +72,12 @@ Headless-проверки звука — ТОЛЬКО с `--mute-audio` (ина�
 Аудио: track07/08 — ffmpeg silenceremove+apad+loudnorm из оригиналов Macmillan; sp_* — Gemini TTS (Kore, flash) на VPS `/root/rev/gen_test_flash.py` → `tts_test/`; квота 429 отдаёт по 2–5 шт. в сутки, поэтому `SPEAK` пополняется по мере готовности (нет: kite, computer game; i_* инструкции и t_who сгенерированы на будущее, в колоде не задействованы).
 Картинки: `pdftoppm -r 200` стр. 4–6, кропы m_* (игрушки задачи 1), t1a..t6b, r1a..r6b, w1–w6, f1–f3, speak.jpg; пары a/b = левая/правая картинка на странице.
 Проверка: headless с `--mute-audio` + `inj.html` (кликает все задачи, ждёт score/total/localStorage).
+
+## 11. Unit 1 «Ready for school!» — u1-l1 … u1-l6, u1-test (23.10.2026)
+Собрано по рецепту U2 копированием папок (`u2-lN → u1-lN`) с заменой данных. Медиа Macmillan скачаны скриптом `~/Проекты с Claude/mee-tools/mee.js` (вход в Macmillan Education Everywhere по Keychain `MEE`): аудио `GMF L1 U1.zip`, мультик `Macmillan_Give Me Five_L1_U1_MASTER.mp4`, флешкарты `Flashcards - Give me Five Basics 1.pdf` → `Методбаза/курсы/GMF1/media-macmillan/U1/`.
+- **Картинки слов** — фото из флешкарт: карточка N = pdf-страница 2N+3 (книга 16 … пенал 25), объект на всём листе, белый фон → прозрачный (PIL), 300×300 PNG в `u1-l1/img/`; остальные уроки ссылаются на `../u1-l1/img/`. Мебель — кропы PB стр. 12; кадры истории — кропы PB стр. 10–11 (200 dpi); картинки тетради — кропы AB (pdf-страница = AB + 1).
+- **Треки** (см. память `gmf1-u1-home-lessons`): CD1·10/11/12 L1; 13, 14 L2; 15 (16 реплик) L3; 16–21 урок 4; 22–24 урок 5; 25–27 Review. Ответы «Listen and…» сняты whisper'ом; CD1·23 (звуки линейки) — по характеру звука, Оксане проверить на слух.
+- **TTS Kore** на VPS: `/root/u1l2 … u1l6, u1test` (`gen_en.py`, при 429 — `gen_pro.py`); очередь «следующий после DONE предыдущего». Квота flash кончилась на u1l6 — хвост дозвучен pro.
+- **Отличия колод от U2** и ответы — в файле памяти; слайд «Подпиши» (u1-l1) заменяет «поезд»; в u1-l3 роли Jake / Beth+Molly / учительница; в u1-l6 «Рюкзак» заменяет «Топ-3».
+- **Тест u1-test**: 5 заданий по PDF Standard Unit 1 (стр. 1–3) + Speaking (8 образцов sp1–8). Треки 05/06 — из Resource Centre `Tests/Audio Files…` (`05_GMF1_TR_Test_U1_Act1.mp3`, `06_…Act2.mp3`), ответы ANS1/ANS2 заполнить по whisper после скачивания.
+- **Проверка**: `python3 -m http.server 8765` из `gmf1/home` + расширение Chrome (`http://localhost:8765/u1-lN/`); headless Chrome на этом Маке виснет.
