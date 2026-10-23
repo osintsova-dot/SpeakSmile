@@ -660,7 +660,7 @@ const VOW=[
   window.addEventListener('resize',()=>{ if($("#panel")) applyZoom(); });
   // ---------- HUB ----------
   function renderHub(){
-    window._stGo=null; window.PZ=1; wrap.style.maxWidth=""; $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics";
+    window._stGo=null; window.PZ=1; wrap.style.maxWidth=""; $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub · Jolly Phonics"; setHash('');
     const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.map(dispG).join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc}${g.tricky.length?' · '+g.tricky.length+' tricky':''}</div></button>`;
     let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Jolly Phonics · для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
     h+=`<h2 class="sec">🎵 Песня</h2><div class="grid">
@@ -680,8 +680,10 @@ const VOW=[
 
   // ---------- LESSON ----------
   function openLesson(tr,i){ track=tr; gi=i; station=0; $("#back").style.display=""; $("#htitle").textContent=LES().title+" · "+LES().desc; renderLesson(); }
+  // Адрес урока в хэше (#beg-5-8 = трек-урок-страница): ссылка из адресной строки открывает тот же урок и страницу у родителей
+  function setHash(h){ try{ history.replaceState(null,'',location.pathname+location.search+(h?'#'+h:'')); }catch(e){} }
   function renderLesson(){
-    stopBalloons(); stopSpeed();
+    stopBalloons(); stopSpeed(); setHash(track+'-'+gi+'-'+(station+1));
     preloadSnds(priorLetters().concat(LES().letters)); // предзагрузка звуков урока — играют мгновенно
     const list=stList();
     let h=`<div class="tabs">`+list.map((s,k)=>`<button class="tab ${k===station?'on':''}" data-k="${k}">${s[0]}</button>`).join('')+`</div><div class="panel" id="panel"></div>
@@ -837,7 +839,7 @@ const VOW=[
       else { b.classList.add("wrong"); setTimeout(()=>b.classList.remove("wrong"),400); } });
   }
   function openCaps(){ // спец-урок: все A-Z
-    $("#back").style.display=""; $("#htitle").textContent="Заглавные буквы A–Z";
+    setHash('caps'); $("#back").style.display=""; $("#htitle").textContent="Заглавные буквы A–Z";
     const all="abcdefghijklmnopqrstuvwxyz".split("");
     let h=`<div class="panel"><div class="lead">Все буквы: строчная ↔ <b>ЗАГЛАВНАЯ</b>. Тапни пару.</div><div class="caps">`+
       all.map(c=>`<button class="cap" data-c="${c}"><span>${c}</span><span class="up">${c.toUpperCase()}</span></button>`).join('')+`</div><div class="digcue" id="cue3"></div></div>`;
@@ -1027,6 +1029,10 @@ const VOW=[
   $("#home").onclick=()=>{ let f="gmf1"; try{ f=new URLSearchParams(location.search).get("from")||sessionStorage.getItem("ph_from")||"gmf1"; }catch(e){} location.href = f==="gmf2" ? "../../gmf2/" : "../"; };
   { let rq=null; try{ rq=new URLSearchParams(location.search).get("read"); }catch(e){}
     const m=rq&&rq.match(/^(beg|dig|adv|vow)-(\d+)$/);
-    if(m && TRACKS[m[1]] && TRACKS[m[1]][+m[2]]) openHomeRead(m[1],+m[2]); else renderHub(); }
+    const hm=(location.hash||'').match(/^#(beg|dig|adv|vow)-(\d+)(?:-(\d+))?$/);
+    if(m && TRACKS[m[1]] && TRACKS[m[1]][+m[2]]) openHomeRead(m[1],+m[2]);
+    else if(location.hash==='#caps') openCaps();
+    else if(hm && TRACKS[hm[1]] && TRACKS[hm[1]][+hm[2]]){ openLesson(hm[1],+hm[2]); if(hm[3]){ station=Math.max(0,Math.min(stList().length-1,+hm[3]-1)); renderLesson(); } }
+    else renderHub(); }
 })();
 </script>
