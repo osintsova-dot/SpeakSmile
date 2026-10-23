@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#6C3FC5">
+<title>Урок дома · Hello, friends! · Give Me Five! 1</title>
+<meta name="description" content="Give Me Five! 1 · Starter · Lesson 1: числа 1–10, песня What's your name?, чант, дни недели. Пропущенный урок дома.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6C3FC5; --pd:#4B278F; --honey:#F5C842; --sky:#63B3FF; --pink:#F17FBE; --teal:#34D3C0; --red:#F26B6B; --good:#1FA85C;
+  --ink:#2A2140; --muted:#6A5B9A; --paper:#FFFFFF;
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,"Trebuchet MS",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1.1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;overflow:hidden}
+body{font-family:var(--f);color:#fff;position:relative;text-align:center;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),
+    radial-gradient(120% 90% at 100% 10%,rgba(99,179,255,.40),transparent 55%),
+    linear-gradient(180deg,#7C4DE0 0%,#5B3FCF 55%,#4A2FB0 100%);background-attachment:fixed}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:12px}
+.bubbles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bubbles i{position:absolute;bottom:-14vh;border-radius:50%;opacity:.4;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.9),rgba(255,255,255,.15) 60%,transparent 70%);animation:rise linear infinite}
+.bubbles i:nth-child(1){left:8%;width:46px;height:46px;animation-duration:17s;animation-delay:-2s}
+.bubbles i:nth-child(2){left:26%;width:26px;height:26px;animation-duration:21s;animation-delay:-8s}
+.bubbles i:nth-child(3){left:49%;width:60px;height:60px;animation-duration:26s;animation-delay:-4s;opacity:.3}
+.bubbles i:nth-child(4){left:70%;width:32px;height:32px;animation-duration:19s;animation-delay:-11s}
+.bubbles i:nth-child(5){left:88%;width:52px;height:52px;animation-duration:23s;animation-delay:-6s;opacity:.35}
+@keyframes rise{to{transform:translateY(-130vh)}}
+@media(prefers-reduced-motion:reduce){.bubbles{display:none}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ── колода слайдов ── */
+.deck{position:relative;z-index:1;display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;overflow-x:hidden;padding:64px 16px calc(118px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center}
+.slide>*{max-width:640px;width:100%;flex-shrink:0}
+.slide h2{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 4px;font-size:clamp(24px,6.4vw,32px);line-height:1.1}
+.slide h2 .n{width:34px;height:34px;border-radius:50%;background:var(--honey);color:var(--pd);display:grid;place-items:center;font-size:17px;flex:none}
+.slide.done h2 .n{background:var(--good);color:#fff}
+.slide.done h2 .n span{display:none}.slide.done h2 .n::after{content:"✓"}
+.hint{font-size:clamp(14px,3.6vw,16px);font-weight:600;opacity:.92;margin:4px 0 14px}
+
+/* ── верхняя полоска ── */
+.top{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;
+  background:linear-gradient(180deg,rgba(60,30,130,.85),rgba(60,30,130,0));pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:12px;white-space:nowrap}
+.brand b{color:var(--honey)}
+.dots{display:flex;gap:5px;align-items:center}
+.dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.35);cursor:pointer;transition:all .25s var(--ease)}
+.dots button.done{background:var(--honey)}
+.dots button.cur{transform:scale(1.5);background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.dots button.done.cur{background:var(--honey)}
+
+/* ── нижняя навигация ── */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(0deg,rgba(60,30,130,.9),rgba(60,30,130,0))}
+.nav .btn{min-width:120px;justify-content:center}
+.nav .cnt{font-weight:800;font-size:14px;opacity:.85}
+
+/* ── обложка ── */
+.cover{justify-content:center;padding-top:40px}
+.cover img{width:clamp(120px,34vw,190px);filter:drop-shadow(0 12px 20px rgba(0,0,0,.3));animation:float 4s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.cover h1{font-size:clamp(48px,14vw,80px);line-height:1;margin:8px 0 0;text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.cover .sub{font-size:clamp(15px,4vw,19px);font-weight:700;color:var(--honey);margin:8px 0 0}
+.book{display:inline-flex;align-items:center;gap:8px;margin:14px auto 0;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:14px;width:auto}
+.book svg{width:18px;height:18px;fill:var(--honey)}
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:18px 0 0;font-size:12px;font-weight:700}
+.plan span{padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.plan span.done{background:rgba(31,168,92,.55);border-color:transparent}
+
+/* ── карточки ── */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.card{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--paper);color:var(--ink);border-radius:20px;padding:10px 6px;cursor:pointer;border:0;font:inherit;text-align:center;
+  box-shadow:0 10px 22px rgba(30,10,70,.28);transition:transform .18s var(--ease),box-shadow .18s,outline-color .2s;outline:4px solid transparent}
+.card:active{transform:scale(.96)}
+.card img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:12px;background:#fff;pointer-events:none}
+.card .en{font-weight:800;font-size:clamp(15px,4.2vw,20px);line-height:1.1;color:var(--p);overflow-wrap:anywhere;max-width:100%}
+.card .ru{font-size:12px;font-weight:700;color:var(--muted)}
+.card .snd{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:var(--honey);display:grid;place-items:center}
+.card .snd svg{width:13px;height:13px;fill:var(--pd)}
+.card.heard .snd{background:var(--good)}.card.heard .snd svg{fill:#fff}
+.card.playing{outline-color:var(--honey);transform:scale(1.04)}
+.card.right{outline-color:var(--good);animation:bounce .5s var(--ease)}
+.card.wrong{outline-color:var(--red);animation:shake .4s}
+@keyframes bounce{40%{transform:scale(1.1)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.card.lit{outline-color:var(--honey);transform:scale(1.06);box-shadow:0 0 0 6px rgba(245,200,66,.35),0 16px 30px rgba(30,10,70,.35)}
+.card.dim{opacity:.5}
+
+/* ── кнопки ── */
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 20px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;color:var(--pd);background:#fff;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .12s,box-shadow .12s;width:auto}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.btn.primary{background:var(--honey);color:var(--pd);box-shadow:0 5px 0 #d9ad2e}.btn.primary:active{box-shadow:0 1px 0 #d9ad2e}
+.btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:2px solid rgba(255,255,255,.5);box-shadow:none}
+.btn.ghost[aria-pressed="true"]{background:#fff;color:var(--pd)}
+.btn.stop{background:var(--red);color:#fff;box-shadow:0 5px 0 #b9474b}
+.btn.big{font-size:20px;padding:16px 28px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:4px 0 12px}
+.score{font-weight:800;font-size:15px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:8px 14px}
+.score b{color:var(--honey)}
+
+/* ── чант ── */
+.chant-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:8px 0}
+.chant-row .card{padding:6px 4px;border-radius:14px;gap:2px}
+.chant-row .card .en{font-size:11px}
+.say{min-height:44px;font-size:clamp(20px,6vw,28px);font-weight:800;color:var(--honey)}
+
+/* ── песня ── */
+.lyrics{display:flex;flex-direction:column;gap:5px;margin:6px 0}
+.line{display:flex;align-items:center;justify-content:center;gap:10px;padding:9px 12px;border-radius:14px;background:rgba(255,255,255,.10);font-weight:800;font-size:clamp(16px,4.4vw,21px);cursor:pointer;transition:all .25s var(--ease);border:0;color:#fff;font-family:inherit;text-align:center;width:100%}
+.line img{width:32px;height:32px;border-radius:8px;background:#fff;object-fit:contain}
+.line.on{background:#fff;color:var(--p);transform:scale(1.03);box-shadow:0 10px 24px rgba(30,10,70,.35)}
+.line.chorus{opacity:.8;font-size:clamp(14px,3.8vw,18px)}
+.tempo{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.tempo input{accent-color:var(--honey);width:100px}
+
+/* ── знаю / не знаю ── */
+.fcwrap{perspective:1200px;margin:6px auto 12px;width:min(300px,78vw)}
+.fc{position:relative;width:100%;aspect-ratio:4/5;transform-style:preserve-3d;transition:transform .5s var(--ease);cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.fc.in{animation:fcin .35s var(--ease)}
+@keyframes fcin{from{transform:translateX(60px) rotate(4deg);opacity:0}}
+.fc.outR{transition:transform .3s,opacity .3s;transform:translateX(120px) rotate(8deg);opacity:0}
+.fc.outL{transition:transform .3s,opacity .3s;transform:translateX(-120px) rotate(-8deg);opacity:0}
+.fc .side{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px;box-shadow:0 16px 36px rgba(30,10,70,.35)}
+.fc .back{transform:rotateY(180deg)}
+.fc img{width:70%;aspect-ratio:1;object-fit:contain}
+.fc .q{font-size:14px;font-weight:700;color:var(--muted)}
+.fc .big{font-size:clamp(30px,9vw,44px);font-weight:800;color:var(--p);line-height:1.05}
+.fc .ru{font-size:16px;font-weight:700;color:var(--muted)}
+.ans{display:flex;gap:10px;justify-content:center;min-height:52px}
+.btn.no{background:#fff;color:var(--red)}.btn.yes{background:var(--good);color:#fff;box-shadow:0 5px 0 #15803f}
+.prog{height:8px;border-radius:4px;background:rgba(255,255,255,.2);overflow:hidden;margin:0 auto 8px;width:min(300px,78vw)}
+.prog i{display:block;height:100%;width:0;background:var(--honey);transition:width .3s}
+
+/* ── мемо ── */
+.memo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:6px 0}
+@media(min-width:480px){.memo{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.mc{aspect-ratio:1;perspective:800px;border:0;background:none;padding:0;cursor:pointer;font:inherit}
+.mc .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .4s var(--ease)}
+.mc.open .in,.mc.hit .in{transform:rotateY(180deg)}
+.mc .f,.mc .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:grid;place-items:center}
+.mc .f{background:linear-gradient(135deg,var(--honey),#f7d978);box-shadow:0 8px 18px rgba(30,10,70,.3);font-size:30px}
+.mc.word .f{background:linear-gradient(135deg,#63B3FF,#34D3C0)}
+.mc .b{background:#fff;color:var(--p);transform:rotateY(180deg);font-weight:800;font-size:clamp(17px,4.8vw,26px);padding:4px;overflow-wrap:normal;word-break:keep-all;hyphens:none;line-height:1.05;text-align:center}
+.mc .b img{width:84%;aspect-ratio:1;object-fit:contain}
+.mc.hit .b{background:#E6F7EC;box-shadow:0 0 0 3px var(--good) inset}
+.mc.hit{pointer-events:none}
+
+/* ── крестики-нолики ── */
+.players{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;width:min(360px,90vw);margin:4px auto 8px}
+.pl{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px;border-radius:18px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);transition:all .25s var(--ease)}
+.pl.turn{background:rgba(255,255,255,.22);border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.18)}
+.pl .face{width:52px;height:52px;border-radius:50%;background:#fff;display:grid;place-items:center;overflow:hidden;font-size:30px}
+.pl .face img{width:100%;height:100%;object-fit:cover;object-position:top}
+.pl .nm{font-weight:800;font-size:15px}
+.pl .mk{width:40px;height:42px}
+.pl .mk svg{width:100%;height:100%}
+.vs{font-weight:800;font-size:18px;opacity:.7}
+.pickwrap{margin:6px 0 10px}
+.pick{display:flex;gap:12px;justify-content:center}
+.pick button{width:84px;height:88px;border-radius:20px;border:3px solid rgba(255,255,255,.4);background:rgba(255,255,255,.14);cursor:pointer;padding:6px;transition:all .2s var(--ease)}
+.pick button:active{transform:scale(.95)}
+.pick button svg{width:100%;height:100%}
+.ttt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:min(330px,84vw);margin:6px auto}
+.cell{position:relative;aspect-ratio:1;border:0;border-radius:18px;background:#fff;padding:8px;cursor:pointer;box-shadow:0 8px 18px rgba(30,10,70,.3);font:inherit;overflow:hidden}
+.cell img{width:100%;height:100%;object-fit:contain;transition:opacity .3s}
+.cell.filled img{opacity:.18}
+.cell .mark{position:absolute;inset:6%;transform-origin:center bottom}
+.cell .mark svg{width:100%;height:100%;display:block}
+.cell .mark.arriving{animation:hopIn .55s cubic-bezier(.2,1.35,.4,1) both}
+@keyframes hopIn{0%{transform:translateY(-130%) scale(.55);opacity:0}55%{transform:translateY(6%) scale(1.1);opacity:1}72%{transform:translateY(-3%) scale(.96)}100%{transform:translateY(0) scale(1)}}
+.mark .legs{display:none}
+.mark.arriving .legs{display:block}
+.mark.arriving .leg{transform-origin:top center;animation:legwig .16s ease-in-out 5}
+.mark.arriving .leg.r{animation-delay:.08s}
+@keyframes legwig{0%,100%{transform:rotate(-22deg)}50%{transform:rotate(22deg)}}
+.eye{animation:blink 3.2s infinite;transform-origin:50px 40px}
+@keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.15)}}
+.cell.win{background:#fff7d6;box-shadow:inset 0 0 0 3px var(--honey),0 0 22px var(--honey)}
+.turn{font-weight:800;font-size:17px;min-height:26px;color:var(--honey)}
+
+/* ── сложи слово ── */
+.spell-pic{width:min(150px,38vw);aspect-ratio:1;object-fit:contain;background:#fff;border-radius:22px;padding:8px;box-shadow:0 10px 22px rgba(30,10,70,.28);margin:0 auto 10px;cursor:pointer}
+.slots,.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:6px 0}
+.slot,.tile{width:clamp(38px,10vw,50px);height:clamp(46px,12vw,60px);border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:clamp(22px,6vw,30px);font-family:inherit}
+.slot{background:rgba(255,255,255,.16);border:2px dashed rgba(255,255,255,.55);color:#fff}
+.slot.ok{background:#fff;color:var(--p);border-style:solid;border-color:#fff;animation:bounce .4s var(--ease)}
+.slot.space{width:16px;border:0;background:none}
+.tile{background:var(--honey);color:var(--pd);border:0;cursor:pointer;box-shadow:0 5px 0 #d9ad2e;transition:transform .12s}
+.tile:active{transform:translateY(3px);box-shadow:0 2px 0 #d9ad2e}
+.tile.used{visibility:hidden}
+.tile.bad{animation:shake .4s;background:var(--red);color:#fff}
+
+/* ── поезд слов ── */
+.labels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:6px 0 12px}
+.lb{border:0;border-radius:18px;background:#fff;color:var(--ink);padding:10px 8px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 6px 0 rgba(0,0,0,.18);font-family:inherit;cursor:pointer;transition:transform .15s var(--ease)}
+.lb img{width:clamp(64px,18vw,92px);height:clamp(64px,18vw,92px);object-fit:contain;filter:grayscale(1) contrast(.6) opacity(.75)}
+.lb.sel{transform:translateY(-3px);box-shadow:0 0 0 4px var(--honey),0 6px 0 rgba(0,0,0,.18)}
+.lb.ok img{filter:none}
+.lb .ln{font-weight:800;font-size:16px;border-bottom:3px dashed var(--muted);padding:0 6px 2px;letter-spacing:.5px}
+.lb.ok .ln{border-bottom-color:var(--good);color:var(--good)}
+.lb .ln b{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:13px;margin-right:6px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.chip{border:0;border-radius:999px;background:var(--honey);color:var(--ink);font-family:inherit;font-weight:800;font-size:17px;padding:9px 16px;box-shadow:0 4px 0 #c99a1c;cursor:pointer}
+.chip.used{opacity:.35;text-decoration:line-through;box-shadow:none}
+.chip.bad{animation:shake .4s;background:var(--red);color:#fff}
+
+/* ── сосчитай ── */
+.bubble{min-height:40px;font-weight:800;font-size:clamp(18px,5.4vw,24px);color:var(--honey);margin:4px 0 8px}
+.pile{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;min-height:120px;background:rgba(255,255,255,.12);border-radius:20px;padding:10px;margin:0 0 10px}
+.pile img{width:clamp(44px,13vw,64px);height:clamp(44px,13vw,64px);object-fit:contain;animation:pop .35s var(--ease) both}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+.numrow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.numrow .btn{min-width:0;padding:10px 0;font-size:20px;justify-content:center}
+.numrow .btn.right{background:var(--good);color:#fff;animation:bounce .5s var(--ease)}
+.numrow .btn.wrong{animation:shake .4s;background:var(--red);color:#fff}
+
+/* ── дни недели ── */
+.dayrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:4px 0 10px}
+.dayrow .btn{min-width:0;padding:10px 4px;font-size:clamp(12px,3.4vw,15px);flex-direction:column;gap:0;line-height:1.1}
+.dayrow .btn small{font-size:10px;font-weight:700;opacity:.65}
+.dayrow .btn.on{background:var(--honey);transform:scale(1.06)}
+.dayrow .btn.right{background:var(--good);color:#fff;animation:bounce .5s var(--ease)}
+.dayrow .btn.wrong{animation:shake .4s;background:var(--red);color:#fff}
+.today{margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.genki{margin:14px 0 4px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.genki .gnote{font-size:12px;font-weight:600;opacity:.8;margin:0;line-height:1.4}
+.genki .gnote b{color:var(--honey)}
+.genki .stage{width:100%;aspect-ratio:4/3;background:#000;border-radius:16px;overflow:hidden;box-shadow:0 14px 30px rgba(30,10,70,.35)}
+.genki .stage ruffle-player,.genki .stage ruffle-object,.genki .stage ruffle-embed{width:100%;height:100%;display:block}
+
+/* ── учебник ── */
+.task{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;background:var(--paper);color:var(--ink);border-radius:20px;padding:12px;margin:8px 0}
+.task .ic{width:48px;height:48px;border-radius:14px;background:#F3EEFF;display:grid;place-items:center;font-size:24px}
+.task h3{margin:0 0 2px;font-size:17px;color:var(--p)}
+.task p{margin:0;font-size:14px;font-weight:600;color:var(--muted)}
+.task label{display:flex;align-items:center;gap:8px;margin-top:6px;font-weight:800;color:var(--ink);cursor:pointer}
+.task input[type=checkbox]{width:24px;height:24px;accent-color:var(--good)}
+
+/* ── финиш ── */
+.finish{justify-content:center}
+.finish input{width:100%;max-width:320px;font:inherit;font-weight:800;font-size:18px;padding:12px 16px;border-radius:16px;border:0;margin:8px auto 12px;text-align:center;color:var(--ink);display:block}
+.finish .msg{min-height:24px;font-weight:700;margin-top:10px}
+.stars{font-size:26px;letter-spacing:1px;margin:4px 0 8px}
+.stars i{font-style:normal;opacity:.25;transition:opacity .3s,transform .3s var(--ease);display:inline-block}
+.stars i.on{opacity:1;transform:scale(1.15)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.confetti i{position:absolute;top:-10px;width:10px;height:14px;border-radius:3px;animation:fall 2.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
+.parent{margin-top:18px;font-size:12px;opacity:.75;font-weight:600;line-height:1.45}
+</style></head>
+<body>
+<div class="bubbles"><i></i><i></i><i></i><i></i><i></i></div>
+
+<div class="top">
+  <div class="brand">Speak<b>&</b>Smile · урок дома</div>
+  <div class="dots" id="dots"></div>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- обложка -->
+  <section class="slide cover" data-key="cover">
+    <img src="img/speaky.png" alt="Спики">
+    <h1 style="font-size:clamp(40px,12vw,72px)">Hello, friends!</h1>
+    <div class="sub">Give Me Five! 1 · Starter «Hello, friends!» · Lesson 1</div>
+    <div class="book"><svg viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 18H6V4h5v8l2.5-1.5L16 12V4h2z"/></svg>Открой Pupil's Book на стр. 4</div>
+    <div class="plan" id="plan"></div>
+    <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
+    <p class="parent">Для родителей: это пропущенный первый урок группы, 15–20 минут. Сегодня — числа 1–10, песня-знакомство «What's your name?» и дни недели. Листайте слайды свайпом или кнопками внизу. Прогресс запоминается на этом телефоне.</p>
+  </section>
+
+  <!-- 1 слова -->
+  <section class="slide" data-key="words">
+    <h2><span class="n"><span>1</span></span>Слова</h2>
+    <p class="hint">Нажми на шарик — услышишь число. Повтори вслух! Послушай все десять.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- 2 послушай и найди -->
+  <section class="slide" data-key="find">
+    <h2><span class="n"><span>2</span></span>Послушай и найди</h2>
+    <p class="hint">Спики называет число — найди шарик с ним и нажми.</p>
+    <div class="btns">
+      <button class="btn primary" id="gameStart"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Играть</button>
+      <button class="btn" id="gameAgain" hidden><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>Ещё раз</button>
+      <span class="score">Верно: <b id="score">0</b> / 10</span>
+    </div>
+    <div class="grid" id="gameGrid"></div>
+  </section>
+
+  <!-- 3 чант -->
+  <section class="slide" data-key="chant">
+    <h2><span class="n"><span>3</span></span>Чант</h2>
+    <p class="hint">Чант «The ten balloons»: слушай и считай шарики вместе с диктором громко, в ритм. Шарик загорается, когда его называют.</p>
+    <div class="btns">
+      <button class="btn primary" id="chantPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать и повторять</button>
+      <button class="btn stop" id="chantStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
+    </div>
+    <div class="chant-row" id="chantRow"></div>
+    <div class="say" id="chantSay"></div>
+  </section>
+
+  <!-- 4 песня -->
+  <section class="slide" data-key="song">
+    <h2><span class="n"><span>4</span></span>Песня</h2>
+    <p class="hint">Песня-знакомство «What's your name?». Строчки подсвечиваются под музыку. Нажми на строчку — услышишь её отдельно. Где вопрос — отвечай своим именем!</p>
+    <div class="btns">
+      <button class="btn primary" id="songPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
+      <button class="btn stop" id="songStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
+      <button class="btn ghost" id="songKar" aria-pressed="false">🎤 Минусовка</button>
+      <label class="tempo">Темп <input type="range" id="tempo" min="0.75" max="1.1" step="0.05" value="1"></label>
+    </div>
+    <div class="lyrics" id="lyrics"></div>
+  </section>
+
+  <!-- 5 знаю / не знаю -->
+  <section class="slide" data-key="know">
+    <h2><span class="n"><span>5</span></span>Знаю / не знаю</h2>
+    <p class="hint">Видишь число — скажи по-английски вслух. Переверни, проверь и честно нажми «знаю» или «не знаю».</p>
+    <div class="prog"><i id="kProg"></i></div>
+    <div class="fcwrap"><div class="fc" id="fc" role="button" tabindex="0"><div class="side front" id="fFront"></div><div class="side back" id="fBack"></div></div></div>
+    <div class="ans" id="ans"></div>
+    <div class="btns" id="kStartWrap"><button class="btn primary" id="kStart">Начать</button></div>
+    <div class="say" id="kMsg"></div>
+  </section>
+
+  <!-- 6 мемо -->
+  <section class="slide" data-key="memo">
+    <h2><span class="n"><span>6</span></span>Мемо</h2>
+    <p class="hint">Открывай по две карточки: слово и шарик с цифрой. Нашёл пару — скажи число вслух.</p>
+    <div class="btns"><button class="btn primary" id="memoStart">Играть</button><span class="score">Пары: <b id="memoScore">0</b> / 6</span></div>
+    <div class="memo" id="memo"></div>
+  </section>
+
+  <!-- 7 крестики-нолики -->
+  <section class="slide" data-key="ttt">
+    <h2><span class="n"><span>7</span></span>Крестики-нолики</h2>
+    <p class="hint">Ты против Спики. Нажми клетку, послушай и скажи число — клетка твоя. Три в ряд — победа!</p>
+    <div class="players">
+      <div class="pl" id="plMe"><div class="face">🧒</div><div class="nm">Я</div><div class="mk" id="mkMe"></div></div>
+      <div class="vs">vs</div>
+      <div class="pl" id="plAi"><div class="face"><img src="img/speaky.png" alt=""></div><div class="nm">Спики</div><div class="mk" id="mkAi"></div></div>
+    </div>
+    <div class="pickwrap" id="pickwrap"><div class="hint" style="margin:0 0 6px">Чем играешь? Выбери:</div><div class="pick"><button id="pickX" aria-label="Крестик"></button><button id="pickO" aria-label="Нолик"></button></div></div>
+    <div class="turn" id="turn"></div>
+    <div class="ttt" id="ttt"></div>
+    <div class="btns"><button class="btn primary" id="tttStart" hidden>Заново</button><span class="score">Счёт: <b id="tttWins">0</b> : <b id="tttLoss">0</b></span></div>
+  </section>
+
+  <!-- 8 сложи слово -->
+  <section class="slide" data-key="spell">
+    <h2><span class="n"><span>8</span></span>Сложи слово</h2>
+    <p class="hint">Послушай и собери слово-число из букв по порядку. Нажми на шарик — услышишь ещё раз.</p>
+    <div class="prog"><i id="sProg"></i></div>
+    <img class="spell-pic" id="spellPic" src="img/n1.png" alt="" hidden>
+    <div class="slots" id="slots"></div>
+    <div class="tiles" id="tiles"></div>
+    <div class="btns" id="sStartWrap"><button class="btn primary" id="sStart">Начать</button></div>
+    <div class="say" id="sMsg"></div>
+  </section>
+
+  <!-- 9 сосчитай -->
+  <section class="slide" data-key="count">
+    <h2><span class="n"><span>9</span></span>Сосчитай</h2>
+    <p class="hint">Как задание 3 на стр. 4: сколько шариков? Считай вслух по-английски и нажми число.</p>
+    <div class="btns"><button class="btn primary" id="hStart"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Играть</button><span class="score">Верно: <b id="hScore">0</b> / 8</span></div>
+    <div class="bubble" id="hBubble">How many balloons?</div>
+    <div class="pile" id="pile"></div>
+    <div class="numrow" id="numrow"></div>
+    <div class="say" id="hMsg"></div>
+  </section>
+
+  <!-- 10 дни недели -->
+  <section class="slide" data-key="days">
+    <h2><span class="n"><span>10</span></span>Дни недели</h2>
+    <p class="hint">Нажми на день — услышишь его. Спой песню, ответь, какой сегодня день, и найди пропавший день.</p>
+    <div class="dayrow" id="dayrow"></div>
+    <div class="btns">
+      <button class="btn ghost" id="pickGenki" aria-pressed="true">🐵 Genki</button>
+      <button class="btn ghost" id="pickPB" aria-pressed="false">📖 Seven days a week</button>
+    </div>
+    <div class="btns">
+      <button class="btn primary" id="daysPlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Петь</button>
+      <button class="btn stop" id="daysStop" hidden><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>Стоп</button>
+      <button class="btn ghost" id="daysKar" aria-pressed="false">🎤 Минусовка</button>
+    </div>
+    <div class="lyrics" id="dlyrics"></div>
+    <div class="today">
+      <button class="btn" id="qDay"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>What day is it today?</button>
+      <button class="btn" id="missBtn">🔍 What's missing? <span class="score" id="missScore" style="padding:2px 8px;margin-left:4px">0 / 6</span></button>
+      <div class="say" id="dMsg">Послушай вопрос и нажми на сегодняшний день ↑</div>
+    </div>
+    <div class="genki" id="genki">
+      <button class="btn primary" id="genkiOpen">🐵 Открыть урок Genki «Days of the week»</button>
+      <p class="gnote">Это тот самый урок, что на доске в классе: сверху кнопки <b>♪Today?</b> — песня, <b>Mini lesson</b> — слова по одному, <b>Game</b> — игра. Загружается полминуты.</p>
+    </div>
+  </section>
+
+  <!-- 11 соедини (AB стр. 2 №1 Read and match) -->
+  <section class="slide" data-key="label">
+    <h2><span class="n"><span>11</span></span>Соедини</h2>
+    <p class="hint">Как задание 1 на стр. 2 тетради: к каждой цифре подбери слово. Нажми на шарик, потом на слово.</p>
+    <div class="labels" id="labels"></div>
+    <div class="chips" id="chips"></div>
+    <div class="say" id="lbMsg"></div>
+  </section>
+
+  <!-- 10 учебник -->
+  <section class="slide" data-key="book">
+    <h2><span class="n"><span>12</span></span>В учебнике</h2>
+    <p class="hint">Теперь как в классе — с книгой и тетрадью.</p>
+    <div class="task"><div class="ic">🎵</div><div><h3>Pupil's Book, стр. 4, задание 1</h3><p>Listen and point. Включи песню «What's your name?» ещё раз и показывай на картинке детей, которые знакомятся. Спой и назови своё имя: «I'm …».</p><label><input type="checkbox" data-task="t1">Сделано</label></div></div>
+    <div class="task"><div class="ic">🎈</div><div><h3>Pupil's Book, стр. 4, задание 2</h3><p>Say the chant: скажи чант «The ten balloons» и показывай шарики на картинке.</p><label><input type="checkbox" data-task="t2">Сделано</label></div></div>
+    <div class="task"><div class="ic">🔢</div><div><h3>Pupil's Book, стр. 4, задание 3</h3><p>Find, count and write: найди на картинке и сосчитай balloons (10 — уже написано), bananas, balls, hats, socks, books, dogs, bike. Впиши цифры в кружочки.</p><label><input type="checkbox" data-task="t3">Сделано</label></div></div>
+    <div class="task"><div class="ic">📅</div><div><h3>Pupil's Book, стр. 7</h3><p>Спой «Seven days a week» ещё раз с книгой. Потом спроси кого-нибудь дома: «What day is it today?» — и ответь: «It's …».</p><label><input type="checkbox" data-task="t4">Сделано</label></div></div>
+    <div class="task"><div class="ic">✍️</div><div><h3>Activity Book, стр. 2</h3><p>Задание 1: Read and match — соедини слова one…ten с пальцами. Задание 2: Think and write — впиши пропущенные цифры в змейку от 1 до 10.</p><label><input type="checkbox" data-task="t5">Сделано</label></div></div>
+    <div class="task"><div class="ic">📝</div><div><h3>Activity Book, стр. 5</h3><p>Задание 1: обведи дни недели по пунктиру и скажи их. Задание 2: впиши в облачко сегодняшний день: «It's …».</p><label><input type="checkbox" data-task="t6">Сделано</label></div></div>
+  </section>
+
+  <!-- финиш -->
+  <section class="slide finish" data-key="finish">
+    <div class="stars" id="stars"></div>
+    <h2>Урок пройден?</h2>
+    <p class="hint">Напиши своё имя — и учитель узнает, что ты всё сделал.</p>
+    <input id="kidName" placeholder="Имя и фамилия" autocomplete="off">
+    <div><button class="btn primary big" id="doneBtn">🎉 Я сделал!</button></div>
+    <div class="msg" id="doneMsg"></div>
+  </section>
+</div>
+
+<div class="nav">
+  <button class="btn ghost" id="prevBtn">← Назад</button>
+  <span class="cnt" id="cnt"></span>
+  <button class="btn primary" id="nextBtn">Дальше →</button>
+</div>
+
+<script>
+const LESSON='gmf1-st-l1';
+const WORDS=[
+  {id:'n1',en:'one',ru:'один'},{id:'n2',en:'two',ru:'два'},{id:'n3',en:'three',ru:'три'},{id:'n4',en:'four',ru:'четыре'},{id:'n5',en:'five',ru:'пять'},
+  {id:'n6',en:'six',ru:'шесть'},{id:'n7',en:'seven',ru:'семь'},{id:'n8',en:'eight',ru:'восемь'},{id:'n9',en:'nine',ru:'девять'},{id:'n10',en:'ten',ru:'десять'}];
+const DAYS=[{id:'mon',en:'Monday',ru:'понедельник'},{id:'tue',en:'Tuesday',ru:'вторник'},{id:'wed',en:'Wednesday',ru:'среда'},{id:'thu',en:'Thursday',ru:'четверг'},{id:'fri',en:'Friday',ru:'пятница'},{id:'sat',en:'Saturday',ru:'суббота'},{id:'sun',en:'Sunday',ru:'воскресенье'}];
+const BY=Object.fromEntries(WORDS.map(w=>[w.id,w]));
+const CHANT=[['n1',9.1],['n2',10.5],['n3',12.5],['n4',16.1],['n5',19.1],['n6',21.9],['n7',24.9],['n8',28.1],['n9',31.5],['n10',34.2]], CHANT_END=38.6; // CD1·3 «…ten balloons in the sky!»
+const SONG=[
+  [17.4,'Hello, hello,',null],[20.2,"What's your name?",null,'c'],[25.7,"I'm Jake, come and play.",'jake'],
+  [33.7,'Hello, hello,',null],[37.0,"What's your name?",null,'c'],[42.1,"I'm Molly, come and play.",'molly'],
+  [49.3,'Hello, hello,',null],[53.0,"What's your name?",null,'c'],[58.5,"I'm Beth, yes, let's play!",'beth']], SONG_END=66; // CD1·1
+const DSONGS={
+  genki:{file:'gdays',kar:'gdays_k',end:112,lines:[
+    [1.6,'What day is it today?',1],[7.0,'From Genki English. Here we go!',1],
+    [11.5,'What day is it today?',0],[14.7,'What day is it today?',0],[17.5,'What day is it today?',0],[20.2,'What day is it today? Wow!',0],
+    [25.4,"It's Monday. It's Monday.",0,['mon']],[31.0,"It's Tuesday. It's Tuesday.",0,['tue']],[36.4,"It's Wednesday. It's Wednesday.",0,['wed']],[42.0,"It's Thursday. It's Thursday. Yay!",0,['thu']],
+    [52.3,'What day is it today? Here we go!',1],
+    [59.5,'What day is it today?',0],[62.4,'What day is it today?',0],[65.1,'What day is it today?',0],[67.9,'What day is it today? Wow!',0],
+    [73.1,"It's Friday. It's Friday.",0,['fri']],[78.7,"It's Saturday. It's Saturday.",0,['sat']],[83.5,"It's Sunday! It's Sunday!",0,['sun']],
+    [90.0,"It's my birthday!",1],[97.3,'Happy Birthday! Happy Birthday!',1]]},
+  pb:{file:'days7',kar:null,end:40,lines:[
+    [8.7,'Monday, Tuesday,',0,['mon','tue']],[12.8,'Wednesday, Thursday,',0,['wed','thu']],[16.5,'Friday, Saturday and Sunday.',0,['fri','sat','sun']],
+    [23.7,'Seven days a week.',1],[26.5,'Seven days a week.',1],[30.0,'We ride our magic bike,',1],[33.9,'Seven days a week.',1]]}};
+const MISS=['fri','tue','sat','thu','sun','wed']; // CD1·9 части 1–6: какого дня нет
+const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
+const SPK='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>';
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const P=Object.assign({heard:[],find:0,chant:false,song:false,know:0,memo:false,ttt:0,spell:0,count:0,days:false,today:false,label:0,labelDone:[],tasks:[]},ls.get('home:'+LESSON)||{});
+const save=()=>{ls.set('home:'+LESSON,P);paint();};
+
+// ── звук ──
+const POOL=[], POOL_N=4; let current=null, playToken=0, unlocked=false;
+function mkNode(){ const a=new Audio(); a.preload='auto'; POOL.push(a); return a; }
+function unlock(){ if(unlocked) return; unlocked=true; while(POOL.length<POOL_N){ const a=mkNode(); try{ a.load(); }catch(e){} } }
+['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
+function getNode(id){ let a=POOL.find(x=>x!==current&&x._src===id); if(!a) a=POOL.find(x=>x!==current&&!x._src); if(!a) a=POOL.find(x=>x!==current); if(!a) a=mkNode();
+  if(a._src!==id){ a._src=id; a.src='audio/'+id+'.mp3'; a.load(); } return a; }
+function isCur(id){ return !!current&&current._src===id; }
+function start(a,onend,at){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; a.onpause=null; a.onended=done; current=a; const t0=Date.now();
+  const seek=()=>{ try{ a.currentTime=at||0; }catch(e){} };
+  if(a.readyState>=1) seek(); else a.addEventListener('loadedmetadata',seek,{once:true});
+  let lastCt=-1, lastMove=Date.now();
+  a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); }
+    const started=ct>(at||0)+0.05;
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(started&&Date.now()-lastMove>4000)||(!started&&Date.now()-t0>25000)||(a.error)) done(); },200);
+  const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
+function play(id,onend,at){ stopAll(); const a=getNode(id); a.playbackRate=1; return start(a,onend,at); }
+function playP(id){ return new Promise(res=>play(id,res)); }
+function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(getNode(id),res); }); }
+function stopAll(){ playToken++; if(current){ const c=current; current=null; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } }
+
+// ── слайды ──
+const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
+const TITLES={cover:'Старт',words:'Числа',find:'Найди',chant:'Чант',song:'Песня',know:'Знаю',memo:'Мемо',ttt:'Крестики',spell:'Буквы',count:'Сосчитай',days:'Дни',label:'Соедини',book:'Учебник',finish:'Финиш'};
+slides.slice(1,-1).forEach((s,i)=>{ const n=s.querySelector('h2 .n span'); if(n) n.textContent=i+1; });
+$('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]}"></button>`).join('');
+$('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]}</span>`).join('');
+function go(i){ i=Math.max(0,Math.min(N-1,i)); deck.scrollTo({left:i*deck.clientWidth,behavior:'smooth'}); }
+function onSlide(i){ if(i===cur) return; cur=i; stopAll(); chantStop(); songStop(); daysStop(); slides[i].scrollTop=0; paintNav(); }
+deck.addEventListener('scroll',()=>{ onSlide(Math.round(deck.scrollLeft/deck.clientWidth)); },{passive:true});
+$('#prevBtn').onclick=()=>go(cur-1); $('#nextBtn').onclick=()=>go(cur+1);
+$$('[data-next]').forEach(b=>b.onclick=()=>go(cur+1));
+$('#dots').onclick=e=>{ const b=e.target.closest('button'); if(b) go(+b.dataset.go); };
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1); });
+window.addEventListener('resize',()=>{ deck.scrollTo({left:cur*deck.clientWidth}); });
+function paintNav(){ $$('#dots button').forEach((b,i)=>b.classList.toggle('cur',i===cur)); $('#prevBtn').style.visibility=cur===0?'hidden':''; $('#nextBtn').style.visibility=cur===N-1?'hidden':''; $('#cnt').textContent=cur===0||cur===N-1?'':`${cur} / ${N-2}`; }
+
+// ── карточка ──
+function cardEl(w){ const b=document.createElement('button'); b.className='card'; b.dataset.id=w.id;
+  b.innerHTML=`<span class="snd">${SPK}</span><img src="img/${w.id}.png" alt=""><span class="en">${w.en}</span><span class="ru">${w.ru}</span>`; return b; }
+
+// ── 1 слова ──
+WORDS.forEach(w=>{ const c=cardEl(w); if(P.heard.includes(w.id)) c.classList.add('heard');
+  c.onclick=()=>{ $$('#grid .card').forEach(x=>x.classList.remove('playing')); c.classList.add('playing'); play(w.id,()=>c.classList.remove('playing'));
+    if(!P.heard.includes(w.id)){ P.heard.push(w.id); c.classList.add('heard'); save(); } };
+  $('#grid').appendChild(c); });
+
+// ── 2 послушай и найди ──
+const gg=$('#gameGrid'); let order=[], gi=0, score=0, locked=false, playing=false;
+function gameRender(){ gg.innerHTML=''; shuffle(WORDS).forEach(w=>{ const c=cardEl(w); c.querySelector('.en').hidden=true; c.querySelector('.ru').hidden=true; c.querySelector('.snd').hidden=true; c.onclick=()=>guess(c); gg.appendChild(c); }); }
+function gameStart(){ order=shuffle(WORDS).map(w=>w.id); gi=0; score=0; playing=true; $('#score').textContent=0; $('#gameStart').hidden=true; $('#gameAgain').hidden=false; gameRender(); setTimeout(ask,400); }
+function ask(){ if(gi>=order.length){ finishGame(); return; } locked=false; play(order[gi]); }
+function guess(c){ if(!playing||locked) return; const id=order[gi]; if(c.dataset.id===id){ locked=true; score++; $('#score').textContent=score; c.classList.add('right'); c.querySelector('.en').hidden=false; setTimeout(()=>{ c.classList.remove('right'); gi++; ask(); },900); }
+  else { c.classList.add('wrong'); setTimeout(()=>c.classList.remove('wrong'),450); } }
+function finishGame(){ playing=false; $('#gameStart').hidden=false; $('#gameStart').innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Играть ещё'; $('#gameAgain').hidden=true; if(score>P.find) P.find=score; if(score>=8) burst(); save(); }
+$('#gameStart').onclick=gameStart; $('#gameAgain').onclick=()=>play(order[gi]); gameRender();
+
+// ── 3 чант ──
+CHANT.forEach(([id])=>{ const c=cardEl(BY[id]); c.querySelector('.ru').remove(); c.querySelector('.snd').remove(); c.onclick=()=>play(id); $('#chantRow').appendChild(c); });
+let chantTimer=null;
+function chantStop(){ clearInterval(chantTimer); if(isCur('chant')) stopAll(); $('#chantPlay').hidden=false; $('#chantStop').hidden=true; $$('#chantRow .card').forEach(c=>c.classList.remove('lit','dim')); $('#chantSay').textContent=''; }
+$('#chantPlay').onclick=()=>{ const a=play('chant',()=>{ chantStop(); P.chant=true; save(); burst(); }); $('#chantPlay').hidden=true; $('#chantStop').hidden=false; $$('#chantRow .card').forEach(c=>c.classList.add('dim'));
+  chantTimer=setInterval(()=>{ const t=a.currentTime; let k=-1; CHANT.forEach(([id,at],i)=>{ if(t>=at) k=i; });
+    $$('#chantRow .card').forEach((c,i)=>{ c.classList.toggle('lit',i===k); c.classList.toggle('dim',i!==k); });
+    if(k>=0) $('#chantSay').textContent=(t-CHANT[k][1]<1.3)?BY[CHANT[k][0]].en+'!':'Повтори: '+BY[CHANT[k][0]].en;
+    if(t>=CHANT_END){ $('#chantSay').textContent='Отлично!'; $$('#chantRow .card').forEach(c=>c.classList.remove('lit','dim')); } },80); };
+$('#chantStop').onclick=chantStop;
+
+// ── 4 песня ──
+SONG.forEach(([t,txt,img,ch],i)=>{ const b=document.createElement('button'); b.className='line'+(ch?' chorus':''); b.innerHTML=(img?`<img src="img/${img}.png" alt="">`:'')+txt;
+  b.onclick=()=>{ songStop(); const a=play('song',null,t); const end=SONG[i+1]?SONG[i+1][0]:SONG_END; const tm=setInterval(()=>{ if(a.currentTime>=end||a.paused){ clearInterval(tm); if(!a.paused) a.pause(); light(-1); } },60); light(i); };
+
+  $('#lyrics').appendChild(b); });
+function light(k){ $$('#lyrics .line').forEach((l,i)=>l.classList.toggle('on',i===k)); }
+let songTimer=null, kar=false;
+$('#songKar').onclick=()=>{ kar=!kar; $('#songKar').setAttribute('aria-pressed',kar); songStop(); };
+function songStop(){ clearInterval(songTimer); if(isCur('song')||isCur('karaoke')) stopAll(); $('#songPlay').hidden=false; $('#songStop').hidden=true; light(-1); }
+$('#songPlay').onclick=()=>{ const a=play(kar?'karaoke':'song',()=>{ songStop(); P.song=true; save(); burst(); }); a.playbackRate=+$('#tempo').value; $('#songPlay').hidden=true; $('#songStop').hidden=false;
+  songTimer=setInterval(()=>{ const t=a.currentTime; let k=-1; SONG.forEach(([at],i)=>{ if(t>=at) k=i; }); if(t>=SONG_END) k=-1; light(k); const el=$$('#lyrics .line')[k]; if(el&&k%4===0) el.scrollIntoView({block:'center',behavior:'smooth'}); },80); };
+$('#songStop').onclick=songStop;
+$('#tempo').oninput=e=>{ if(current&&(isCur('song')||isCur('karaoke'))) current.playbackRate=+e.target.value; };
+
+// ── 5 знаю / не знаю: «не знаю» возвращается через 3 карточки ──
+let Q=[], kTotal=0, kDone=0, kCur=null, kFlipped=false, kFirst={};
+function kStart(){ Q=shuffle(WORDS); kTotal=Q.length; kDone=0; kFirst={}; $('#kStartWrap').hidden=true; $('#kMsg').textContent=''; $('#fc').hidden=false; kNext(); }
+function kNext(){ if(!Q.length) return kFinish(); kCur=Q.shift(); kFlipped=false; const fc=$('#fc'); fc.className='fc'; void fc.offsetWidth; fc.classList.add('in');
+  $('#fFront').innerHTML=`<img src="img/${kCur.id}.png" alt=""><div class="q">Скажи по-английски вслух, потом переверни</div><button class="btn" data-say>${SPK}Послушать</button>`;
+  $('#fBack').innerHTML=`<div class="big">${kCur.en}</div><div class="ru">${kCur.ru}</div><button class="btn" data-say>${SPK}Ещё раз</button>`;
+  $('#ans').innerHTML='<button class="btn" id="aShow">Перевернуть</button>'; $('#kProg').style.width=(kDone/kTotal*100)+'%'; }
+function kFlip(){ if(kFlipped) return; kFlipped=true; $('#fc').classList.add('flip'); play(kCur.id); $('#ans').innerHTML='<button class="btn no" id="aNo">✗ Не знаю</button><button class="btn yes" id="aYes">✓ Знаю</button>'; }
+function kGrade(ok){ if(kFirst[kCur.id]===undefined) kFirst[kCur.id]=ok; $('#fc').classList.add(ok?'outR':'outL'); if(ok) kDone++; else Q.splice(Math.min(3,Q.length),0,kCur); setTimeout(kNext,320); }
+function kFinish(){ const k=Object.values(kFirst).filter(Boolean).length; $('#fc').hidden=true; $('#ans').innerHTML=''; $('#kProg').style.width='100%'; $('#kStartWrap').hidden=false; $('#kStart').textContent='Ещё раз';
+  $('#kMsg').textContent=k===kTotal?'🏆 Знаешь все десять!':`С первого раза: ${k} из ${kTotal}`; if(k>P.know) P.know=k; save(); if(k>=8) burst(); }
+$('#kStart').onclick=kStart; $('#fc').hidden=true;
+$('#fc').addEventListener('click',e=>{ if(e.target.closest('[data-say]')){ e.stopPropagation(); return play(kCur.id); } kFlip(); });
+$('#ans').addEventListener('click',e=>{ if(e.target.id==='aShow') kFlip(); if(e.target.id==='aNo') kGrade(false); if(e.target.id==='aYes') kGrade(true); });
+
+// ── 6 мемо: слово ↔ картинка, 6 пар ──
+let mOpen=[], mLock=false, mPairs=0;
+function memoStart(){ const pick=shuffle(WORDS).slice(0,6); const cards=shuffle([...pick.map(w=>({w,t:'pic'})),...pick.map(w=>({w,t:'word'}))]); mOpen=[]; mLock=false; mPairs=0; $('#memoScore').textContent=0; $('#memoStart').textContent='Заново';
+  $('#memo').innerHTML=cards.map((c,i)=>`<button class="mc ${c.t}" data-id="${c.w.id}" data-i="${i}"><div class="in"><div class="f">${c.t==='pic'?'🎁':'Aa'}</div><div class="b">${c.t==='pic'?`<img src="img/${c.w.id}.png" alt="">`:c.w.en}</div></div></button>`).join('');
+  $$('#memo .mc').forEach(b=>b.onclick=()=>memoTap(b)); }
+function memoTap(b){ if(mLock||b.classList.contains('open')||b.classList.contains('hit')) return; b.classList.add('open'); play(b.dataset.id); mOpen.push(b); if(mOpen.length<2) return; mLock=true; const [a,c]=mOpen;
+  if(a.dataset.id===c.dataset.id){ setTimeout(()=>{ a.classList.add('hit'); c.classList.add('hit'); a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; mPairs++; $('#memoScore').textContent=mPairs; if(mPairs===6){ P.memo=true; save(); burst(); } },500); }
+  else setTimeout(()=>{ a.classList.remove('open'); c.classList.remove('open'); mOpen=[]; mLock=false; },800); }
+$('#memoStart').onclick=memoStart;
+
+// ── 7 крестики-нолики против Спики (фигурки как в gmf1/games/toys-ttt) ──
+const LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+function eyeSVG(){ return '<g class="eye"><circle cx="41" cy="39" r="6.5" fill="#fff"/><circle cx="59" cy="39" r="6.5" fill="#fff"/><circle cx="42.5" cy="40.5" r="3" fill="#1a1a2a"/><circle cx="60.5" cy="40.5" r="3" fill="#1a1a2a"/></g>'; }
+function legsSVG(c){ return '<g class="legs" stroke="'+c+'" stroke-width="5" stroke-linecap="round"><line class="leg l" x1="42" y1="82" x2="36" y2="96"/><line class="leg r" x1="58" y1="82" x2="64" y2="96"/></g>'; }
+function markSVG(kind){ const c=kind==='X'?'#3f86ff':'#ff5147';
+  const sh=kind==='X'?'<line x1="30" y1="34" x2="70" y2="74" stroke="'+c+'" stroke-width="20" stroke-linecap="round"/><line x1="70" y1="34" x2="30" y2="74" stroke="'+c+'" stroke-width="20" stroke-linecap="round"/>'
+    :'<circle cx="50" cy="55" r="26" fill="none" stroke="'+c+'" stroke-width="19"/>';
+  return '<svg viewBox="0 0 100 105">'+legsSVG(c)+sh+eyeSVG()+'</svg>'; }
+$('#pickX').innerHTML=markSVG('X'); $('#pickO').innerHTML=markSVG('O');
+let board=[], tLock=true, tCells=[], KIND={me:'X',ai:'O'};
+function tPick(k){ KIND={me:k,ai:k==='X'?'O':'X'}; $('#mkMe').innerHTML=markSVG(KIND.me); $('#mkAi').innerHTML=markSVG(KIND.ai); $('#pickwrap').hidden=true; $('#tttStart').hidden=false; tttStart(); }
+$('#pickX').onclick=()=>tPick('X'); $('#pickO').onclick=()=>tPick('O');
+function tttStart(){ board=Array(9).fill(null); tLock=false; const ws=shuffle(WORDS).slice(0,9); tCells=ws.map(w=>w.id);
+  $('#ttt').innerHTML=ws.map((w,i)=>`<button class="cell" data-i="${i}"><img src="img/${w.id}.png" alt=""></button>`).join('');
+  $$('#ttt .cell').forEach(b=>b.onclick=()=>tTap(+b.dataset.i)); setTurn('me'); $('#turn').textContent='Твой ход — нажми и скажи слово'; }
+function setTurn(who){ $('#plMe').classList.toggle('turn',who==='me'); $('#plAi').classList.toggle('turn',who==='ai'); }
+function mark(i,who){ board[i]=who; const c=$$('#ttt .cell')[i]; c.classList.add('filled',who); c.insertAdjacentHTML('beforeend',`<span class="mark arriving">${markSVG(KIND[who])}</span>`); play(tCells[i]); }
+function winner(b){ for(const l of LINES){ if(b[l[0]]&&b[l[0]]===b[l[1]]&&b[l[0]]===b[l[2]]) return l; } return null; }
+function tTap(i){ if(tLock||board[i]) return; tLock=true; mark(i,'me'); if(tEnd()) return; setTurn('ai'); $('#turn').textContent='Спики думает…';
+  setTimeout(()=>{ const free=board.map((v,j)=>v?null:j).filter(v=>v!==null); let pick=null;
+    for(const who of ['ai','me']){ for(const j of free){ const b=[...board]; b[j]=who; if(winner(b)){ pick=j; break; } } if(pick!==null) break; }
+    if(pick===null) pick=free.includes(4)?4:free[Math.floor(Math.random()*free.length)]; mark(pick,'ai'); if(tEnd()) return; tLock=false; setTurn('me'); $('#turn').textContent='Твой ход'; },1400); }
+function tEnd(){ const w=winner(board); if(w){ w.forEach(j=>$$('#ttt .cell')[j].classList.add('win')); const me=board[w[0]]==='me'; $('#turn').textContent=me?'🎉 Ты победил!':'Спики победил — попробуй ещё!';
+    if(me){ P.ttt++; $('#tttWins').textContent=P.ttt; save(); burst(); } else { P.tttL=(P.tttL||0)+1; $('#tttLoss').textContent=P.tttL; save(); } tLock=true; setTurn(null); return true; }
+  if(board.every(Boolean)){ $('#turn').textContent='Ничья! Ещё разок?'; tLock=true; setTurn(null); return true; } return false; }
+$('#tttStart').onclick=tttStart; $('#tttWins').textContent=P.ttt; $('#tttLoss').textContent=P.tttL||0;
+
+// ── 8 сложи слово из букв ──
+let sQ=[], sCur=null, sPos=0, sDone=0, sTotal=0, sErr=0;
+function sStart(){ sQ=shuffle(WORDS); sTotal=sQ.length; sDone=0; sErr=0; $('#sStartWrap').hidden=true; $('#sMsg').textContent=''; $('#spellPic').hidden=false; sNext(); }
+function sNext(){ if(!sQ.length) return sFinish(); sCur=sQ.shift(); sPos=0; const w=sCur.en; $('#spellPic').src=`img/${sCur.id}.png`; $('#sProg').style.width=(sDone/sTotal*100)+'%';
+  $('#slots').innerHTML=[...w].map(ch=>ch===' '?'<span class="slot space"></span>':'<span class="slot"></span>').join('');
+  const letters=shuffle([...w.replace(/ /g,'')]); $('#tiles').innerHTML=letters.map((ch,i)=>`<button class="tile" data-ch="${ch}" data-i="${i}">${ch}</button>`).join('');
+  $$('#tiles .tile').forEach(t=>t.onclick=()=>sTap(t)); setTimeout(()=>play(sCur.id),300); }
+function sTap(t){ const w=sCur.en; while(w[sPos]===' ') sPos++; const need=w[sPos];
+  if(t.dataset.ch===need){ t.classList.add('used'); const slot=$$('#slots .slot')[sPos]; slot.textContent=need; slot.classList.add('ok'); sPos++;
+    if(sPos>=w.length){ sDone++; play(sCur.id); setTimeout(sNext,900); } }
+  else { sErr++; t.classList.add('bad'); setTimeout(()=>t.classList.remove('bad'),450); } }
+function sFinish(){ $('#sProg').style.width='100%'; $('#slots').innerHTML=''; $('#tiles').innerHTML=''; $('#spellPic').hidden=true; $('#sStartWrap').hidden=false; $('#sStart').textContent='Ещё раз';
+  const ok=sErr<=6; $('#sMsg').textContent=ok?'🏆 Все десять чисел сложены!':`Сложил все слова, ошибок: ${sErr}. Попробуй ещё!`; if(ok) P.spell=1; save(); if(ok) burst(); }
+$('#sStart').onclick=sStart; $('#spellPic').onclick=()=>sCur&&play(sCur.id);
+
+// ── 9 подпиши: рисунок → слово (AB стр. 6 №2) ──
+const LABELS=['n3','n7','n1','n10','n5','n8','n2','n9','n4','n6']; let lbDone=new Set(P.labelDone||[]), lbCur=null;
+function lbRender(){ $('#labels').innerHTML=LABELS.map((id,i)=>`<button class="lb ${lbDone.has(id)?'ok':''}" data-id="${id}"><img src="img/${id}.png" alt=""><span class="ln"><b>${i+1}</b> ${lbDone.has(id)?BY[id].en:'________'}</span></button>`).join('');
+  $('#chips').innerHTML=LABELS.map(id=>`<button class="chip ${lbDone.has(id)?'used':''}" data-id="${id}">${BY[id].en}</button>`).join('');
+  $$('#labels .lb').forEach(b=>b.onclick=()=>{ if(b.classList.contains('ok')){ play(b.dataset.id); return; } $$('#labels .lb').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); lbCur=b.dataset.id; $('#lbMsg').textContent='Выбери слово для рисунка '+(LABELS.indexOf(lbCur)+1); });
+  $$('#chips .chip').forEach(c=>c.onclick=()=>{ if(c.classList.contains('used')) return; if(!lbCur){ $('#lbMsg').textContent='Сначала нажми на рисунок'; return; }
+    if(c.dataset.id===lbCur){ lbDone.add(lbCur); P.labelDone=[...lbDone]; P.label=lbDone.size; play(lbCur); $('#lbMsg').textContent=BY[lbCur].en+'!'; lbCur=null; if(lbDone.size===LABELS.length){ $('#lbMsg').textContent='🏆 Все числа соединены!'; burst(); } save(); lbRender(); }
+    else { c.classList.add('bad'); setTimeout(()=>c.classList.remove('bad'),450); } }); }
+lbRender();
+
+// ── сосчитай: сколько шариков? ──
+let hQ=[], hCur=0, hScore=0, hDone=0, hLock=true;
+function hRow(){ $('#numrow').innerHTML=WORDS.map((w,i)=>`<button class="btn" data-n="${i+1}">${i+1}</button>`).join(''); $$('#numrow .btn').forEach(b=>b.onclick=()=>hPick(b)); }
+function hStart(){ hQ=shuffle([1,2,3,4,5,6,7,8,9,10]).slice(0,8); hScore=0; hDone=0; $('#hScore').textContent=0; $('#hStart').hidden=true; $('#hMsg').textContent=''; hNext(); }
+function hNext(){ if(!hQ.length) return hFinish(); hCur=hQ.shift(); hRow(); $('#pile').innerHTML=Array.from({length:hCur},(_,i)=>`<img src="img/balloon.png" alt="" style="animation-delay:${i*0.08}s;transform:rotate(${(i%3-1)*8}deg)">`).join(''); $('#hBubble').textContent='How many balloons?'; hLock=true; play('howmany',()=>{ hLock=false; }); setTimeout(()=>{ hLock=false; },2500); }
+function hPick(b){ if(hLock) return; const n=+b.dataset.n; if(n===hCur){ hLock=true; hScore++; hDone++; $('#hScore').textContent=hScore; b.classList.add('right'); $('#hBubble').textContent=WORDS[n-1].en+' balloons!'; play('n'+n,()=>setTimeout(hNext,700)); }
+  else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),450); $('#hMsg').textContent='Сосчитай ещё раз: one, two, three…'; if(!hQ.miss){ hQ.miss=1; } } }
+function hFinish(){ $('#hStart').hidden=false; $('#hStart').innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Играть ещё'; $('#pile').innerHTML=''; $('#numrow').innerHTML=''; $('#hBubble').textContent=''; $('#hMsg').textContent=hScore>=7?'🏆 Отлично: '+hScore+' из 8!':'Верно '+hScore+' из 8. Попробуй ещё!'; if(hScore>P.count) P.count=hScore; save(); if(hScore>=7) burst(); }
+$('#hStart').onclick=hStart; hRow();
+
+// ── дни недели: карточки + 2 песни + «какой сегодня день» + «what's missing» ──
+const DBY=Object.fromEntries(DAYS.map(d=>[d.id,d]));
+$('#dayrow').innerHTML=DAYS.map(d=>`<button class="btn" data-d="${d.id}">${d.en}<small>${d.ru}</small></button>`).join('');
+let askToday=false, missI=-1, missScore=0, missLock=true;
+$$('#dayrow .btn').forEach(b=>b.onclick=()=>{ const id=b.dataset.d; $$('#dayrow .btn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  if(askToday){ const td=DAYS[(new Date().getDay()+6)%7].id; if(id===td){ askToday=false; b.classList.add('right'); $('#dMsg').textContent="It's "+DBY[id].en+'! ✓ Скажи вслух'; play('its_'+id,()=>{ P.today=true; save(); burst(); }); } else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),450); $('#dMsg').textContent='Сегодня не '+DBY[id].ru+'. Какой сегодня день?'; } return; }
+  if(missI>=0&&!missLock){ if(id===MISS[missI]){ missLock=true; missScore++; $('#missScore').textContent=missScore+' / 6'; b.classList.add('right'); $('#dMsg').textContent=DBY[id].en+' is missing! ✓'; play('d_'+id,()=>setTimeout(missNext,500)); } else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),450); $('#dMsg').textContent='Нет, этот день называли. Слушай ещё раз'; } return; }
+  play('d_'+id,()=>b.classList.remove('on')); });
+$('#qDay').onclick=()=>{ daysStop(); missI=-1; askToday=true; $$('#dayrow .btn').forEach(x=>x.classList.remove('on','right','wrong')); $('#dMsg').textContent='Какой сегодня день? Нажми на него ↑'; play('q_day'); };
+function missNext(){ missI++; $$('#dayrow .btn').forEach(x=>x.classList.remove('on','right','wrong')); if(missI>=MISS.length){ missI=-1; $('#dMsg').textContent=missScore>=5?'🏆 Нашёл все пропавшие дни!':'Нашёл '+missScore+' из 6. Попробуй ещё!'; if(missScore>(P.miss||0)) P.miss=missScore; save(); if(missScore>=5) burst(); return; }
+  $('#dMsg').textContent='Слушай: какого дня не хватает? Нажми его ↑'; missLock=true; play('miss'+(missI+1),()=>{ missLock=false; $('#dMsg').textContent="What's missing? Нажми день, который не назвали ↑"; }); }
+$('#missBtn').onclick=()=>{ daysStop(); askToday=false; missI=-1; missScore=0; $('#missScore').textContent='0 / 6'; missNext(); };
+let dsong='genki', dkar=false, daysTimer=null;
+function dLines(){ $('#dlyrics').innerHTML=''; DSONGS[dsong].lines.forEach(([t,txt,ch],i)=>{ const b=document.createElement('button'); b.className='line'+(ch?' chorus':''); b.textContent=txt;
+  b.onclick=()=>{ daysStop(); const a=play(DSONGS[dsong].file,null,t); const L=DSONGS[dsong].lines; const end=L[i+1]?L[i+1][0]:DSONGS[dsong].end; const tm=setInterval(()=>{ if(a.currentTime>=end||a.paused){ clearInterval(tm); if(!a.paused) a.pause(); dlight(-1); } },60); dlight(i); };
+  $('#dlyrics').appendChild(b); }); $('#daysKar').hidden=!DSONGS[dsong].kar; }
+function dlight(k){ $$('#dlyrics .line').forEach((l,i)=>l.classList.toggle('on',i===k)); }
+function pickSong(k){ daysStop(); dsong=k; $('#pickGenki').setAttribute('aria-pressed',k==='genki'); $('#pickPB').setAttribute('aria-pressed',k==='pb'); dLines(); }
+$('#pickGenki').onclick=()=>pickSong('genki'); $('#pickPB').onclick=()=>pickSong('pb');
+$('#daysKar').onclick=()=>{ dkar=!dkar; $('#daysKar').setAttribute('aria-pressed',dkar); daysStop(); };
+function daysStop(){ clearInterval(daysTimer); if(isCur('gdays')||isCur('gdays_k')||isCur('days7')) stopAll(); $('#daysPlay').hidden=false; $('#daysStop').hidden=true; dlight(-1); $$('#dayrow .btn').forEach(x=>x.classList.remove('on')); }
+$('#daysPlay').onclick=()=>{ askToday=false; missI=-1; const D=DSONGS[dsong]; const a=play(dkar&&D.kar?D.kar:D.file,()=>{ daysStop(); P.days=true; save(); burst(); }); $('#daysPlay').hidden=true; $('#daysStop').hidden=false;
+  daysTimer=setInterval(()=>{ const t=a.currentTime; let k=-1; D.lines.forEach(([at],i)=>{ if(t>=at) k=i; }); if(t>=D.end) k=-1; dlight(k); const d=k>=0?D.lines[k][3]:null; $$('#dayrow .btn').forEach(x=>x.classList.toggle('on',!!d&&d.includes(x.dataset.d))); },80); };
+$('#daysStop').onclick=daysStop; dLines();
+// Genki «Days of the week» (Flash) через Ruffle — грузим только по кнопке
+$('#genkiOpen').onclick=()=>{ stopAll(); daysStop(); const box=$('#genki'); box.innerHTML='<div class="stage" id="gstage"></div><p class="gnote">Если тихо — нажми на картинку, чтобы включить звук. Кнопки сверху: <b>♪Today?</b> — песня, <b>Mini lesson</b> — слова, <b>Game</b> — игра.</p>';
+  window.RufflePlayer=window.RufflePlayer||{}; window.RufflePlayer.config={autoplay:'on',unmuteOverlay:'visible',letterbox:'on',splashScreen:false,backgroundColor:'#ffffff'};
+  const run=()=>{ try{ const r=window.RufflePlayer.newest(); const pl=r.createPlayer(); $('#gstage').append(pl); pl.load('genki/days.swf').then(()=>{ P.genki=1; save(); }).catch(()=>{ $('#gstage').innerHTML='<p class="gnote" style="padding:20px">Не загрузилось — проверь интернет и открой слайд заново.</p>'; }); }catch(e){} };
+  if(window.RufflePlayer.newest) run(); else { const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle/ruffle.js'; sc.onload=run; sc.onerror=()=>{ const s2=document.createElement('script'); s2.src='https://unpkg.com/@ruffle-rs/ruffle/ruffle.js'; s2.onload=run; document.head.append(s2); }; document.head.append(sc); } };
+
+// ── учебник ──
+$$('[data-task]').forEach(cb=>{ cb.checked=P.tasks.includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
+
+// ── прогресс ──
+const KEYS=['words','find','chant','song','know','memo','ttt','spell','count','days','label','book'];
+function doneMap(){ return {words:P.heard.length>=10, find:P.find>=8, chant:P.chant, song:P.song, know:P.know>=8, memo:P.memo, ttt:P.ttt>=1, spell:P.spell>=1, count:P.count>=7, days:P.days, label:P.label>=10, book:P.tasks.length>=4}; }
+function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); });
+  $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); $('#stars').innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); }
+paint(); paintNav();
+
+// ── финиш ──
+$('#kidName').value=ls.get('home:name')||'';
+$('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя 🙂'; $('#kidName').focus(); return; } ls.set('home:name',n);
+  const d=doneMap(), cnt=KEYS.filter(k=>d[k]).length; if(cnt<5){ m.textContent='Сделай хотя бы пять шагов — тогда можно отправлять!'; return; }
+  m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
+  const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${cnt}&m=${KEYS.length}&f=${P.find}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
+  const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
+  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Молодец! Учитель уже знает.'; burst(); burst(); }
+  catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
+
+// ── конфетти ──
+function burst(){ const c=document.createElement('div'); c.className='confetti'; const cols=['#F5C842','#F17FBE','#63B3FF','#34D3C0','#fff']; for(let i=0;i<40;i++){ const p=document.createElement('i'); p.style.left=Math.random()*100+'vw'; p.style.background=cols[i%5]; p.style.animationDelay=(Math.random()*.6)+'s'; c.appendChild(p); } document.body.appendChild(c); setTimeout(()=>c.remove(),3200); }
+</script>
+</body></html>
