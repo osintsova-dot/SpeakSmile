@@ -141,6 +141,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .para .ru{display:block;font-size:13px;color:#6b6480;font-weight:600;margin-top:4px}
 .para.static{cursor:default}
 .photo{width:100%;border-radius:16px;box-shadow:0 10px 24px rgba(30,10,70,.3);display:block;background:#fff}
+.vid{width:100%;aspect-ratio:16/9;border-radius:18px;background:#000;box-shadow:0 12px 26px rgba(30,10,70,.3);display:block;margin:4px 0 8px}
 .photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .photos.p2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pc{position:relative;background:#fff;color:var(--ink);border-radius:16px;padding:5px 5px 7px;cursor:pointer;border:0;font:inherit;text-align:center;box-shadow:0 10px 22px rgba(30,10,70,.28);outline:4px solid transparent;transition:transform .18s var(--ease),outline-color .2s;display:flex;flex-direction:column;gap:4px;align-items:center}
@@ -282,7 +283,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на занятие"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку</button></div>
-    <p class="parent">Для родителей: это пропущенное четвёртое занятие Unit 2 (вопросы have got + Real-world speaking «о фото»), 25–30 минут. Диалоги озвучены синтезированными голосами по тексту учебника, видео заменено аудио. В конце нажать «Готово».</p>
+    <p class="parent">Для родителей: это пропущенное четвёртое занятие Unit 2 (вопросы have got + Real-world speaking «о фото»), 25–30 минут. Диалог из учебника и видео Real-world speaking — оригинальные записи Macmillan; плюс аудирование из тетради. В конце нажать «Готово».</p>
   </section>
   <section class="slide" data-key="qtab">
     <h2><span class="n"><span>1</span></span>Вопросы с have got</h2>
@@ -316,13 +317,22 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
   </section>
   <section class="slide" data-key="speak">
     <h2><span class="n"><span>1</span></span>Talking about photos</h2>
-    <p class="hint">Real-world speaking, стр. 31: Елена смотрит фото Оуэна. Видео дома нет — диалог озвучен. Сначала заполни Key phrases (задание 4), потом слушай и играй роль.</p>
+    <p class="hint">Real-world speaking, стр. 31, задания 2–4: посмотри видео — Елена смотрит фото Оуэна. Кто на фото 1–3? Потом заполни Key phrases и слушай диалог по репликам (звук из видео) — можно сыграть роль.</p>
+<video class="vid" id="vid" controls playsinline preload="metadata" poster="img/video.jpg" src="video.mp4"></video><div class="say" id="vMsg"></div>
 <div class="photos" style="margin-bottom:8px"><button class="pc"><span class="n">1</span><img src="img/ph1.jpg" alt=""><span class="en">grandma, auntie Sarah</span></button><button class="pc"><span class="n">2</span><img src="img/ph2.jpg" alt=""><span class="en">cousins Charlie, Johnny</span></button><button class="pc"><span class="n">3</span><img src="img/ph3.jpg" alt=""><span class="en">their sister Caroline</span></button></div><div class="wchips" id="sBank"></div><div class="rows" id="sRows"></div><div class="btns"><span class="score">Верно: <b id="sScore">0</b> / 7</span></div><div class="say" id="sMsg"></div><div class="btns" style="margin-top:10px"><button class="btn primary" id="sAll"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать всё</button><button class="btn ghost sm" id="sE" aria-pressed="false">Я — Elena</button><button class="btn ghost sm" id="sO" aria-pressed="false">Я — Owen</button></div><div class="chat" id="sChat"></div><div class="say" id="sMsg2"></div>
   </section>
   <section class="slide" data-key="kp">
     <h2><span class="n"><span>1</span></span>Key phrases</h2>
     <p class="hint">Задание 3 и тетрадь, стр. 17: разложи фразы по группам — о людях на фото (T), вопрос о фото (A), мнение (O).</p>
 <div class="cats" id="kCats"></div><div class="chips" id="kItems"></div><div class="btns"><span class="score">Разложено: <b id="kScore">0</b> / 10</span></div><div class="say" id="kMsg"></div><div class="btns" style="margin-top:8px"><button class="btn primary" id="knStart">Какой фразы НЕТ в диалоге? →</button><span class="score">Верно: <b id="knScore">0</b> / 2</span></div><div id="knBox"></div><div class="say" id="knMsg"></div>
+  </section>
+  <section class="slide" data-key="game">
+    <h2><span class="n"><span>1</span></span>Listening: «Who am I?»</h2>
+    <p class="hint">Workbook, стр. 17, задания 1–3: друзья играют в «Кто я?» — у каждого на лбу бумажка с именем знаменитости, и надо угадать её вопросами. Сначала ответь на задание 1, потом включи запись из тетради (можно слушать два раза и останавливать).</p>
+<div class="btns"><button class="btn primary" id="gqStart">Задание 1 →</button><span class="score">Верно: <b id="gqScore">0</b> / 2</span></div><div id="gqBox"></div><div class="say" id="gqMsg"></div>
+<audio controls preload="none" src="audio/wb_t6.mp3" style="width:100%;margin:8px 0 10px"></audio>
+<span class="sec" style="display:block;text-align:left;font-weight:800;margin:6px 0">Задание 2: какие вопросы задаёт Gemma? Отметь все (№1 — пример).</span><div class="opts" id="gaList"></div><div class="btns"><button class="btn primary" id="gaCheck">Проверить</button><span class="score">Верно: <b id="gaScore2">0</b> / 10</span></div><div class="say" id="gaMsg2"></div>
+<span class="sec" style="display:block;text-align:left;font-weight:800;margin:10px 0 6px">Задание 3: послушай ещё раз. Какие ДВЕ проблемы были в игре?</span><div class="opts" id="gpList"></div><div class="btns"><button class="btn primary" id="gpCheck">Проверить</button></div><div class="say" id="gpMsg"></div>
   </section>
   <section class="slide" data-key="mine">
     <h2><span class="n"><span>1</span></span>Мой диалог</h2>
@@ -335,7 +345,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <div class="task"><div class="ic">📘</div><div><h3>Student's Book, стр. 30, задания 1–4</h3><p>Перепиши таблицу вопросов и запиши свои ответы на вопросы задания 4 полными предложениями (I haven’t got a brother. I’m an only child.).</p><label><input type="checkbox" data-task="t1">Сделано</label></div></div>
     <div class="task"><div class="ic">💬</div><div><h3>Student's Book, стр. 30, задание 5</h3><p>Спроси кого-нибудь дома: Have you got a lucky number? Have you got any pets? — и запиши ответы.</p><label><input type="checkbox" data-task="t2">Сделано</label></div></div>
     <div class="task"><div class="ic">📸</div><div><h3>Student's Book, стр. 31, задание 5</h3><p>Найди 2–3 фото своих родных или друзей и запиши диалог о них с Key phrases (слайд «Мой диалог» — образец).</p><label><input type="checkbox" data-task="t3">Сделано</label></div></div>
-    <div class="task"><div class="ic">✍️</div><div><h3>Workbook, стр. 15 и 17</h3><p>Вопросы с have got, исправь ошибки (Has your friend got…), семья Аддамс; стр. 17: фразы о фото и диалог про Marshall.</p><label><input type="checkbox" data-task="t4">Сделано</label></div></div>
+    <div class="task"><div class="ic">✍️</div><div><h3>Workbook, стр. 15 и 17</h3><p>Вопросы с have got, исправь ошибки (Has your friend got…), семья Аддамс; стр. 17: фразы о фото и диалог про Marshall (аудирование «Who am I?» — на слайде выше).</p><label><input type="checkbox" data-task="t4">Сделано</label></div></div>
 
   </section>
   <section class="slide finish" data-key="finish">
@@ -388,7 +398,7 @@ function flash(el,cls){ el.classList.add(cls); setTimeout(()=>el.classList.remov
 // ── слайды ──
 const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
 slides.slice(1,-1).forEach((s,i)=>{ const n=s.querySelector('h2 .n span'); if(n) n.textContent=i+1; });
-const TITLES={"cover": "Старт", "qtab": "Вопросы", "opt": "Выбери", "grid": "Спроси", "q4": "a / any", "dlg": "Диалог", "alex": "Ask Alex", "speak": "Фото", "kp": "Key phrases", "mine": "Мой диалог", "book": "Учебник", "finish": "Финиш"};
+const TITLES={"cover": "Старт", "qtab": "Вопросы", "opt": "Выбери", "grid": "Спроси", "q4": "a / any", "dlg": "Диалог", "alex": "Ask Alex", "speak": "Фото", "kp": "Key phrases", "game": "Who am I?", "mine": "Мой диалог", "book": "Учебник", "finish": "Финиш"};
 $('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]||s.dataset.key}"></button>`).join('');
 $('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]||s.dataset.key}</span>`).join('');
 let goT=null;
@@ -508,11 +518,29 @@ function spellGame(SP,o){ let q=[], c=null, pos=0, done=0, score=0, peek=0, time
 function iCan(IC,o){ function render(){ $(o.list).innerHTML=IC.map(c=>`<div class="opt"><button class="btn ghost sm" data-say="${c.a}">${SPK}</button><span class="en">${c.en}<small>${c.ru}</small></span><div class="lights">${['🔴','🟡','🟢'].map((l,k)=>`<button class="lt ${(P.light||{})[c.a]===k?'sel':''}" data-a="${c.a}" data-k="${k}">${l}</button>`).join('')}</div></div>`).join('');
     $$(o.list+' [data-say]').forEach(b=>b.onclick=()=>play(b.dataset.say)); $$(o.list+' .lt').forEach(b=>b.onclick=()=>{ P.light=P.light||{}; P.light[b.dataset.a]=+b.dataset.k; save(); render(); const n=Object.keys(P.light).length; $(o.msg).textContent=n>=IC.length?'🏆 Самооценка готова!':'Оценено: '+n+' из '+IC.length; if(n>=IC.length&&!P.icDone){ P.icDone=1; save(); burst(); } }); }
   render(); if(o.wd){ $(o.wd).onclick=()=>{ $(o.hifive).classList.add('on'); play('wd',()=>{ $(o.hifive).classList.remove('on'); burst(); burst(); }); }; } }
+// видео: отметка просмотра (90% или конец)
+function vidWatch(sel,key,msg){ const v=$(sel); if(!v) return; const ok=()=>{ if(!P[key]){ P[key]=1; save(); burst(); } if(msg) $(msg).textContent='Видео просмотрено! 🎬'; };
+  v.addEventListener('timeupdate',()=>{ if(v.duration&&v.currentTime/v.duration>0.9) ok(); }); v.addEventListener('ended',ok); v.addEventListener('play',()=>stopAll()); }
+function stopExtra(){ $$('video,audio').forEach(v=>{ try{ v.pause(); }catch(e){} }); }
+vidWatch('#vid','vid','#vMsg');
+// WB 17: Listening «Who am I?» (WB track 6, ключ Workbook)
+mcq([{q:'1. The people have papers on their heads. Can they see the writing on the paper on their own head?',opts:['Yes','No'],ok:1,why:'No — поэтому и задают вопросы.'},{q:'2. The name on the paper is…',opts:['one of the friends','a famous person'],ok:1,why:'a famous person — олимпийская гимнастка Simone Biles.'}],
+  {box:'#gqBox',score:'#gqScore',start:'#gqStart',msg:'#gqMsg',pkey:'gq',pass:2,keepOrder:true,shuffleOpts:false});
+const GQ=['Am I a man?','Have I got long hair?','What’s my job?','Am I American?','Am I an actor?','Am I good at sport?','Am I a football player?','Am I a gymnast?','Am I short?','Am I Simone Biles?'], GQOK=[1,1,1,0,1,1,0,1,1,1];
+const GP=['Alex can’t think of a famous person to write.','Gemma asks the wrong type of question.','Gemma sees the name on her paper.','Alex and Neesha don’t know the answer to one of the questions.'], GPOK=[0,1,0,1];
+const gaSel=new Set(P.gaSel||[0]), gpSel=new Set(P.gpSel||[]);
+function gaRender(){ const chk=P.gaChk; $('#gaList').innerHTML=GQ.map((q,i)=>{ const on=gaSel.has(i); const cls=chk?(on===!!GQOK[i]?(on?'right':''):'wrong'):''; return `<button class="btn ${cls}" data-i="${i}" aria-pressed="${on}" style="justify-content:flex-start;text-align:left;${on&&!chk?'background:var(--honey);color:var(--ink)':''}">${on?'☑':'☐'} ${i+1}. ${q}</button>`; }).join('');
+  $$('#gaList .btn').forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; if(i===0) return; if(gaSel.has(i)) gaSel.delete(i); else gaSel.add(i); P.gaSel=[...gaSel]; P.gaChk=0; save(); gaRender(); }); }
+$('#gaCheck').onclick=()=>{ let ok=0; GQ.forEach((q,i)=>{ if(gaSel.has(i)===!!GQOK[i]) ok++; }); P.gaChk=1; $('#gaScore2').textContent=ok; if(ok>(P.game||0)) P.game=ok; save(); gaRender(); if(ok>=10){ burst(); $('#gaMsg2').textContent='🏆 Верно! Gemma НЕ спрашивает: Am I American? и Am I a football player?'; } else { play('fb_no'); $('#gaMsg2').textContent='Верно '+ok+' из 10. Красные — послушай ещё раз и исправь.'; } };
+function gpRender(){ const chk=P.gpChk; $('#gpList').innerHTML=GP.map((q,i)=>{ const on=gpSel.has(i); const cls=chk&&on?(GPOK[i]?'right':'wrong'):''; return `<button class="btn ${cls}" data-i="${i}" aria-pressed="${on}" style="justify-content:flex-start;text-align:left;${on&&!chk?'background:var(--honey);color:var(--ink)':''}">${on?'☑':'☐'} ${i+1}. ${q}</button>`; }).join('');
+  $$('#gpList .btn').forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; if(gpSel.has(i)) gpSel.delete(i); else { if(gpSel.size>=2) return; gpSel.add(i); } P.gpSel=[...gpSel]; P.gpChk=0; save(); gpRender(); }); }
+$('#gpCheck').onclick=()=>{ if(gpSel.size!==2){ $('#gpMsg').textContent='Выбери две проблемы'; return; } const ok=[...gpSel].every(i=>GPOK[i]); P.gpChk=1; if(ok){ P.gp=1; burst(); $('#gpMsg').textContent='🏆 Верно: 2 — Gemma спрашивает «What’s my job?», а можно только Yes/No; 4 — про длинные волосы Alex и Neesha не знают.'; } else { play('fb_no'); $('#gpMsg').textContent='Не совсем. Послушай ещё раз: какой вопрос задавать нельзя? На какой вопрос друзья не знают ответа?'; } save(); gpRender(); };
+gaRender(); gpRender(); if(P.game) $('#gaScore2').textContent=P.game;
 // ── учебник ──
 $$('[data-task]').forEach(cb=>{ cb.checked=(P.tasks||[]).includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
 // ── прогресс ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key);
-function doneMap(){ return {qtab:P.qtab>=1, opt:P.opt>=1, grid:P.grid>=1&&P.ga>=5, q4:P.q4>=1, dlg:P.dlg>=1&&P.dl>=1, alex:P.alex>=1, speak:P.speak>=1&&P.sl>=1, kp:P.kp>=1&&P.kn>=2, mine:P.mine>=2, book:P.tasks.length>=2}; }
+function doneMap(){ return {qtab:P.qtab>=1, opt:P.opt>=1, grid:P.grid>=1&&P.ga>=5, q4:P.q4>=1, dlg:P.dlg>=1&&P.dl>=1, alex:P.alex>=1, speak:P.speak>=1&&(P.sl>=1||P.vid>=1), kp:P.kp>=1&&P.kn>=2, game:P.gq>=1&&P.game>=8&&P.gp>=1, mine:P.mine>=2, book:P.tasks.length>=2}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); const st=$('#stars'); if(st) st.innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); if(typeof paintExtra==='function') paintExtra(d); }
 // ── финиш ──
 $('#kidName').value=ls.get('home:name')||'';

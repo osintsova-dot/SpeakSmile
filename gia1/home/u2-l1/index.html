@@ -141,6 +141,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .para .ru{display:block;font-size:13px;color:#6b6480;font-weight:600;margin-top:4px}
 .para.static{cursor:default}
 .photo{width:100%;border-radius:16px;box-shadow:0 10px 24px rgba(30,10,70,.3);display:block;background:#fff}
+.vid{width:100%;aspect-ratio:16/9;border-radius:18px;background:#000;box-shadow:0 12px 26px rgba(30,10,70,.3);display:block;margin:4px 0 8px}
 .photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .photos.p2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pc{position:relative;background:#fff;color:var(--ink);border-radius:16px;padding:5px 5px 7px;cursor:pointer;border:0;font:inherit;text-align:center;box-shadow:0 10px 22px rgba(30,10,70,.28);outline:4px solid transparent;transition:transform .18s var(--ease),outline-color .2s;display:flex;flex-direction:column;gap:4px;align-items:center}
@@ -282,7 +283,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на занятие"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку</button></div>
-    <p class="parent">Для родителей: это пропущенное первое занятие Unit 2 «Family», 25–30 минут. Слова семьи и описания людей, семейное дерево Canes из учебника, аудио-версия видео Video skills и задание из тетради. Прогресс сохраняется на этом телефоне; в конце нажать «Готово».</p>
+    <p class="parent">Для родителей: это пропущенное первое занятие Unit 2 «Family», 25–30 минут. Слова семьи и описания людей, семейное дерево Canes из учебника, оригинальное видео Video skills (Macmillan) и задание из тетради. Прогресс сохраняется на этом телефоне; в конце нажать «Готово».</p>
   </section>
   <section class="slide" data-key="words">
     <h2><span class="n"><span>1</span></span>Слова: семья</h2>
@@ -316,8 +317,8 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
   </section>
   <section class="slide" data-key="video">
     <h2><span class="n"><span>1</span></span>Video skills: Me and my family</h2>
-    <p class="hint">Видео дома недоступно, поэтому слушай <b>аудио-версию</b>: Йонас показывает своё семейное дерево. Нажимай части по порядку, потом ответь на вопросы (задание 8).</p>
-<img class="photo" src="img/video_family.jpg" alt="" style="max-width:360px;margin:0 auto 8px"><div class="btns"><button class="btn primary" id="vAll"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать всё</button></div><div id="vBox"></div><div class="btns" style="margin-top:10px"><button class="btn primary" id="vqStart">Вопросы →</button><span class="score">Верно: <b id="vqScore">0</b> / 5</span></div><div id="vqBox"></div><div class="say" id="vqMsg"></div>
+    <p class="hint">Задание 8, стр. 25: посмотри видео — Йонас показывает своё семейное дерево. Ниже текст видео по частям: нажми часть, чтобы переслушать. Потом ответь на вопросы.</p>
+<video class="vid" id="vid" controls playsinline preload="metadata" poster="img/video.jpg" src="video.mp4"></video><div class="say" id="vMsg"></div><div class="btns"><button class="btn primary" id="vAll"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать всё</button></div><div id="vBox"></div><div class="btns" style="margin-top:10px"><button class="btn primary" id="vqStart">Вопросы →</button><span class="score">Верно: <b id="vqScore">0</b> / 5</span></div><div id="vqBox"></div><div class="say" id="vqMsg"></div>
   </section>
   <section class="slide" data-key="famous">
     <h2><span class="n"><span>1</span></span>Знаменитые семьи</h2>
@@ -503,11 +504,16 @@ function spellGame(SP,o){ let q=[], c=null, pos=0, done=0, score=0, peek=0, time
 function iCan(IC,o){ function render(){ $(o.list).innerHTML=IC.map(c=>`<div class="opt"><button class="btn ghost sm" data-say="${c.a}">${SPK}</button><span class="en">${c.en}<small>${c.ru}</small></span><div class="lights">${['🔴','🟡','🟢'].map((l,k)=>`<button class="lt ${(P.light||{})[c.a]===k?'sel':''}" data-a="${c.a}" data-k="${k}">${l}</button>`).join('')}</div></div>`).join('');
     $$(o.list+' [data-say]').forEach(b=>b.onclick=()=>play(b.dataset.say)); $$(o.list+' .lt').forEach(b=>b.onclick=()=>{ P.light=P.light||{}; P.light[b.dataset.a]=+b.dataset.k; save(); render(); const n=Object.keys(P.light).length; $(o.msg).textContent=n>=IC.length?'🏆 Самооценка готова!':'Оценено: '+n+' из '+IC.length; if(n>=IC.length&&!P.icDone){ P.icDone=1; save(); burst(); } }); }
   render(); if(o.wd){ $(o.wd).onclick=()=>{ $(o.hifive).classList.add('on'); play('wd',()=>{ $(o.hifive).classList.remove('on'); burst(); burst(); }); }; } }
+// видео: отметка просмотра (90% или конец)
+function vidWatch(sel,key,msg){ const v=$(sel); if(!v) return; const ok=()=>{ if(!P[key]){ P[key]=1; save(); burst(); } if(msg) $(msg).textContent='Видео просмотрено! 🎬'; };
+  v.addEventListener('timeupdate',()=>{ if(v.duration&&v.currentTime/v.duration>0.9) ok(); }); v.addEventListener('ended',ok); v.addEventListener('play',()=>stopAll()); }
+function stopExtra(){ $$('video').forEach(v=>{ try{ v.pause(); }catch(e){} }); }
+vidWatch('#vid','vid','#vMsg');
 // ── учебник ──
 $$('[data-task]').forEach(cb=>{ cb.checked=(P.tasks||[]).includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
 // ── прогресс ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key);
-function doneMap(){ return {words:(P.heard.length+P.heardA.length)>=20, tree:P.tree>=1, who:P.who>=3, mf:P.mf>=1, defs:P.defs>=1, adj:P.adj>=6, video:P.video>=4&&P.vq>=4, famous:P.famous>=1, book:P.tasks.length>=3}; }
+function doneMap(){ return {words:(P.heard.length+P.heardA.length)>=20, tree:P.tree>=1, who:P.who>=3, mf:P.mf>=1, defs:P.defs>=1, adj:P.adj>=6, video:(P.vid||P.video>=4)&&P.vq>=4, famous:P.famous>=1, book:P.tasks.length>=3}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); const st=$('#stars'); if(st) st.innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); if(typeof paintExtra==='function') paintExtra(d); }
 // ── финиш ──
 $('#kidName').value=ls.get('home:name')||'';
@@ -549,7 +555,7 @@ function adjRender(){ $('#adjPh').innerHTML=PH.map(p=>`<button class="pc ${adjSe
   $$('#adjPh .pc').forEach(b=>b.onclick=()=>{ adjSel=b.dataset.id; adjRender(); $('#adjMsg').textContent='Фото '+adjSel+': какие два слова подходят?'; });
   $('#adjBank').innerHTML=ADJ.map(([id,en])=>`<button class="btn" data-w="${id}">${en}</button>`).join(''); $$('#adjBank .btn').forEach(b=>b.onclick=()=>{ if(!adjSel){ $('#adjMsg').textContent='Сначала выбери фото'; return; } const p=PH.find(x=>x.id===adjSel); if(p.adj.includes(b.dataset.w)){ adjDone.add(adjSel+b.dataset.w); P.adjDone=[...adjDone]; P.adj=adjDone.size; save(); b.classList.add('right'); play('w_'+b.dataset.w); $('#adjMsg').textContent='✓ '+adjSel+' — '+b.dataset.w; if(adjDone.size>=6){ $('#adjMsg').textContent='🏆 A: short, old · B: tall, dark · C: young, fair'; burst(); } } else { flash(b,'wrong'); play('fb_no'); $('#adjMsg').textContent=b.dataset.w+' — не про это фото'; } adjRender(); }); $('#adjScore').textContent=adjDone.size; }
 adjRender();
-// 7 видео (аудио-версия)
+// 7 видео: текст по частям (оригинальный звук из видео)
 const V=[["Hello! So, this is me. And this is my family. And this is our family tree. But let's start with me. I'm Jonas and I'm 13 years old. I've got a sister. Her name is Kira. She's 15.", "Привет! Это я, а это моя семья и наше семейное дерево. Начнём с меня: я Йонас, мне 13. У меня есть сестра Кира, ей 15."], ["I've got a father, Jack, and a mother, Maggie. My father's parents are Ann and Pete – they're my grandparents. They've also got a daughter, Sandie. That's my father's sister. She's my aunt.", "Папа Джек, мама Мэгги. Родители папы — Энн и Пит, мои бабушка и дедушка. У них есть ещё дочь Сэнди — папина сестра, моя тётя."], ["Sandie has got a son, Cameron, and a daughter, Rhea. They're my cousins. And this is my grandfather Marcus and my grandmother Lydia. They're my mother's parents. She hasn't got brothers or sisters. She's an only child.", "У Сэнди сын Кэмерон и дочь Рея — мои двоюродные брат и сестра. А это дедушка Маркус и бабушка Лидия — родители мамы. У мамы нет братьев и сестёр, она единственный ребёнок."], ["OK – remember that? Now it's quiz time. So, look at my family tree and tell me – who is my cousins' mother's brother? It's my father! Who is my grandfather's son's daughter? Yep, it's my sister! And who is my cousins' uncle's daughter's brother? Answers in the comments! Good luck guys.", "Запомнили? Квиз! Кто брат мамы моих кузенов? Мой папа! Кто дочь сына моего дедушки? Моя сестра! А кто брат дочери дяди моих кузенов? Ответы в комментариях!"]];
 reader(V.map((v,i)=>({a:'v'+(i+1),html:'<b>Jonas:</b> '+esc(v[0])+'<span class="ru">'+esc(v[1])+'</span>'})),{box:'#vBox',all:'#vAll',pkey:'video'});
 mcq([{q:'1. Who is the narrator? How old is he?',opts:['Jonas, 13','Kira, 15','Jack, 40'],ok:0,why:'Йонас, 13 лет.'},{q:'2. What is this video for?',opts:['To show a family tree','To sell a card game','To describe a school'],ok:0,why:'Показать семейное дерево — так понятно, кто кому кто.'},

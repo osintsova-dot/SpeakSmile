@@ -141,6 +141,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .para .ru{display:block;font-size:13px;color:#6b6480;font-weight:600;margin-top:4px}
 .para.static{cursor:default}
 .photo{width:100%;border-radius:16px;box-shadow:0 10px 24px rgba(30,10,70,.3);display:block;background:#fff}
+.vid{width:100%;aspect-ratio:16/9;border-radius:18px;background:#000;box-shadow:0 12px 26px rgba(30,10,70,.3);display:block;margin:4px 0 8px}
 .photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .photos.p2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pc{position:relative;background:#fff;color:var(--ink);border-radius:16px;padding:5px 5px 7px;cursor:pointer;border:0;font:inherit;text-align:center;box-shadow:0 10px 22px rgba(30,10,70,.28);outline:4px solid transparent;transition:transform .18s var(--ease),outline-color .2s;display:flex;flex-direction:column;gap:4px;align-items:center}
@@ -282,11 +283,12 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на занятие"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку</button></div>
-    <p class="parent">Для родителей: это пропущенное шестое занятие Unit 2 (проект + повторение), 30 минут. Презентация-образец озвучена синтезом, карта собирается по полям и переносится на бумагу; повторение слов, грамматики и самооценка. В конце нажать «Готово».</p>
+    <p class="parent">Для родителей: это пропущенное шестое занятие Unit 2 (проект + повторение), 30 минут. Презентация-образец — оригинальное видео Macmillan, карта собирается по полям и переносится на бумагу; повторение слов, грамматики и самооценка. В конце нажать «Готово».</p>
   </section>
   <section class="slide" data-key="model">
     <h2><span class="n"><span>1</span></span>Model project: Circle map</h2>
-    <p class="hint">Проект, стр. 34–35: Алекс представляет свою карту важных людей (видео заменено аудио). Слушай по частям, потом ответь на вопросы задания 2.</p>
+    <p class="hint">Проект, стр. 34–35, задания 1–2: посмотри видео — Алекс представляет свою карту важных людей. Ниже текст по частям (звук из видео) — нажми часть, чтобы переслушать. Потом ответь на вопросы.</p>
+<video class="vid" id="vid" controls playsinline preload="metadata" poster="img/video.jpg" src="video.mp4"></video><div class="say" id="vMsg"></div>
 <div class="btns"><button class="btn primary" id="mAll"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать всё</button></div><div id="mBox"></div><div class="btns" style="margin-top:8px"><button class="btn primary" id="mqStart">Вопросы →</button><span class="score">Верно: <b id="mqScore">0</b> / 7</span></div><div id="mqBox"></div><div class="say" id="mqMsg"></div>
   </section>
   <section class="slide" data-key="mymap">
@@ -507,11 +509,16 @@ function spellGame(SP,o){ let q=[], c=null, pos=0, done=0, score=0, peek=0, time
 function iCan(IC,o){ function render(){ $(o.list).innerHTML=IC.map(c=>`<div class="opt"><button class="btn ghost sm" data-say="${c.a}">${SPK}</button><span class="en">${c.en}<small>${c.ru}</small></span><div class="lights">${['🔴','🟡','🟢'].map((l,k)=>`<button class="lt ${(P.light||{})[c.a]===k?'sel':''}" data-a="${c.a}" data-k="${k}">${l}</button>`).join('')}</div></div>`).join('');
     $$(o.list+' [data-say]').forEach(b=>b.onclick=()=>play(b.dataset.say)); $$(o.list+' .lt').forEach(b=>b.onclick=()=>{ P.light=P.light||{}; P.light[b.dataset.a]=+b.dataset.k; save(); render(); const n=Object.keys(P.light).length; $(o.msg).textContent=n>=IC.length?'🏆 Самооценка готова!':'Оценено: '+n+' из '+IC.length; if(n>=IC.length&&!P.icDone){ P.icDone=1; save(); burst(); } }); }
   render(); if(o.wd){ $(o.wd).onclick=()=>{ $(o.hifive).classList.add('on'); play('wd',()=>{ $(o.hifive).classList.remove('on'); burst(); burst(); }); }; } }
+// видео: отметка просмотра (90% или конец)
+function vidWatch(sel,key,msg){ const v=$(sel); if(!v) return; const ok=()=>{ if(!P[key]){ P[key]=1; save(); burst(); } if(msg) $(msg).textContent='Видео просмотрено! 🎬'; };
+  v.addEventListener('timeupdate',()=>{ if(v.duration&&v.currentTime/v.duration>0.9) ok(); }); v.addEventListener('ended',ok); v.addEventListener('play',()=>stopAll()); }
+function stopExtra(){ $$('video').forEach(v=>{ try{ v.pause(); }catch(e){} }); }
+vidWatch('#vid','vid','#vMsg');
 // ── учебник ──
 $$('[data-task]').forEach(cb=>{ cb.checked=(P.tasks||[]).includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
 // ── прогресс ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key);
-function doneMap(){ return {model:P.model>=4&&P.mq>=5, mymap:P.map.length>=4, wbtree:P.wbtree>=1, groups:P.groups>=1, lwyk:P.lwyk>=1&&P.simp>=1, ladder:P.ladder>=1, match:P.match>=1, spell:P.spell>=8, ican:P.icDone>=1, book:P.tasks.length>=2}; }
+function doneMap(){ return {model:(P.vid||P.model>=4)&&P.mq>=5, mymap:P.map.length>=4, wbtree:P.wbtree>=1, groups:P.groups>=1, lwyk:P.lwyk>=1&&P.simp>=1, ladder:P.ladder>=1, match:P.match>=1, spell:P.spell>=8, ican:P.icDone>=1, book:P.tasks.length>=2}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); const st=$('#stars'); if(st) st.innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); if(typeof paintExtra==='function') paintExtra(d); }
 // ── финиш ──
 $('#kidName').value=ls.get('home:name')||'';
