@@ -887,6 +887,11 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <p class="hint">Задание 7 + Critical thinking: ответь про свою страну и расставь, что важнее для счастья. Правильных ответов нет — это твоё мнение, обсудим на занятии.</p>
 <div id="ct"></div>
   </section>
+  <section class="slide" data-key="peru">
+    <h2><span class="n"><span>1</span></span>Focus on … Peru</h2>
+    <p class="hint">Workbook, стр. 8, задания 2–4: тот же subskill. Сначала ответь, какие части есть в статье (задание 2), потом слушай и читай (задание 3) и ответь на вопросы (задание 4).</p>
+<div id="peruQ"></div><div id="peru" style="margin-top:10px"></div>
+  </section>
   <section class="slide" data-key="book">
     <h2><span class="n"><span>1</span></span>В учебнике и тетради</h2>
     <p class="hint">Теперь как на занятии — с книгой и тетрадью.</p>
@@ -913,8 +918,8 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
 </div>
 <script>
 const LESSON="gia1-u1-l2";
-const P0={"phDone": [], "photos": 0, "types": 0, "read": 0, "halves": 0, "tf": 0, "ww": 0, "ct": 0, "tasks": []};
-const TITLES={"cover": "Старт", "photos": "Фото", "types": "Тип текста", "read": "Читаем", "halves": "Половинки", "tf": "True/false", "ww": "Word work", "ct": "А у нас?", "book": "Учебник", "finish": "Финиш"};
+const P0={"phDone": [], "photos": 0, "types": 0, "read": 0, "halves": 0, "tf": 0, "ww": 0, "ct": 0, "peruR": 0, "peru": 0, "tasks": []};
+const TITLES={"cover": "Старт", "photos": "Фото", "types": "Тип текста", "read": "Читаем", "halves": "Половинки", "tf": "True/false", "ww": "Word work", "ct": "А у нас?", "peru": "Peru", "book": "Учебник", "finish": "Финиш"};
 
 window.addEventListener('error',e=>{ let d=document.getElementById('jserr'); if(!d){ d=document.createElement('div'); d.id='jserr'; d.style.cssText='position:fixed;left:8px;right:8px;bottom:120px;z-index:99;background:#c0392b;color:#fff;font:700 13px/1.3 system-ui;padding:8px 10px;border-radius:10px;word-break:break-word'; document.body.appendChild(d); } d.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?'); });
 const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
@@ -1073,7 +1078,21 @@ builder('#ct',{key:'ct',need:4,fields:[{id:'cur',label:"What's the currency in y
  template:V=>{ let n=0; const g=(k,f)=>{ if(V[k]){ n++; return f(V[k]); } return '<span class="k">…</span>'; }; const html=`In my country the currency is ${g('cur',v=>'<span class="k">'+esc(v)+'</span>')}.\nThree things in a good diet: ${g('diet',v=>'<span class="k">'+esc(v)+'</span>')}.\nMy favourite school subject is ${g('subj',v=>'<span class="k">'+v+'</span>')}.\nBikes? ${g('bikes',v=>'<span class="k">'+v+'</span>')}\nChildren start school at ${g('age',v=>'<span class="k">'+v+'</span>')}.\nTo be happy, number 1 for me is ${g('top',v=>'<span class="k">'+v+'</span>')}.`; return {html,filled:n}; }});
 function stopExtra(){}
 
-function doneMap(){ return {photos:P.photos>=5, types:P.types>=4, read:P.read>=1, halves:P.halves>=5, tf:P.tf>=6, ww:P.ww>=6, ct:P.ct>=4, book:(P.tasks||[]).length>=2}; }
+reader('#peru',{key:'peruR',paras:[{"a":"wb_peru1","ph":"Country Fact File","h":"Name: Republic of Peru. Nationality: Peruvian. Capital city: Lima. Population: 32.9 million. Official languages: Spanish, Quechua and Aymara. Currency: Sol (plural soles)."},{"a":"wb_peru2","ph":"City life","h":"Seventy percent of Peruvians live in cities. Eight million people live in the capital, Lima. It's a great place to visit with beautiful beaches, fantastic restaurants and interesting museums. Other important cities are Arequipa and Callao."},{"a":"wb_peru3","ph":"Geography","h":"Peru is a big country in South America. It's a very beautiful country with mountains and beaches. Its neighbours are Ecuador, Colombia, Brazil, Bolivia and Chile. The most important mountains are the Andes. Two important rivers are the Amazon and the Ucayali. Ubinas is an active volcano!"},{"a":"wb_peru4","ph":"Places to visit","h":"See the Inca city at Machu Picchu. Visit the pyramids at Pachacamac near Lima. Go to beautiful Huascaran National Park. Peru is a great place for all kinds of adventure sports."}]});
+quiz('#peruQ',{key:'peru',need:10,keepOrder:true,shuffleOpts:false,items:[
+ {q:'Задание 2. Есть в статье? <b>Basic information about the country</b> (cities, language, currency)',opts:['Есть','Нет'],ok:'Есть',expl:'Посмотри на Country Fact File'},
+ {q:'<b>Information about the most important football teams</b>',opts:['Есть','Нет'],ok:'Нет',expl:'Про футбол в статье ничего нет'},
+ {q:'<b>Information about the natural world</b>',opts:['Есть','Нет'],ok:'Есть',expl:'Раздел Geography: горы, реки, вулкан'},
+ {q:'<b>Useful language and expressions for visitors</b>',opts:['Есть','Нет'],ok:'Нет',expl:'Фраз для туристов нет'},
+ {q:'<b>Ideas for visitors to the country</b>',opts:['Есть','Нет'],ok:'Есть',expl:'Раздел Places to visit'},
+ {q:'<b>Information about prices and how much things cost</b>',opts:['Есть','Нет'],ok:'Нет',expl:'Цен в статье нет'},
+ {q:'Задание 4. How many people live in Peru?',opts:['32.9 million','8 million','70%'],ok:'32.9 million',expl:'Population в Country Fact File'},
+ {q:'Do Peruvian people pay in euros?',opts:['No, in soles.','Yes, they do.','No, in dollars.'],ok:'No, in soles.',expl:'Currency: Sol (plural soles)'},
+ {q:'What percentage (%) of Peruvians live in cities?',opts:['70%','17%','32%'],ok:'70%',expl:'Раздел City life'},
+ {q:'Is Ucayali a city in Peru?',opts:["No, it's a river.","Yes, it is.","No, it's a mountain."],ok:"No, it's a river.",expl:'Two important rivers are the Amazon and the Ucayali'},
+ {q:'Why is Ubinas sometimes a dangerous place?',opts:["Because it's an active volcano.","Because it's a big city.","Because it's a river."],ok:"Because it's an active volcano.",expl:'Раздел Geography, последнее предложение'},
+ {q:'What can I see at Pachacamac?',opts:['pyramids','an Inca city','a national park'],ok:'pyramids',expl:'Visit the pyramids at Pachacamac near Lima'}],after:()=>{}});
+function doneMap(){ return {photos:P.photos>=5, types:P.types>=4, read:P.read>=1, halves:P.halves>=5, tf:P.tf>=6, ww:P.ww>=6, ct:P.ct>=4, peru:P.peruR>=1&&P.peru>=10, book:(P.tasks||[]).length>=2}; }
 function FSCORE(){ return P.tf+P.halves; }
 
 // ── учебник ──

@@ -850,7 +850,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на урок"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку на урок</button></div>
-    <p class="parent">Для родителей: пропущенное четвёртое занятие Unit 1 (пара 8 по КТП), 25–30 минут: вопросы и краткие ответы с be, Grammar round-up про флаги, Real-world speaking «Meeting new people» (видео в аудио-версии) и свой диалог-знакомство. Прогресс запоминается на этом телефоне.</p>
+    <p class="parent">Для родителей: пропущенное четвёртое занятие Unit 1 (пара 8 по КТП), 25–30 минут: вопросы и краткие ответы с be, Grammar round-up про флаги, Real-world speaking «Meeting new people» (видео), подкаст из тетради и свой диалог-знакомство. Прогресс запоминается на этом телефоне.</p>
   </section>
   <section class="slide" data-key="qtable">
     <h2><span class="n"><span>1</span></span>be: вопросы и краткие ответы</h2>
@@ -882,10 +882,20 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <p class="hint">Задание 6: форум о флагах. Выбери верный вариант.</p>
 <div id="board"></div>
   </section>
+  <section class="slide" data-key="fabio">
+    <h2><span class="n"><span>1</span></span>Fabio и Keira</h2>
+    <p class="hint">Workbook, стр. 7, задание 3: собери разговор по порядку. Выбери, какая реплика идёт дальше, — после верного ответа она прозвучит. Потом откроется весь разговор — послушай его и сыграй роль.</p>
+<div class="say" style="font-size:15px;text-align:left"><b>1 Fabio:</b> Hi. Are you new in this school?</div><div id="fabQ"></div><div id="fabChat" style="margin-top:8px;display:none"></div>
+  </section>
   <section class="slide" data-key="meet">
     <h2><span class="n"><span>1</span></span>Real-world speaking: Meeting new people</h2>
-    <p class="hint">Стр. 19: Эми — новенькая в Bedford High. Видео дома не открыть — вот аудио-версия. Сначала вставь Key phrases, потом послушай и сыграй роль.</p>
-<img class="photo" src="img/video_frame.jpg" alt="" style="max-height:150px;object-fit:cover;margin-bottom:8px"><div id="meetQ"></div><div id="meetChat" style="margin-top:8px"></div>
+    <p class="hint">Стр. 19: Эми — новенькая в Bedford High. Посмотри видео, потом вставь Key phrases. Внизу — тот же диалог по репликам: послушай и сыграй роль.</p>
+<video class="vid" id="vid" controls playsinline preload="metadata" poster="img/video.jpg"></video><div class="say" id="vMsg"></div><div id="meetQ"></div><div id="meetChat" style="margin-top:8px"></div>
+  </section>
+  <section class="slide" data-key="pod">
+    <h2><span class="n"><span>1</span></span>Подкаст: Top Teen City</h2>
+    <p class="hint">Workbook, стр. 9, задания 2–3: Тодд и Хизер рассказывают о лучшем городе США для подростков. Включи запись (её можно останавливать и слушать ещё раз) и ответь на вопросы.</p>
+<audio id="podA" controls preload="none" src="audio/wb_podcast.mp3" style="width:100%;margin:6px 0 10px"></audio><div id="podQ"></div>
   </section>
   <section class="slide" data-key="mine">
     <h2><span class="n"><span>1</span></span>Мой диалог</h2>
@@ -918,8 +928,8 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
 </div>
 <script>
 const LESSON="gia1-u1-l4";
-const P0={"qtable": 0, "order": 0, "ans": 0, "lily": 0, "lilyChat": 0, "true": 0, "board": 0, "meet": 0, "meetChat": 0, "mine": 0, "tasks": []};
-const TITLES={"cover": "Старт", "qtable": "Вопросы", "order": "Собери", "ans": "Ответы", "lily": "Lily & Erin", "true": "Про себя", "board": "Флаги", "meet": "Meeting people", "mine": "Мой диалог", "book": "Учебник", "finish": "Финиш"};
+const P0={"qtable": 0, "order": 0, "ans": 0, "lily": 0, "lilyChat": 0, "true": 0, "board": 0, "meet": 0, "meetChat": 0, "meetVid": 0, "fab": 0, "fabChat": 0, "pod": 0, "mine": 0, "tasks": []};
+const TITLES={"cover": "Старт", "qtable": "Вопросы", "order": "Собери", "ans": "Ответы", "lily": "Lily & Erin", "true": "Про себя", "board": "Флаги", "fabio": "Fabio & Keira", "meet": "Meeting people", "pod": "Подкаст", "mine": "Мой диалог", "book": "Учебник", "finish": "Финиш"};
 
 window.addEventListener('error',e=>{ let d=document.getElementById('jserr'); if(!d){ d=document.createElement('div'); d.id='jserr'; d.style.cssText='position:fixed;left:8px;right:8px;bottom:120px;z-index:99;background:#c0392b;color:#fff;font:700 13px/1.3 system-ui;padding:8px 10px;border-radius:10px;word-break:break-word'; document.body.appendChild(d); } d.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?'); });
 const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
@@ -1081,7 +1091,30 @@ builder('#mine',{key:'mine',need:4,fields:[{id:'name',label:'Твоё новое
    const html=`<b>Elena:</b> Hi there! Are you new here? ${spk('l4_my1')}\n<b>You:</b> Yes, I am. This is my first day.\n<b>Elena:</b> Welcome! What's your name? ${spk('l4_my2')}\n<b>You:</b> My name's ${k(V.name)}.\n<b>Elena:</b> Nice to meet you. Where are you from? ${spk('l4_my3')}\n<b>You:</b> I'm from ${k(V.city)}, in ${k(c[0])}. I'm ${c[1]?'<span class="k">'+c[1]+'</span>':'<span class="k">…</span>'}.\n<b>Elena:</b> Is that a big city? ${spk('l4_my4')}\n<b>You:</b> ${k(V.size)}\n<b>Elena:</b> How old are you? ${spk('l4_my5')}\n<b>You:</b> I'm ${k(V.age)}.\n<b>Elena:</b> Cool! See you later! ${spk('l4_my6')}\n<b>You:</b> See you!`; return {html,filled:Math.min(n,5)}; }});
 function stopExtra(){}
 
-function doneMap(){ return {qtable:P.qtable>=4, order:P.order>=4, ans:P.ans>=5, lily:P.lily>=7&&P.lilyChat>=1, true:P.true>=6, board:P.board>=6, meet:P.meet>=5&&P.meetChat>=1, mine:P.mine>=4, book:(P.tasks||[]).length>=2}; }
+
+const vid=$('#vid'); vid.src='video.mp4';
+const vDone=()=>{ if(!P.meetVid){ best('meetVid',1); burst(); } $('#vMsg').textContent='Видео просмотрено! 🎬 Теперь Key phrases ↓'; };
+vid.addEventListener('timeupdate',()=>{ if(vid.duration&&vid.currentTime/vid.duration>0.9) vDone(); });
+vid.addEventListener('ended',vDone); vid.addEventListener('play',()=>stopAll());
+const FK=[['g','Fabio',"Hi. Are you new in this school?"],['b','Keira',"Yes, I am. My name's Keira."],['d','Fabio',"Hi. I'm Fabio. Where are you from, Keira? Are you English?"],['a','Keira',"No, I'm not. I'm from Ireland. Fabio – that's not an English name."],['f','Fabio',"No, it isn't. I'm from England, but my mum and dad …"],['e','Keira',"Wait – are they Italian?"],['c','Fabio',"Yes, they are! They're from Milan."]];
+const fkLine=i=>`${FK[i][1]}: ${FK[i][2]}`;
+quiz('#fabQ',{key:'fab',need:5,keepOrder:true,items:[1,2,3,4,5,6].map(i=>{ const later=[1,2,3,4,5,6].filter(j=>j>i), other=[1,2,3,4,5,6].filter(j=>j<i); const d=later.concat(other.reverse()).slice(0,2); return {q:`Реплика ${i+1}: что дальше?`,opts:[i].concat(d).map(fkLine),ok:fkLine(i),a2:'wb_fk'+(i+1),expl:'Смотри на краткие ответы: Yes, I am / No, it isn\'t — к какому вопросу они подходят?'}; }),after:()=>{ $('#fabChat').style.display=''; }});
+if(P.fab) $('#fabChat').style.display='';
+chat('#fabChat',{key:'fabChat',lines:FK.map((l,i)=>({who:l[1]==='Fabio'?'l':'r',a:'wb_fk'+(i+1),en:l[2]})),roles:{l:{name:'Fabio',av:'👦🏻'},r:{name:'Keira',av:'👧🏼'}}});
+$('#podA').addEventListener('play',()=>stopAll());
+quiz('#podQ',{key:'pod',need:9,keepOrder:true,shuffleOpts:false,items:[
+ {q:'Задание 2. О чём говорят в подкасте? <b>The most important cities in the USA</b>',opts:['Да, говорят','Нет'],ok:'Нет',expl:'Говорят только об одном городе — Irvine'},
+ {q:'<b>A great place for teens to live in the USA</b>',opts:['Да, говорят','Нет'],ok:'Да, говорят',expl:'«Which is America\'s Top Teen City?»'},
+ {q:'<b>A fun activity at a park</b>',opts:['Да, говорят','Нет'],ok:'Да, говорят',expl:'Вспомни большой оранжевый воздушный шар в парке'},
+ {q:'<b>Popular sports for American teenagers</b>',opts:['Да, говорят','Нет'],ok:'Нет',expl:'Про спорт в парке — да, но о популярных видах спорта у подростков не говорят'},
+ {q:'<b>A robotics camp</b>',opts:['Да, говорят','Нет'],ok:'Да, говорят',expl:'Послушай конец: summer camp for teens'},
+ {q:'Задание 3. Irvine is in the state of <span class="gap">___</span>.',opts:['Texas','California'],ok:'California',fill:1,expl:'«Irvine, California»'},
+ {q:'Parents like Irvine because it\'s a <span class="gap">___</span> city.',opts:['safe','modern'],ok:'safe',fill:1,expl:'«a very clean, safe city»'},
+ {q:'Irvine has great <span class="gap">___</span>.',opts:['schools','weather'],ok:'schools',fill:1,expl:'«It has great schools and lots of jobs»'},
+ {q:'In Orange County Great Park, you can <span class="gap">___</span>.',opts:['do sports','go shopping'],ok:'do sports',fill:1,expl:'Магазины — это Irvine Spectrum Center'},
+ {q:'Irvine Spectrum Center has some excellent <span class="gap">___</span>.',opts:['sports facilities','restaurants'],ok:'restaurants',fill:1,expl:'«lots of great shops and … some excellent restaurants»'},
+ {q:'At Beall Center for Art and Technology, they have a summer program on <span class="gap">___</span>.',opts:['making films','robotics'],ok:'robotics',fill:1,expl:'«programmes like robotics»'}]});
+function doneMap(){ return {qtable:P.qtable>=4, order:P.order>=4, ans:P.ans>=5, lily:P.lily>=7&&P.lilyChat>=1, true:P.true>=6, board:P.board>=6, fabio:P.fab>=5&&P.fabChat>=1, meet:P.meet>=5&&(P.meetChat>=1||P.meetVid>=1), pod:P.pod>=9, mine:P.mine>=4, book:(P.tasks||[]).length>=2}; }
 function FSCORE(){ return P.lily+P.board; }
 
 // ── учебник ──

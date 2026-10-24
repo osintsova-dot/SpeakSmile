@@ -877,6 +877,11 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     <p class="hint">Задания 6–7: переверни предложение (+ ↔ −) и исправь неверные факты: Washington <b>isn't</b> the capital of the Netherlands.</p>
 <div id="neg"></div>
   </section>
+  <section class="slide" data-key="wbneg">
+    <h2><span class="n"><span>1</span></span>Послушай и скажи «нет»</h2>
+    <p class="hint">Workbook, стр. 5, задание 5: послушай предложение и выбери его отрицательную форму. Повтори вслух. Запись можно включить ещё раз кнопкой 🔊.</p>
+<div id="wbneg"></div>
+  </section>
   <section class="slide" data-key="mun">
     <h2><span class="n"><span>1</span></span>Model United Nations</h2>
     <p class="hint">Задание 8: вставь краткие формы be: (+) утверждение, (−) отрицание.</p>
@@ -923,8 +928,8 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
 </div>
 <script>
 const LESSON="gia1-u1-l3";
-const P0={"table": 0, "contr": 0, "clChat": 0, "nat": 0, "where": 0, "qzChat": 0, "neg": 0, "mun": 0, "brain": 0, "adjHeard": [], "opp": 0, "nz": 0, "nzQ": 0, "tasks": []};
-const TITLES={"cover": "Старт", "table": "Таблица be", "contr": "Краткие формы", "nat": "Pronoun+nat.", "where": "Where am I?", "neg": "Отрицание", "mun": "UN текст", "brain": "Brain teaser", "adj": "Adjectives", "nz": "New Zealand", "book": "Учебник", "finish": "Финиш"};
+const P0={"table": 0, "contr": 0, "clChat": 0, "nat": 0, "where": 0, "qzChat": 0, "neg": 0, "wbneg": 0, "mun": 0, "brain": 0, "adjHeard": [], "opp": 0, "nz": 0, "nzQ": 0, "tasks": []};
+const TITLES={"cover": "Старт", "table": "Таблица be", "contr": "Краткие формы", "nat": "Pronoun+nat.", "where": "Where am I?", "neg": "Отрицание", "wbneg": "Слушай: нет", "mun": "UN текст", "brain": "Brain teaser", "adj": "Adjectives", "nz": "New Zealand", "book": "Учебник", "finish": "Финиш"};
 
 window.addEventListener('error',e=>{ let d=document.getElementById('jserr'); if(!d){ d=document.createElement('div'); d.id='jserr'; d.style.cssText='position:fixed;left:8px;right:8px;bottom:120px;z-index:99;background:#c0392b;color:#fff;font:700 13px/1.3 system-ui;padding:8px 10px;border-radius:10px;word-break:break-word'; document.body.appendChild(d); } d.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?'); });
 const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
@@ -1082,10 +1087,18 @@ quiz('#where',{key:'where',need:8,keepOrder:true,row:true,shuffleOpts:false,item
  {q:'A: Ready? 1 <span class="gap">___</span> in a big city.',opts:["I'm","I's"],ok:"I'm",fill:1},{q:'2 <span class="gap">___</span> hot. I can see pyramids.',opts:["It're","It's"],ok:"It's",fill:1},{q:'B: 3 <span class="gap">___</span> in Cairo in Egypt.',opts:["You's","You're"],ok:"You're",fill:1},{q:'A: OK, this time 4 <span class="gap">___</span> in a city in Europe. I can see a big metal tower …',opts:["we's","we're"],ok:"we're",fill:1},
  {q:'B: The Eiffel Tower! 5 <span class="gap">___</span> in Paris!',opts:["We're","We'm"],ok:"We're",fill:1},{q:'A: Now, I can see nine big letters: H-O-L-L-Y … B: Hollywood – 6 <span class="gap">___</span> in Los Angeles.',opts:["it's","it are"],ok:"it's",fill:1},{q:'7 <span class="gap">___</span> in the USA!',opts:["You'are","You're"],ok:"You're",fill:1},{q:'A: Congratulations! This time I 8 <span class="gap">___</span> in a football stadium in a capital city in Europe.',opts:["'re","'m"],ok:"'m",fill:1},
  {q:'The players 9 <span class="gap">___</span> in red and white. Atlético de …',opts:['is','are'],ok:'are',fill:1},{q:"What's the answer to the final clue?",opts:['Madrid','Barcelona','Lisbon'],ok:'Madrid',expl:'Atlético de … — столица Испании'}]});
-chat('#qzChat',{key:'qzChat',lines:[{"who": "l", "a": "l3_qz1", "en": "Ready? I'm in a big city. It's hot. I can see pyramids."}, {"who": "r", "a": "l3_qz2", "en": "You're in Cairo in Egypt."}, {"who": "l", "a": "l3_qz3", "en": "OK, this time we're in a city in Europe. I can see a big metal tower …"}, {"who": "r", "a": "l3_qz4", "en": "The Eiffel Tower! We're in Paris!"}, {"who": "l", "a": "l3_qz5", "en": "Fantastic. Now, I can see nine big letters: H-O-L-L-Y …"}, {"who": "r", "a": "l3_qz6", "en": "Hollywood – it's in Los Angeles. You're in the USA!"}, {"who": "l", "a": "l3_qz7", "en": "Congratulations! This time I'm in a football stadium in a capital city in Europe. The players are in red and white. Atlético de …"}, {"who": "r", "a": "l3_qz8", "en": "Madrid!"}],roles:{l:{name:'A',av:'🧑‍💼'},r:{name:'B',av:'🧒'}}});
+chat('#qzChat',{key:'qzChat',lines:[{"who": "l", "a": "l3_qz1", "en": "Welcome to the ‘Where am I?’ quiz show. Ready? I'm in a big city. It's hot. I can see pyramids."}, {"who": "r", "a": "l3_qz2", "en": "You're in Cairo in Egypt."}, {"who": "l", "a": "l3_qz3", "en": "OK, this time we're in a city in Europe. I can see a big metal tower …"}, {"who": "r", "a": "l3_qz4", "en": "The Eiffel Tower! We're in Paris!"}, {"who": "l", "a": "l3_qz5", "en": "Fantastic. Now, I can see nine big letters: H-O-L-L-Y …"}, {"who": "r", "a": "l3_qz6", "en": "Hollywood – it's in Los Angeles. You're in the USA!"}, {"who": "l", "a": "l3_qz7", "en": "Congratulations! This time I'm in a football stadium in a capital city in Europe. The players are in red and white. Atlético de …"}, {"who": "r", "a": "l3_qz8", "en": "Madrid!"}],roles:{l:{name:'A',av:'🧑‍💼'},r:{name:'B',av:'🧒'}}});
 quiz('#neg',{key:'neg',need:7,items:[
  {q:'Cem is from Istanbul. → (−)',opts:["Cem isn't from Istanbul.","Cem aren't from Istanbul.","Cem not from Istanbul."],ok:0},{q:"We aren't from Miami. → (+)",opts:["We're from Miami.","We is from Miami.","We am from Miami."],ok:0},{q:"I'm Indian. → (−)",opts:["I'm not Indian.","I amn't Indian.","I isn't Indian."],ok:0,expl:"am not = 'm not"},{q:"Elena isn't from Brazil. → (+)",opts:["Elena's from Brazil.","Elena are from Brazil.","Elena am from Brazil."],ok:0},{q:"You're from Tokyo. → (−)",opts:["You aren't from Tokyo.","You isn't from Tokyo.","You not from Tokyo."],ok:0},
  {q:'Correct it: China and India are in Europe.',opts:["China and India aren't in Europe. They're in Asia.","China and India isn't in Europe. It's in Asia.","China and India aren't in Asia. They're in Europe."],ok:0},{q:'Correct it: Thomas is from Spain.',opts:["Thomas isn't from Spain. He's from the Netherlands.","Thomas aren't from Spain. He's Dutch.","Thomas isn't from Spain. He's from Brazil."],ok:0},{q:"Correct it: We're in a maths class.",opts:["We aren't in a maths class. We're in an English class.","We isn't in a maths class. We're in English.","We're not in English. We're in maths."],ok:0}]});
+quiz('#wbneg',{key:'wbneg',need:6,keepOrder:true,items:[
+ {q:'1 ▶ …',a:'wb_neg1',opts:["They aren't from New Zealand.","They isn't from New Zealand.","They not from New Zealand."],ok:0,ok_expl:"They're → They aren't"},
+ {q:'2 ▶ …',a:'wb_neg2',opts:["I'm not from India.","I amn't from India.","I aren't from India."],ok:0,ok_expl:"I'm → I'm not"},
+ {q:'3 ▶ …',a:'wb_neg3',opts:["My parents aren't from Turkey.","My parents isn't from Turkey.","My parents not are from Turkey."],ok:0,ok_expl:"are → aren't"},
+ {q:'4 ▶ …',a:'wb_neg4',opts:["We aren't in Class 7B.","We isn't in Class 7B.","We not in Class 7B."],ok:0,ok_expl:"We're → We aren't"},
+ {q:'5 ▶ …',a:'wb_neg5',opts:["Anna isn't 11.","Anna aren't 11.","Anna not is 11."],ok:0,ok_expl:"is → isn't"},
+ {q:'6 ▶ …',a:'wb_neg6',opts:["My mother isn't a doctor.","My mother aren't a doctor.","My mother not a doctor."],ok:0,ok_expl:"is → isn't"},
+ {q:'7 ▶ …',a:'wb_neg7',opts:["You aren't in my English class.","You isn't in my English class.","You amn't in my English class."],ok:0,ok_expl:"You're → You aren't"}]});
 gaps('#mun .q-text',{key:'mun'});
 const BR=[['People from the UK are …','British',['British','English','Britain']],['St Petersburg is in this country.','Russia',['Russia','Russian','Rome']],['The capital of Turkey is …','Ankara',['Ankara','Istanbul','Athens']],['Zambia and …imbabwe are in Africa.','Zimbabwe',['Zimbabwe','Zanzibar','Zurich']],['New Delhi is the capital of this country.','India',['India','Indonesia','Iran']],['The capital of the UK is …','London',['London','Liverpool','Leeds']]]; let brW='';
 quiz('#brain',{key:'brain',need:6,keepOrder:true,items:BR.map(b=>({q:b[0],opts:b[2],ok:b[1],ok_expl:b[1]+' → буква '+b[1][0]})),after:()=>{ $('#brainWord').textContent='B R A Z I L → Brazil! 🇧🇷'; }});
@@ -1099,7 +1112,7 @@ quiz('#nzQ',{key:'nzQ',need:12,keepOrder:true,items:[
  {q:'Population: <span class="gap">___</span> million',opts:['4','27','17'],ok:'4',fill:1,expl:'27 million — это овцы 🐑'},{q:'Capital city: <span class="gap">___</span>',opts:['Wellington','Auckland','Sydney'],ok:'Wellington',fill:1},{q:'Weather: <span class="gap">___</span> in summer',opts:['hot','cold','wet'],ok:'hot',fill:1},{q:'Weather: <span class="gap">___</span> in winter on the South Island',opts:['cold','hot','warm'],ok:'cold',fill:1},{q:'Official languages: <span class="gap">___</span> and Maori',opts:['English','New Zild','French'],ok:'English',fill:1},{q:'National sport: <span class="gap">___</span>',opts:['rugby','football','cricket'],ok:'rugby',fill:1}]});
 function stopExtra(){}
 
-function doneMap(){ return {table:P.table>=5, contr:P.contr>=5, nat:P.nat>=4, where:P.where>=8, neg:P.neg>=7, mun:P.mun>=6, brain:P.brain>=6, adj:(P.adjHeard||[]).length>=6&&P.opp>=8, nz:P.nz>=1&&P.nzQ>=12, book:(P.tasks||[]).length>=2}; }
+function doneMap(){ return {table:P.table>=5, contr:P.contr>=5, nat:P.nat>=4, where:P.where>=8, neg:P.neg>=7, wbneg:P.wbneg>=6, mun:P.mun>=6, brain:P.brain>=6, adj:(P.adjHeard||[]).length>=6&&P.opp>=8, nz:P.nz>=1&&P.nzQ>=12, book:(P.tasks||[]).length>=2}; }
 function FSCORE(){ return P.where+P.nzQ; }
 
 // ── учебник ──
