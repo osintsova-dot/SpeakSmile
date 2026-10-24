@@ -383,7 +383,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   </section>
   <section class="slide" data-key="phon">
     <h2><span class="n"><span>0</span></span>Фоникс: заглавные A–Z</h2>
-    <p class="hint">Phonics Hero урок 10. Нажми маленькую букву — услышишь её название — и найди такую же БОЛЬШУЮ. Три раунда по 8 пар.</p>
+    <p class="hint">Phonics Hero урок 10. Нажми маленькую букву — услышишь её звук — и найди такую же БОЛЬШУЮ. Три раунда по 8 пар.</p>
     <div class="caps2" id="lowRow"></div>
     <div class="say" id="capMsg">Нажми маленькую букву</div>
     <div class="caps2" id="upRow"></div>
@@ -588,9 +588,9 @@ let cRound=0, cSel=null, cHit=0, cTot=0;
 function capsRound(){ const ls8=shuffle('abcdefghijklmnopqrstuvwxyz'.split('')).slice(0,8); cSel=null; cHit=0;
   $('#lowRow').innerHTML=shuffle(ls8).map(c=>`<button class="btn" data-c="${c}">${c}</button>`).join('');
   $('#upRow').innerHTML=shuffle(ls8).map(c=>`<button class="btn" data-c="${c}">${c.toUpperCase()}</button>`).join('');
-  $$('#lowRow .btn').forEach(b=>b.onclick=()=>{ $$('#lowRow .btn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); cSel=b.dataset.c; play('let_'+cSel); $('#capMsg').textContent='Теперь найди большую букву '+cSel.toUpperCase(); });
+  $$('#lowRow .btn').forEach(b=>b.onclick=()=>{ $$('#lowRow .btn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); cSel=b.dataset.c; play('snd_'+cSel); $('#capMsg').textContent='Теперь найди большую букву '+cSel.toUpperCase(); });
   $$('#upRow .btn').forEach(b=>b.onclick=()=>{ if(!cSel){ $('#capMsg').textContent='Сначала нажми маленькую букву'; return; }
-    if(b.dataset.c===cSel){ b.classList.add('used'); $(`#lowRow .btn[data-c="${cSel}"]`).classList.add('used'); cHit++; cTot++; play('let_'+cSel); cSel=null; $('#capMsg').textContent='Пара! '+b.textContent+' '+b.textContent.toLowerCase();
+    if(b.dataset.c===cSel){ b.classList.add('used'); $(`#lowRow .btn[data-c="${cSel}"]`).classList.add('used'); cHit++; cTot++; play('snd_'+cSel); cSel=null; $('#capMsg').textContent='Пара! '+b.textContent+' '+b.textContent.toLowerCase();
       if(cHit===8){ cRound++; $('#capMsg').textContent='🏆 Все 8 пар! Раунд '+cRound+(cRound<3?' — нажми «Новые буквы»':''); if(cTot>P.ph) P.ph=cTot; save(); burst(); } }
     else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),450); } }); }
 $('#capNew').onclick=capsRound; capsRound();
