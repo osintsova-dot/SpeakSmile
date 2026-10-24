@@ -683,9 +683,9 @@ $('#daysPlay').onclick=()=>{ askToday=false; missI=-1; const D=DSONGS[dsong]; co
 $('#daysStop').onclick=daysStop; dLines();
 // Genki «Days of the week» (Flash) через Ruffle — грузим только по кнопке
 $('#genkiOpen').onclick=()=>{ stopAll(); daysStop(); const box=$('#genki'); box.innerHTML='<div class="stage" id="gstage"></div><p class="gnote">Если тихо — нажми на картинку, чтобы включить звук. Кнопки сверху: <b>♪Today?</b> — песня, <b>Mini lesson</b> — слова, <b>Game</b> — игра.</p>';
-  window.RufflePlayer=window.RufflePlayer||{}; window.RufflePlayer.config={autoplay:'on',unmuteOverlay:'visible',letterbox:'on',splashScreen:false,backgroundColor:'#ffffff'};
+  window.RufflePlayer=window.RufflePlayer||{}; window.RufflePlayer.config={autoplay:'on',unmuteOverlay:'visible',letterbox:'on',splashScreen:false,backgroundColor:'#ffffff',preferredRenderer:'canvas'};
   const run=()=>{ try{ const r=window.RufflePlayer.newest(); const pl=r.createPlayer(); $('#gstage').append(pl); pl.load('genki/days.swf').then(()=>{ P.genki=1; save(); }).catch(()=>{ $('#gstage').innerHTML='<p class="gnote" style="padding:20px">Не загрузилось — проверь интернет и открой слайд заново.</p>'; }); }catch(e){} };
-  if(window.RufflePlayer.newest) run(); else { const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle/ruffle.js'; sc.onload=run; sc.onerror=()=>{ const s2=document.createElement('script'); s2.src='https://unpkg.com/@ruffle-rs/ruffle/ruffle.js'; s2.onload=run; document.head.append(s2); }; document.head.append(sc); } };
+  if(window.RufflePlayer.newest) run(); else { const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.7.1/ruffle.js'; sc.onload=run; sc.onerror=()=>{ const s2=document.createElement('script'); s2.src='https://unpkg.com/@ruffle-rs/ruffle@0.7.1/ruffle.js'; s2.onload=run; document.head.append(s2); }; document.head.append(sc); } };
 
 // ── учебник ──
 $$('[data-task]').forEach(cb=>{ cb.checked=P.tasks.includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
