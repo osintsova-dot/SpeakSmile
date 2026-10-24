@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /oferta.html
 Disallow: /privacy.html
+Disallow: /video/
 
 Sitemap: https://speakandsmile.ru/sitemap.xml
