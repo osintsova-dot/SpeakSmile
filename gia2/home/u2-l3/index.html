@@ -504,6 +504,8 @@ function spellGame(SP,o){ let q=[], c=null, pos=0, done=0, score=0, peek=0, time
 function iCan(IC,o){ function render(){ $(o.list).innerHTML=IC.map(c=>`<div class="opt"><button class="btn ghost sm" data-say="${c.a}">${SPK}</button><span class="en">${c.en}<small>${c.ru}</small></span><div class="lights">${['🔴','🟡','🟢'].map((l,k)=>`<button class="lt ${(P.light||{})[c.a]===k?'sel':''}" data-a="${c.a}" data-k="${k}">${l}</button>`).join('')}</div></div>`).join('');
     $$(o.list+' [data-say]').forEach(b=>b.onclick=()=>play(b.dataset.say)); $$(o.list+' .lt').forEach(b=>b.onclick=()=>{ P.light=P.light||{}; P.light[b.dataset.a]=+b.dataset.k; save(); render(); const n=Object.keys(P.light).length; $(o.msg).textContent=n>=IC.length?'🏆 Самооценка готова!':'Оценено: '+n+' из '+IC.length; if(n>=IC.length&&!P.icDone){ P.icDone=1; save(); burst(); } }); }
   render(); if(o.wd){ $(o.wd).onclick=()=>{ $(o.hifive).classList.add('on'); play('wd',()=>{ $(o.hifive).classList.remove('on'); burst(); burst(); }); }; } }
+// перемешать варианты внутри строк (детерминированно), пересчитав ans
+function mix(rows){ return rows.map((r,ri)=>{ const opts=[],ans=[]; r.opts.forEach((o,n)=>{ const k=(ri*2+n+1)%o.length; const no=o.slice(k).concat(o.slice(0,k)); opts.push(no); ans.push(no.indexOf(o[r.ans[n]])); }); return Object.assign({},r,{opts,ans}); }); }
 // выбрать несколько: items=[{t,ok}] ; o={list,check,score?,msg,pkey,okMsg?,fixed?:[i]}
 function pickMany(items,o){ const fixed=new Set(o.fixed||[]); const sel=new Set([...(P[o.pkey+'_sel']||[]),...fixed]); let chk=!!P[o.pkey];
   function render(){ $(o.list).innerHTML=items.map((it,i)=>{ const on=sel.has(i); const cls=chk?(on===!!it.ok?(on?'right':''):'wrong'):''; return `<button class="btn ${cls}" data-i="${i}" aria-pressed="${on}" style="justify-content:flex-start;text-align:left;${on&&!chk?'background:var(--honey);color:var(--ink)':''}">${on?'☑':'☐'} ${it.t}</button>`; }).join('');
@@ -554,7 +556,7 @@ chooseRows([{html:'She {0} in adult competitions. (play / often)',opts:[['plays 
   {rows:'#caRows',score:'#caScore',msg:'#caMsg',pkey:'carissa'});
 $('#caPlay').onclick=()=>play('car');
 mcq([{q:'Do they like taking photos?',opts:['No, they don’t.','Yes, they do.'],ok:0,why:'Нет!'},{q:'Why?',opts:['They only like things with double letters: swiMMing, coLLecting, slEEping, chESS.','They don’t like cameras.','Taking photos is a sport.'],ok:0,why:'Двойные буквы! В taking photos их нет.'}],
-  {box:'#btBox',score:'#btScore',start:'#btStart',msg:'#btMsg',pkey:'teaser',pass:2,keepOrder:true,shuffleOpts:false});
+  {box:'#btBox',score:'#btScore',start:'#btStart',msg:'#btMsg',pkey:'teaser',pass:2,keepOrder:true});
 gapFill([{html:'My parents {0} have lunch at home. (почти никогда)',ans:['hardly ever']},{html:'I {0} play chess with my brother. (иногда)',ans:['sometimes']},{html:'We {0} make videos in ICT. (часто)',ans:['often']},{html:'You’re {0} tired on Monday mornings. (всегда)',ans:['always']},
   {html:'My dad {0} plays tennis. (hardly ever)',ans:['hardly ever']},
   {html:'My mum {0} practising the piano in the morning. 🙂',ans:['likes']},{html:'You {0} helping at home in the evening. 😐',ans:['don’t mind']},{html:'We {0} going to the gym when we’ve got PE. 🙁',ans:['don’t like']},{html:'My brother {0} drawing, but I like it! 😡',ans:['hates']}],

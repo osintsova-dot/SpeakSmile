@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#26176B">
+<title>Урок дома · Comic Con live · Get Involved! A2</title>
+<meta name="description" content="Unit 3 · занятие 2">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p:#6C3FC5; --pd:#4B278F; --honey:#F5C842; --sky:#63B3FF; --pink:#F17FBE; --teal:#34D3C0; --red:#F26B6B; --good:#1FA85C;
+  --ink:#2A2140; --muted:#6A5B9A; --paper:#FFFFFF;
+  --f:"Baloo 2","Segoe UI Rounded",ui-rounded,"Trebuchet MS",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.9,.25,1.1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;overflow:hidden}
+body{font-family:var(--f);color:#fff;position:relative;text-align:center;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),radial-gradient(120% 90% at 100% 10%,rgba(99,179,255,.40),transparent 55%),linear-gradient(180deg,#7C4DE0 0%,#5B3FCF 55%,#4A2FB0 100%);background-attachment:fixed}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px;border-radius:12px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.deck{position:relative;z-index:1;display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow-y:auto;overflow-x:hidden;padding:64px 16px calc(118px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center}
+.slide>*{max-width:640px;width:100%;flex-shrink:0}
+.slide h2{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 4px;font-size:clamp(22px,6vw,30px);line-height:1.1}
+.slide h2 .n{width:34px;height:34px;border-radius:50%;background:var(--honey);color:var(--pd);display:grid;place-items:center;font-size:17px;flex:none}
+.slide.done h2 .n{background:var(--good);color:#fff}
+.slide.done h2 .n span{display:none}.slide.done h2 .n::after{content:"✓"}
+.hint{font-size:clamp(14px,3.6vw,16px);font-weight:600;opacity:.92;margin:4px 0 12px;line-height:1.4}
+.hint b{color:var(--honey)}
+.top{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:linear-gradient(180deg,rgba(40,24,100,.9),rgba(40,24,100,0));pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:12px;white-space:nowrap}
+.brand b{color:var(--honey)}
+.dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.35);cursor:pointer;transition:all .25s var(--ease)}
+.dots button.done{background:var(--honey)}
+.dots button.cur{transform:scale(1.5);background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(27,23,64,.95),rgba(27,23,64,0))}
+.nav .btn{min-width:120px;justify-content:center}
+.nav .cnt{font-weight:800;font-size:14px;opacity:.85}
+.cover{justify-content:center;padding-top:40px}
+.cover h1{font-size:clamp(34px,10vw,60px);line-height:1;margin:8px 0 0;text-shadow:0 4px 0 rgba(30,15,90,.35),0 14px 30px rgba(0,0,0,.28)}
+.cover .sub{font-size:clamp(15px,4vw,19px);font-weight:700;color:var(--honey);margin:8px 0 0}
+.book{display:inline-flex;align-items:center;gap:8px;margin:14px auto 0;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:14px;width:auto}
+.book svg{width:18px;height:18px;fill:var(--honey)}
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:18px 0 0;font-size:12px;font-weight:700}
+.plan span{padding:8px 4px;border-radius:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.plan span.done{background:rgba(31,168,92,.55);border-color:transparent}
+.parent{margin-top:18px;font-size:12px;opacity:.75;font-weight:600;line-height:1.45}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.grid.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid.g4{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--paper);color:var(--ink);border-radius:18px;padding:10px 6px;cursor:pointer;border:0;font:inherit;text-align:center;min-height:64px;
+  box-shadow:0 10px 22px rgba(30,10,70,.28);transition:transform .18s var(--ease),box-shadow .18s,outline-color .2s;outline:4px solid transparent}
+.card:active{transform:scale(.96)}
+.card img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:12px;background:#fff;pointer-events:none}
+.card .en{font-weight:800;font-size:clamp(14px,4vw,18px);line-height:1.1;color:var(--p);overflow-wrap:anywhere;max-width:100%}
+.card .ru{font-size:12px;font-weight:700;color:var(--muted)}
+.card .snd{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:var(--honey);display:grid;place-items:center}
+.card .snd svg{width:12px;height:12px;fill:var(--pd)}
+.card.heard .snd{background:var(--good)}.card.heard .snd svg{fill:#fff}
+.card.playing,.card.lit{outline-color:var(--honey);transform:scale(1.04)}
+.card.right{outline-color:var(--good);animation:bounce .5s var(--ease)}
+.card.wrong{outline-color:var(--red);animation:shake .4s}
+.card.sel{outline-color:var(--honey)}
+.card.dim{opacity:.45}
+@keyframes bounce{40%{transform:scale(1.1)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 20px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;color:var(--pd);background:#fff;box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .12s,box-shadow .12s;width:auto}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.btn.primary{background:var(--honey);color:var(--pd);box-shadow:0 5px 0 #d9ad2e}.btn.primary:active{box-shadow:0 1px 0 #d9ad2e}
+.btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:2px solid rgba(255,255,255,.5);box-shadow:none}
+.btn.ghost[aria-pressed="true"]{background:#fff;color:var(--pd)}
+.btn.big{font-size:20px;padding:16px 28px}
+.btn.sm{padding:8px 14px;font-size:14px}
+.btn.right{background:var(--good);color:#fff;animation:bounce .5s var(--ease)}
+.btn.wrong{animation:shake .4s;background:var(--red);color:#fff}
+.btn.ok::after{content:" ✓";color:var(--good)}
+.btn.used{opacity:.3;pointer-events:none}
+.btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:4px 0 12px}
+.score{font-weight:800;font-size:15px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:8px 14px}
+.score b{color:var(--honey)}
+.say{min-height:24px;font-weight:700;margin-top:6px;font-size:15px;line-height:1.4}
+.bigsay{font-weight:800;font-size:clamp(17px,4.8vw,22px);color:var(--honey);min-height:30px;line-height:1.3}
+.sent{font-size:clamp(18px,5vw,24px);font-weight:800;min-height:44px;margin:4px 0 10px;line-height:1.3}
+.prog{height:8px;border-radius:99px;background:rgba(255,255,255,.2);overflow:hidden;margin:0 0 10px}
+.prog i{display:block;height:100%;width:0;background:var(--honey);transition:width .4s var(--ease)}
+.opts{display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}
+.opts .btn{justify-content:center;font-size:clamp(15px,4.4vw,19px);text-align:center;white-space:normal;line-height:1.25}
+.opts.row{flex-direction:row;flex-wrap:wrap;justify-content:center}
+.tf{display:flex;gap:12px;justify-content:center;margin-top:8px}
+.tf .btn{font-size:18px;padding:14px 20px}
+.tf .btn.yes{background:var(--good);color:#fff;box-shadow:0 5px 0 #157a42}
+.tf .btn.no{background:var(--red);color:#fff;box-shadow:0 5px 0 #b9474b}
+.chat{display:flex;flex-direction:column;gap:10px;margin:6px 0 10px}
+.msg{display:flex;align-items:flex-end;gap:8px;max-width:92%}
+.msg.r{align-self:flex-end;flex-direction:row-reverse}
+.msg .av{width:42px;height:42px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:22px;flex:none;box-shadow:0 4px 10px rgba(30,10,70,.3);font-weight:900;color:var(--p)}
+.bub{position:relative;background:#fff;color:var(--ink);border-radius:20px;padding:11px 15px;font-weight:700;font-size:clamp(15px,4.2vw,19px);text-align:left;cursor:pointer;border:0;font-family:inherit;box-shadow:0 8px 18px rgba(30,10,70,.28);transition:all .25s var(--ease);outline:4px solid transparent;line-height:1.3}
+.msg.r .bub{background:var(--honey);color:var(--pd)}
+.bub.on{outline-color:#fff;transform:scale(1.03)}
+.bub.you{background:rgba(255,255,255,.18);color:#fff;border:2px dashed rgba(255,255,255,.6);box-shadow:none}
+.bub.you.on{background:rgba(255,255,255,.3)}
+.bub .ru{display:block;font-size:12px;font-weight:600;opacity:.7;margin-top:2px}
+.bub .gap{display:inline-block;min-width:60px;border-bottom:3px solid var(--p);padding:0 6px;color:var(--p);text-align:center;border-radius:6px 6px 0 0}
+.bub .gap.cur{background:#FFF3C4}.bub .gap.good{color:var(--good);border-color:var(--good)}
+.roles{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:4px 0 8px}
+.task{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;background:var(--paper);color:var(--ink);border-radius:20px;padding:12px;margin:8px 0}
+.task .ic{width:48px;height:48px;border-radius:14px;background:#F3EEFF;display:grid;place-items:center;font-size:24px}
+.task h3{margin:0 0 2px;font-size:16px;color:var(--p)}
+.task p{margin:0;font-size:14px;font-weight:600;color:var(--muted)}
+.task label{display:flex;align-items:center;gap:8px;margin-top:6px;font-weight:800;color:var(--ink);cursor:pointer}
+.task input[type=checkbox]{width:24px;height:24px;accent-color:var(--good)}
+.finish{justify-content:center}
+.finish input,.inp{width:100%;max-width:320px;font:inherit;font-weight:800;font-size:18px;padding:12px 16px;border-radius:16px;border:0;margin:8px auto 12px;text-align:center;color:var(--ink);display:block}
+.finish .msg{min-height:24px;font-weight:700;margin-top:10px;display:block;max-width:100%}
+.stars{font-size:26px;letter-spacing:1px;margin:4px 0 8px}
+.stars i{font-style:normal;opacity:.25;transition:opacity .3s,transform .3s var(--ease);display:inline-block}
+.stars i.on{opacity:1;transform:scale(1.15)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.confetti i{position:absolute;top:-10px;width:10px;height:14px;border-radius:3px;animation:fall 2.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
+#toast{position:fixed;left:50%;bottom:calc(126px + env(safe-area-inset-bottom));transform:translate(-50%,16px);z-index:60;background:#fff;color:var(--pd);font-weight:800;font-size:15px;padding:10px 18px;border-radius:999px;box-shadow:0 12px 26px rgba(30,10,70,.35);opacity:0;pointer-events:none;transition:all .25s var(--ease);white-space:nowrap}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.btn.copy{margin-top:12px;font-size:14px;padding:9px 16px}.btn.copy.ok{background:#fff;color:#1e9e6a;border-color:#fff}
+.btn.copy svg{width:17px;height:17px;fill:currentColor}
+/* текст по абзацам */
+.para{background:#FFFDF6;color:var(--ink);border-radius:18px;padding:12px 14px;text-align:left;font-weight:600;font-size:clamp(15px,4.2vw,18px);line-height:1.5;box-shadow:0 10px 24px rgba(30,10,70,.3);cursor:pointer;transition:all .2s;margin:6px 0;border:0;font-family:inherit;width:100%}
+.para.on{outline:4px solid var(--honey);background:#FFF8DD}
+.para.heard{border-left:6px solid var(--good)}
+.para img{width:100%;border-radius:12px;margin:0 0 6px;display:block}
+.para b{color:var(--p)}
+.para mark{background:#FFE9A8;color:var(--pd);border-radius:4px;padding:0 3px;font-weight:800}
+.para .ru{display:block;font-size:13px;color:#6b6480;font-weight:600;margin-top:4px}
+.para.static{cursor:default}
+.photo{width:100%;border-radius:16px;box-shadow:0 10px 24px rgba(30,10,70,.3);display:block;background:#fff}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.photos.p2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.vid{width:100%;aspect-ratio:16/9;border-radius:18px;background:#000;box-shadow:0 12px 26px rgba(30,10,70,.3);display:block;margin:4px 0 8px}
+.aud{width:100%;margin:6px 0 10px}
+.pc{position:relative;background:#fff;color:var(--ink);border-radius:16px;padding:5px 5px 7px;cursor:pointer;border:0;font:inherit;text-align:center;box-shadow:0 10px 22px rgba(30,10,70,.28);outline:4px solid transparent;transition:transform .18s var(--ease),outline-color .2s;display:flex;flex-direction:column;gap:4px;align-items:center}
+.pc img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;display:block;pointer-events:none}
+.pc.sq img{aspect-ratio:1}
+.pc .en{font-weight:800;font-size:clamp(12px,3.3vw,15px);line-height:1.15;color:var(--p)}
+.pc .ru{font-size:11px;font-weight:700;color:var(--muted)}
+.pc .n{position:absolute;top:-8px;left:-6px;width:28px;height:28px;border-radius:50%;background:var(--honey);color:var(--pd);font-weight:800;font-size:15px;display:grid;place-items:center;box-shadow:0 3px 8px rgba(0,0,0,.3);z-index:2}
+.pc.sel,.pc.on{outline-color:var(--honey);transform:scale(1.03)}
+.pc.right{outline-color:var(--good);animation:bounce .5s var(--ease)}
+.pc.wrong{outline-color:var(--red);animation:shake .4s}
+.pc .tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;min-height:20px}
+.pc .tags span{background:#E6F7EC;color:var(--good);border-radius:999px;padding:1px 8px;font-size:12px;font-weight:800}
+/* пропуски + банк */
+.rows{display:flex;flex-direction:column;gap:10px;width:100%}
+.tk-row{position:relative;background:#fff;color:var(--ink);border-radius:18px;padding:10px 10px 10px 14px;display:flex;align-items:center;gap:10px;outline:4px solid transparent;box-shadow:0 8px 18px rgba(30,10,70,.25);flex-wrap:wrap}
+.tk-row .num{position:absolute;top:-8px;left:-6px;width:26px;height:26px;border-radius:50%;background:var(--honey);color:var(--pd);font-weight:800;font-size:14px;display:grid;place-items:center;box-shadow:0 3px 8px rgba(0,0,0,.25)}
+.tk-row.ok{outline-color:var(--good)}.tk-row.bad{outline-color:var(--red)}
+.tk-sent{font-weight:700;font-size:clamp(15px,4.3vw,18px);color:var(--ink);line-height:1.6;flex:1;text-align:left;min-width:0}
+.tk-sent b{color:var(--p)}
+.gap{display:inline-block;min-width:70px;border-bottom:3px solid var(--p);padding:0 8px;text-align:center;cursor:pointer;border-radius:6px 6px 0 0;color:var(--p);font-weight:800;line-height:1.3}
+.gap.cur{background:#FFF3C4}
+.gap.on{background:var(--honey);color:var(--pd)}
+.gap.good{background:#e4f7ea;color:var(--good);border-color:var(--good)}
+.gap.wrong{background:#fde8e8;color:var(--red);border-color:var(--red);text-decoration:line-through}
+i.fix{margin-left:6px;font-style:normal;color:var(--good);font-weight:800}
+.wchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0 10px}
+.wchips .btn{padding:9px 14px;font-size:15px}
+.wchips .btn.sel{background:var(--honey);box-shadow:0 5px 0 #d9ad2e}
+.wchips .btn.used{opacity:.3;pointer-events:none}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:8px 0}
+.chip{border:0;border-radius:999px;background:var(--honey);color:var(--ink);font-family:inherit;font-weight:800;font-size:16px;padding:9px 15px;box-shadow:0 4px 0 #c99a1c;cursor:pointer}
+.chip.used{opacity:.35;text-decoration:line-through;box-shadow:none}
+.chip.bad{animation:shake .4s;background:var(--red);color:#fff}
+.cats{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:0 0 10px}
+.cats .btn{padding:8px 12px;font-size:13px;min-width:0}
+.cats .btn[aria-pressed="true"]{background:var(--honey);color:var(--pd)}
+.cats .btn.ok::after{content:" ✓";color:var(--good)}
+.grtab{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:#fff;color:var(--ink);border-radius:14px;padding:8px;font-weight:800;font-size:14px;margin:6px 0 10px}
+.grtab span{background:#F3F0FA;border-radius:8px;padding:6px 4px;text-align:center;min-height:30px;display:grid;place-items:center}
+.grtab span.hl{background:var(--honey);color:var(--pd)}
+.grtab span.hd{background:none;color:var(--p);font-size:12px}
+.grtab span.q{cursor:pointer;color:var(--p)}
+.grtab span.q.ok{background:#E6F7EC;color:var(--good)}
+.grtab span.q.no{background:#FFE4E4;color:#c0392b}
+.grtab.c3{grid-template-columns:1.3fr 1fr 1fr}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:stretch}
+.mcol{display:flex;flex-direction:column;gap:8px}
+.mb{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;background:#fff;color:var(--ink);border:0;border-radius:14px;padding:10px 8px;font:inherit;font-weight:800;font-size:clamp(12px,3.4vw,15px);line-height:1.2;cursor:pointer;box-shadow:0 6px 14px rgba(30,10,70,.25);outline:4px solid transparent;transition:all .2s var(--ease)}
+.mb.en{color:var(--p)}
+.mb.sel{outline-color:var(--honey);transform:scale(1.03)}
+.mb.ok{background:var(--good);color:#fff;opacity:.85;pointer-events:none}
+.mb.wrong{outline-color:var(--red);animation:shake .4s}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;color:var(--ink);border-radius:18px;padding:10px 14px;cursor:pointer;border:0;font:inherit;text-align:left;box-shadow:0 8px 18px rgba(30,10,70,.25);outline:4px solid transparent;transition:all .2s var(--ease);width:100%}
+.opt .en{font-weight:800;font-size:clamp(15px,4.3vw,18px);color:var(--p);flex:1;line-height:1.25}
+.opt .en small{display:block;font-size:12px;color:var(--muted);font-weight:600}
+.opt.on{outline-color:var(--honey);transform:scale(1.02)}
+.lights{display:flex;gap:8px;justify-content:flex-end}
+.lt{width:44px;height:44px;border-radius:50%;border:0;background:#f1edfa;font-size:22px;cursor:pointer;display:grid;place-items:center;opacity:.55;transition:all .2s var(--ease)}
+.lt.sel{opacity:1;background:var(--honey);transform:scale(1.12);box-shadow:0 4px 0 #d9ad2e}
+.hifive{font-size:54px;text-align:center;opacity:.25;transform:scale(.8);transition:all .3s var(--ease);margin-top:6px}
+.hifive.on{opacity:1;transform:scale(1.25) rotate(-10deg)}
+.ladbox{display:flex;gap:12px;align-items:flex-start;background:#fff;color:var(--ink);border-radius:20px;padding:14px;box-shadow:0 12px 26px rgba(30,10,70,.3)}
+.ladbox .ru{width:92px;flex:none;font-weight:800;color:var(--muted);font-size:14px;text-align:center;padding-top:4px;line-height:1.2}
+.ladder{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.ladder .stp{font-weight:800;font-size:clamp(15px,4.2vw,19px);letter-spacing:.06em;padding:3px 10px;border-radius:8px;color:var(--muted);border-bottom:2px dashed #e4dcf7;text-align:left;min-height:1.5em;overflow-wrap:anywhere}
+.ladder .stp span{color:#cfc6e8}
+.ladder .stp.done{color:var(--good)}
+.ladder .stp.cur{background:#FFF3C4;color:var(--p)}
+.ladder .stp.cur b{color:var(--p);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.chips .btn.letter{padding:10px 16px;font-size:20px;min-width:44px;justify-content:center}
+.wordflash{font-size:clamp(28px,8vw,40px);font-weight:800;color:var(--honey);min-height:50px;letter-spacing:.04em;transition:opacity .3s}
+.wordflash.hide{opacity:0}
+.slots,.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:6px 0}
+.slot,.tile{width:clamp(34px,8.6vw,46px);height:clamp(42px,10.6vw,56px);border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:clamp(20px,5.4vw,28px);font-family:inherit}
+.slot{background:rgba(255,255,255,.16);border:2px dashed rgba(255,255,255,.55);color:#fff}
+.slot.ok{background:#fff;color:var(--p);border-style:solid;border-color:#fff;animation:bounce .4s var(--ease)}
+.slot.space{width:14px;border:0;background:none}
+.tile{background:var(--honey);color:var(--pd);border:0;cursor:pointer;box-shadow:0 5px 0 #d9ad2e;transition:transform .12s}
+.tile:active{transform:translateY(3px);box-shadow:0 2px 0 #d9ad2e}
+.tile.used{visibility:hidden}
+.tile.bad{animation:shake .4s;background:var(--red);color:#fff}
+.result{background:#fff;color:var(--ink);border-radius:20px;padding:12px 16px;text-align:left;box-shadow:0 12px 26px rgba(30,10,70,.3);margin-bottom:12px}
+.rrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed #e4dcf7;font-weight:700;font-size:15px}
+.rrow.todo{opacity:.5}
+.rrow b{color:var(--p);font-size:17px}
+.rrow.tot{border:0;font-size:18px;margin-top:4px}
+.rrow.tot b{color:var(--good);font-size:24px}
+.rrow.sub{font-size:13px;opacity:.75}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 10px}
+.fields label{display:block;text-align:left;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;opacity:.8;margin:0 0 3px 6px}
+.fields input,.fields select{width:100%;font:inherit;font-weight:700;font-size:15px;padding:10px 12px;border-radius:12px;border:0;color:var(--ink);background:#fff}
+.fields .full{grid-column:1/-1}
+.email{background:#FFFDF6;color:var(--ink);border-radius:18px;padding:14px 16px;text-align:left;font-weight:600;font-size:15px;line-height:1.55;box-shadow:0 10px 24px rgba(30,10,70,.3);white-space:pre-wrap}
+.email b{color:var(--p)}
+.keyph{display:grid;grid-template-columns:1fr;gap:6px;background:#fff;color:var(--ink);border-radius:16px;padding:10px 12px;text-align:left;font-size:14px;font-weight:700;margin:6px 0 10px}
+.keyph b{color:var(--p);display:block;font-size:12px;text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+.cmap{position:relative;width:min(340px,86vw);aspect-ratio:1;margin:6px auto 10px}
+.cmap .ring{position:absolute;border-radius:50%;border:3px solid;display:grid;place-items:center}
+.cmap .me{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:#fff;color:#c0392b;font-weight:900;display:grid;place-items:center;font-size:16px;box-shadow:0 6px 14px rgba(0,0,0,.3)}
+.cmap .nm{position:absolute;transform:translate(-50%,-50%);background:#fff;color:var(--ink);font-weight:800;font-size:12px;padding:4px 9px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.25);white-space:nowrap}
+.plist{display:flex;flex-direction:column;gap:6px}
+.plist .pp{display:flex;align-items:center;gap:8px;background:#fff;color:var(--ink);border-radius:14px;padding:8px 12px;font-weight:700;font-size:14px;text-align:left}
+.plist .pp b{color:var(--p)}
+.plist .pp .x{margin-left:auto;border:0;background:#fde8e8;color:#c0392b;border-radius:50%;width:30px;height:30px;cursor:pointer;font-weight:900}
+
+/* ── Get Involved! A1+ · тема «Урок дома» для 11–13 лет (вставлять ПОСЛЕ базового <style> движка GMF) ── */
+:root{--p:#5B3FCF;--pd:#26176B;--honey:#F5C842;--sky:#63B3FF;--pink:#F17FBE;--teal:#34D3C0;--ink:#1E1838;--muted:#5E55A0;
+  --f:"Rubik","Segoe UI",system-ui,-apple-system,sans-serif}
+html{background:#1B1740}
+.deck,.slide{font-family:var(--f)}
+.bg,html,body{background:radial-gradient(120% 90% at 8% 0%,rgba(52,211,192,.26),transparent 55%),radial-gradient(110% 80% at 100% 8%,rgba(241,127,190,.22),transparent 55%),linear-gradient(180deg,#3A2A8C 0%,#241B5E 55%,#1B1740 100%);background-attachment:fixed}
+.top{background:linear-gradient(180deg,rgba(27,23,64,.92),rgba(27,23,64,0))}
+.nav{background:linear-gradient(0deg,rgba(27,23,64,.96),rgba(27,23,64,0))}
+.card .en{font-size:clamp(12px,3.5vw,16px);overflow-wrap:normal;word-break:normal;hyphens:manual}
+.slide h2{font-weight:900}
+.btn,.chip,.tile{font-weight:700}
+h1,h2,.sent,.cover h1{letter-spacing:-.01em}
+.cover img{display:none}
+.gi-tag{display:inline-block;font-weight:900;letter-spacing:.14em;font-size:12px;text-transform:uppercase;padding:8px 14px;border-radius:999px;background:var(--honey);color:var(--pd);margin:0 0 14px}
+.gi-mission{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:12px 14px;text-align:left;font-weight:600;font-size:15px;line-height:1.45;margin:10px 0}
+.gi-mission b{color:var(--honey)}
+.btn,.card,.lesson{font-family:var(--f)}
+
+
+</style></head>
+<body>
+<div class="top">
+  <div class="brand">Speak<b>&</b>Smile · урок дома</div>
+  <div class="dots" id="dots"></div>
+</div>
+<div class="deck" id="deck">
+  <section class="slide cover" data-key="cover">
+    <div><span class="gi-tag">Get Involved! · Unit 3 · занятие 2</span></div>
+    <h1>Comic Con live</h1>
+    <div class="gi-mission"><b>Миссия:</b> разобраться в live feed с фестиваля Comic Con — понять тип текста ещё до чтения и найти, кто во что одет: Халк, Безумный Шляпник и другие.</div>
+    <div class="book"><svg viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 18H6V4h5v8l2.5-1.5L16 12V4h2z"/></svg>Student’s Book стр. 38–39 · Workbook стр. 24</div>
+    <div class="plan" id="plan"></div>
+    <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
+    <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на занятие"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку</button></div>
+    <p class="parent">Для родителей: это пропущенное второе занятие Unit 3 (пара 22 по КТП: чтение, Word work, критическое мышление), 25–30 минут. Текст блога и статья из тетради — оригинальные записи Macmillan, фото из Student’s Book, задания с автопроверкой. Прогресс сохраняется на этом телефоне; в конце нажать «Готово».</p>
+  </section>
+  <section class="slide" data-key="event">
+    <h2><span class="n"><span>1</span></span>Что за событие?</h2>
+    <p class="hint">Задания 1–2, стр. 38: посмотри на фото на странице 39 (A–G). Опиши чью-нибудь одежду: <i>This person is wearing a hat and a sweater.</i> Потом ответь на вопросы.</p>
+<img class="photo" src="img/comic.jpg" alt="Comic Con photos A–G" style="max-width:300px;margin:0 auto 10px"><div class="btns"><button class="btn primary" id="evStart">Вопросы →</button><span class="score">Верно: <b id="evScore">0</b> / 3</span></div><div id="evBox"></div><div class="say" id="evMsg"></div>
+  </section>
+  <section class="slide" data-key="type">
+    <h2><span class="n"><span>1</span></span>Тип текста</h2>
+    <p class="hint">Subskill <b>Identifying the text type</b>: определи тип текста ДО чтения — это помогает понять содержание. Задание 3: посмотри на текст (время у каждого сообщения!) и ответь.</p>
+<div class="btns"><button class="btn primary" id="tyStart">Вопросы →</button><span class="score">Верно: <b id="tyScore">0</b> / 3</span></div><div id="tyBox"></div><div class="say" id="tyMsg"></div>
+  </section>
+  <section class="slide" data-key="read">
+    <h2><span class="n"><span>1</span></span>Comic Con: live feed</h2>
+    <p class="hint">Задание 4, стр. 39: читай и слушай (запись из учебника). Сообщения идут сверху вниз от последнего к первому — начни с конца, если хочешь читать по порядку событий. Выделены слова Word work.</p>
+<div class="btns"><button class="btn primary" id="rAll"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать всё</button></div><div id="rBox"></div>
+  </section>
+  <section class="slide" data-key="match">
+    <h2><span class="n"><span>1</span></span>Сообщение → фото</h2>
+    <p class="hint">Задание 4: к какому фото (A–G) каждое сообщение? Фото — на первом слайде.</p>
+<img class="photo" src="img/comic.jpg" alt="" style="max-width:220px;margin:0 auto 10px"><div class="rows" id="mRows"></div><div class="btns"><span class="score">Верно: <b id="mScore">0</b> / 7</span></div><div class="say" id="mMsg"></div>
+  </section>
+  <section class="slide" data-key="tf">
+    <h2><span class="n"><span>1</span></span>True or false?</h2>
+    <p class="hint">Задание 5, стр. 38: правда или нет? Ищи доказательство в тексте.</p>
+<div class="prog"><i id="tfProg"></i></div><div class="bigsay" id="tfText"></div><div class="tf" id="tfBtns" hidden><button class="btn yes" id="tfYes">True</button><button class="btn no" id="tfNo">False</button></div><div class="btns" id="tfWrap"><button class="btn primary" id="tfStart">Начать</button><span class="score">Верно: <b id="tfScore">0</b> / 6</span></div><div class="say" id="tfMsg"></div>
+  </section>
+  <section class="slide" data-key="ww">
+    <h2><span class="n"><span>1</span></span>Word work</h2>
+    <p class="hint">Задания 6–7, стр. 38: соедини определение со словом. Потом исправь предложения — слова в них перепутаны.</p>
+<div class="mcols"><div class="mcol" id="wwL"></div><div class="mcol" id="wwR"></div></div><div class="btns"><span class="score">Пары: <b id="wwScore">0</b> / 6</span><button class="btn ghost sm" id="wwReset">↺</button></div><div class="say" id="wwMsg"></div><div class="rows" id="w7Rows" style="margin-top:10px"></div><div class="btns"><span class="score">Верно: <b id="w7Score">0</b> / 6</span></div><div class="say" id="w7Msg"></div>
+  </section>
+  <section class="slide" data-key="ct">
+    <h2><span class="n"><span>1</span></span>Critical thinking</h2>
+    <p class="hint">Стр. 38: зачем нужен live feed? О каких событиях можно писать в таком формате?</p>
+<div class="btns"><button class="btn primary" id="ctStart">Understand →</button><span class="score">Верно: <b id="ctScore">0</b> / 1</span></div><div id="ctBox"></div><div class="say" id="ctMsg"></div><span class="sec" style="display:block;text-align:left;font-weight:800;margin:10px 0 6px">Apply: какие события можно описать в live feed? Отметь все.</span><div class="opts" id="apList"></div><div class="btns"><button class="btn primary" id="apCheck">Проверить</button></div><div class="say" id="apMsg"></div>
+  </section>
+  <section class="slide" data-key="wb">
+    <h2><span class="n"><span>1</span></span>Workbook, стр. 24: Finding the perfect shirt</h2>
+    <p class="hint">Задания 1–3: сначала по заголовку и абзацам определи тип текста, потом читай и слушай (запись из тетради) и ответь A, B или C.</p>
+<div class="btns"><button class="btn primary" id="kqStart">Задание 1 →</button><span class="score">Верно: <b id="kqScore">0</b> / 3</span></div><div id="kqBox"></div><div class="say" id="kqMsg"></div><div class="btns"><button class="btn primary" id="kAll"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Слушать всё</button></div><div id="kBox"></div><div class="rows" id="kRows" style="margin-top:10px"></div><div class="btns"><span class="score">Верно: <b id="kScore">0</b> / 4</span></div><div class="say" id="kMsg"></div>
+  </section>
+  <section class="slide" data-key="book">
+    <h2><span class="n"><span>1</span></span>В учебнике и тетради</h2>
+    <p class="hint">Теперь как в классе — с книгой и тетрадью.</p>
+    <div class="task"><div class="ic">🦸</div><div><h3>Student's Book, стр. 38, Critical thinking 3 «Create»</h3><p>Придумай ещё два события, о которых можно писать live feed, и напиши три коротких сообщения о любом из них со временем: 6:05 pm The players are coming onto the pitch…</p><label><input type="checkbox" data-task="t1">Сделано</label></div></div>
+    <div class="task"><div class="ic">📝</div><div><h3>Student's Book, стр. 38, задание 7</h3><p>Перепиши 6 исправленных предложений в тетрадь.</p><label><input type="checkbox" data-task="t2">Сделано</label></div></div>
+    <div class="task"><div class="ic">✍️</div><div><h3>Workbook, стр. 24, задание 4</h3><p>Какой рынок ты хотел бы посетить и почему? Любишь ли покупать на рынке? Твой любимый тип магазина?</p><label><input type="checkbox" data-task="t3">Сделано</label></div></div>
+
+  </section>
+  <section class="slide finish" data-key="finish">
+    <div class="stars" id="stars"></div>
+    <h2>Занятие пройдено?</h2>
+    <p class="hint">Напиши имя и фамилию — учитель увидит, что ты всё сделал.</p>
+    <input id="kidName" placeholder="Имя и фамилия" autocomplete="off">
+    <div><button class="btn primary big" id="doneBtn">✅ Готово</button></div>
+    <div class="msg" id="doneMsg"></div>
+  </section>
+</div>
+<div class="nav">
+  <button class="btn ghost" id="prevBtn">← Назад</button>
+  <span class="cnt" id="cnt"></span>
+  <button class="btn primary" id="nextBtn">Дальше →</button>
+</div>
+<script>
+const LESSON='gia2-u3-l2';
+
+window.addEventListener('error',e=>{ let d=document.getElementById('jserr'); if(!d){ d=document.createElement('div'); d.id='jserr'; d.style.cssText='position:fixed;left:8px;right:8px;bottom:120px;z-index:99;background:#c0392b;color:#fff;font:700 13px/1.3 system-ui;padding:8px 10px;border-radius:10px;word-break:break-word'; document.body.appendChild(d); } d.textContent='⚠️ '+(e.message||e)+' @'+(e.lineno||'?'); });
+const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
+const SPK='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>';
+const PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const P=Object.assign({"ev": 0, "type": 0, "read": 0, "mt": 0, "tf": 0, "ww": 0, "w7": 0, "ct": 0, "ap": 0, "kq": 0, "kread": 0, "kr": 0, "tasks": []},ls.get('home:'+LESSON)||{});
+const save=()=>{ls.set('home:'+LESSON,P);paint();};
+// ── звук (пул 4 Audio для iOS) ──
+const POOL=[], POOL_N=4; let current=null, playToken=0, unlocked=false;
+function mkNode(){ const a=new Audio(); a.preload='auto'; POOL.push(a); return a; }
+function unlock(){ if(unlocked) return; unlocked=true; while(POOL.length<POOL_N){ const a=mkNode(); try{ a.load(); }catch(e){} } }
+['touchend','pointerup','click'].forEach(ev=>document.addEventListener(ev,unlock,{once:true,capture:true}));
+function getNode(id){ let a=POOL.find(x=>x!==current&&x._src===id); if(!a) a=POOL.find(x=>x!==current&&!x._src); if(!a) a=POOL.find(x=>x!==current); if(!a) a=mkNode(); if(a._src!==id){ a._src=id; a.src=id.startsWith('../')?id+'.mp3':'audio/'+id+'.mp3'; a.load(); } return a; }
+function isCur(id){ return !!current&&current._src===id; }
+function start(a,onend,at){ let fired=false; const done=()=>{ if(fired) return; fired=true; if(a._wd){ clearInterval(a._wd); a._wd=null; } if(current===a) current=null; onend&&onend(); };
+  a.muted=false; a.onpause=null; a.onended=done; current=a; const t0=Date.now(); const seek=()=>{ try{ a.currentTime=at||0; }catch(e){} }; if(a.readyState>=1) seek(); else a.addEventListener('loadedmetadata',seek,{once:true});
+  let lastCt=-1, lastMove=Date.now();
+  a._wd=setInterval(()=>{ if(current!==a){ clearInterval(a._wd); a._wd=null; return; } const d=a.duration, ok=d&&isFinite(d), ct=a.currentTime; if(ct!==lastCt){ lastCt=ct; lastMove=Date.now(); } const started=ct>(at||0)+0.05;
+    if(a.ended||(ok&&ct>=d-0.08)||(a.paused&&ok&&ct>=d-0.3)||(started&&Date.now()-lastMove>4000)||(!started&&Date.now()-t0>25000)||(a.error)) done(); },200);
+  const p=a.play(); if(p&&p.catch) p.catch(()=>done()); return a; }
+function play(id,onend,at){ stopAll(); if(typeof stopExtra==="function") stopExtra(); const a=getNode(id); a.playbackRate=1; return start(a,onend,at); }
+function playP(id){ return new Promise(res=>play(id,res)); }
+function playTok(id,tok){ return new Promise(res=>{ stopAll(); playToken=tok; start(getNode(id),res); }); }
+function stopAll(){ playToken++; if(current){ const c=current; current=null; c.onended=null; c.onpause=null; if(c._wd){ clearInterval(c._wd); c._wd=null; } c.pause(); } }
+async function chain(ids,tok){ for(const id of ids){ if(playToken!==tok) return false; await playTok(id,tok); await sleep(150); } return playToken===tok; }
+function flash(el,cls){ el.classList.add(cls); setTimeout(()=>el.classList.remove(cls),450); }
+// ── слайды ──
+const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
+slides.slice(1,-1).forEach((s,i)=>{ const n=s.querySelector('h2 .n span'); if(n) n.textContent=i+1; });
+const TITLES={"cover": "Старт", "event": "Событие", "type": "Тип текста", "read": "Текст", "match": "Фото", "tf": "True/False", "ww": "Word work", "ct": "Live feed", "wb": "Тетрадь", "book": "Учебник", "finish": "Финиш"};
+$('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]||s.dataset.key}"></button>`).join('');
+$('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]||s.dataset.key}</span>`).join('');
+let goT=null;
+function go(i){ i=Math.max(0,Math.min(N-1,i)); const x=slides[i].offsetLeft; clearInterval(goT); deck.style.scrollSnapType='none'; deck.scrollTo({left:x,behavior:'smooth'}); const t0=Date.now();
+  goT=setInterval(()=>{ const near=Math.abs(deck.scrollLeft-x)<=2; if(near||Date.now()-t0>900){ clearInterval(goT); goT=null; if(!near){ deck.style.scrollBehavior='auto'; deck.scrollLeft=x; } deck.style.scrollSnapType=''; deck.style.scrollBehavior=''; onSlide(i); } },60); }
+function onSlide(i){ if(i===cur) return; cur=i; stopAll(); if(typeof stopExtra==='function') stopExtra(); slides[i].scrollTop=0; paintNav(); }
+deck.addEventListener('scroll',()=>{ onSlide(Math.round(deck.scrollLeft/deck.clientWidth)); },{passive:true});
+$('#prevBtn').onclick=()=>go(cur-1); $('#nextBtn').onclick=()=>go(cur+1); $$('[data-next]').forEach(b=>b.onclick=()=>go(cur+1));
+$('#dots').onclick=e=>{ const b=e.target.closest('button'); if(b) go(+b.dataset.go); };
+document.addEventListener('keydown',e=>{ if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) return; if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1); });
+window.addEventListener('resize',()=>{ deck.scrollTo({left:cur*deck.clientWidth}); });
+function paintNav(){ $$('#dots button').forEach((b,i)=>b.classList.toggle('cur',i===cur)); $('#prevBtn').style.visibility=cur===0?'hidden':''; $('#nextBtn').style.visibility=cur===N-1?'hidden':''; $('#cnt').textContent=cur===0||cur===N-1?'':`${cur} / ${N-2}`; }
+// ── универсальные виджеты ──
+// слова-карточки: WORDS=[{id,en,ru,img?}] в #<id>; P.heard
+function wordCards(sel,words,pkey,opts){ opts=opts||{}; const box=$(sel); const heard=new Set(P[pkey]||[]);
+  box.innerHTML=words.map(w=>`<button class="card ${heard.has(w.id)?'heard':''}" data-id="${w.id}"><span class="snd">${SPK}</span>${w.img?`<img src="${w.img}" alt="">`:''}<span class="en">${esc(w.en)}</span>${opts.ru!==false&&w.ru?`<span class="ru">${esc(w.ru)}</span>`:''}</button>`).join('');
+  $$(sel+' .card').forEach(c=>c.onclick=()=>{ const w=words.find(x=>x.id===c.dataset.id); $$(sel+' .card').forEach(x=>x.classList.remove('playing')); c.classList.add('playing'); play(w.a||w.id,()=>c.classList.remove('playing')); heard.add(w.id); P[pkey]=[...heard]; c.classList.add('heard'); save(); if(opts.onAll&&heard.size>=words.length) opts.onAll(); }); }
+// «найди»: слушай слово — нажми карточку
+function findGame(sel,words,o){ const box=$(sel), st=$(o.start), sc=$(o.score), msg=$(o.msg); let q=[], curW=null, score=0, first=true, lock=true;
+  function render(){ box.innerHTML=words.map(w=>`<button class="card" data-id="${w.id}">${w.img?`<img src="${w.img}" alt="">`:''}<span class="en">${o.hideWord?'?':esc(w.en)}</span></button>`).join(''); $$(sel+' .card').forEach(c=>c.onclick=()=>pick(c)); }
+  function startG(){ q=shuffle(words); score=0; sc.textContent=0; st.hidden=true; msg.textContent=''; next(); }
+  function next(){ if(!q.length) return fin(); curW=q.shift(); first=true; lock=true; $$(sel+' .card').forEach(c=>c.classList.remove('right','wrong','dim')); msg.textContent='Слушай…'; play(curW.a||curW.id,()=>{ lock=false; msg.textContent='Какое слово?'; }); setTimeout(()=>lock=false,3000); }
+  function pick(c){ if(lock||!curW) return; if(c.dataset.id===curW.id){ lock=true; if(first) score++; sc.textContent=score; c.classList.add('right'); msg.textContent='✓ '+curW.en+(curW.ru?' — '+curW.ru:''); play('fb_yes',()=>setTimeout(next,500)); } else { first=false; flash(c,'wrong'); play(curW.a||curW.id); msg.textContent='Нет — слушай ещё раз'; } }
+  function fin(){ st.hidden=false; st.textContent='Ещё раз'; msg.textContent=score>=words.length-1?'🏆 Отлично: '+score+' из '+words.length+'!':'С первого раза '+score+' из '+words.length+'. Попробуй ещё!'; if(score>(P[o.pkey]||0)){ P[o.pkey]=score; save(); } if(score>=words.length-1) burst(); }
+  render(); st.onclick=startG; }
+// MCQ-раунды: items=[{q, a?, img?, opts:[...], ok:index|text, why?}] ; o={box, score, start?, msg, prog?, pkey, pass}
+function mcq(items,o){ const box=$(o.box), sc=$(o.score), msg=$(o.msg), st=o.start?$(o.start):null, pg=o.prog?$(o.prog):null; let q=[], curI=null, score=0, done=0, first=true, lock=false;
+  function startG(){ q=o.keepOrder?items.map((x,i)=>i):shuffle(items.map((x,i)=>i)); score=0; done=0; sc.textContent=0; if(st) st.hidden=true; msg.textContent=''; next(); }
+  function next(){ if(!q.length) return fin(); curI=q.shift(); first=true; lock=false; const it=items[curI]; if(pg) pg.style.width=(done/items.length*100)+'%';
+    box.innerHTML=`${it.img?`<img class="photo" src="${it.img}" alt="" style="max-height:200px;object-fit:contain;margin:0 auto 8px;width:auto;max-width:100%">`:''}<div class="bigsay" id="${o.box.slice(1)}_q">${it.q}</div><div class="opts ${o.rowOpts?'row':''}">${(o.shuffleOpts===false?it.opts:shuffle(it.opts)).map(t=>`<button class="btn" data-t="${esc(t)}">${t}</button>`).join('')}</div>`;
+    $$(o.box+' .opts .btn').forEach(b=>b.onclick=()=>pick(b)); if(it.a) play(it.a); $('#'+o.box.slice(1)+'_q').onclick=()=>it.a&&play(it.a); }
+  function pick(b){ if(lock) return; const it=items[curI]; const okT=typeof it.ok==='number'?it.opts[it.ok]:it.ok; if(b.dataset.t===okT){ lock=true; done++; if(first) score++; sc.textContent=score; b.classList.add('right'); msg.textContent='✓ '+(it.why||''); if(it.ao) play(it.ao,()=>setTimeout(next,600)); else { play('fb_yes'); setTimeout(next,1100); } } else { first=false; flash(b,'wrong'); play('fb_no'); msg.textContent=it.hint||'Не то. Подумай ещё'; } }
+  function fin(){ if(pg) pg.style.width='100%'; box.innerHTML=''; if(st){ st.hidden=false; st.textContent='Ещё раз'; } const pass=o.pass||Math.ceil(items.length*0.75); msg.textContent=score>=pass?'🏆 '+score+' из '+items.length+'!':'С первого раза '+score+' из '+items.length+'. Попробуй ещё!'; if(score>(P[o.pkey]||0)){ P[o.pkey]=score; save(); } if(score>=pass) burst(); }
+  if(st) st.onclick=startG; else startG(); return {start:startG}; }
+// true/false: items=[{t, a?, ok:bool, why}] ; o={text, yes, no, wrap, start, score, msg, prog, pkey, pass}
+function tfGame(items,o){ let q=[], c=null, score=0, done=0, lock=true;
+  function startG(){ q=shuffle(items); score=0; done=0; $(o.score).textContent=0; $(o.wrap).hidden=true; $(o.tf).hidden=false; $(o.msg).textContent=''; next(); }
+  function next(){ if(!q.length) return fin(); c=q.shift(); $(o.prog).style.width=(done/items.length*100)+'%'; $(o.text).textContent=c.t; lock=true; if(c.a) play(c.a,()=>{ lock=false; }); setTimeout(()=>{ lock=false; },c.a?4000:300); }
+  function ans(yes){ if(lock) return; lock=true; const ok=(yes===c.ok); done++; if(ok){ score++; $(o.score).textContent=score; $(o.msg).textContent=(c.ok?'True ✓ ':'False ✓ ')+(c.why||''); } else { $(o.msg).textContent=(c.ok?'Это правда: ':'Это неправда: ')+(c.why||''); } play(ok?'fb_yes':'fb_no',()=>setTimeout(()=>{ $(o.msg).textContent=''; next(); },ok?700:1800)); }
+  function fin(){ $(o.prog).style.width='100%'; $(o.tf).hidden=true; $(o.text).textContent=''; $(o.wrap).hidden=false; $(o.start).textContent='Ещё раз'; const pass=o.pass||Math.ceil(items.length*0.8); $(o.msg).textContent=score>=pass?'🏆 Отлично: '+score+' из '+items.length+'!':'Верно '+score+' из '+items.length+'. Попробуй ещё!'; if(score>(P[o.pkey]||0)){ P[o.pkey]=score; save(); } if(score>=pass) burst(); }
+  $(o.start).onclick=startG; $(o.yes).onclick=()=>ans(true); $(o.no).onclick=()=>ans(false); $(o.text).onclick=()=>c&&c.a&&play(c.a); }
+// пропуски с мгновенной проверкой: rows=[{html:'... {0} ...', ans:['x'], a?}] bank=[...] ; o={rows, bank, score, msg, pkey, once?}
+function gapFill(rows,bank,o){ const box=$(o.rows), bk=$(o.bank), msg=$(o.msg); let curG=null; const st=P[o.pkey+'_g']||{}; let okCount=0;
+  function gid(r,k){ return r+'_'+k; }
+  function render(){ okCount=0; box.innerHTML=rows.map((r,ri)=>{ let k=0; const h=r.html.replace(/\{(\d+)\}/g,(m,n)=>{ const id=gid(ri,n); const v=st[id]; const ok=v===r.ans[+n]; if(ok) okCount++; return `<span class="gap ${curG===id?'cur':''} ${ok?'good':(v?'wrong':'')}" data-g="${id}" data-r="${ri}" data-k="${n}">${v||'?'}</span>`; }); const allOk=r.ans.every((a,n)=>st[gid(ri,n)]===a); return `<div class="tk-row ${allOk?'ok':''}"><div class="num">${ri+1}</div><div class="tk-sent">${h}</div>${r.a?`<button class="btn sm" data-a="${r.a}">${SPK}</button>`:''}</div>`; }).join('');
+    const used=new Set(o.once?rows.flatMap((r,ri)=>r.ans.filter((a,n)=>st[gid(ri,n)]===a)):[]); bk.innerHTML=bank.map(w=>`<button class="btn ${used.has(w)?'used':''}" data-w="${esc(w)}">${w}</button>`).join('');
+    $$(o.rows+' .gap').forEach(g=>g.onclick=()=>{ if(g.classList.contains('good')) return; curG=g.dataset.g; render(); }); $$(o.rows+' [data-a]').forEach(b=>b.onclick=()=>play(b.dataset.a));
+    $$(o.bank+' .btn').forEach(b=>b.onclick=()=>put(b.dataset.w)); const total=rows.reduce((n,r)=>n+r.ans.length,0); $(o.score).textContent=okCount; if(okCount>=total&&!P[o.pkey]){ P[o.pkey]=1; save(); burst(); msg.textContent='🏆 Всё верно!'; } }
+  function put(w){ if(!curG){ const g=$$(o.rows+' .gap').find(x=>!x.classList.contains('good')); if(!g) return; curG=g.dataset.g; } const [ri,k]=curG.split('_').map(Number); const r=rows[ri]; if(r.ans[k]===w){ st[curG]=w; P[o.pkey+'_g']=st; msg.textContent='✓'; if(r.a&&r.ans.every((a,n)=>st[gid(ri,n)]===a)) play(r.a); else play('fb_yes'); const nx=$$(o.rows+' .gap').find(x=>!x.classList.contains('good')&&x.dataset.g!==curG); curG=nx?nx.dataset.g:null; } else { st[curG]=w; msg.textContent='Нет, не '+w+'. Попробуй другое слово'; play('fb_no'); } save(); render(); }
+  render(); }
+// выбор из вариантов внутри строки (choose the correct option): rows=[{html:'... {0} ...', opts:[[a,b]], ans:[idx], a?}]
+function chooseRows(rows,o){ const box=$(o.rows), msg=$(o.msg); const st=P[o.pkey+'_g']||{}; let okCount=0;
+  function render(){ okCount=0; box.innerHTML=rows.map((r,ri)=>{ const h=r.html.replace(/\{(\d+)\}/g,(m,n)=>{ const id=ri+'_'+n; const v=st[id]; const ok=v===r.ans[+n]; if(ok) okCount++; return `<span class="opts row" style="display:inline-flex;margin:0 4px;gap:4px;vertical-align:middle">${r.opts[+n].map((t,oi)=>`<button class="btn sm ${v===oi?(ok?'right':'wrong'):''}" data-id="${id}" data-oi="${oi}" ${ok?'disabled':''}>${t}</button>`).join('')}</span>`; }); const allOk=r.ans.every((a,n)=>st[ri+'_'+n]===a); return `<div class="tk-row ${allOk?'ok':''}"><div class="num">${ri+1}</div><div class="tk-sent">${h}</div>${r.a?`<button class="btn sm" data-a="${r.a}">${SPK}</button>`:''}</div>`; }).join('');
+    $$(o.rows+' [data-oi]').forEach(b=>b.onclick=()=>{ const id=b.dataset.id, oi=+b.dataset.oi; const [ri,n]=id.split('_').map(Number); st[id]=oi; P[o.pkey+'_g']=st; if(rows[ri].ans[n]===oi){ msg.textContent='✓ '+(rows[ri].why||''); if(rows[ri].a&&rows[ri].ans.every((a,k)=>st[ri+'_'+k]===a)) play(rows[ri].a); else play('fb_yes'); } else { msg.textContent=rows[ri].hint||'Нет. Подумай ещё'; play('fb_no'); } save(); render(); });
+    $$(o.rows+' [data-a]').forEach(b=>b.onclick=()=>play(b.dataset.a)); const total=rows.reduce((n,r)=>n+r.ans.length,0); $(o.score).textContent=okCount; if(okCount>=total&&!P[o.pkey]){ P[o.pkey]=1; save(); burst(); msg.textContent='🏆 Всё верно!'; } }
+  render(); }
+// пары (две колонки): pairs=[{a:'id', l:'левое', r:'правое', snd?}] ; o={left,right,score,msg,reset,pkey}
+function matchPairs(pairs,o){ let sl=null, sr=null, n=0;
+  function render(){ $(o.left).innerHTML=shuffle(pairs).map(p=>`<button class="mb" data-a="${p.a}">${p.l}</button>`).join(''); $(o.right).innerHTML=shuffle(pairs).map(p=>`<button class="mb en" data-a="${p.a}">${p.r}</button>`).join('');
+    $$(o.left+' .mb').forEach(b=>b.onclick=()=>{ if(b.classList.contains('ok')) return; $$(o.left+' .mb').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); sl=b; check(); }); $$(o.right+' .mb').forEach(b=>b.onclick=()=>{ if(b.classList.contains('ok')) return; $$(o.right+' .mb').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); sr=b; check(); }); }
+  function check(){ if(!sl||!sr) return; const a=sl,b=sr; sl=sr=null; if(a.dataset.a===b.dataset.a){ a.classList.remove('sel'); b.classList.remove('sel'); a.classList.add('ok'); b.classList.add('ok'); n++; $(o.score).textContent=n; const p=pairs.find(x=>x.a===a.dataset.a); if(p.snd) play(p.snd); else play('fb_yes'); $(o.msg).textContent=p.say||''; if(n>=pairs.length){ P[o.pkey]=1; save(); burst(); $(o.msg).textContent='🏆 Все пары найдены!'; } } else { a.classList.add('wrong'); b.classList.add('wrong'); play('fb_no'); setTimeout(()=>{ a.classList.remove('wrong','sel'); b.classList.remove('wrong','sel'); },500); } }
+  if(o.reset) $(o.reset).onclick=()=>{ n=0; $(o.score).textContent=0; render(); }; render(); }
+// собери предложение из слов: items=[{words:[...], a?, say?}] ; o={start,sent,chips,score,msg,prog,reset,pkey}
+function orderWords(items,o){ let q=[], c=null, picked=[], n=0;
+  function startG(){ q=o.keepOrder?items.slice():shuffle(items); n=0; $(o.score).textContent=0; $(o.start).hidden=true; if(o.reset) $(o.reset).hidden=false; $(o.msg).textContent=''; next(); }
+  function next(){ if(!q.length) return fin(); c=q.shift(); picked=[]; $(o.prog).style.width=(n/items.length*100)+'%'; if(o.prompt) $(o.prompt).innerHTML=c.prompt||''; render(); }
+  function render(){ $(o.sent).textContent=picked.join(' ')||'…'; const pool=c.words.slice(); picked.forEach(p=>{ const k=pool.indexOf(p); if(k>=0) pool.splice(k,1); }); $(o.chips).innerHTML=shuffle(pool).map(w=>`<button class="chip" data-w="${esc(w)}">${w}</button>`).join(''); $$(o.chips+' .chip').forEach(ch=>ch.onclick=()=>tap(ch)); }
+  function tap(ch){ const w=ch.dataset.w; if(w===c.words[picked.length]){ picked.push(w); render(); if(picked.length===c.words.length){ n++; $(o.score).textContent=n; $(o.msg).textContent='✓ '+(c.say||'Повтори вслух'); if(c.a) play(c.a,()=>setTimeout(next,500)); else { play('fb_yes'); setTimeout(next,900); } } } else { flash(ch,'bad'); play('fb_no'); $(o.msg).textContent=c.hint||'Не то слово'; } }
+  function fin(){ $(o.prog).style.width='100%'; $(o.sent).textContent=''; $(o.chips).innerHTML=''; if(o.prompt) $(o.prompt).innerHTML=''; $(o.start).hidden=false; $(o.start).textContent='Ещё раз'; if(o.reset) $(o.reset).hidden=true; $(o.msg).textContent='🏆 Все '+items.length+' собраны!'; P[o.pkey]=1; save(); burst(); }
+  $(o.start).onclick=startG; if(o.reset) $(o.reset).onclick=()=>{ if(c){ picked=[]; render(); } }; }
+// диалог с ролями: lines=[{who, a, en, ru?, gap?}] ; o={chat, all, msg, roles:{l:'#dL',r:'#dR'}, av:{l:'👧',r:'🧑'}, pkey, rkey}
+function dialog(lines,o){ let role=null, busy=false; const chat=$(o.chat);
+  function render(){ chat.innerHTML=lines.map((l,i)=>{ const you=role&&role===l.who; return `<div class="msg ${l.side==='r'||(!l.side&&l.who===o.rightWho)?'r':''}"><div class="av">${o.av[l.who]||l.who}</div><button class="bub ${you?'you':''}" data-i="${i}">${you?'Скажи: ':''}${l.en}${l.ru?`<span class="ru">${l.ru}</span>`:''}</button></div>`; }).join('');
+    $$(o.chat+' .bub').forEach(b=>b.onclick=()=>{ if(busy) return; light(+b.dataset.i); play(lines[+b.dataset.i].a,()=>light(-1)); }); }
+  function light(k){ $$(o.chat+' .bub').forEach((b,i)=>b.classList.toggle('on',i===k)); }
+  async function all(){ if(busy) return; busy=true; const tok=++playToken; $(o.msg).textContent=''; $(o.all).innerHTML='⏹ Стоп';
+    for(let i=0;i<lines.length;i++){ if(playToken!==tok) break; const l=lines[i]; light(i); if(role&&role===l.who){ $(o.msg).textContent='Твоя реплика: '+l.en; await sleep(Math.max(2400,l.en.length*80)); $(o.msg).textContent=''; } else { await playTok(l.a,tok); await sleep(300); } }
+    light(-1); busy=false; $(o.all).innerHTML=PLAY+(role?'Играем!':'Слушать всё'); if(playToken===tok){ if(role){ P[o.rkey]=1; $(o.msg).textContent='Отлично сыграно 🎭'; } else { P[o.pkey]=1; $(o.msg).textContent='Теперь выбери роль и сыграй сам'; } save(); burst(); } }
+  $(o.all).onclick=()=>{ if(busy){ stopAll(); busy=false; light(-1); $(o.all).innerHTML=PLAY+(role?'Играем!':'Слушать всё'); return; } all(); };
+  function setRole(r){ role=role===r?null:r; for(const k in o.roles) $(o.roles[k]).setAttribute('aria-pressed',role===k); render(); $(o.msg).textContent=role?'Нажми «Играем!» — свои реплики говори сам':''; $(o.all).innerHTML=PLAY+(role?'Играем!':'Слушать всё'); }
+  for(const k in o.roles) $(o.roles[k]).onclick=()=>setRole(k); render(); }
+// текст по абзацам с озвучкой: paras=[{a, html, img?}] ; o={box, all, msg, pkey(=число прослушанных)}
+function reader(paras,o){ const heard=new Set(P[o.pkey+'_h']||[]); let busy=false;
+  function render(){ $(o.box).innerHTML=paras.map((p,i)=>`<button class="para ${heard.has(i)?'heard':''}" data-i="${i}">${p.img?`<img src="${p.img}" alt="">`:''}${p.html}</button>`).join(''); $$(o.box+' .para').forEach(b=>b.onclick=()=>{ if(busy) return; const i=+b.dataset.i; lit(i); play(paras[i].a,()=>{ lit(-1); mark(i); }); }); }
+  function lit(k){ $$(o.box+' .para').forEach((b,i)=>b.classList.toggle('on',i===k)); }
+  function mark(i){ heard.add(i); P[o.pkey+'_h']=[...heard]; P[o.pkey]=heard.size; save(); $$(o.box+' .para')[i].classList.add('heard'); if(heard.size>=paras.length&&o.onAll) o.onAll(); }
+  async function all(){ if(busy){ stopAll(); busy=false; lit(-1); $(o.all).innerHTML=PLAY+'Слушать всё'; return; } busy=true; const tok=++playToken; $(o.all).innerHTML='⏹ Стоп'; for(let i=0;i<paras.length;i++){ if(playToken!==tok) break; lit(i); const el=$$(o.box+' .para')[i]; el.scrollIntoView({block:'center',behavior:'smooth'}); await playTok(paras[i].a,tok); if(playToken===tok) mark(i); await sleep(250); } lit(-1); busy=false; $(o.all).innerHTML=PLAY+'Слушать всё'; }
+  $(o.all).onclick=all; render(); }
+// сортировка по категориям: items=[{t, cat, a?}] cats=[{id,name}] ; o={cats, items, score, msg, pkey}
+function sorter(items,cats,o){ const st=P[o.pkey+'_s']||{}; let selCat=null;
+  function render(){ $(o.cats).innerHTML=cats.map(c=>`<button class="btn ${selCat===c.id?'':'ghost'}" data-c="${c.id}" aria-pressed="${selCat===c.id}">${c.name} <b style="opacity:.7">${items.filter((it,i)=>st[i]===it.cat&&it.cat===c.id).length}/${items.filter(it=>it.cat===c.id).length}</b></button>`).join('');
+    $$(o.cats+' .btn').forEach(b=>b.onclick=()=>{ selCat=b.dataset.c; render(); });
+    $(o.items).innerHTML=items.map((it,i)=>st[i]===it.cat?'':`<button class="chip" data-i="${i}">${it.t}</button>`).join(''); $$(o.items+' .chip').forEach(ch=>ch.onclick=()=>{ if(!selCat){ $(o.msg).textContent='Сначала выбери группу сверху'; return; } const i=+ch.dataset.i; if(items[i].cat===selCat){ st[i]=selCat; P[o.pkey+'_s']=st; $(o.msg).textContent='✓ '+items[i].t; if(items[i].a) play(items[i].a); else play('fb_yes'); } else { flash(ch,'bad'); play('fb_no'); $(o.msg).textContent=items[i].t+' — не сюда'; } save(); render(); });
+    const n=items.filter((it,i)=>st[i]===it.cat).length; $(o.score).textContent=n; if(n>=items.length&&!P[o.pkey]){ P[o.pkey]=1; save(); burst(); $(o.msg).textContent='🏆 Всё разложено!'; } }
+  render(); }
+// лесенка: LADDER=[{w, a, ru}]
+function ladderGame(L,o){ let q=[], c=null, step=0, score=0;
+  function startG(){ q=L.slice(); score=0; $(o.score).textContent=0; $(o.start).hidden=true; $(o.msg).textContent=''; next(); }
+  function next(){ if(!q.length) return fin(); c=q.shift(); step=1; play(c.a); render(); }
+  function render(){ const w=c.w; const steps=[...Array(w.length).keys()];
+    $(o.box).innerHTML=`<div class="ru">${c.ru}</div><div class="ladder">${steps.map(k=>{ const vis=w.length-k; const txt=k===0?w:(k<step?w.slice(0,vis)+'<span>'+'·'.repeat(k)+'</span>':k===step?w.slice(0,vis-1)+'<b>_</b>'+'<span>'+'·'.repeat(k)+'</span>':'<span>'+'·'.repeat(w.length)+'</span>'); return `<div class="stp ${k<step?'done':''} ${k===step?'cur':''}">${txt}</div>`; }).join('')}</div>`;
+    if(step>w.length-1){ score++; $(o.score).textContent=score; $(o.msg).textContent=w+' ✓'; play(c.a,()=>setTimeout(next,700)); $(o.chips).innerHTML=''; return; }
+    const need=w[w.length-step-1]; const pool=shuffle([need,...shuffle('abcdeghilmnoprstuy'.replace(need,'').split('')).slice(0,3)]);
+    $(o.chips).innerHTML=pool.map(ch=>`<button class="btn letter" data-ch="${ch}">${ch}</button>`).join(''); $$(o.chips+' .btn').forEach(b=>b.onclick=()=>{ if(b.dataset.ch===need){ step++; render(); } else flash(b,'wrong'); }); $(o.msg).textContent='Какая буква пропала? Скажи слово целиком: '+w; }
+  function fin(){ $(o.start).hidden=false; $(o.start).textContent='Ещё раз'; $(o.msg).textContent='🏆 Лесенки пройдены! Запиши слова в тетрадь'; P[o.pkey]=1; save(); burst(); }
+  $(o.start).onclick=startG; }
+// правописание: SP=[{en, a}]
+function spellGame(SP,o){ let q=[], c=null, pos=0, done=0, score=0, peek=0, timer=null;
+  function startG(){ q=shuffle(SP); done=0; score=0; $(o.score).textContent=0; $(o.wrap).hidden=true; $(o.msg).textContent=''; next(); }
+  function next(){ if(!q.length) return fin(); c=q.shift(); pos=0; peek=0; const w=c.en; $(o.prog).style.width=(done/SP.length*100)+'%'; $(o.word).textContent=w; $(o.word).classList.remove('hide'); play(c.a); clearTimeout(timer); timer=setTimeout(()=>$(o.word).classList.add('hide'),3000);
+    $(o.slots).innerHTML=[...w].map(ch=>ch===' '?'<span class="slot space"></span>':'<span class="slot"></span>').join(''); $(o.tiles).innerHTML=shuffle([...w.replace(/ /g,'')]).map((ch,i)=>`<button class="tile" data-ch="${ch}" data-i="${i}">${ch}</button>`).join(''); $$(o.tiles+' .tile').forEach(t=>t.onclick=()=>tap(t)); $(o.msg).textContent='Запомни, потом собери'; }
+  function tap(t){ const w=c.en; while(w[pos]===' ') pos++; const need=w[pos]; if(t.dataset.ch===need){ t.classList.add('used'); const slot=$$(o.slots+' .slot')[pos]; slot.textContent=need; slot.classList.add('ok'); pos++; if(pos>=w.length){ done++; if(!peek){ score++; $(o.score).textContent=score; } $(o.word).classList.remove('hide'); $(o.msg).textContent=w+' '+(peek?'(подсмотрел)':'✓'); play(c.a,()=>setTimeout(next,600)); } } else flash(t,'bad'); }
+  $(o.word).onclick=()=>{ if(!c) return; peek=1; $(o.word).classList.remove('hide'); clearTimeout(timer); timer=setTimeout(()=>$(o.word).classList.add('hide'),2000); };
+  function fin(){ $(o.prog).style.width='100%'; $(o.word).textContent=''; $(o.slots).innerHTML=''; $(o.tiles).innerHTML=''; $(o.wrap).hidden=false; $(o.start).textContent='Ещё раз'; const pass=Math.ceil(SP.length*.8); $(o.msg).textContent=score>=pass?'🏆 По памяти: '+score+' из '+SP.length+'!':'По памяти '+score+' из '+SP.length+'. Попробуй ещё!'; if(score>(P[o.pkey]||0)){ P[o.pkey]=score; save(); } if(score>=pass) burst(); }
+  $(o.start).onclick=startG; }
+// «Я могу»: IC=[{a,en,ru}]
+function iCan(IC,o){ function render(){ $(o.list).innerHTML=IC.map(c=>`<div class="opt"><button class="btn ghost sm" data-say="${c.a}">${SPK}</button><span class="en">${c.en}<small>${c.ru}</small></span><div class="lights">${['🔴','🟡','🟢'].map((l,k)=>`<button class="lt ${(P.light||{})[c.a]===k?'sel':''}" data-a="${c.a}" data-k="${k}">${l}</button>`).join('')}</div></div>`).join('');
+    $$(o.list+' [data-say]').forEach(b=>b.onclick=()=>play(b.dataset.say)); $$(o.list+' .lt').forEach(b=>b.onclick=()=>{ P.light=P.light||{}; P.light[b.dataset.a]=+b.dataset.k; save(); render(); const n=Object.keys(P.light).length; $(o.msg).textContent=n>=IC.length?'🏆 Самооценка готова!':'Оценено: '+n+' из '+IC.length; if(n>=IC.length&&!P.icDone){ P.icDone=1; save(); burst(); } }); }
+  render(); if(o.wd){ $(o.wd).onclick=()=>{ $(o.hifive).classList.add('on'); play('wd',()=>{ $(o.hifive).classList.remove('on'); burst(); burst(); }); }; } }
+// перемешать варианты внутри строк (детерминированно), пересчитав ans
+function mix(rows){ return rows.map((r,ri)=>{ const opts=[],ans=[]; r.opts.forEach((o,n)=>{ const k=(ri*2+n+1)%o.length; const no=o.slice(k).concat(o.slice(0,k)); opts.push(no); ans.push(no.indexOf(o[r.ans[n]])); }); return Object.assign({},r,{opts,ans}); }); }
+// выбрать несколько: items=[{t,ok}] ; o={list,check,score?,msg,pkey,okMsg?,fixed?:[i]}
+function pickMany(items,o){ const fixed=new Set(o.fixed||[]); const sel=new Set([...(P[o.pkey+'_sel']||[]),...fixed]); let chk=!!P[o.pkey];
+  function render(){ $(o.list).innerHTML=items.map((it,i)=>{ const on=sel.has(i); const cls=chk?(on===!!it.ok?(on?'right':''):'wrong'):''; return `<button class="btn ${cls}" data-i="${i}" aria-pressed="${on}" style="justify-content:flex-start;text-align:left;${on&&!chk?'background:var(--honey);color:var(--ink)':''}">${on?'☑':'☐'} ${it.t}</button>`; }).join('');
+    $$(o.list+' .btn').forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; if(fixed.has(i)) return; if(sel.has(i)) sel.delete(i); else sel.add(i); chk=false; P[o.pkey+'_sel']=[...sel]; save(); render(); }); }
+  $(o.check).onclick=()=>{ let ok=0; items.forEach((it,i)=>{ if(sel.has(i)===!!it.ok) ok++; }); chk=true; render(); if(o.score) $(o.score).textContent=ok; if(ok>=items.length){ if(!P[o.pkey]){ P[o.pkey]=1; save(); } burst(); play('fb_yes'); $(o.msg).textContent='🏆 '+(o.okMsg||'Всё верно!'); } else { play('fb_no'); $(o.msg).textContent='Верно '+ok+' из '+items.length+'. Красные — исправь и проверь снова.'; } };
+  render(); }
+// видео: отметка просмотра (90% или конец)
+function vidWatch(sel,key,msg){ const v=$(sel); if(!v) return; const ok=()=>{ if(!P[key]){ P[key]=1; save(); burst(); } if(msg) $(msg).textContent='Видео просмотрено! 🎬'; };
+  v.addEventListener('timeupdate',()=>{ if(v.duration&&v.currentTime/v.duration>0.9) ok(); }); v.addEventListener('ended',ok); v.addEventListener('play',()=>stopAll()); }
+function audWatch(sel,key){ const v=$(sel); if(!v) return; v.addEventListener('play',()=>stopAll()); v.addEventListener('timeupdate',()=>{ if(v.duration&&v.currentTime/v.duration>0.85&&!P[key]){ P[key]=1; save(); } }); }
+function stopExtra(){ $$('video,audio').forEach(v=>{ try{ v.pause(); }catch(e){} }); }
+// ── учебник ──
+$$('[data-task]').forEach(cb=>{ cb.checked=(P.tasks||[]).includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
+// ── прогресс ──
+const KEYS=slides.slice(1,-1).map(s=>s.dataset.key);
+function doneMap(){ return {event:P.ev>=2, type:P.type>=2, read:P.read>=6, match:P.mt>=1, tf:P.tf>=5, ww:P.ww>=1&&P.w7>=1, ct:P.ct>=1&&P.ap>=1, wb:P.kq>=2&&P.kread>=3&&P.kr>=1, book:P.tasks.length>=2}; }
+function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); const st=$('#stars'); if(st) st.innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); if(typeof paintExtra==='function') paintExtra(d); }
+// ── финиш ──
+$('#kidName').value=ls.get('home:name')||'';
+$('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя и фамилию'; $('#kidName').focus(); return; } ls.set('home:name',n);
+  const d=doneMap(), cnt=KEYS.filter(k=>d[k]).length; const need=6; if(cnt<need){ m.textContent='Сделай хотя бы '+need+' шагов из '+KEYS.length+' — тогда можно отправлять'; return; }
+  m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
+  const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${typeof sendScore==='function'?sendScore():cnt}&m=${typeof sendMax==='function'?sendMax():KEYS.length}&f=${typeof sendF==='function'?sendF():cnt}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
+  const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
+  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит.'; burst(); burst(); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
+function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
+  const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
+let toastT=null; function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; document.body.appendChild(t); } t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
+$('#copyLink').onclick=()=>copyLink($('#copyLink'),location.origin+location.pathname);
+function copyText(txt,btn){ const done=ok=>{ toast(ok?'Текст скопирован ✓':'Не скопировалось'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } }; if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>done(true),()=>done(false)); else done(false); }
+function burst(){ const c=document.createElement('div'); c.className='confetti'; const cols=['#F5C842','#F17FBE','#63B3FF','#34D3C0','#fff']; for(let i=0;i<40;i++){ const p=document.createElement('i'); p.style.left=Math.random()*100+'vw'; p.style.background=cols[i%5]; p.style.animationDelay=(Math.random()*.6)+'s'; c.appendChild(p); } document.body.appendChild(c); setTimeout(()=>c.remove(),3200); }
+
+
+mcq([{q:'1. What type of event can you see?',opts:['a festival for comic fans','a football match','a school concert'],ok:0},{q:'2. What happens there?',opts:['People dress up as their heroes, play video games and watch artists.','People buy food and cook.','People run a marathon.'],ok:0},{q:'3. What type of people go there?',opts:['fans of comics, video games and films','only actors','only children'],ok:0}],
+  {box:'#evBox',score:'#evScore',start:'#evStart',msg:'#evMsg',pkey:'ev',pass:2,keepOrder:true});
+mcq([{q:'1. What type of text is it?',opts:['a live feed (posts with the time)','a story from a book','a letter'],ok:0,why:'Live feed — сообщения в реальном времени.'},{q:'2. Where do you normally read this type of text?',opts:['on a computer or on your phone','in a book'],ok:0,why:'b и c — на компьютере или телефоне.'},{q:'3. What is unusual about the order of the text?',opts:['You start reading at the bottom – the first post is at the bottom.','It has no title.','The posts are in alphabetical order.'],ok:0,why:'Новые сообщения сверху, первое — внизу (11:25 am).'}],
+  {box:'#tyBox',score:'#tyScore',start:'#tyStart',msg:'#tyMsg',pkey:'type',pass:2,keepOrder:true});
+const POSTS=[["3:31 pm", "Now I’m in the Game Zone. It’s the place to be for video games fans. Lots of fans are here and they’re having a great time! They’re playing this year’s new games. More from Comic Con later!", "Я в Игровой зоне — месте для фанатов видеоигр. Здесь полно фанатов, им очень весело! Они играют в новые игры этого года.", "A"], ["2:47 pm", "Comic Con is a great place to see actors, artists and other stars. A lot of fans are getting <mark>autographs</mark> and you can take a photo with your <mark>hero</mark>.", "Comic Con — отличное место, чтобы увидеть актёров, художников и других звёзд. Многие берут автографы, можно сфотографироваться со своим героем.", "B"], ["1:54 pm", "I’m now in Artists’ Alley. People are buying comics and watching their favourite <mark>artists</mark> at work. What’s this man doing? He’s drawing a comic – it’s really interesting to watch him draw.", "Я на Аллее художников. Люди покупают комиксы и смотрят, как работают любимые художники. Что делает этот человек? Рисует комикс — очень интересно смотреть!", "F"], ["12:32 pm", "A man on the stage has got a hat on and he’s wearing striped blue tights. His face is completely white and his hair is orange! Another great costume – he’s the Mad Hatter from Alice in Wonderland. Fantastic!", "На сцене мужчина в шляпе и синих полосатых колготках. Лицо совсем белое, волосы оранжевые! Ещё один классный костюм — Безумный Шляпник из «Алисы в Стране чудес».", "D"], ["12:15 pm", "I can see some amazing costumes. One man is wearing an <mark>enormous</mark> green top and brown trousers – wait – he’s turning round. He’s the Hulk!", "Вижу потрясающие костюмы. На одном мужчине огромная зелёная кофта и коричневые брюки — он поворачивается… Это Халк!", "C"], ["12:01 pm", "The doors are opening now and hundreds of people are coming through the doors. The organisers are telling people to go slowly but the fans aren’t listening. They all want to get in. So many people!", "Двери открываются, входят сотни людей. Организаторы просят идти медленно, но фанаты не слушают — все хотят попасть внутрь!", "G"], ["11:25 am", "The day’s just starting but already a lot of people are waiting to get in. Hundreds of Comic Con fans are arriving and some of them are wearing amazing <mark>costumes</mark>. Everyone’s very <mark>excited</mark>.", "День только начинается, а люди уже ждут у входа. Приезжают сотни фанатов, некоторые в потрясающих костюмах. Все в восторге.", "E"]];
+reader(POSTS.map((p,i)=>({a:'p'+(i+1),html:'<b>'+p[0]+'</b><br>'+p[1]+'<span class="ru">'+p[2]+'</span>'})),{box:'#rBox',all:'#rAll',pkey:'read'});
+const LG='ABCDEFG'.split('');
+chooseRows(POSTS.map(p=>({html:'<b>'+p[0]+'</b> '+p[1].replace(/<[^>]+>/g,'').slice(0,70)+'… {0}',opts:[LG],ans:[LG.indexOf(p[3])]})),{rows:'#mRows',score:'#mScore',msg:'#mMsg',pkey:'mt'});
+tfGame([{t:'Comic Con isn’t very busy at the start of the day.',ok:false,why:'«…already a lot of people are waiting to get in.»'},{t:'The fans walk in slowly.',ok:false,why:'«The organisers are telling people to go slowly but the fans aren’t listening.»'},{t:'Some people are wearing unusual clothes.',ok:true,why:'«I can see some amazing costumes.»'},
+  {t:'In one part of the festival you can watch people draw.',ok:true,why:'Artists’ Alley: «watching their favourite artists at work».'},{t:'Fans can see their heroes but they can’t meet them.',ok:false,why:'«…fans are getting autographs and you can take a photo with your hero.»'},{t:'At Comic Con you can try new video games.',ok:true,why:'«They’re playing this year’s new games.»'}],
+  {text:'#tfText',yes:'#tfYes',no:'#tfNo',wrap:'#tfWrap',tf:'#tfBtns',start:'#tfStart',score:'#tfScore',msg:'#tfMsg',prog:'#tfProg',pkey:'tf',pass:5});
+matchPairs([{a:'1',l:'people who draw or paint',r:'artists'},{a:'2',l:'someone who people admire',r:'hero'},{a:'3',l:'the clothes an actor wears to look like a different person',r:'costumes'},{a:'4',l:'the signatures of famous people',r:'autographs'},{a:'5',l:'very big',r:'enormous'},{a:'6',l:'feeling very happy about something',r:'excited'}],
+  {left:'#wwL',right:'#wwR',score:'#wwScore',msg:'#wwMsg',reset:'#wwReset',pkey:'ww'});
+const W6=[['excited','enormous','hero']];
+chooseRows([{html:'An elephant is an {0} animal.',opts:[['excited','enormous','artist']],ans:[1]},{html:'Leonardo da Vinci was a famous {0}.',opts:[['hero','artist','costume']],ans:[1]},{html:'Superman is my favourite comic book {0}.',opts:[['artist','hero','autograph']],ans:[1]},
+  {html:'People wear special {0} for Carnival.',opts:[['autographs','costumes','heroes']],ans:[1]},{html:'It’s my birthday tomorrow – I’m really {0}!',opts:[['enormous','excited','nervous']],ans:[1]},{html:'Some people like collecting {0}.',opts:[['costumes','autographs','heroes']],ans:[1]}],{rows:'#w7Rows',score:'#w7Score',msg:'#w7Msg',pkey:'w7'});
+mcq([{q:'Choose the correct sentence.',opts:['We use a live feed to report actions or events when they are happening.','We use a live feed to write about general information or things in the past.'],ok:0,why:'a — о том, что происходит прямо сейчас (поэтому present continuous!).'}],{box:'#ctBox',score:'#ctScore',start:'#ctStart',msg:'#ctMsg',pkey:'ct',pass:1});
+pickMany([{t:'the biography of a famous person',ok:0},{t:'a football match',ok:1},{t:'your last holiday',ok:0},{t:'an election',ok:1},{t:'an awards ceremony (Oscars, Grammys)',ok:1},{t:'reference information about an animal',ok:0}],{list:'#apList',check:'#apCheck',msg:'#apMsg',pkey:'ap',okMsg:'Live feed — для того, что происходит сейчас: матч, выборы, церемония наград.'});
+mcq([{q:'1. The article is…',opts:['a guide','an advert','an email'],ok:0},{q:'2. The text is about different…',opts:['markets','clothes','people'],ok:0},{q:'3. There are three paragraphs because there are three different…',opts:['places','writers','things on sale'],ok:0}],
+  {box:'#kqBox',score:'#kqScore',start:'#kqStart',msg:'#kqMsg',pkey:'kq',pass:2,keepOrder:true});
+const MK=[["Finding the perfect shirt. This week our reporter Rob Evans is looking for a perfect shirt in three world-famous markets.", "Наш репортёр Роб Эванс ищет идеальную рубашку на трёх знаменитых рынках."], ["<b>A San Telmo Fair, Buenos Aires, Argentina.</b> The indoor market is open Monday to Saturday, but I’m at the street market, San Telmo Fair. It’s open every Sunday till about 5:00 pm, if the weather is good. People here are selling all kinds of clothes, street musicians are playing and people are dancing. There’s a baggy shirt for €5. It isn’t trendy, but it’s cheap!", "Уличная ярмарка по воскресеньям до 5 вечера: одежда, музыканты, танцы. Мешковатая рубашка за 5 евро — не модная, зато дешёвая."], ["<b>B Night Bazaar, Chiang Mai, Thailand.</b> During the day, Chang Khlan Road is a normal street, but when the sun goes down, it becomes a large market, open every day of the year, even in the rain. It’s 8:00 pm and I’m searching for a shirt. There’s a light, comfortable shirt for €10! I suggest €7, the man wants more, finally we agree on €8 and it’s mine.", "Днём обычная улица, вечером — большой рынок, каждый день, даже в дождь. Удобная рубашка за 10 евро — сторговались на 8."], ["<b>C Grand Bazaar, Istanbul, Turkey.</b> This is one of the oldest and largest covered markets in the world. Around 400,000 people visit it every day from 9:00 am (except Sundays and holidays) until 7:00 pm. I found an old-fashioned shirt, perfect for Granddad. We’re trying to agree on the price. You always try to pay less!", "Один из старейших крытых рынков мира: 400 000 человек в день, с 9 до 19. Старомодная рубашка — идеально для дедушки. Торгуемся!"]];
+reader(MK.map((p,i)=>({a:'k'+(i+1),html:p[0]+'<span class="ru">'+p[1]+'</span>'})),{box:'#kBox',all:'#kAll',pkey:'kread'});
+const ABC=[['A','B','C']];
+chooseRows([{html:'Which market opens in the evening? {0}',opts:ABC,ans:[1]},{html:'In which does Rob listen to some music? {0}',opts:ABC,ans:[0]},{html:'Which market closes at 7:00 pm? {0}',opts:ABC,ans:[2]},{html:'Where does Rob buy a shirt for someone in his family? {0}',opts:ABC,ans:[2]}],{rows:'#kRows',score:'#kScore',msg:'#kMsg',pkey:'kr'});
+
+paint(); paintNav();
+</script>
+</body></html>
