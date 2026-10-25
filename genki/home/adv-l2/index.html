@@ -66,7 +66,7 @@ details.par p{margin:8px 0 0}
 .hint{font-size:13px;color:var(--muted);max-width:480px;margin:6px auto 0;line-height:1.35}
 .hint b{color:var(--ink)}
 .big{width:min(78vw,340px);aspect-ratio:1;border-radius:36px;background:#fff;display:grid;place-items:center;margin:14px auto 8px;box-shadow:0 10px 0 rgba(108,63,197,.18);overflow:hidden;position:relative}
-.big img{width:92%;height:92%;object-fit:contain;transition:transform .35s var(--spring)}
+.big img{position:absolute;left:4%;top:4%;width:92%;height:92%;object-fit:contain;transition:transform .35s var(--spring)}
 .big img.bump{animation:bump .5s var(--spring)}
 @keyframes bump{0%{transform:scale(.7)}100%{transform:scale(1)}}
 .say{font-size:30px;font-weight:800;color:var(--p);min-height:40px}
@@ -79,7 +79,9 @@ details.par p{margin:8px 0 0}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;max-width:440px;margin:14px auto}
 .grid.g3{grid-template-columns:repeat(3,1fr)}
 .card{aspect-ratio:1;border-radius:28px;background:#fff;box-shadow:0 7px 0 rgba(108,63,197,.2);display:grid;place-items:center;overflow:hidden;position:relative;transition:transform .2s var(--spring)}
-.card img{width:90%;height:90%;object-fit:contain;pointer-events:none}
+.card img{position:absolute;left:6%;top:5%;width:88%;height:90%;object-fit:contain;pointer-events:none}
+.card.cap img{height:72%}
+.card .lbl{position:absolute;left:4px;right:4px;bottom:6px;font-weight:800;font-size:clamp(12px,3.4vw,16px);line-height:1.05;color:#4B278F;pointer-events:none}
 .card:active{transform:scale(.95)}
 .card.heard::after{content:"✓";position:absolute;right:8px;top:6px;width:30px;height:30px;border-radius:50%;background:var(--good);color:#fff;font-weight:800;display:grid;place-items:center}
 .card.on{outline:6px solid var(--honey);transform:scale(1.04)}
@@ -188,14 +190,9 @@ const hint=t=>`<p class="hint">👩 ${t}</p>`;
 
 const SC={
  // Genki-мультик (swf)
- swf(b,s){b.innerHTML=`<div class="stage" id="stage"><button class="play y" id="swfGo">▶ Смотреть</button></div>${hint(s.hint||'Это настоящая программа Genki. Внутри нажимайте вместе с ребёнком: <b>Words</b> — слова, <b>Song</b> — песня, <b>Game</b> — игра. Если на телефоне не грузится — пропустите, всё то же есть в следующих кружках.')}<button class="play alt sm" id="swfOk">⭐ Посмотрели!</button>`;
-  $('#swfGo').onclick=()=>{$('#stage').innerHTML='<p class="hint">Загружаю… (это большой файл, подождите)</p>';
-   window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={autoplay:'on',unmuteOverlay:'visible',letterbox:'on',splashScreen:false,backgroundColor:'#ffffff',preferredRenderer:'canvas',polyfills:false};
-   const run=()=>{try{const pl=window.RufflePlayer.newest().createPlayer();$('#stage').innerHTML='';$('#stage').append(pl);pl.load({url:'genki/'+s.swf});}catch(e){$('#stage').innerHTML='<p class="hint">Не загрузилось 🙁 Пропустите этот кружок.</p>';}};
-   if(window.RufflePlayer.newest)run();else{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.7.1/ruffle.js';sc.onload=run;sc.onerror=()=>{const s2=document.createElement('script');s2.src='https://unpkg.com/@ruffle-rs/ruffle@0.7.1/ruffle.js';s2.onload=run;document.head.append(s2);};document.head.append(sc);}};
-  $('#swfOk').onclick=()=>{finish(s.k);closeScene();};
-  sceneStop=()=>{const st=$('#stage');if(st)st.innerHTML='';};},
-
+ swf(b,s){const here=location.pathname.split('/').filter(Boolean).pop();
+  b.innerHTML=`<div class="big"><img src="img/hi.png" alt=""></div><a class="play y" id="swfGo" href="../play.html?swf=${encodeURIComponent(here+'/genki/'+s.swf)}&t=${encodeURIComponent(s.sub||'Genki')}&back=${encodeURIComponent('./'+here+'/')}">🎬 Открыть мультик</a>${hint(s.hint||'Это настоящая программа Genki, откроется на весь экран. Внутри нажимайте вместе с ребёнком: <b>Words</b> — слова, <b>Song</b> — песня, <b>Game</b> — игра. Файл большой — подождите немного. Если не грузится — пропустите, всё то же есть в других кружках.')}`;
+  $('#swfGo').onclick=()=>{P.done[s.k]=1;save();};},
  // аудио с синхронной картинкой (мини-урок / песня)
  sync(b,s){const kar=s.kar;b.innerHTML=`<div class="big"><img id="syImg" src="img/${s.cover||'speaky.png'}" alt=""></div><div class="say" id="syTxt">&nbsp;</div><div class="gest" id="syG"></div>
    <div><button class="play" id="syPlay">▶ ${s.btn||'Слушать'}</button>${kar?'<button class="play y sm" id="syKar">🎤 Поём сами</button>':''}</div>${hint(s.hint)}`;
@@ -205,7 +202,7 @@ const SC={
   $('#syPlay').onclick=()=>go(s.file);if(kar)$('#syKar').onclick=()=>{on=false;go(s.kar);};},
 
  // карточки: нажми — услышь
- cards(b,s){const WS=s.ids?s.ids.map(i=>BY[i]):D.words;b.innerHTML=`<div class="grid ${WS.length>9?'g3':''}">${WS.map(w=>`<button class="card ${P.heard.includes(w.id)?'heard':''}" data-id="${w.id}"><img src="img/${w.img}" alt="${w.en}"></button>`).join('')}</div>${hint(s.hint||'Нажимайте на картинки — Спики говорит фразу. Повторяйте вслух вместе и показывайте жестом.')}`;
+ cards(b,s){const WS=s.ids?s.ids.map(i=>BY[i]):D.words;b.innerHTML=`<div class="grid ${WS.length>9?'g3':''}">${WS.map(w=>`<button class="card cap ${P.heard.includes(w.id)?'heard':''}" data-id="${w.id}"><img src="img/${w.img}" alt="${w.en}"><span class="lbl">${w.en}</span></button>`).join('')}</div>${hint(s.hint||'Нажимайте на картинки — Спики говорит фразу. Повторяйте вслух вместе и показывайте жестом.')}`;
   $$('.card').forEach(c=>c.onclick=()=>{const id=c.dataset.id;$$('.card').forEach(x=>x.classList.remove('on'));c.classList.add('on','heard');play(BY[id].a);
    if(!P.heard.includes(id)){P.heard.push(id);save();}if(WS.every(w=>P.heard.includes(w.id)))setTimeout(()=>finish(s.k),1400);});},
 
@@ -254,10 +251,9 @@ const SC={
   $('#ynGo').onclick=next;$('#ynY').onclick=()=>ans(D.yesA||YES());$('#ynN').onclick=()=>ans(D.noA||YES());},
 
  // наша книжка-сказка (озвучена), встроена
- book(b,s){b.innerHTML=`<iframe class="bookf" id="bkf" src="../../books/${s.book}.html" title="Книжка"></iframe>${hint(s.hint||'Наша книжка про Спики — её читает голос. Листайте стрелкой ›, на каждой странице можно нажать 🔊 ещё раз. Повторяйте вместе повторяющуюся фразу и показывайте жесты!')}<button class="play alt sm" id="bkOk">⭐ Дочитали!</button>`;
-  let fired=false;const iv=setInterval(()=>{try{const d=$('#bkf').contentDocument,pg=d&&d.getElementById('pgnum');if(pg&&/^(\d+) \/ \1$/.test(pg.textContent.trim())&&!fired){fired=true;setTimeout(()=>finish(s.k),2500);}}catch(e){}},700);
-  sceneStop=()=>{clearInterval(iv);const f=$('#bkf');if(f)f.src='about:blank';};
-  $('#bkOk').onclick=()=>{finish(s.k);closeScene();};},
+ book(b,s){const here=location.pathname.split('/').filter(Boolean).pop();
+  b.innerHTML=`<div class="big"><img src="img/love.png" alt=""></div><div class="say">${s.sub||''}</div><a class="play" id="bkGo" href="../play.html?book=${s.book}&t=${encodeURIComponent(s.sub||'Книжка')}&back=${encodeURIComponent('./'+here+'/')}">📖 Открыть книжку</a>${hint(s.hint||'Наша книжка про Спики откроется на весь экран — её читает голос. Листайте стрелкой ›, на каждой странице можно нажать 🔊 ещё раз. Повторяйте вместе повторяющуюся фразу и показывайте жесты! Потом нажмите «Назад в урок».')}`;
+  $('#bkGo').onclick=()=>{P.done[s.k]=1;save();};},
 
  // рисуем (worksheet)
  draw(b,s){b.innerHTML=`<img class="ws" src="img/ws.png" alt="Листок"><div><a class="play y" href="${s.pdf}" target="_blank" rel="noopener">🖨 Открыть листок</a></div>${hint(s.hint)}<button class="play alt sm" id="dOk">⭐ Сделали!</button>`;
