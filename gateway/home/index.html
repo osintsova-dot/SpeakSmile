@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#6C3FC5">
+<title>Уроки дома · Gateway to the World B2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6C3FC5;--pd:#4B278F;--honey:#F5C842;--ink:#2A2140;--muted:#6A5B9A;--f:"Rubik","Segoe UI",system-ui,-apple-system,sans-serif;--ease:cubic-bezier(.2,.9,.25,1.1)}
+*{box-sizing:border-box}
+html{background:#15112F}
+body{margin:0;font-family:var(--f);color:#fff;min-height:100vh;padding:28px 16px 60px;text-align:center;
+  background:radial-gradient(110% 80% at 0% 0%,rgba(255,122,107,.24),transparent 55%),radial-gradient(110% 80% at 100% 6%,rgba(99,179,255,.20),transparent 55%),linear-gradient(180deg,#32237E 0%,#1F1854 55%,#15112F 100%);background-attachment:fixed}
+.wrap{max-width:640px;margin:0 auto}
+.brand{display:inline-flex;gap:6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px}
+.brand b{color:var(--honey)}
+h1{font-size:clamp(34px,9vw,52px);line-height:1;margin:12px 0 4px;text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.sub{font-weight:700;color:var(--honey);margin:0 0 22px}
+.unit{text-align:left;font-weight:800;font-size:14px;opacity:.8;margin:18px 4px 8px;text-transform:uppercase;letter-spacing:.06em}
+.lesson{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;background:#fff;color:var(--ink);border-radius:22px;padding:14px;margin:0 0 10px;text-decoration:none;box-shadow:0 12px 26px rgba(30,10,70,.28);transition:transform .18s var(--ease)}
+.lesson:hover{transform:translateY(-3px)}
+.lesson .n{width:48px;height:48px;border-radius:14px;background:#F3EEFF;display:grid;place-items:center;font-weight:800;color:var(--p);font-size:18px}
+.lesson h2{margin:0;font-size:19px;color:var(--p)}
+.lesson p{margin:2px 0 0;font-size:14px;font-weight:600;color:var(--muted)}
+.lesson .go{font-size:24px;color:var(--honey)}
+.lesson.soon{opacity:.55;pointer-events:none}
+.foot{margin-top:26px;font-size:13px;opacity:.75;font-weight:600;line-height:1.5}
+.row{display:flex;gap:8px;margin:0 0 10px;align-items:stretch}
+.row .lesson{flex:1;margin:0;min-width:0}
+.copy{flex:0 0 54px;border-radius:22px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.16);color:#fff;cursor:pointer;display:grid;place-items:center;padding:0;transition:all .18s var(--ease);-webkit-tap-highlight-color:transparent}
+.copy svg{width:24px;height:24px;fill:currentColor}
+.copy:hover{background:rgba(255,255,255,.28);transform:translateY(-3px)}
+.copy.ok{background:#fff;color:#1e9e6a;border-color:#fff}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,16px);z-index:60;background:#fff;color:var(--pd);font-weight:800;font-size:15px;padding:10px 18px;border-radius:999px;box-shadow:0 12px 26px rgba(30,10,70,.35);opacity:0;pointer-events:none;transition:all .25s var(--ease);white-space:nowrap}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ── юниты-плашки ── */
+.ubox{margin:0 0 12px;text-align:left}
+.usum{list-style:none;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:22px;padding:12px 14px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:background .2s var(--ease),transform .18s var(--ease),box-shadow .2s var(--ease)}
+.usum::-webkit-details-marker{display:none}
+.usum:hover{background:rgba(255,255,255,.22);transform:translateY(-2px)}
+.ulab{background:var(--honey);color:var(--pd);border-radius:12px;padding:7px 10px;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;line-height:1}
+.utxt{min-width:0}
+.utitle{display:block;font-weight:800;font-size:18px;line-height:1.15}
+.ucount{display:block;font-size:13px;font-weight:700;opacity:.78;margin-top:2px}
+.chev{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;transition:transform .28s var(--ease),background .2s}
+.chev::before{content:"";width:8px;height:8px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.ubox[open] .usum{background:#fff;color:var(--ink);box-shadow:0 12px 26px rgba(30,10,70,.28)}
+.ubox[open] .utitle{color:var(--p)}
+.ubox[open] .ucount{color:var(--muted);opacity:1}
+.ubox[open] .chev{transform:rotate(180deg);background:#F3EEFF;color:var(--p)}
+.ubody{padding:12px 0 2px;animation:drop .32s var(--ease)}
+@keyframes drop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.row.started .lesson .n{box-shadow:inset 0 0 0 3px var(--honey)}
+.row.started .lesson .n::after{content:"";position:absolute;right:-4px;top:-4px;width:12px;height:12px;border-radius:50%;background:var(--honey);border:2px solid #fff}
+.lesson .n{position:relative}
+</style></head>
+<body><div class="wrap">
+  <div class="brand">Speak<b>&</b>Smile · урок дома</div>
+  <h1>Gateway to the World B2</h1>
+  <p class="sub">Пропустил урок? Пройди его дома за 30–40 минут.</p>
+    <details class="ubox" id="st"><summary class="usum"><span class="ulab">Вводные</span><span class="utxt"><span class="utitle">Welcome back</span><span class="ucount">3 урока</span></span><span class="chev"></span></summary>
+  <div class="ubody">
+  <div class="row"><a class="lesson" href="st-l1/"><div class="n">1</div><div><h2>Welcome back!</h2><p>How was your summer? (4 подростка) · вопросы для знакомства · ответы с деталями · что такое B2 и ЕГЭ · цели на год · классный контракт · карта 10 юнитов · About me</p></div><div class="go">→</div></a><button class="copy" data-href="st-l1/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="st-l2/"><div class="n">2</div><div><h2>B1 vocabulary review</h2><p>Word maps: study, work, travel, technology, health · определения · collocations · рассказ с пропусками · словообразование · квиз · правописание</p></div><div class="go">→</div></a><button class="copy" data-href="st-l2/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="st-l3/"><div class="n">3</div><div><h2>B1 grammar review</h2><p>Времена и их объяснение · conditionals 0–3 · passive · reported speech · grammar auction · Find someone who · стартовый срез (12 вопросов, результат — учителю)</p></div><div class="go">→</div></a><button class="copy" data-href="st-l3/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  </div></details>
+    <details class="ubox" id="u1"><summary class="usum"><span class="ulab">Unit 1</span><span class="utxt"><span class="utitle">Make the grade</span><span class="ucount">6 уроков + тест</span></span><span class="chev"></span></summary>
+  <div class="ubody">
+  <div class="row"><a class="lesson" href="u1-l1/"><div class="n">1</div><div><h2>School life · Higher education</h2><p>12 слов School life (оригинальная запись) · интервью британской школьницы · Culture exchange: Studying in the UK · 19 слов Higher education · Use it · Workbook стр. 4 · тренажёр · Student’s Book стр. 6</p></div><div class="go">→</div></a><button class="copy" data-href="u1-l1/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="u1-l2/"><div class="n">2</div><div><h2>Student life: extra-curricular activities</h2><p>Форум о необычных клубах (оригинальная запись) · Which person…? как на экзамене · слова из контекста · Critical thinkers · Workbook: The end-of-school dilemma (аудио) · Student’s Book стр. 7</p></div><div class="go">→</div></a><button class="copy" data-href="u1-l2/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="u1-l3/"><div class="n">3</div><div><h2>Present tenses · do and make</h2><p>Видео Flipped classroom (present perfect) · present simple / continuous / habits · Wearing pyjamas in class · present perfect simple / continuous · for, since, yet… · do / make · Workbook стр. 6–7 · стр. 8–9</p></div><div class="go">→</div></a><button class="copy" data-href="u1-l3/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="u1-l4/"><div class="n">4</div><div><h2>Studying abroad · Gerunds and infinitives</h2><p>Интервью Poppy & Harry (оригинальная запись, с кусочками-доказательствами) · Critical thinkers · правила -ing / to · Language focus · New kid at school? · подкаст о Gaokao (аудио) · стр. 12–13</p></div><div class="go">→</div></a><button class="copy" data-href="u1-l4/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="u1-l5/"><div class="n">5</div><div><h2>Preferences · An informal email</h2><p>Пять учеников отвечают (оригинальная запись) · prefer / would prefer / would rather · вопросы вслух · диалоги тетради (аудио) · письмо Фрейи · Writing bank · свой ответ · стр. 14–15</p></div><div class="go">→</div></a><button class="copy" data-href="u1-l5/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="u1-l6/"><div class="n">6</div><div><h2>Unit 1 review</h2><p>Grammar reference · Test yourself с автопроверкой · слова юнита на слух · правописание · самые дорогие ошибки · все тренажёры юнита · стр. 16–17</p></div><div class="go">→</div></a><button class="copy" data-href="u1-l6/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  <div class="row"><a class="lesson" href="u1-test/"><div class="n">Тест</div><div><h2>Unit 1 Test</h2><p>Unit Test Standard с автопроверкой: Vocabulary 20 · Grammar 25 · Use of English 8 · Listening 12 (оригинальная запись) · Reading 15 · Writing 10 = 90 баллов; Speaking 10 — на уроке · результат уходит учителю</p></div><div class="go">→</div></a><button class="copy" data-href="u1-test/" aria-label="Скопировать ссылку на урок" title="Скопировать ссылку"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg></button></div>
+  </div></details>
+    <details class="ubox" id="u2"><summary class="usum"><span class="ulab">Unit 2</span><span class="utxt"><span class="utitle">A job well done</span><span class="ucount">6 уроков + тест</span></span><span class="chev"></span></summary>
+  <div class="ubody">
+  <!--U2-ITEMS-->
+  </div></details>
+    <details class="ubox" id="u3"><summary class="usum"><span class="ulab">Unit 3</span><span class="utxt"><span class="utitle">Departure time</span><span class="ucount">6 уроков + тест</span></span><span class="chev"></span></summary>
+  <div class="ubody">
+  <!--U3-ITEMS-->
+  </div></details>
+  <!--NEXT-UNIT-->
+
+
+  <p class="foot"><a href="../" style="color:#F5C842">← Сайт курса и тренажёры Word chunks</a><br><br>Для родителей: страница открывается на телефоне, прогресс запоминается на устройстве. В конце занятия ученик нажимает «Готово» — учитель получает результат.</p>
+</div>
+<script>
+function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
+  const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
+let toastT=null; function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; document.body.appendChild(t); } t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
+document.querySelectorAll('.copy[data-href]').forEach(b=>b.onclick=()=>copyLink(b,new URL(b.dataset.href,location.href).href));
+</script>
+<script>
+(function(){ const KEY='home:idx-open'; let saved=[]; try{ saved=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){}
+  const boxes=[...document.querySelectorAll('details.ubox')];
+  const h=location.hash.replace('#',''); if(h&&document.getElementById(h)) saved=[h];
+  boxes.forEach(b=>{ if(saved.includes(b.id)) b.open=true; b.addEventListener('toggle',()=>{ try{ localStorage.setItem(KEY,JSON.stringify(boxes.filter(x=>x.open).map(x=>x.id))); }catch(e){} }); });
+  if(h){ const el=document.getElementById(h); if(el) setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60); }
+  const course='gw';
+  document.querySelectorAll('.row').forEach(r=>{ const a=r.querySelector('.lesson[href]'); if(!a) return; const id=a.getAttribute('href').replace(/\/$/,''); let has=false; try{ has=!!localStorage.getItem('home:'+course+'-'+id); }catch(e){} if(has) r.classList.add('started'); });
+})();
+</script>
+</body></html>
