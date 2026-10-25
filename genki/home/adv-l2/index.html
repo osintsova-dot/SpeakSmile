@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#6C3FC5">
-<title>How are you? · Genki дома</title>
+<title>How are you? · 1 · Genki дома</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -108,11 +108,11 @@ details.par p{margin:8px 0 0}
 <div class="sky" aria-hidden="true"><i style="top:8%;animation-duration:70s"></i><i style="top:22%;animation-duration:95s;animation-delay:-40s;transform:scale(.7)"></i><i style="top:40%;animation-duration:120s;animation-delay:-80s"></i></div>
 
 <main id="mapView">
-  <div class="top"><div class="brand">Speak&amp;Smile · Genki · урок дома</div><h1>How are you?</h1><div class="stars" id="stars"></div></div>
+  <div class="top"><div class="brand">Speak&amp;Smile · Genki · урок дома</div><h1>How are you? · 1</h1><div class="stars" id="stars"></div></div>
   <div class="guide"><img id="guideImg" src="img/hi.png" alt="Спики"><div class="bubble" id="guideSay">Hi! Нажми на кружок!</div></div>
   <div class="map" id="map"></div>
   <div class="parent-top"><details class="par"><summary>👩 Для родителя (нажмите)</summary>
-    <p>Урок 2 · Adventure. Тема — чувства: <b>How are you? — I'm happy / sad / tired / hungry / cold / great / good / OK.</b> В классе мы поём песню с жестами: happy — руки вверх, sad — трём глазки, tired — ладошки под щёку, hungry — гладим животик, cold — дрожим, great — два больших пальца.</p>
+    <p>Урок 3 · Adventure. Чувства, часть 1: <b>How are you? — I'm hungry / tired / cold / sad.</b> В классе поём песню с жестами: hungry — гладим животик, tired — ладошки под щёку, cold — дрожим, sad — трём глазки.</p>
     <p>Ребёнок проходит кружки по дорожке сверху вниз. За каждый получает звёздочку. Читать ничего не нужно: Спики всё говорит сам. Ваша задача — быть рядом, повторять вместе и хвалить. Лучше по 10–15 минут два-три дня, чем всё за раз.</p>
     <button class="copy" id="copyBtn">🔗 Скопировать ссылку на урок</button></details></div>
 </main>
@@ -125,7 +125,7 @@ details.par p{margin:8px 0 0}
 
 <script>
 const LESSON="genki-adv-l2";
-const D={"words": [{"id": "happy", "en": "I'm happy!", "img": "g_happy.png", "a": ["w_happy1", "w_happy2", "w_happy3", "w_happy4", "w_happy5"]}, {"id": "sad", "en": "I'm sad!", "img": "g_sad.png", "a": ["w_sad1", "w_sad2", "w_sad3", "w_sad4", "w_sad5", "w_sad6"]}, {"id": "tired", "en": "I'm tired!", "img": "g_tired.png", "a": ["w_tired1", "w_tired2", "w_tired3", "w_tired4", "w_tired5", "w_tired6"]}, {"id": "hungry", "en": "I'm hungry!", "img": "g_hungry.png", "a": ["w_hungry1", "w_hungry2", "w_hungry3", "w_hungry4", "w_hungry5"]}, {"id": "cold", "en": "I'm cold!", "img": "g_cold.png", "a": ["w_cold1", "w_cold2", "w_cold3", "w_cold4", "w_cold5"]}, {"id": "great", "en": "I'm great!", "img": "g_great.png", "a": ["w_great1", "w_great2", "w_great3", "w_great4", "w_great5", "w_great6"]}, {"id": "good", "en": "I'm good!", "img": "g_good.png", "a": ["w_good1", "w_good2", "w_good3", "w_good4", "w_good5", "w_good6"]}, {"id": "okay", "en": "I'm OK!", "img": "g_okay.png", "a": ["w_okay1", "w_okay2", "w_okay3", "w_okay4"]}], "stops": [{"k": "cards", "type": "cards", "ic": "🃏", "t": "Картинки", "sub": "нажми и повтори", "c": "#F17FBE"}, {"k": "mini", "type": "sync", "ic": "🦝", "t": "Повторяй!", "sub": "мини-урок Genki", "c": "#63B3FF", "file": "mini", "btn": "Слушать", "cover": "hi.png", "hint": "Это мини-урок от автора Genki. Он говорит фразу — <b>повторяйте вслух вместе</b> и показывайте жест. Картинка меняется сама.", "cues": [[0, "hi", "Hello! How are you?", "👋"], [3.2, "good", "I'm good!", "👍"], [4.9, "hungry", "I'm hungry!", "🤤"], [15.4, "tired", "I'm tired!", "😴"], [22.4, "cold", "I'm cold!", "🥶"], [29.9, "sad", "I'm sad!", "😢"], [39, "happy", "I'm happy!", "🙌"], [44.6, "great", "I'm great!", "👍👍"], [49.9, "good", "I'm good!", "👍"], [54.9, "okay", "I'm OK!", "👌"], [62.5, "hi", "Hello! How are you?", "👋"], [83.4, "love", "Yay! Fantastic!", "🎉"]]}, {"k": "song", "type": "sync", "ic": "💃", "t": "Песня", "sub": "танцуем с жестами", "c": "#34D3C0", "file": "song", "kar": "karaoke", "btn": "Петь", "cover": "hi.png", "hint": "Включите песню и танцуйте вместе: на каждую фразу — свой жест. Когда выучите — нажмите <b>«Поём сами»</b>: там только музыка.", "cues": [[0, "hi", "♪ ♪ ♪", ""], [7.6, "hi", "Hello, how are you?", "👋"], [17.4, "hungry", "I'm hungry!", "🤤"], [19.9, "tired", "I'm tired!", "😴"], [21.9, "cold", "I'm cold!", "🥶"], [23.9, "sad", "I'm sad!", "😢"], [25.5, "hi", "Hello, how are you?", "👋"], [35.5, "happy", "I'm happy!", "🙌"], [37.8, "great", "I'm great!", "👍👍"], [39.7, "good", "I'm good!", "👍"], [41.5, "okay", "I'm OK!", "👌"], [43.3, "hi", "Hello, how are you?", "👋"], [52, "love", "♪ ♪ ♪", ""]]}, {"k": "find", "type": "find", "ic": "👂", "t": "Найди!", "sub": "послушай и нажми", "c": "#F5C842", "rounds": 6, "opts": 4}, {"k": "swf", "type": "swf", "ic": "🎬", "t": "Genki-мультик", "sub": "слова, песня, игра", "c": "#8B5CF6", "swf": "howru_m.swf"}, {"k": "book", "type": "book", "ic": "📖", "t": "Книжка", "sub": "How are you, Speaky?", "c": "#FF9F43", "book": "u1-feelings"}, {"k": "ask", "type": "ask", "ic": "🗣", "t": "Как дела?", "sub": "Спики спрашивает тебя", "c": "#F26B6B", "q": "How are you?", "qa": ["q_howru1", "q_howru2", "q_howru3"], "need": 3, "hint": "Спики спрашивает <b>How are you?</b> Пусть ребёнок сначала скажет ответ сам («I'm happy!»), а потом нажмёт картинку — Спики повторит. Можно спросить и маму, и папу, и игрушку!"}], "yes": ["p_yes1", "p_yes2", "p_yes3", "p_yes4", "p_yes5", "p_yes6"], "no": ["p_no1", "p_no2", "p_no3"]};
+const D={"words": [{"id": "hungry", "en": "I'm hungry!", "img": "hungry.png", "a": ["w_hungry1", "w_hungry2", "w_hungry3", "w_hungry4", "w_hungry5"]}, {"id": "tired", "en": "I'm tired!", "img": "tired.png", "a": ["w_tired1", "w_tired2", "w_tired3", "w_tired4", "w_tired5", "w_tired6"]}, {"id": "cold", "en": "I'm cold!", "img": "cold.png", "a": ["w_cold1", "w_cold2", "w_cold3", "w_cold4", "w_cold5"]}, {"id": "sad", "en": "I'm sad!", "img": "sad.png", "a": ["w_sad1", "w_sad2", "w_sad3", "w_sad4", "w_sad5", "w_sad6"]}, {"id": "happy", "en": "I'm happy!", "img": "happy.png", "a": ["w_happy1", "w_happy2", "w_happy3", "w_happy4", "w_happy5"]}, {"id": "great", "en": "I'm great!", "img": "great.png", "a": ["w_great1", "w_great2", "w_great3", "w_great4", "w_great5", "w_great6"]}, {"id": "good", "en": "I'm good!", "img": "good.png", "a": ["w_good1", "w_good2", "w_good3", "w_good4", "w_good5", "w_good6"]}, {"id": "okay", "en": "I'm OK!", "img": "okay.png", "a": ["w_okay1", "w_okay2", "w_okay3", "w_okay4", "w_okay5"]}], "stops": [{"k": "cards", "type": "cards", "ic": "🃏", "t": "Картинки", "sub": "нажми и повтори", "c": "#F17FBE", "ids": ["hungry", "tired", "cold", "sad"]}, {"k": "mini", "type": "sync", "ic": "🐵", "t": "Повторяй!", "sub": "мини-урок Genki", "c": "#63B3FF", "btn": "Слушать", "cover": "hi.png", "hint": "Мини-урок от автора Genki. Он говорит фразу — <b>повторяйте вслух вместе</b> и показывайте жест. Картинка меняется сама.", "file": "mini", "cues": [[0, "hi", "♪ ♪ ♪", ""], [2.9, "good", "I'm good!", ""], [5.88, "hungry", "I'm hungry!", ""], [9.22, "hungry", "I'm hungry!", ""], [12.06, "hungry", "I'm hungry!", ""], [16.32, "tired", "I'm tired!", ""], [19.16, "tired", "I'm tired!", ""], [23.3, "cold", "I'm cold!", ""], [26.22, "cold", "I'm cold!", ""], [30.84, "sad", "I'm sad!", ""], [33.88, "sad", "I'm sad!", ""], [40.1, "happy", "I'm happy!", ""], [45.52, "great", "I'm great!", ""], [50.34, "good", "I'm good!", ""], [86.74, "good", "I'm good!", ""], [102.42, "love", "♪ ♪ ♪", ""]]}, {"k": "song", "type": "sync", "ic": "💃", "t": "Песня", "sub": "How are you?", "c": "#34D3C0", "btn": "Петь", "cover": "hi.png", "hint": "Включите песню и пойте вместе, показывая жесты. Когда выучите — нажмите <b>«Поём сами»</b>: там только музыка.", "file": "song", "kar": "song_k", "cues": [[0, "hi", "♪ ♪ ♪", ""], [8.22, "hi", "Hello, how are you?", ""], [12.22, "hi", "Hello, how are you?", ""], [17.66, "hungry", "I'm hungry!", ""], [19.6, "tired", "I'm tired!", ""], [21.58, "cold", "I'm cold!", ""], [23.54, "sad", "I'm sad!", ""], [26.2, "hi", "Hello, how are you?", ""], [30.24, "hi", "Hello, how are you?", ""], [35.66, "happy", "I'm happy!", ""], [37.62, "great", "I'm great!", ""], [39.6, "good", "I'm good!", ""], [44.2, "hi", "Hello, how are you?", ""], [48.24, "hi", "Hello, how are you?", ""], [58.06, "love", "♪ ♪ ♪", ""]]}, {"k": "simon", "type": "simon", "ic": "🎭", "t": "Покажи!", "sub": "изобрази чувство", "c": "#F26B6B", "ids": ["hungry", "tired", "cold", "sad"], "need": 6, "hint": "Спики говорит, как он себя чувствует, — ребёнок показывает это жестом: hungry — гладим животик, tired — ладошки под щёку, cold — дрожим, sad — трём глазки, happy — руки вверх, great — два пальца вверх."}, {"k": "find", "type": "find", "ic": "👂", "t": "Найди!", "sub": "послушай и нажми", "c": "#F5C842", "rounds": 6, "opts": 4, "ids": ["hungry", "tired", "cold", "sad"]}, {"k": "book", "type": "book", "ic": "📖", "t": "Книжка", "sub": "How are you, Speaky?", "c": "#FF9F43", "book": "u1-feelings"}], "yes": ["p_yes1", "p_yes2", "p_yes3", "p_yes4", "p_yes5", "p_yes6"], "no": ["p_no1", "p_no2", "p_no3", "p_no4", "p_no5", "p_no6"]};
 const SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net','https://ss-bb.o-sintsova.workers.dev'];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
@@ -205,30 +205,53 @@ const SC={
   $('#syPlay').onclick=()=>go(s.file);if(kar)$('#syKar').onclick=()=>{on=false;go(s.kar);};},
 
  // карточки: нажми — услышь
- cards(b,s){b.innerHTML=`<div class="grid ${D.words.length>9?'g3':''}">${D.words.map(w=>`<button class="card ${P.heard.includes(w.id)?'heard':''}" data-id="${w.id}"><img src="img/${w.img}" alt="${w.en}"></button>`).join('')}</div>${hint(s.hint||'Нажимайте на картинки — Спики говорит фразу. Повторяйте вслух вместе и показывайте жестом.')}`;
+ cards(b,s){const WS=s.ids?s.ids.map(i=>BY[i]):D.words;b.innerHTML=`<div class="grid ${WS.length>9?'g3':''}">${WS.map(w=>`<button class="card ${P.heard.includes(w.id)?'heard':''}" data-id="${w.id}"><img src="img/${w.img}" alt="${w.en}"></button>`).join('')}</div>${hint(s.hint||'Нажимайте на картинки — Спики говорит фразу. Повторяйте вслух вместе и показывайте жестом.')}`;
   $$('.card').forEach(c=>c.onclick=()=>{const id=c.dataset.id;$$('.card').forEach(x=>x.classList.remove('on'));c.classList.add('on','heard');play(BY[id].a);
-   if(!P.heard.includes(id)){P.heard.push(id);save();}if(P.heard.length>=D.words.length)setTimeout(()=>finish(s.k),1400);});},
+   if(!P.heard.includes(id)){P.heard.push(id);save();}if(WS.every(w=>P.heard.includes(w.id)))setTimeout(()=>finish(s.k),1400);});},
 
  // найди картинку
  find(b,s){const R=s.rounds||6;let r=0,good=0,ans=null,first=true;
   b.innerHTML=`<div class="dots" id="fDots">${'<i></i>'.repeat(R)}</div><button class="play" id="fAgain">🔊 Ещё раз</button><div class="grid" id="fGrid"></div>${hint(s.hint||'Спики говорит — ребёнок нажимает нужную картинку. Если ошибся — ничего страшного, пусть послушает ещё раз.')}`;
-  const order=shuffle(D.words).concat(shuffle(D.words));
+  const WS=s.ids?s.ids.map(i=>BY[i]):D.words;const order=shuffle(WS).concat(shuffle(WS));
   const round=()=>{if(good>=R){finish(s.k);setTimeout(closeScene,1600);return;}ans=order[r++%order.length];first=true;
-   const opts=shuffle([ans].concat(shuffle(D.words.filter(w=>w.id!==ans.id)).slice(0,(s.opts||4)-1)));
+   const opts=shuffle([ans].concat(shuffle(WS.filter(w=>w.id!==ans.id)).slice(0,(s.opts||4)-1)));
    $('#fGrid').className='grid'+(opts.length===3?' g3':'');$('#fGrid').innerHTML=opts.map(w=>`<button class="card" data-id="${w.id}"><img src="img/${w.img}" alt=""></button>`).join('');
    $$('#fGrid .card').forEach(c=>c.onclick=()=>{if(c.dataset.id===ans.id){c.classList.add('ok');good++;$$('#fDots i').forEach((d,i)=>d.classList.toggle('on',i<good));burst(10);play(YES(),()=>setTimeout(round,300));}
      else{first=false;c.classList.remove('no');void c.offsetWidth;c.classList.add('no');play(NO(),()=>play(ans.a));}});
    setTimeout(()=>play(ans.a),400);};
   $('#fAgain').onclick=()=>ans&&play(ans.a);round();},
 
- // Спики спрашивает — ребёнок отвечает
- ask(b,s){let n=0;const need=s.need||3;
-  b.innerHTML=`<div class="big" style="width:min(56vw,240px)"><img id="aSp" src="img/speaky.png" alt=""></div><div class="say" id="aQ">${s.q}</div>
-   <button class="play" id="aGo">🔊 Спики спрашивает</button><div class="grid g3" id="aGrid" hidden>${D.words.map(w=>`<button class="card" data-id="${w.id}"><img src="img/${w.img}" alt=""></button>`).join('')}</div>
+ // Спики спрашивает — ребёнок отвечает (карточками или свободно)
+ ask(b,s){let n=0;const need=s.need||3;const WS=s.ids?s.ids.map(i=>BY[i]):D.words;
+  b.innerHTML=`<div class="big" style="width:min(56vw,240px)"><img id="aSp" src="img/${s.img||'speaky.png'}" alt=""></div><div class="say" id="aQ">${s.q}</div>
+   <button class="play" id="aGo">🔊 Спики спрашивает</button>
+   ${s.free?'<div><button class="play alt" id="aSaid" hidden>🗣 Ответил!</button></div>':`<div class="grid g3" id="aGrid" hidden>${WS.map(w=>`<button class="card" data-id="${w.id}"><img src="img/${w.img}" alt=""></button>`).join('')}</div>`}
    <div class="dots">${'<i></i>'.repeat(need)}</div>${hint(s.hint)}`;
-  $('#aGo').onclick=()=>{$('#aSp').src='img/speaky.png';play(s.qa,()=>{$('#aGrid').hidden=false;});};
-  $$('#aGrid .card').forEach(c=>c.onclick=()=>{const w=BY[c.dataset.id];$('#aSp').src='img/'+w.img;$('#aQ').textContent=w.en;$('#aGrid').hidden=true;
-   play(w.a,()=>{n++;$$('.dots i').forEach((d,i)=>d.classList.toggle('on',i<n));burst(10);if(n>=need){finish(s.k);}else play(YES());});});},
+  const step=()=>{n++;$$('.dots i').forEach((d,i)=>d.classList.toggle('on',i<n));burst(10);if(n>=need){finish(s.k);}else play(YES());};
+  $('#aGo').onclick=()=>{$('#aSp').src='img/'+(s.img||'speaky.png');$('#aQ').textContent=s.q;play(s.qa,()=>{if(s.free){$('#aSaid').hidden=false;if(s.model)setTimeout(()=>{},0);}else $('#aGrid').hidden=false;});};
+  if(s.free){$('#aSaid').onclick=()=>{$('#aSaid').hidden=true;s.model?play(s.model,step):step();};}
+  else $$('#aGrid .card').forEach(c=>c.onclick=()=>{const w=BY[c.dataset.id];$('#aSp').src='img/'+w.img;$('#aQ').textContent=w.en;$('#aGrid').hidden=true;play(w.a,step);});},
+
+ // Спики командует — ребёнок делает (TPR)
+ simon(b,s){let n=0;const need=s.need||6;const WS=s.ids?s.ids.map(i=>BY[i]):D.words;let cur=null,last=null;
+  b.innerHTML=`<div class="big"><img id="smImg" src="img/speaky.png" alt=""></div><div class="say" id="smT">&nbsp;</div>
+   <button class="play" id="smGo">▶ Начать</button><button class="play alt" id="smDid" hidden>✓ Сделал!</button><div class="dots">${'<i></i>'.repeat(need)}</div>${hint(s.hint||'Спики говорит команду — ребёнок выполняет её всем телом. Потом жмёт «Сделал!». Можно играть вместе со всей семьёй!')}`;
+  const next=()=>{do{cur=WS[Math.floor(Math.random()*WS.length)];}while(WS.length>1&&cur===last);last=cur;
+   const im=$('#smImg');im.src='img/'+cur.img;im.classList.remove('bump');void im.offsetWidth;im.classList.add('bump');$('#smT').textContent=s.hidePic?'':cur.en;
+   $('#smGo').hidden=true;$('#smDid').hidden=false;play(cur.a);};
+  $('#smGo').onclick=next;$('#smDid').onclick=()=>{n++;$$('.dots i').forEach((d,i)=>d.classList.toggle('on',i<n));burst(8);
+   if(n>=need){$('#smDid').hidden=true;finish(s.k);}else play(YES(),next);};},
+
+ // Do you like …? — Yes, I do / No, I don't
+ yesno(b,s){let n=0;const need=s.need||6;const WS=shuffle(s.ids?s.ids.map(i=>BY[i]):D.words);let cur=null;
+  b.innerHTML=`<div class="big"><img id="ynImg" src="img/speaky.png" alt=""></div><div class="say" id="ynT">&nbsp;</div>
+   <button class="play" id="ynGo">▶ Начать</button><div id="ynB" hidden><button class="play alt" id="ynY">👍 Yes!</button><button class="play y" id="ynN">👎 No!</button></div>
+   <div class="dots">${'<i></i>'.repeat(need)}</div>${hint(s.hint||'Спики спрашивает «Do you like…?» Ребёнок отвечает вслух «Yes, I do!» или «No, I don\'t!» и нажимает пальчик.')}`;
+  const next=()=>{cur=WS[n%WS.length];const im=$('#ynImg');im.src='img/'+cur.img;im.classList.remove('bump');void im.offsetWidth;im.classList.add('bump');
+   $('#ynT').textContent=cur.q_en||cur.en;$('#ynGo').hidden=true;$('#ynB').hidden=true;play(cur.q||cur.a,()=>{$('#ynB').hidden=false;});};
+  const ans=(id)=>{$('#ynB').hidden=true;n++;$$('.dots i').forEach((d,i)=>d.classList.toggle('on',i<n));burst(8);
+   play(id,()=>{if(n>=need)finish(s.k);else setTimeout(next,350);});};
+  $('#ynGo').onclick=next;$('#ynY').onclick=()=>ans(D.yesA||YES());$('#ynN').onclick=()=>ans(D.noA||YES());},
 
  // наша книжка-сказка (озвучена), встроена
  book(b,s){b.innerHTML=`<iframe class="bookf" id="bkf" src="../../books/${s.book}.html" title="Книжка"></iframe>${hint(s.hint||'Наша книжка про Спики — её читает голос. Листайте стрелкой ›, на каждой странице можно нажать 🔊 ещё раз. Повторяйте вместе повторяющуюся фразу и показывайте жесты!')}<button class="play alt sm" id="bkOk">⭐ Дочитали!</button>`;
