@@ -268,6 +268,18 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
 .btn,.card,.lesson{font-family:var(--f)}
 
 
+</style><style id="gi-pic-css">
+.slide.cover{justify-content:flex-start;padding-top:72px}
+.slide.cover>:first-child{margin-top:auto}
+.slide.cover>:last-child{margin-bottom:auto}
+.slide.cover img.gi-hero{display:block;width:100%;max-width:560px;height:clamp(100px,21vh,220px);object-fit:cover;border-radius:18px;margin:14px auto 2px;box-shadow:0 14px 30px rgba(0,0,0,.32);animation:none;filter:none;background:#fff}
+figure.gi-fig{margin:4px 0 12px;display:flex;gap:10px;justify-content:center}
+figure.gi-fig>div{flex:1 1 0;max-width:440px;margin:0;text-align:center}
+figure.gi-fig img{display:block;width:100%;max-height:150px;object-fit:contain;border-radius:14px;background:#fff;box-shadow:0 10px 24px rgba(20,8,60,.3)}
+figure.gi-fig.two img{max-height:120px;object-fit:cover;aspect-ratio:1}
+figure.gi-fig figcaption{font-size:13px;font-weight:700;opacity:.8;margin-top:5px}
+img.gi-pth{float:right;width:34%;max-width:160px;aspect-ratio:4/3;object-fit:cover;border-radius:10px;margin:2px 0 6px 10px;background:#fff}
+.para:has(img.gi-pth){display:flow-root}
 </style></head>
 <body>
 <div class="top">
@@ -278,7 +290,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
   <section class="slide cover" data-key="cover">
     <div><span class="gi-tag">Get Involved! · Unit 2 · занятие 4</span></div>
     <h1>Have you got…?</h1>
-    <div class="gi-mission"><b>Миссия:</b> задать вопрос с have got и ответить коротко, а потом рассказать о фото: Who’s this? That’s my cousin. That’s a great photo!</div>
+    <!--gi-pic--><img class="gi-hero" src="img/bk_hero.webp" alt="Кадр видео: Owen показывает Елене фото на телефоне" width="900" decoding="async"><!--/gi-pic--><div class="gi-mission"><b>Миссия:</b> задать вопрос с have got и ответить коротко, а потом рассказать о фото: Who’s this? That’s my cousin. That’s a great photo!</div>
     <div class="book"><svg viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 18H6V4h5v8l2.5-1.5L16 12V4h2z"/></svg>Student’s Book стр. 30–31 · Workbook стр. 15, 17</div>
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать →</button></div>
@@ -312,7 +324,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
   </section>
   <section class="slide" data-key="alex">
     <h2><span class="n"><span>1</span></span>Grammar round-up: Ask Alex</h2>
-    <p class="hint">Задание 7, стр. 30: выбери верный вариант в ответах Алекса про близнецов.</p>
+    <p class="hint">Задание 7, стр. 30: выбери верный вариант в ответах Алекса про близнецов.</p><!--gi-pic--><figure class="gi-fig"><div><img src="img/bk_alex.webp" alt="Папа с близнецами — фото к колонке Ask Alex" loading="lazy" decoding="async"><figcaption>Ask Alex: twins</figcaption></div></figure><!--/gi-pic-->
 <div class="rows" id="aRows"></div><div class="btns"><span class="score">Верно: <b id="aScore">0</b> / 9</span></div><div class="say" id="aMsg"></div>
   </section>
   <section class="slide" data-key="speak">
