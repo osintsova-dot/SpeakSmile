@@ -46,6 +46,11 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
 .cover{justify-content:center;padding-top:40px}
 .cover h1{font-size:clamp(34px,10vw,60px);line-height:1;margin:8px 0 0;text-shadow:0 4px 0 rgba(30,15,90,.35),0 14px 30px rgba(0,0,0,.28)}
 .cover .sub{font-size:clamp(15px,4vw,19px);font-weight:700;color:var(--honey);margin:8px 0 0}
+.cover img.hero,.hero{display:block;width:min(280px,70vw);height:auto;margin:0 auto 14px;border-radius:22px;border:4px solid #fff;transform:rotate(-2deg);box-shadow:0 18px 40px rgba(5,0,30,.45),0 0 0 8px rgba(245,200,66,.22);background:#fff}
+.cover:has(.hero){justify-content:flex-start;padding-top:78px}
+.defimg{display:block;width:100%;max-width:340px;max-height:170px;object-fit:cover;border-radius:14px;margin:8px auto 4px;border:3px solid #fff;box-shadow:0 8px 18px rgba(5,0,30,.3)}
+.para img.pth,.pth{float:right;width:96px;height:76px;object-fit:cover;border-radius:10px;margin:0 0 6px 10px;border:2px solid #fff;box-shadow:0 4px 10px rgba(5,0,30,.25)}
+.bimg{display:block;width:auto;max-width:100%;max-height:210px;object-fit:contain;border-radius:14px;margin:0 auto 8px}
 .book{display:inline-flex;align-items:center;gap:8px;margin:14px auto 0;padding:9px 14px;border-radius:14px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:14px;width:auto}
 .book svg{width:18px;height:18px;fill:var(--honey)}
 .plan{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:18px 0 0;font-size:12px;font-weight:700}
@@ -283,6 +288,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
 </div>
 <div class="deck" id="deck">
   <section class="slide cover" data-key="cover">
+    <img class="hero" src="img/hero-st-l4.webp" alt="Мальчик играет на гитаре" fetchpriority="high">
     <div><span class="gi-tag">Get Involved! · Starter · занятие 4</span></div>
     <h1>Starter round-up</h1>
     <div class="gi-mission"><b>Миссия:</b> пройти ворота Starter — квиз на 10 из 12, узнать на слух фразы из учебника и собрать своё досье на английском.</div>
@@ -398,11 +404,11 @@ function paintNav(){ $$('#dots button').forEach((b,i)=>b.classList.toggle('cur',
 // ── универсальные виджеты ──
 // слова-карточки: WORDS=[{id,en,ru,img?}] в #<id>; P.heard
 function wordCards(sel,words,pkey,opts){ opts=opts||{}; const box=$(sel); const heard=new Set(P[pkey]||[]);
-  box.innerHTML=words.map(w=>`<button class="card ${heard.has(w.id)?'heard':''}" data-id="${w.id}"><span class="snd">${SPK}</span>${w.img?`<img src="${w.img}" alt="">`:''}<span class="en">${esc(w.en)}</span>${opts.ru!==false&&w.ru?`<span class="ru">${esc(w.ru)}</span>`:''}</button>`).join('');
+  box.innerHTML=words.map(w=>`<button class="card ${heard.has(w.id)?'heard':''}" data-id="${w.id}"><span class="snd">${SPK}</span>${w.img?`<img loading="lazy" src="${w.img}" alt="">`:''}<span class="en">${esc(w.en)}</span>${opts.ru!==false&&w.ru?`<span class="ru">${esc(w.ru)}</span>`:''}</button>`).join('');
   $$(sel+' .card').forEach(c=>c.onclick=()=>{ const w=words.find(x=>x.id===c.dataset.id); $$(sel+' .card').forEach(x=>x.classList.remove('playing')); c.classList.add('playing'); play(w.a||w.id,()=>c.classList.remove('playing')); heard.add(w.id); P[pkey]=[...heard]; c.classList.add('heard'); save(); if(opts.onAll&&heard.size>=words.length) opts.onAll(); }); }
 // «найди»: слушай слово — нажми карточку
 function findGame(sel,words,o){ const box=$(sel), st=$(o.start), sc=$(o.score), msg=$(o.msg); let q=[], curW=null, score=0, first=true, lock=true;
-  function render(){ box.innerHTML=words.map(w=>`<button class="card" data-id="${w.id}">${w.img?`<img src="${w.img}" alt="">`:''}<span class="en">${o.hideWord?'?':esc(w.en)}</span></button>`).join(''); $$(sel+' .card').forEach(c=>c.onclick=()=>pick(c)); }
+  function render(){ box.innerHTML=words.map(w=>`<button class="card" data-id="${w.id}">${w.img?`<img loading="lazy" src="${w.img}" alt="">`:''}<span class="en">${o.hideWord?'?':esc(w.en)}</span></button>`).join(''); $$(sel+' .card').forEach(c=>c.onclick=()=>pick(c)); }
   function startG(){ q=shuffle(words); score=0; sc.textContent=0; st.hidden=true; msg.textContent=''; next(); }
   function next(){ if(!q.length) return fin(); curW=q.shift(); first=true; lock=true; $$(sel+' .card').forEach(c=>c.classList.remove('right','wrong','dim')); msg.textContent='Слушай…'; play(curW.a||curW.id,()=>{ lock=false; msg.textContent='Какое слово?'; }); setTimeout(()=>lock=false,3000); }
   function pick(c){ if(lock||!curW) return; if(c.dataset.id===curW.id){ lock=true; if(first) score++; sc.textContent=score; c.classList.add('right'); msg.textContent='✓ '+curW.en+(curW.ru?' — '+curW.ru:''); play('fb_yes',()=>setTimeout(next,500)); } else { first=false; flash(c,'wrong'); play(curW.a||curW.id); msg.textContent='Нет — слушай ещё раз'; } }
@@ -412,9 +418,10 @@ function findGame(sel,words,o){ const box=$(sel), st=$(o.start), sc=$(o.score), 
 function mcq(items,o){ const box=$(o.box), sc=$(o.score), msg=$(o.msg), st=o.start?$(o.start):null, pg=o.prog?$(o.prog):null; let q=[], curI=null, score=0, done=0, first=true, lock=false;
   function startG(){ q=o.keepOrder?items.map((x,i)=>i):shuffle(items.map((x,i)=>i)); score=0; done=0; sc.textContent=0; if(st) st.hidden=true; msg.textContent=''; next(); }
   function next(){ if(!q.length) return fin(); curI=q.shift(); first=true; lock=false; const it=items[curI]; if(pg) pg.style.width=(done/items.length*100)+'%';
-    box.innerHTML=`${it.img?`<img class="photo" src="${it.img}" alt="" style="max-height:200px;object-fit:contain;margin:0 auto 8px;width:auto;max-width:100%">`:''}<div class="bigsay" id="${o.box.slice(1)}_q">${it.q}</div><div class="opts ${o.rowOpts?'row':''}">${(o.shuffleOpts===false?it.opts:shuffle(it.opts)).map(t=>`<button class="btn" data-t="${esc(t)}">${t}</button>`).join('')}</div>`;
+    if(msg.querySelector('.defimg')) msg.textContent='';
+    box.innerHTML=`${it.img?`<img loading="lazy" class="photo" src="${it.img}" alt="${esc(it.alt||'')}" style="max-height:200px;object-fit:contain;margin:0 auto 8px;width:auto;max-width:100%">`:''}<div class="bigsay" id="${o.box.slice(1)}_q">${it.q}</div><div class="opts ${o.rowOpts?'row':''}">${(o.shuffleOpts===false?it.opts:shuffle(it.opts)).map(t=>`<button class="btn" data-t="${esc(t)}">${t}</button>`).join('')}</div>`;
     $$(o.box+' .opts .btn').forEach(b=>b.onclick=()=>pick(b)); if(it.a) play(it.a); $('#'+o.box.slice(1)+'_q').onclick=()=>it.a&&play(it.a); }
-  function pick(b){ if(lock) return; const it=items[curI]; const okT=typeof it.ok==='number'?it.opts[it.ok]:it.ok; if(b.dataset.t===okT){ lock=true; done++; if(first) score++; sc.textContent=score; b.classList.add('right'); msg.textContent='✓ '+(it.why||''); if(it.ao) play(it.ao,()=>setTimeout(next,600)); else { play('fb_yes'); setTimeout(next,1100); } } else { first=false; flash(b,'wrong'); play('fb_no'); msg.textContent=it.hint||'Не то. Подумай ещё'; } }
+  function pick(b){ if(lock) return; const it=items[curI]; const okT=typeof it.ok==='number'?it.opts[it.ok]:it.ok; if(b.dataset.t===okT){ lock=true; done++; if(first) score++; sc.textContent=score; b.classList.add('right'); msg.textContent='✓ '+(it.why||''); if(it.img2){ msg.innerHTML='✓ '+esc(it.why||'')+'<img loading="lazy" class="defimg" src="'+it.img2+'" alt="'+esc(it.alt2||'')+'">'; } if(it.ao) play(it.ao,()=>setTimeout(next,it.img2?1500:600)); else { play('fb_yes'); setTimeout(next,it.img2?2200:1100); } } else { first=false; flash(b,'wrong'); play('fb_no'); msg.textContent=it.hint||'Не то. Подумай ещё'; } }
   function fin(){ if(pg) pg.style.width='100%'; box.innerHTML=''; if(st){ st.hidden=false; st.textContent='Ещё раз'; } const pass=o.pass||Math.ceil(items.length*0.75); msg.textContent=score>=pass?'🏆 '+score+' из '+items.length+'!':'С первого раза '+score+' из '+items.length+'. Попробуй ещё!'; if(score>(P[o.pkey]||0)){ P[o.pkey]=score; save(); } if(score>=pass) burst(); }
   if(st) st.onclick=startG; else startG(); return {start:startG}; }
 // true/false: items=[{t, a?, ok:bool, why}] ; o={text, yes, no, wrap, start, score, msg, prog, pkey, pass}
@@ -466,7 +473,7 @@ function dialog(lines,o){ let role=null, busy=false; const chat=$(o.chat);
   for(const k in o.roles) $(o.roles[k]).onclick=()=>setRole(k); render(); }
 // текст по абзацам с озвучкой: paras=[{a, html, img?}] ; o={box, all, msg, pkey(=число прослушанных)}
 function reader(paras,o){ const heard=new Set(P[o.pkey+'_h']||[]); let busy=false;
-  function render(){ $(o.box).innerHTML=paras.map((p,i)=>`<button class="para ${heard.has(i)?'heard':''}" data-i="${i}">${p.img?`<img src="${p.img}" alt="">`:''}${p.html}</button>`).join(''); $$(o.box+' .para').forEach(b=>b.onclick=()=>{ if(busy) return; const i=+b.dataset.i; lit(i); play(paras[i].a,()=>{ lit(-1); mark(i); }); }); }
+  function render(){ $(o.box).innerHTML=paras.map((p,i)=>`<button class="para ${heard.has(i)?'heard':''}" data-i="${i}">${p.img?`<img src="${p.img}" alt="${esc(p.alt||'')}" loading="lazy">`:''}${p.html}</button>`).join(''); $$(o.box+' .para').forEach(b=>b.onclick=()=>{ if(busy) return; const i=+b.dataset.i; lit(i); play(paras[i].a,()=>{ lit(-1); mark(i); }); }); }
   function lit(k){ $$(o.box+' .para').forEach((b,i)=>b.classList.toggle('on',i===k)); }
   function mark(i){ heard.add(i); P[o.pkey+'_h']=[...heard]; P[o.pkey]=heard.size; save(); $$(o.box+' .para')[i].classList.add('heard'); if(heard.size>=paras.length&&o.onAll) o.onAll(); }
   async function all(){ if(busy){ stopAll(); busy=false; lit(-1); $(o.all).innerHTML=PLAY+'Слушать всё'; return; } busy=true; const tok=++playToken; $(o.all).innerHTML='⏹ Стоп'; for(let i=0;i<paras.length;i++){ if(playToken!==tok) break; lit(i); const el=$$(o.box+' .para')[i]; el.scrollIntoView({block:'center',behavior:'smooth'}); await playTok(paras[i].a,tok); if(playToken===tok) mark(i); await sleep(250); } lit(-1); busy=false; $(o.all).innerHTML=PLAY+'Слушать всё'; }
@@ -508,7 +515,7 @@ function stopExtra(){ $$('video,audio').forEach(v=>{ try{ v.pause(); }catch(e){}
 // тап по словам в тексте: o={box, text, targets:[..] (нормализованные), score, msg, pkey, need?, cmp?(token)->key}
 function tapWords(o){ const found=new Set(P[o.pkey+'_f']||[]); const toks=o.text.split(/(\s+)/); const norm=w=>w.toLowerCase().replace(/[^a-z’'’]/g,'').replace(/[’']s$/,'').replace(/[’']/g,'');
   function render(){ $(o.box).innerHTML=toks.map((t,i)=>/^\s+$/.test(t)?' ':`<button data-i="${i}" class="${found.has(i)?'ok':''}">${esc(t)}</button>`).join(''); $$(o.box+' button').forEach(b=>b.onclick=()=>tap(b)); const n=found.size; $(o.score).textContent=n; }
-  function tap(b){ const i=+b.dataset.i; if(found.has(i)) return; const t=toks[i]; const key=o.cmp?o.cmp(t):norm(t); if(o.targets.includes(key)){ found.add(i); P[o.pkey+'_f']=[...found]; play('fb_yes'); $(o.msg).textContent='✓ '+t.replace(/[.,!?;:]+$/,''); if(found.size>=(o.need||o.targets.length)&&!P[o.pkey]){ P[o.pkey]=1; burst(); $(o.msg).textContent='🏆 Все найдены!'; } save(); render(); } else { b.classList.add('no'); setTimeout(()=>b.classList.remove('no'),450); play('fb_no'); $(o.msg).textContent=o.wrong||'Не то'; } }
+  function tap(b){ const i=+b.dataset.i; if(found.has(i)) return; const t=toks[i]; const key=o.cmp?o.cmp(t,i):norm(t); if(o.targets.includes(key)){ found.add(i); P[o.pkey+'_f']=[...found]; play('fb_yes'); $(o.msg).textContent='✓ '+t.replace(/[.,!?;:]+$/,''); if(found.size>=(o.need||o.targets.length)&&!P[o.pkey]){ P[o.pkey]=1; burst(); $(o.msg).textContent='🏆 Все найдены!'; } save(); render(); } else { b.classList.add('no'); setTimeout(()=>b.classList.remove('no'),450); play('fb_no'); $(o.msg).textContent=o.wrong||'Не то'; } }
   render(); }
 // ── учебник ──
 $$('[data-task]').forEach(cb=>{ cb.checked=(P.tasks||[]).includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
@@ -536,10 +543,10 @@ function burst(){ const c=document.createElement('div'); c.className='confetti';
 const LAD=[["nephew", "племянник"], ["daughter", "дочь"], ["notebook", "тетрадь"], ["sharpener", "точилка"], ["glasses", "очки"], ["moustache", "усы"], ["Japanese", "японский"], ["guitar", "гитара"]], SPL=["cousin", "window", "Brazilian", "grandmother", "beard", "dictionary", "Wednesday", "Turkish"], SPKQ=[["Where are you from?", "I’m from Russia. I’m Russian."], ["How old are you?", "I’m twelve."], ["Have you got any brothers or sisters?", "Yes, I have. I’ve got a sister. Her name’s Anna."], ["What colour is your hair?", "I’ve got short brown hair and blue eyes."], ["Can you swim?", "Yes, I can. But I can’t dance!"], ["What’s your favourite sport?", "My favourite sport is football."]], IC=[["i1", "I can name countries and nationalities.", "страны и национальности"], ["i2", "I can use be: I’m, you aren’t, Is he…?", "глагол be"], ["i3", "I can name things in the classroom.", "предметы класса"], ["i4", "I can understand classroom instructions.", "команды учителя"], ["i5", "I can talk about my family: my, his, their, Ann’s.", "семья и притяжательные"], ["i6", "I can describe people with have got.", "внешность и have got"], ["i7", "I can say what I can and can’t do.", "can / can’t"], ["i8", "I can find things in my Student’s Book.", "учебник"]];
 mcq([{q:'She ___ from Japan. She’s Japanese.',opts:['’s','’re','am'],ok:0},{q:'They ___ French. They’re Spanish.',opts:['aren’t','isn’t','not'],ok:0},
      {q:'Are you Mexican? — Yes, ___.',opts:['I am','I’m','I is'],ok:0},{q:'What ___ those? — They’re my books.',opts:['are','is','am'],ok:0},
-     {q:'Your father’s mother is your …',opts:['grandmother','aunt','niece'],ok:0},{q:'My cousins live with ___ parents.',opts:['their','they','there'],ok:0},
+     {q:'Your father’s mother is your …',opts:['grandmother','aunt','niece'],ok:0,img2:'img/famD.jpg',alt2:'Семья с бабушкой и дедушкой'},{q:'My cousins live with ___ parents.',opts:['their','they','there'],ok:0},
      {q:'My ___ names are Ajay and Hari. (2 cousins)',opts:['cousins’','cousin’s','cousins'],ok:0},{q:'He ___ got a beard.',opts:['has','have','is'],ok:0},
-     {q:'___ they got blue eyes? — Yes, they have.',opts:['Have','Has','Are'],ok:0},{q:'She can ___ Chinese.',opts:['speak','speaks','to speak'],ok:0},
-     {q:'Can he cook? — No, he ___.',opts:['can’t','doesn’t','isn’t'],ok:0},{q:'Which is a nationality?',opts:['Moroccan','Morocco','Moroccia'],ok:0}],
+     {q:'___ they got blue eyes? — Yes, they have.',opts:['Have','Has','Are'],ok:0},{q:'She can ___ Chinese.',opts:['speak','speaks','to speak'],ok:0,img2:'img/act8.jpg',alt2:'Девочка говорит по-китайски: Nǐ hǎo!'},
+     {q:'Can he cook? — No, he ___.',opts:['can’t','doesn’t','isn’t'],ok:0,img2:'img/act3.jpg',alt2:'Кто-то готовит: разбивает яйцо'},{q:'Which is a nationality?',opts:['Moroccan','Morocco','Moroccia'],ok:0}],
   {box:'#qzBox',score:'#qzScore',start:'#qzStart',msg:'#qzMsg',prog:'#qzProg',pkey:'quiz',pass:10});
 mcq([{q:'Что ты услышал?',a:'p_ireland',opts:['Ireland — Irish','Iceland — Icelandic','Italy — Italian'],ok:0},{q:'Что ты услышал?',a:'p_japan',opts:['Japan — Japanese','China — Chinese','Nigeria — Nigerian'],ok:0},
      {q:'Какое слово по буквам?',a:'sp_teacher',opts:['teacher','teaches','reacher'],ok:0},{q:'Что сказал учитель?',a:'ins3',opts:['Open your books.','Close your books.','Write the answers.'],ok:0},
