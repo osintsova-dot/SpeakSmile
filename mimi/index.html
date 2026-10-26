@@ -92,6 +92,11 @@ h1 .w{color:var(--honey)}
 .tile.phon{--band:linear-gradient(90deg,var(--honey),#FF9E57)}
 .tile.phon .ic{--icbg:linear-gradient(160deg,#FFF7DA,#FFE9AE);--icsh:rgba(245,200,66,.35)}
 .tile.phon .go{color:#C98A00}
+.tile.home{--band:linear-gradient(90deg,#34D3C0,#63B3FF)}
+.tile.home .ic{--icbg:linear-gradient(160deg,#E2FBF7,#C6F2EA);--icsh:rgba(52,211,192,.3)}
+.tile.home .go{color:#14907F}
+.tile:nth-child(3){animation-delay:.42s}
+@media(min-width:521px){.tile.home{grid-column:1/-1}}
 
 .foot{position:relative;z-index:1;margin-top:34px;opacity:.85;font-size:12px;font-weight:700;letter-spacing:.2px}
 .foot b{color:var(--honey)}
@@ -128,6 +133,12 @@ h1 .w{color:var(--honey)}
       <span class="ic">🔤</span>
       <span class="t">Фониксы</span>
       <span class="d">Phonics Hub · чтение по тетради</span>
+      <span class="go">Открыть <span class="arw">→</span></span>
+    </a>
+    <a class="tile home" href="home/">
+      <span class="ic">🏠</span>
+      <span class="t">Урок дома</span>
+      <span class="d">пропустили урок? песни, мультики, игры</span>
       <span class="go">Открыть <span class="arw">→</span></span>
     </a>
   </div>

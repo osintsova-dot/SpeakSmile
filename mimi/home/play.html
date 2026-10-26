@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#6C3FC5">
+<title>Genki · смотрим</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6C3FC5;--pd:#4B278F;--honey:#F5C842;--f:"Baloo 2",ui-rounded,system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#2A2140;font-family:var(--f);color:#fff}
+.bar{height:56px;padding:0 10px;padding-top:env(safe-area-inset-top);display:flex;align-items:center;gap:10px;background:var(--p);box-sizing:content-box}
+.bar a{display:inline-flex;align-items:center;gap:6px;height:42px;padding:0 16px;border-radius:999px;background:var(--honey);color:#2A2140;font-weight:800;font-size:17px;text-decoration:none}
+.bar span{font-weight:800;font-size:16px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#box{position:absolute;left:0;right:0;bottom:0;top:calc(56px + env(safe-area-inset-top));background:#fff}
+#box iframe,#box ruffle-player,#box ruffle-object,#box ruffle-embed{width:100%;height:100%;border:0;display:block}
+.msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#4B278F;font-weight:800;font-size:19px;padding:24px;line-height:1.35}
+.go{border:0;font:inherit;font-size:24px;font-weight:800;color:#2A2140;background:var(--honey);border-radius:40px;padding:16px 32px;box-shadow:0 7px 0 #C99A12;cursor:pointer}
+</style></head><body>
+<div class="bar"><a id="back" href="./">← Назад в урок</a><span id="ttl"></span></div>
+<div id="box"></div>
+<script>
+const q=new URLSearchParams(location.search), back=q.get('back')||'./', box=document.getElementById('box');
+document.getElementById('back').href=back;
+document.getElementById('ttl').textContent=q.get('t')||'';
+if(q.get('book')){ const slug=q.get('book').replace(/[^\w-]/g,''); box.innerHTML=`<iframe src="/genki/books/${slug}.html" title="Книжка" allow="autoplay"></iframe>`; }
+else if(q.get('swf')){ const f=q.get('swf').replace(/[^\w./-]/g,'');
+  box.innerHTML='<div class="msg"><div>Мультик Genki<br><small style="font-weight:600">большой файл — после нажатия подождите 10–30 секунд</small><br><br><button class="go" id="go">▶ Смотреть</button></div></div>';
+  document.getElementById('go').onclick=()=>{ box.innerHTML='<div class="msg" id="ld">Загружаю мультик… ⏳</div>';
+    window.RufflePlayer=window.RufflePlayer||{}; window.RufflePlayer.config={autoplay:'on',unmuteOverlay:'visible',letterbox:'on',splashScreen:true,backgroundColor:'#ffffff',polyfills:false};
+    const run=()=>{ try{ const pl=window.RufflePlayer.newest().createPlayer(); pl.style.cssText='width:100%;height:100%;position:absolute;inset:0'; box.append(pl);
+        pl.load({url:f}).then(()=>{const l=document.getElementById('ld'); l&&l.remove();}).catch(()=>{document.getElementById('ld').textContent='Не загрузилось 🙁 Проверьте интернет и попробуйте ещё раз.';}); }
+      catch(e){ box.innerHTML='<div class="msg">Этот телефон не смог открыть мультик 🙁<br>Вернитесь в урок — всё то же есть в других кружках.</div>'; } };
+    const sc=document.createElement('script'); sc.src='https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.7.1/ruffle.js'; sc.onload=run;
+    sc.onerror=()=>{ const s2=document.createElement('script'); s2.src='https://unpkg.com/@ruffle-rs/ruffle@0.7.1/ruffle.js'; s2.onload=run; s2.onerror=()=>{box.innerHTML='<div class="msg">Не загрузился плеер 🙁 Проверьте интернет.</div>';}; document.head.append(s2); };
+    document.head.append(sc); };
+}
+</script></body></html>
