@@ -15,6 +15,16 @@
   --ease:cubic-bezier(.2,.9,.25,1.1);
 }
 .defx{display:block;margin-top:8px;font-size:18px;line-height:1.4;font-style:italic;color:#FFE27A;background:rgba(255,255,255,.08);border-left:4px solid #F5C842;border-radius:10px;padding:10px 12px;text-align:left}.defq{display:block;font-size:19px;line-height:1.35;font-weight:700;color:#fff;background:rgba(255,255,255,.1);border-radius:16px;padding:12px 14px;margin:4px 0}.defno{display:block;margin-top:6px;opacity:.8}
+/* картинки из учебника (2026-10-26) */
+.slide.cover{justify-content:flex-start;padding-top:68px}.slide.cover>:first-child{margin-top:auto}.slide.cover>:last-child{margin-bottom:auto}
+.cover img.hero{display:block;width:min(320px,84vw);height:min(180px,22vh);object-fit:cover;object-position:center 30%;margin:0 auto 14px;border-radius:18px;border:3px solid rgba(255,255,255,.9);box-shadow:0 18px 40px rgba(5,0,30,.45);background:#fff}
+.banner{display:block;width:100%;border-radius:14px;margin:0 0 10px;box-shadow:0 8px 20px rgba(5,0,30,.3);background:#fff}
+.defimg{display:block;width:100%;max-width:340px;height:150px;object-fit:cover;border-radius:12px;margin:8px auto 4px;border:2px solid #fff;box-shadow:0 8px 18px rgba(5,0,30,.3);background:#fff}
+.pth{display:flex;gap:6px;float:right;margin:0 0 6px 10px}
+.pth img,.para .pth img{width:96px;height:72px;margin:0;object-fit:cover;border-radius:10px;border:2px solid #fff;box-shadow:0 4px 10px rgba(5,0,30,.2);background:#fff}
+.para::after{content:"";display:table;clear:both}
+.bimg{display:block;width:100%;max-width:360px;height:180px;object-fit:cover;border-radius:12px;margin:0 auto 6px}
+
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 html,body{margin:0;height:100%;overflow:hidden}
@@ -278,6 +288,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
 </div>
 <div class="deck" id="deck">
   <section class="slide cover" data-key="cover">
+    <img class="hero" src="img/hero.webp" alt="A scientist in safety glasses examining a test tube in a lab" fetchpriority="high">
     <div><span class="gi-tag">Gateway B2 · Unit 2 · урок 1</span></div>
     <h1>A job well done</h1>
     <div class="gi-mission"><b>Mission:</b> выучить 44 слова и фразы о работе — условия, обязанности, часы и зарплата — так, чтобы рассказать о работе мечты.</div>
@@ -420,7 +431,7 @@ function findGame(sel,words,o){ const box=$(sel), st=$(o.start), sc=$(o.score), 
   function render(){ box.innerHTML=words.map(w=>`<button class="card" data-id="${w.id}">${w.img?`<img src="${w.img}" alt="">`:''}<span class="en">${o.hideWord?'?':esc(w.en)}</span></button>`).join(''); $$(sel+' .card').forEach(c=>c.onclick=()=>pick(c)); }
   function startG(){ q=shuffle(words); score=0; sc.textContent=0; st.hidden=true; msg.textContent=''; next(); }
   function next(){ if(!q.length) return fin(); curW=q.shift(); first=true; lock=true; $$(sel+' .card').forEach(c=>c.classList.remove('right','wrong','dim')); if(curW.d){ msg.innerHTML='<span class="defq">'+esc(curW.d)+'</span>'; lock=false; return; } msg.textContent='Слушай…'; play(curW.a||curW.id,()=>{ lock=false; msg.textContent='Какое слово?'; }); setTimeout(()=>lock=false,3000); }
-  function pick(c){ if(lock||!curW) return; if(c.dataset.id===curW.id){ lock=true; if(first) score++; sc.textContent=score; c.classList.add('right'); msg.textContent='✓ '+curW.en+(curW.ru?' — '+curW.ru:''); if(curW.x){ msg.innerHTML='<b>✓ '+esc(curW.en)+'</b>'+(curW.ru?' — '+esc(curW.ru):'')+'<span class="defx">'+esc(curW.x)+'</span>'; play(curW.xa,()=>setTimeout(next,900)); } else if(curW.d) play(curW.a||curW.id,()=>setTimeout(next,400)); else play('fb_yes',()=>setTimeout(next,500)); } else { first=false; flash(c,'wrong'); if(curW.d){ play('fb_no'); msg.innerHTML='<span class="defq">'+esc(curW.d)+'</span><small class="defno">Не то — перечитай определение</small>'; } else { play(curW.a||curW.id); msg.textContent='Нет — слушай ещё раз'; } } }
+  function pick(c){ if(lock||!curW) return; if(c.dataset.id===curW.id){ lock=true; if(first) score++; sc.textContent=score; c.classList.add('right'); msg.textContent='✓ '+curW.en+(curW.ru?' — '+curW.ru:''); if(curW.x){ msg.innerHTML='<b>✓ '+esc(curW.en)+'</b>'+(curW.ru?' — '+esc(curW.ru):'')+(curW.img2?'<img class="defimg" src="'+curW.img2+'" alt="'+esc(curW.en)+'">':'')+'<span class="defx">'+esc(curW.x)+'</span>'; play(curW.xa,()=>setTimeout(next,900)); } else if(curW.d) play(curW.a||curW.id,()=>setTimeout(next,400)); else play('fb_yes',()=>setTimeout(next,500)); } else { first=false; flash(c,'wrong'); if(curW.d){ play('fb_no'); msg.innerHTML='<span class="defq">'+esc(curW.d)+'</span><small class="defno">Не то — перечитай определение</small>'; } else { play(curW.a||curW.id); msg.textContent='Нет — слушай ещё раз'; } } }
   function fin(){ st.hidden=false; st.textContent='Ещё раз'; msg.textContent=score>=words.length-1?'🏆 Отлично: '+score+' из '+words.length+'!':'С первого раза '+score+' из '+words.length+'. Попробуй ещё!'; if(score>(P[o.pkey]||0)){ P[o.pkey]=score; save(); } if(score>=words.length-1) burst(); }
   render(); st.onclick=startG; }
 // MCQ-раунды: items=[{q, a?, img?, opts:[...], ok:index|text, why?}] ; o={box, score, start?, msg, prog?, pkey, pass}
