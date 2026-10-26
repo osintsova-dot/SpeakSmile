@@ -133,7 +133,7 @@ details.par p{margin:8px 0 0}
   <div class="guide"><img id="guideImg" src="img/hi.png" alt="Спики"><div class="bubble" id="guideSay">Hi! Нажми на кружок!</div></div>
   <div class="map" id="map"></div>
   <div class="parent-top"><details class="par"><summary>👩 Для родителя (нажмите)</summary>
-    <p>Mimi's Wheel 3 · Unit 2 School · уроки 7–8</p>
+    <p>Mimi's Wheel 3 · Unit 2 School (октябрь) · уроки 7–8</p>
     <p>Ребёнок проходит кружки по дорожке сверху вниз. За каждый получает звёздочку. Читать ничего не нужно: Спики всё говорит сам. Ваша задача — быть рядом, повторять вместе и хвалить. Лучше по 10–15 минут два-три дня, чем всё за раз.</p>
     <button class="copy" id="copyBtn">🔗 Скопировать ссылку на урок</button></details></div>
 </main>
@@ -154,7 +154,7 @@ const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return
 const P=Object.assign({done:{},heard:[]},ls.get('home:'+LESSON)||{});
 const save=()=>ls.set('home:'+LESSON,P);
 const BY=Object.fromEntries(D.words.map(w=>[w.id,w]));
-const img=id=>'img/'+(BY[id]?BY[id].img:id+'.png');
+const img=id=>'img/'+(BY[id]?BY[id].img:/\.(png|jpg)$/.test(id)?id:id+'.png');
 
 // ── звук (пул для iOS) ──
 const POOL=[];let current=null,unlocked=false;

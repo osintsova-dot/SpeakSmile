@@ -154,7 +154,7 @@ const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return
 const P=Object.assign({done:{},heard:[]},ls.get('home:'+LESSON)||{});
 const save=()=>ls.set('home:'+LESSON,P);
 const BY=Object.fromEntries(D.words.map(w=>[w.id,w]));
-const img=id=>'img/'+(BY[id]?BY[id].img:id+'.png');
+const img=id=>'img/'+(BY[id]?BY[id].img:/\.(png|jpg)$/.test(id)?id:id+'.png');
 
 // ── звук (пул для iOS) ──
 const POOL=[];let current=null,unlocked=false;
