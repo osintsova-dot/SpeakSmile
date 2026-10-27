@@ -107,7 +107,7 @@ const url=(c,h)=>new URL(`${SITE}/${c}/home/${h}/`).href;
 const esc=s=>s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 function render(){ const m=document.getElementById('main'); m.innerHTML=DATA.map(c=>`<section class="course" data-c="${c.id}"><h2>${esc(c.name)} <a href="${SITE}/${c.id}/home/" target="_blank" rel="noopener">главная курса ↗</a></h2>`+
   c.units.map(u=>`<div class="unit" data-u="${u.id}"><div class="uhead"><span class="ulab">${esc(u.lab)}</span><span class="utitle">${esc(u.title)}</span><button class="uall" data-c="${c.id}" data-u="${u.id}">Все ссылки юнита</button></div>`+
-    u.rows.map(r=>`<div class="ls" data-now="${isNow(r.wk)?1:0}" data-s="${esc((c.name+' '+u.lab+' '+u.title+' '+r.n+' '+r.h2+' '+r.p+' '+r.href).toLowerCase())}"><div class="n">${esc(r.n)}</div><div class="t"><b>${esc(r.h2)}</b><span>${esc(r.p)}</span><span class="wks">${wks(r.wk)}</span><span class="url">${esc(url(c.id,r.href).replace('https://',''))}</span></div><div class="acts"><button class="act copy" title="Скопировать ссылку" data-url="${url(c.id,r.href)}" data-t="${esc(r.h2)}">${I_COPY}</button><button class="act msg" title="Сообщение родителю со ссылкой" data-url="${url(c.id,r.href)}" data-t="${esc(r.h2)}" data-u="${esc(u.lab+(u.id==='st'?'':' · урок '+r.n.replace('L','')))}">✉️</button><button class="act share" title="Поделиться" data-url="${url(c.id,r.href)}" data-t="${esc(c.name+' · '+u.lab+' · '+r.n+' '+r.h2)}">${I_SHARE}</button><a class="act" title="Открыть" href="${url(c.id,r.href)}" target="_blank" rel="noopener">${I_OPEN}</a></div></div>`).join('')+`</div>`).join('')+`</section>`).join('')+'<p class="empty hide" id="empty">Ничего не нашлось</p>'; }
+    u.rows.map(r=>`<div class="ls" data-now="${isNow(r.wk)?1:0}" data-s="${esc((c.name+' '+u.lab+' '+u.title+' '+r.n+' '+r.h2+' '+r.p+' '+r.href).toLowerCase())}"><div class="n">${esc(r.n)}</div><div class="t"><b>${esc(r.h2)}</b><span>${esc(r.p)}</span><span class="wks">${wks(r.wk)}</span><span class="url">${esc(url(c.id,r.href).replace('https://',''))}</span></div><div class="acts"><button class="act copy" title="Скопировать текст ДЗ со ссылкой" data-url="${url(c.id,r.href)}" data-t="${esc(r.h2)}">${I_COPY}</button><button class="act msg" title="Сообщение родителю со ссылкой" data-url="${url(c.id,r.href)}" data-t="${esc(r.h2)}" data-u="${esc(u.lab+(u.id==='st'?'':' · урок '+r.n.replace('L','')))}">✉️</button><button class="act share" title="Поделиться" data-url="${url(c.id,r.href)}" data-t="${esc(c.name+' · '+u.lab+' · '+r.n+' '+r.h2)}">${I_SHARE}</button><a class="act" title="Открыть" href="${url(c.id,r.href)}" target="_blank" rel="noopener">${I_OPEN}</a></div></div>`).join('')+`</div>`).join('')+`</section>`).join('')+'<p class="empty hide" id="empty">Ничего не нашлось</p>'; }
 render();
 if(navigator.share) document.body.classList.add('canshare');
 let toastT=null; function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2000); }
@@ -115,6 +115,16 @@ function copyText(txt,btn){ const done=ok=>{ toast(ok?'Скопировано �
   const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=txt; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,txt.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
 const F={parent:'',child:'',sex:'m',date:''};
+const OLD=/\/(gia\d|prepare\d|gateway)\//; // старшие: Get Involved, Prepare, Gateway
+function hwText(u){ return OLD.test(u)
+  ? `🏠 Урок дома: ${u}
+Был на уроке — пройди ещё раз, чтобы закрепить: слова, видео, задания с автопроверкой.
+Пропустил — проработай урок сам от начала до конца, чтобы не отстать перед тестом.
+✍️ В конце впиши имя и фамилию и нажми «Я сделал!» — результат придёт учителю.`
+  : `🏠 Урок дома: ${u}
+👍 Был на уроке? Повтори дома: послушай слова, поиграй, спой песню. Так ты всё запомнишь!
+🙈 Пропустил урок? Пройди его сам, шаг за шагом. Так ты не отстанешь от ребят.
+✍️ В конце напиши своё имя и фамилию и нажми «Я сделал!» — учитель увидит, что ты молодец.`; }
 const fmtDate=v=>{ if(!v) return ''; const [y,m,d]=v.split('-'); return `${d}.${m}`; };
 function message(url,title,unit){ const p=F.parent.trim(), c=F.child.trim(), d=fmtDate(F.date), v=F.sex==='f'?'пропустила':'пропустил';
   const hi=p?`Здравствуйте, ${p}!`:'Здравствуйте!'; const who=c?`${c} ${v}`:(F.sex==='f'?'Ваша дочка пропустила':'Ваш ребёнок пропустил');
@@ -129,7 +139,7 @@ preview();
 document.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
   if(b.classList.contains('msg')){ lastMsg={url:b.dataset.url,title:b.dataset.t,unit:b.dataset.u}; preview(); const m=message(b.dataset.url,b.dataset.t,b.dataset.u); document.getElementById('msgbox').open=true;
     if(navigator.share){ navigator.share({text:m}).catch(()=>copyText(m,b)); } else copyText(m,b); return; }
-  if(b.classList.contains('copy')) copyText(b.dataset.url,b);
+  if(b.classList.contains('copy')) copyText(hwText(b.dataset.url),b);
   else if(b.classList.contains('share')) navigator.share({title:b.dataset.t,text:b.dataset.t,url:b.dataset.url}).catch(()=>{});
   else if(b.classList.contains('uall')){ const c=DATA.find(x=>x.id===b.dataset.c), u=c.units.find(x=>x.id===b.dataset.u); copyText(`${c.name} · ${u.lab} · ${u.title}\n`+u.rows.map(r=>`${r.n} ${r.h2} — ${url(c.id,r.href)}`).join('\n'),b); }
   else if(b.classList.contains('tab')){ document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-pressed',t===b)); filter(); } });
