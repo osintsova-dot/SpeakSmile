@@ -38,6 +38,13 @@ body.singing .disc img{animation:spin 3.2s linear infinite}
 .btn{padding:12px 20px;border-radius:999px;background:var(--purple);color:#fff;font-weight:600;font-size:clamp(15px,2vh,19px);box-shadow:0 5px 0 #4a2896;white-space:nowrap}
 .btn.ghost{background:#fff;color:var(--purple);box-shadow:0 5px 0 rgba(42,18,83,.18)}
 .btn:active{transform:translateY(3px);box-shadow:0 2px 0 #4a2896}
+.rule{position:fixed;inset:0;z-index:5;background:rgba(42,18,83,.55);display:none;align-items:center;justify-content:center;padding:12px}
+.rule.on{display:flex}
+.rule .pw{position:relative;height:100%;max-height:100%;aspect-ratio:1024/1536;max-width:100%}
+.rule img{width:100%;height:100%;display:block;border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.rule .row{position:absolute;left:1%;right:1%;border-radius:14px}
+.rule .row.say{background:rgba(108,63,197,.16)}
+.rule .x{position:absolute;top:-6px;right:-6px;width:46px;height:46px;border-radius:50%;background:#fff;color:var(--purple);font-weight:700;font-size:24px;box-shadow:0 4px 0 rgba(42,18,83,.25)}
 .hint{max-width:240px;text-align:center;font-size:14px;opacity:.75;line-height:1.3}
 @media (max-aspect-ratio:1/1){.stage{flex-direction:column}.hand{height:auto;width:min(100%,62vh)}.side{flex-direction:row;flex-wrap:wrap;justify-content:center}.disc{width:84px}.hint{display:none}}
 </style>
@@ -51,9 +58,11 @@ body.singing .disc img{animation:spin 3.2s linear infinite}
     <button class="btn" id="songBtn">🎵 Песня гласных</button>
     <button class="btn ghost" id="all">👁 Открыть все</button>
     <button class="btn ghost" id="reset">↺ Закрыть</button>
-    <p class="hint">Нажми на кружок «?» — откроется долгая гласная и прозвучит. Буквы на пальцах тоже говорят. Пробел — песня, F — во весь экран.</p>
+    <button class="btn" id="ruleBtn" style="background:#2fb4c9;box-shadow:0 5px 0 #1f8797">📜 Правило</button>
+    <p class="hint">Нажми на кружок «?» — откроется долгая гласная и прозвучит. Буквы на пальцах тоже говорят. Пробел — песня, F — во весь экран, R — правило.</p>
   </div>
 </div>
+<div class="rule" id="rule"><div class="pw" id="rulePw"><img src="rule.jpg" alt="When two vowels go walking, the first does the talking: rain, train, bee, tree, pie, tie, boat, goat, blue, glue"><button class="x" id="ruleX" aria-label="Закрыть">✕</button></div></div>
 <script>
 const SND='../../gmf1/phonics/sounds/';
 // координаты в % картинки (из урока Jolly lesson_step3_unit5, кадр 1000×1200)
@@ -70,7 +79,13 @@ song.onended=()=>document.body.classList.remove('singing');
 document.getElementById('song').onclick=toggle;document.getElementById('songBtn').onclick=toggle;
 document.getElementById('all').onclick=()=>document.querySelectorAll('.q').forEach(q=>q.classList.add('open'));
 document.getElementById('reset').onclick=()=>document.querySelectorAll('.q').forEach(q=>q.classList.remove('open'));
-addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();toggle();}if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});}});
+// правило «When two vowels go walking…»: строки плаката говорят свою долгую гласную
+const R=document.getElementById('rule'),RP=document.getElementById('rulePw');
+[['ai',12.7,14.4],['ee',28.1,14.9],['ie',43.8,15.2],['oa',59.9,15.3],['ue',76.2,15.3]].forEach(([g,t,h])=>{const b=document.createElement('button');b.className='row';b.style.top=t+'%';b.style.height=h+'%';b.setAttribute('aria-label',g);b.onclick=()=>say(g,b);RP.appendChild(b);});
+document.getElementById('ruleBtn').onclick=()=>R.classList.add('on');
+document.getElementById('ruleX').onclick=()=>R.classList.remove('on');
+R.onclick=e=>{if(e.target===R)R.classList.remove('on');};
+addEventListener('keydown',e=>{if(e.key==='Escape')R.classList.remove('on');if(e.key==='r'||e.key==='R'||e.key==='к'||e.key==='К')R.classList.toggle('on');if(e.code==='Space'){e.preventDefault();toggle();}if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});}});
 </script>
 </body>
 </html>
