@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>The vowel hand · песня гласных</title>
+<meta name="description" content="Ладошка гласных (Jolly Phonics, Step 3): короткие a e i o u на пальцах, долгие ai ee ie oa ue под кружками, песня гласных.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#6C3FC5;--deep:#3d1b86;--ink:#2a1253;--honey:#F5C842;--yellow:#FFF560;--ease:cubic-bezier(.2,.9,.3,1.2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--yellow);color:var(--ink);font-family:Fredoka,"Nunito","Arial Rounded MT Bold",system-ui,sans-serif;overflow:hidden;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer;color:inherit;border:0;background:none}
+.top{display:flex;align-items:center;gap:10px;padding:max(10px,env(safe-area-inset-top)) 16px 0;flex-wrap:wrap}
+.back{padding:7px 14px;border-radius:999px;background:rgba(42,18,83,.1);color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.back:hover{background:rgba(42,18,83,.18)}
+.title{font-weight:700;font-size:clamp(17px,2.6vh,26px)}
+.title small{display:block;font-weight:500;font-size:.62em;opacity:.7}
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,48px);padding:8px 16px max(12px,env(safe-area-inset-bottom))}
+.hand{position:relative;height:100%;max-height:100%;aspect-ratio:1000/1200;max-width:100%}
+.hand img{width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}
+/* короткие гласные на пальцах — прозрачные кнопки поверх букв */
+.v{position:absolute;width:9%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%}
+.v:active,.v.say{background:rgba(108,63,197,.18)}
+/* кружки «?» над долгими гласными — как в Jolly */
+.q{position:absolute;width:9.4%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--c);border:.35vh solid #111;box-shadow:0 .4vh 0 rgba(0,0,0,.25);display:grid;place-items:center;font-weight:700;font-size:min(4.4vh,6vw);color:#111;transition:transform .45s var(--ease),opacity .35s}
+.q.open{transform:translate(-50%,-50%) scale(.2) rotate(-90deg);opacity:0;pointer-events:none}
+.lv{position:absolute;width:11%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%}
+.lv.say{background:rgba(108,63,197,.18)}
+.side{display:flex;flex-direction:column;align-items:center;gap:14px}
+.disc{width:clamp(110px,22vh,200px);aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.2))}
+.disc img{width:100%;height:100%;border-radius:50%}
+body.singing .disc img{animation:spin 3.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn{padding:12px 20px;border-radius:999px;background:var(--purple);color:#fff;font-weight:600;font-size:clamp(15px,2vh,19px);box-shadow:0 5px 0 #4a2896;white-space:nowrap}
+.btn.ghost{background:#fff;color:var(--purple);box-shadow:0 5px 0 rgba(42,18,83,.18)}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #4a2896}
+.hint{max-width:240px;text-align:center;font-size:14px;opacity:.75;line-height:1.3}
+@media (max-aspect-ratio:1/1){.stage{flex-direction:column}.hand{height:auto;width:min(100%,62vh)}.side{flex-direction:row;flex-wrap:wrap;justify-content:center}.disc{width:84px}.hint{display:none}}
+</style>
+</head>
+<body>
+<div class="top"><a class="back" href="../../gmf1/phonics/">← Phonics Hub</a><div class="title">✋ The vowel hand<small>Jolly Phonics · Step 3 · Alternatives</small></div></div>
+<div class="stage">
+  <div class="hand" id="hand"><img src="hand.jpg" alt="Ладошка гласных: a e i o u на пальцах, ai ee ie oa ue у оснований"></div>
+  <div class="side">
+    <button class="disc" id="song" aria-label="Песня гласных"><img src="songs.png" alt=""></button>
+    <button class="btn" id="songBtn">🎵 Песня гласных</button>
+    <button class="btn ghost" id="all">👁 Открыть все</button>
+    <button class="btn ghost" id="reset">↺ Закрыть</button>
+    <p class="hint">Нажми на кружок «?» — откроется долгая гласная и прозвучит. Буквы на пальцах тоже говорят. Пробел — песня, F — во весь экран.</p>
+  </div>
+</div>
+<script>
+const SND='../../gmf1/phonics/sounds/';
+// координаты в % картинки (из урока Jolly lesson_step3_unit5, кадр 1000×1200)
+const SHORT=[['a',21,37.4],['e',28.7,20.2],['i',41.5,16.6],['o',53.7,18.5],['u',67.6,29.4]];
+const LONG=[['ai',29.6,51.8,'#FFE94A'],['ee',35.6,38.9,'#F7A23C'],['ie',44.9,35.1,'#FFE94A'],['oa',53.1,39.6,'#B04A9E'],['ue',61.8,42.6,'#A86A33']];
+const H=document.getElementById('hand');let au=null;
+const say=(g,el)=>{song.pause();document.body.classList.remove('singing');au&&au.pause();au=new Audio(SND+g+'.m4a');au.play().catch(()=>{});if(el){el.classList.add('say');setTimeout(()=>el.classList.remove('say'),500);}};
+SHORT.forEach(([g,x,y])=>{const b=document.createElement('button');b.className='v';b.style.left=x+'%';b.style.top=y+'%';b.setAttribute('aria-label',g);b.onclick=()=>say(g,b);H.appendChild(b);});
+LONG.forEach(([g,x,y,c])=>{const l=document.createElement('button');l.className='lv';l.style.left=x+'%';l.style.top=y+'%';l.setAttribute('aria-label',g);l.onclick=()=>say(g,l);H.appendChild(l);
+  const q=document.createElement('button');q.className='q';q.textContent='?';q.style.left=x+'%';q.style.top=y+'%';q.style.setProperty('--c',c);q.setAttribute('aria-label','открыть '+g);q.onclick=()=>{q.classList.add('open');say(g);};H.appendChild(q);});
+const song=new Audio('song.m4a');
+const toggle=()=>{if(song.paused){au&&au.pause();song.play();document.body.classList.add('singing');}else{song.pause();document.body.classList.remove('singing');}};
+song.onended=()=>document.body.classList.remove('singing');
+document.getElementById('song').onclick=toggle;document.getElementById('songBtn').onclick=toggle;
+document.getElementById('all').onclick=()=>document.querySelectorAll('.q').forEach(q=>q.classList.add('open'));
+document.getElementById('reset').onclick=()=>document.querySelectorAll('.q').forEach(q=>q.classList.remove('open'));
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();toggle();}if(e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{});}});
+</script>
+</body>
+</html>
