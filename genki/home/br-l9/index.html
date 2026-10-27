@@ -67,6 +67,19 @@ details.par p{margin:8px 0 0}
 .hint b{color:var(--ink)}
 .big{width:min(78vw,340px);aspect-ratio:1;border-radius:36px;background:#fff;display:grid;place-items:center;margin:14px auto 8px;box-shadow:0 10px 0 rgba(108,63,197,.18);overflow:hidden;position:relative}
 .big img{position:absolute;left:4%;top:4%;width:92%;height:92%;object-fit:contain;transition:transform .35s var(--spring)}
+.spw{position:relative;width:100%;max-width:760px;margin:8px auto;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 8px 0 rgba(108,63,197,.16);touch-action:manipulation}
+.spw img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+.spf{position:absolute;border-radius:28%;mix-blend-mode:multiply;opacity:0;transition:opacity .45s ease;pointer-events:none}
+.spf.on{opacity:.62}.spf.ring{mix-blend-mode:normal;background:transparent!important;border:4px solid #1FA85C;opacity:1;animation:bump .5s var(--spring)}
+.spdot{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:rgba(242,107,107,.85);pointer-events:none;animation:bump .4s var(--spring)}
+.res{font-weight:800;font-size:22px;color:var(--good);margin:8px 0}
+.pbl{list-style:none;padding:0;margin:10px auto;max-width:560px;text-align:left}
+.pbi{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;width:100%;background:#fff;border:0;border-radius:20px;padding:12px 14px;margin:0 0 10px;font:inherit;color:var(--ink);text-align:left;box-shadow:0 6px 0 rgba(108,63,197,.14);cursor:pointer}
+.pbi .bx{width:34px;height:34px;border-radius:10px;border:3px solid #CFC3EE;display:grid;place-items:center;font-size:20px;color:#fff;transition:all .2s var(--spring)}
+.pbi.on .bx{background:var(--good);border-color:var(--good);transform:scale(1.08)}
+.pbi .pg{display:inline-block;background:#F3EEFF;color:var(--p);font-weight:800;font-size:13px;border-radius:8px;padding:1px 8px;margin-bottom:3px}
+.pbi b{display:block;font-size:16px;line-height:1.2}.pbi small{display:block;font-size:14px;color:var(--muted);font-weight:600;line-height:1.3;margin-top:2px}
+.vid{display:block;width:100%;max-width:640px;margin:14px auto 8px;border-radius:24px;background:#000;aspect-ratio:16/9;box-shadow:0 10px 0 rgba(108,63,197,.18)}
 .big img.bump{animation:bump .5s var(--spring)}
 @keyframes bump{0%{transform:scale(.7)}100%{transform:scale(1)}}
 .say{font-size:30px;font-weight:800;color:var(--p);min-height:40px}
@@ -153,7 +166,7 @@ const ls={get:k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return
 const P=Object.assign({done:{},heard:[]},ls.get('home:'+LESSON)||{});
 const save=()=>ls.set('home:'+LESSON,P);
 const BY=Object.fromEntries(D.words.map(w=>[w.id,w]));
-const img=id=>'img/'+(BY[id]?BY[id].img:id+'.png');
+const img=id=>'img/'+(BY[id]?BY[id].img:/\.(png|jpg)$/.test(id)?id:id+'.png');
 
 // ── звук (пул для iOS) ──
 const POOL=[];let current=null,unlocked=false;
@@ -211,6 +224,32 @@ const SC={
  swf(b,s){const here=location.pathname.split('/').filter(Boolean).pop();
   b.innerHTML=`<div class="big"><img src="img/hi.png" alt=""></div><a class="play y" id="swfGo" href="../play.html?swf=${encodeURIComponent(here+'/genki/'+s.swf)}&t=${encodeURIComponent(s.sub||'Genki')}&back=${encodeURIComponent('./'+here+'/')}">🎬 Открыть мультик</a>${hint(s.hint||'Это настоящая программа Genki, откроется на весь экран. Внутри нажимайте вместе с ребёнком: <b>Words</b> — слова, <b>Song</b> — песня, <b>Game</b> — игра. Файл большой — подождите немного. Если не грузится — пропустите, всё то же есть в других кружках.')}`;
   $('#swfGo').onclick=()=>{P.done[s.k]=1;save();};},
+ // задания в учебнике (Pupil's Book): отметить сделанное
+ pb(b,s){const it=s.items;const need=s.need||Math.max(1,it.length-1);const key='pb:'+s.k;const done=new Set(P[key]||[]);
+  b.innerHTML=`<div class="who">📖 ${s.book||"Pupil's Book"}</div><ul class="pbl">${it.map((x,i)=>`<li><button class="pbi ${done.has(i)?'on':''}" data-i="${i}"><span class="bx">✓</span><span>${x.p?`<span class="pg">стр. ${x.p}</span>`:''}<b>${x.en}</b><small>${x.ru}</small></span></button></li>`).join('')}</ul>${hint(s.hint||'Откройте учебник на нужной странице и сделайте задания вместе с ребёнком. Нажимайте на задание, когда оно готово.')}`;
+  $$('.pbi').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;done.has(i)?done.delete(i):done.add(i);c.classList.toggle('on');P[key]=[...done];save();if(done.size>=need)finish(s.k);});},
+ // найди на картинке (постер / лист теста): голос даёт задание — нажми нужное место; col → раскрашивается
+ spot(b,s){const T=s.order?s.tasks.slice():shuffle(s.tasks);let i=0,good=0,first=true,lock=false;
+  b.innerHTML=`<div class="who" id="spT">&nbsp;</div><div class="spw" id="spW"><img src="img/${s.pic}" alt=""></div><div><button class="play sm" id="spA">🔊 Ещё раз</button></div><div class="dots">${'<i></i>'.repeat(T.length)}</div>${hint(s.hint||'Слушайте задание и нажимайте на картинку в нужном месте.')}`;
+  const W=$('#spW');const box=(bx,c,cls)=>{const d=document.createElement('div');d.className='spf '+(cls||'');d.style.cssText=`left:${bx[0]}%;top:${bx[1]}%;width:${bx[2]-bx[0]}%;height:${bx[3]-bx[1]}%;background:${c||'transparent'}`;W.appendChild(d);requestAnimationFrame(()=>d.classList.add('on'));return d;};
+  const ask=()=>{if(i>=T.length){const m=$('#spT');m.innerHTML=`<div class="res">${good} из ${T.length} с первого раза ⭐</div>`;P['score:'+s.k]=good+'/'+T.length;save();finish(s.k);return;}
+   const t=T[i];first=true;lock=false;$('#spT').textContent='🗣 '+t.t;play(t.a);};
+  $('#spA').onclick=()=>T[i]&&play(T[i].a);
+  W.onclick=e=>{if(lock||i>=T.length)return;const r=W.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*100,y=(e.clientY-r.top)/r.height*100;const t=T[i];
+   if(t.boxes.some(q=>x>=q[0]&&x<=q[2]&&y>=q[1]&&y<=q[3])){lock=true;if(first)good++;$$('.dots i').forEach((d,k)=>d.classList.toggle('on',k<=i));
+    t.boxes.forEach(q=>{const d=box(q,t.circ?'':t.col,(t.col&&!t.circ)?'':'ring');if(t.circ)d.style.borderColor=t.col;if(!t.col)setTimeout(()=>d.remove(),1500);});burst(10);i++;play(YES(),()=>setTimeout(ask,400));}
+   else{first=false;const d=document.createElement('div');d.className='spdot';d.style.left=x+'%';d.style.top=y+'%';W.appendChild(d);setTimeout(()=>d.remove(),700);play(NO(),()=>play(t.a));}};
+  setTimeout(ask,500);},
+ // назови (устный тест): картинка → ребёнок называет → родитель отмечает
+ name(b,s){const WS=(s.ids?s.ids.map(i=>BY[i]):D.words).slice();let i=0,ok=0,lk=0;
+  b.innerHTML=`<div class="who" id="nmT">Что это? 🤔</div><div class="big"><img id="nmI" src="" alt=""></div><div id="nmB"><button class="play alt" id="nmY">✅ Назвал</button><button class="play y" id="nmN">🔁 Ещё учим</button></div><div class="dots">${'<i></i>'.repeat(WS.length)}</div>${hint(s.hint||'Покажите картинку — ребёнок называет её по-английски <b>сам, без подсказки</b>. Нажмите «Назвал» или «Ещё учим» — после этого прозвучит правильный ответ.')}`;
+  const show=()=>{if(i>=WS.length){$('#nmB').hidden=true;$('#nmT').innerHTML=`<div class="res">Назвал ${ok} из ${WS.length} ⭐</div>`;P['score:'+s.k]=ok+'/'+WS.length;save();finish(s.k);return;}
+   const im=$('#nmI');im.src='img/'+WS[i].img;im.classList.remove('bump');void im.offsetWidth;im.classList.add('bump');$('#nmT').textContent='Что это? 🤔';lk=0;};
+  const step=y=>{if(lk)return;lk=1;if(y)ok++;$$('.dots i').forEach((d,k)=>d.classList.toggle('on',k<=i));$('#nmT').textContent=WS[i].en;play(WS[i].a,()=>{i++;setTimeout(show,300);});};
+  $('#nmY').onclick=()=>step(1);$('#nmN').onclick=()=>step(0);show();},
+ // мультик (mp4 курса): досмотрел или «Посмотрели!» → звезда
+ video(b,s){b.innerHTML=`<video class="vid" id="vd" src="video/${s.file}.mp4" ${s.poster?`poster="img/${s.poster}"`:''} controls playsinline preload="metadata"></video><div><button class="play alt sm" id="vOk">⭐ Посмотрели!</button></div>${hint(s.hint||'Смотрите мультик вместе. Повторяйте за героями фразы и показывайте жесты. Можно смотреть несколько раз!')}`;
+  const v=$('#vd');v.onended=()=>finish(s.k);sceneStop=()=>{try{v.pause();}catch(e){}};$('#vOk').onclick=()=>{finish(s.k);closeScene();};},
  // аудио с синхронной картинкой (мини-урок / песня)
  sync(b,s){const kar=s.kar;b.innerHTML=`<div class="big"><img id="syImg" src="img/${s.cover||'speaky.png'}" alt=""></div><div class="say" id="syTxt">&nbsp;</div><div class="gest" id="syG"></div>
    <div><button class="play" id="syPlay">▶ ${s.btn||'Слушать'}</button>${kar?'<button class="play y sm" id="syKar">🎤 Поём сами</button>':''}</div>${hint(s.hint)}`;
@@ -227,14 +266,14 @@ const SC={
  // найди картинку
  find(b,s){const R=s.rounds||6;let r=0,good=0,ans=null,first=true;
   b.innerHTML=`<div class="dots" id="fDots">${'<i></i>'.repeat(R)}</div><button class="play" id="fAgain">🔊 Ещё раз</button><div class="grid" id="fGrid"></div>${hint(s.hint||'Спики говорит — ребёнок нажимает нужную картинку. Если ошибся — ничего страшного, пусть послушает ещё раз.')}`;
-  const WS=s.ids?s.ids.map(i=>BY[i]):D.words;const order=shuffle(WS).concat(shuffle(WS));
+  const WS=s.ids?s.ids.map(i=>BY[i]):D.words;const order=shuffle(WS).concat(shuffle(WS));const SAY=w=>(s.say&&w[s.say])||w.a;
   const round=()=>{if(good>=R){finish(s.k);setTimeout(closeScene,1600);return;}ans=order[r++%order.length];first=true;
    const opts=shuffle([ans].concat(shuffle(WS.filter(w=>w.id!==ans.id)).slice(0,(s.opts||4)-1)));
    $('#fGrid').className='grid'+(opts.length===3?' g3':'');$('#fGrid').innerHTML=opts.map(w=>`<button class="card" data-id="${w.id}"><img src="img/${w.img}" alt=""></button>`).join('');
    $$('#fGrid .card').forEach(c=>c.onclick=()=>{if(c.dataset.id===ans.id){c.classList.add('ok');good++;$$('#fDots i').forEach((d,i)=>d.classList.toggle('on',i<good));burst(10);play(YES(),()=>setTimeout(round,300));}
-     else{first=false;c.classList.remove('no');void c.offsetWidth;c.classList.add('no');play(NO(),()=>play(ans.a));}});
-   setTimeout(()=>play(ans.a),400);};
-  $('#fAgain').onclick=()=>ans&&play(ans.a);round();},
+     else{first=false;c.classList.remove('no');void c.offsetWidth;c.classList.add('no');play(NO(),()=>play(SAY(ans)));}});
+   setTimeout(()=>play(SAY(ans)),400);};
+  $('#fAgain').onclick=()=>ans&&play(SAY(ans));round();},
 
  // Спики спрашивает — ребёнок отвечает (карточками или свободно)
  ask(b,s){let n=0;const need=s.need||3;const WS=s.ids?s.ids.map(i=>BY[i]):D.words;
@@ -245,7 +284,7 @@ const SC={
   const step=()=>{n++;$$('.dots i').forEach((d,i)=>d.classList.toggle('on',i<n));burst(10);if(n>=need){finish(s.k);}else play(YES());};
   $('#aGo').onclick=()=>{$('#aSp').src='img/'+(s.img||'speaky.png');$('#aQ').textContent=s.q;play(s.qa,()=>{if(s.free){$('#aSaid').hidden=false;if(s.model)setTimeout(()=>{},0);}else $('#aGrid').hidden=false;});};
   if(s.free){$('#aSaid').onclick=()=>{$('#aSaid').hidden=true;s.model?play(s.model,step):step();};}
-  else $$('#aGrid .card').forEach(c=>c.onclick=()=>{const w=BY[c.dataset.id];$('#aSp').src='img/'+w.img;$('#aQ').textContent=w.en;$('#aGrid').hidden=true;play(w.a,step);});},
+  else $$('#aGrid .card').forEach(c=>c.onclick=()=>{const w=BY[c.dataset.id];$('#aSp').src='img/'+w.img;$('#aQ').textContent=(s.say&&w[s.say+'_en'])||w.en;$('#aGrid').hidden=true;play((s.say&&w[s.say])||w.a,step);});},
 
  // Спики командует — ребёнок делает (TPR)
  simon(b,s){let n=0;const need=s.need||6;const WS=s.ids?s.ids.map(i=>BY[i]):D.words;let cur=null,last=null;
@@ -272,8 +311,8 @@ const SC={
  memo(b,s){const WS=shuffle(s.ids?s.ids.map(i=>BY[i]):D.words).slice(0,s.pairs||6);let deck=shuffle(WS.concat(WS)),open=[],got=0,lock=false,moves=0;
   b.innerHTML=`<div class="who" id="mmT">Найди пары! 🎴</div><div class="memo ${deck.length>12?'m4':''}" id="mm">${deck.map((w,i)=>`<button class="mc" data-i="${i}"><span class="in"><span class="fr">🐵</span><span class="bk"><img src="img/${w.img}" alt=""></span></span></button>`).join('')}</div>${hint(s.hint||'Открывайте по две карточки — каждая говорит слово. Найдите одинаковые! Повторяйте слово вслух.')}`;
   $$('#mm .mc').forEach(c=>c.onclick=()=>{if(lock||c.classList.contains('open')||c.classList.contains('got'))return;const w=deck[+c.dataset.i];c.classList.add('open');play(w.a);open.push(c);
-   if(open.length===2){lock=true;moves++;const[a,b2]=open;if(deck[+a.dataset.i].id===deck[+b2.dataset.i].id){setTimeout(()=>{a.classList.add('got');b2.classList.add('got');a.classList.remove('open');b2.classList.remove('open');open=[];lock=false;got++;burst(8);
-      if(got===WS.length){$('#mmT').textContent='Все пары! 🎉';finish(s.k);}},700);}
+   if(open.length===2){lock=true;moves++;const[a,b2]=open;if(deck[+a.dataset.i].id===deck[+b2.dataset.i].id){const w=deck[+a.dataset.i];if(s.ph&&s.ph[w.id]){const j=Math.floor(Math.random()*s.ph[w.id].length);$('#mmT').textContent='🗣 '+s.pt[w.id][j];setTimeout(()=>play(s.ph[w.id][j]),650);}setTimeout(()=>{a.classList.add('got');b2.classList.add('got');a.classList.remove('open');b2.classList.remove('open');open=[];lock=false;got++;burst(8);
+      if(got===WS.length){setTimeout(()=>{$('#mmT').textContent='Все пары! 🎉';finish(s.k);},s.ph?2200:0);}},700);}
      else setTimeout(()=>{a.classList.remove('open');b2.classList.remove('open');open=[];lock=false;},1300);}});},
 
  // крестики-нолики против Спики: нажми картинку, скажи слово — ставишь ❌
@@ -289,8 +328,9 @@ const SC={
     mark(pick,'o');const l=line('o');if(l)return end('Спики выиграл! Ещё раз? 🦝',l);if(cells.every(x=>x))return end('Ничья! 🤝');turn='x';$('#tT').textContent='Твой ход! ❌';};
   const start=()=>{cells=Array(9).fill(null);turn='x';over=false;$('#tNew').hidden=true;const pics=[];for(let i=0;i<9;i++)pics.push(WS[i%WS.length]);const P9=shuffle(pics);
     $('#tt').innerHTML=P9.map((w,i)=>`<button class="tc" data-i="${i}"><img src="img/${w.img}" alt=""></button>`).join('');$('#tT').textContent='Твой ход! ❌';
-    $$('#tt .tc').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;if(over||turn!=='x'||cells[i])return;turn='-';play(P9[i].a,()=>{mark(i,'x');const l=line('x');
-      if(l){wins++;burst(20);play(YES());end('Ты выиграл! 🎉',l);if(wins>=need)finish(s.k);return;}if(cells.every(x=>x))return end('Ничья! 🤝');$('#tT').textContent='Ходит Спики…';setTimeout(spiky,700);});});};
+    $$('#tt .tc').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;if(over||turn!=='x'||cells[i])return;turn='-';const w=P9[i];let au=w.a,said=null;if(s.ph&&s.ph[w.id]){const j=Math.floor(Math.random()*s.ph[w.id].length);au=s.ph[w.id][j];said=s.pt[w.id][j];$('#tT').textContent='🗣 '+said;}
+     play(au,()=>setTimeout(()=>{mark(i,'x');const l=line('x');
+      if(l){wins++;burst(20);play(YES());end('Ты выиграл! 🎉',l);if(wins>=need)finish(s.k);return;}if(cells.every(x=>x))return end('Ничья! 🤝');$('#tT').textContent='Ходит Спики…';setTimeout(spiky,700);},said?1800:0));});};
   $('#tNew').onclick=start;start();},
 
  // приветствие по времени суток (ритуал начала урока)
@@ -302,6 +342,18 @@ const SC={
   $('#hlGo').onclick=()=>play(cur.a,()=>{$('#hlOk').hidden=false;});
   $('#hlOk').onclick=()=>{finish(s.k);setTimeout(closeScene,1400);};
   $$('.grid .card').forEach(c=>c.onclick=()=>play(BY[c.dataset.id].a));},
+
+ // какой сегодня день? today / tomorrow / yesterday — по настоящему календарю (ids: monday…sunday)
+ day(b,s){const WS=s.ids.map(i=>BY[i]);const t0=(new Date().getDay()+6)%7;
+  const Q=[[0,s.qt,s.tt||'What day is it today?','Today is '],[1,s.qm,s.tm||'What day is it tomorrow?','Tomorrow is '],[-1,s.qy,s.ty||'What day was it yesterday?','Yesterday was ']];let r=0,lock=false;
+  b.innerHTML=`<div class="big" style="width:min(44vw,190px)"><img id="dyImg" src="img/speaky.png" alt=""></div><div class="say" id="dyT">&nbsp;</div><button class="play" id="dyGo">🔊 Спики спрашивает</button>
+   <div class="grid g3" id="dyGrid" hidden>${WS.map(w=>`<button class="card cap" data-id="${w.id}"><img src="img/${w.img}" alt=""><span class="lbl">${w.en.replace(/!$/,'')}</span></button>`).join('')}</div><div class="dots">${'<i></i>'.repeat(Q.length)}</div>${hint(s.hint||'Спики спрашивает, какой день <b>сегодня</b>, <b>завтра</b> и <b>вчера</b>. Подскажите ребёнку по-русски, если нужно, — а ответить он должен по-английски: «Today is Monday!» — и нажать картинку.')}`;
+  const ask=()=>{if(r>=Q.length){finish(s.k);return;}lock=false;const q=Q[r];$('#dyT').textContent=q[2];$('#dyImg').src='img/speaky.png';$('#dyGrid').hidden=true;play(q[1],()=>{$('#dyGrid').hidden=false;});};
+  $('#dyGo').onclick=ask;
+  $$('#dyGrid .card').forEach(c=>c.onclick=()=>{if(lock||r>=Q.length)return;const q=Q[r];const want=WS[(t0+q[0]+7)%7];const w=BY[c.dataset.id];
+   if(w===want){lock=true;c.classList.add('ok');$('#dyImg').src='img/'+w.img;$('#dyT').textContent=q[3]+w.en.replace(/!$/,'')+'!';r++;$$('.dots i').forEach((d,i)=>d.classList.toggle('on',i<r));burst(10);
+     play(w.a,()=>play(YES(),()=>{$$('#dyGrid .card').forEach(x=>x.classList.remove('ok'));setTimeout(ask,300);}));}
+   else{c.classList.remove('no');void c.offsetWidth;c.classList.add('no');play(NO(),()=>play(q[1]));}});},
 
  // наша книжка-сказка (озвучена), встроена
  book(b,s){const here=location.pathname.split('/').filter(Boolean).pop();
