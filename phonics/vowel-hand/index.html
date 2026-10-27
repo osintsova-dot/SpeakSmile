@@ -45,14 +45,27 @@ body.singing .disc img{animation:spin 3.2s linear infinite}
 .rule .row{position:absolute;left:1%;right:1%;border-radius:14px}
 .rule .row.say{background:rgba(108,63,197,.16)}
 .rule .x{position:absolute;top:-6px;right:-6px;width:46px;height:46px;border-radius:50%;background:#fff;color:var(--purple);font-weight:700;font-size:24px;box-shadow:0 4px 0 rgba(42,18,83,.25)}
+/* песня: плакат собирается по ходу песни */
+.board{display:none;flex-direction:column;gap:.6vh;height:100%;max-height:100%;aspect-ratio:1024/1560;min-width:0}
+body.sung .board{display:flex}
+body.sung .hint{display:none}
+.board .st{width:100%;flex:none;border-radius:12px;opacity:.12;filter:grayscale(1);transform:scale(.96);transition:opacity .5s,transform .5s var(--ease),filter .5s;cursor:pointer}
+.board .st.on{opacity:1;filter:none;transform:none}
+.board .st.now{box-shadow:0 0 0 .5vh var(--purple),0 6px 18px rgba(42,18,83,.3)}
+.lyr{position:absolute;left:50%;top:2%;transform:translate(-50%,-30%) scale(.8);opacity:0;padding:.8vh 2vh;border-radius:999px;background:#fff;color:var(--purple);font-weight:700;font-size:clamp(14px,2.6vh,26px);white-space:nowrap;box-shadow:0 4px 0 rgba(42,18,83,.15);transition:opacity .35s,transform .35s var(--ease);pointer-events:none;z-index:2}
+.lyr.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.v.beat{background:rgba(108,63,197,.28);animation:beat .45s ease-out}
+@keyframes beat{0%{transform:translate(-50%,-50%) scale(.6)}60%{transform:translate(-50%,-50%) scale(1.25)}100%{transform:translate(-50%,-50%) scale(1)}}
+.lv.now{background:rgba(108,63,197,.22)}
 .hint{max-width:240px;text-align:center;font-size:14px;opacity:.75;line-height:1.3}
-@media (max-aspect-ratio:1/1){.stage{flex-direction:column}.hand{height:auto;width:min(100%,62vh)}.side{flex-direction:row;flex-wrap:wrap;justify-content:center}.disc{width:84px}.hint{display:none}}
+@media (max-aspect-ratio:1/1){.stage{flex-direction:column}body.sung .stage{flex-direction:row;flex-wrap:wrap;align-content:center;justify-content:center}body.sung .hand{width:43vw;height:auto}body.sung .board{height:auto;width:43vw}body.sung .side{width:100%}.hand{height:auto;width:min(100%,62vh)}.side{flex-direction:row;flex-wrap:wrap;justify-content:center}.disc{width:84px}.hint{display:none}}
 </style>
 </head>
 <body>
 <div class="top"><a class="back" href="../../gmf1/phonics/">← Phonics Hub</a><div class="title">✋ The vowel hand<small>Jolly Phonics · Step 3 · Alternatives</small></div></div>
 <div class="stage">
-  <div class="hand" id="hand"><img src="hand.jpg" alt="Ладошка гласных: a e i o u на пальцах, ai ee ie oa ue у оснований"></div>
+  <div class="hand" id="hand"><img src="hand.jpg" alt="Ладошка гласных: a e i o u на пальцах, ai ee ie oa ue у оснований"><div class="lyr" id="lyr">A vowel is in every word!</div></div>
+  <div class="board" id="board"><img class="st" data-g="" src="p_head.jpg" alt="When two vowels go walking, the first does the talking!"><img class="st" data-g="ai" src="p_ai.jpg" alt="ai: rain, train"><img class="st" data-g="ee" src="p_ee.jpg" alt="ee: bee, tree"><img class="st" data-g="ie" src="p_ie.jpg" alt="ie: pie, tie"><img class="st" data-g="oa" src="p_oa.jpg" alt="oa: boat, goat"><img class="st" data-g="ue" src="p_ue.jpg" alt="ue: blue, glue"><img class="st" data-g="" src="p_foot.jpg" alt="Look out for exceptions!"></div>
   <div class="side">
     <button class="disc" id="song" aria-label="Песня гласных"><img src="songs.png" alt=""></button>
     <button class="btn" id="songBtn">🎵 Песня гласных</button>
@@ -74,11 +87,24 @@ SHORT.forEach(([g,x,y])=>{const b=document.createElement('button');b.className='
 LONG.forEach(([g,x,y,c])=>{const l=document.createElement('button');l.className='lv';l.style.left=x+'%';l.style.top=y+'%';l.setAttribute('aria-label',g);l.onclick=()=>say(g,l);H.appendChild(l);
   const q=document.createElement('button');q.className='q';q.textContent='?';q.style.left=x+'%';q.style.top=y+'%';q.style.setProperty('--c',c);q.setAttribute('aria-label','открыть '+g);q.onclick=()=>{q.classList.add('open');say(g);};H.appendChild(q);});
 const song=new Audio('song.m4a');
-const toggle=()=>{if(song.paused){au&&au.pause();song.play();document.body.classList.add('singing');}else{song.pause();document.body.classList.remove('singing');}};
-song.onended=()=>document.body.classList.remove('singing');
+// разметка песни (whisper): короткие a e i o u ×3 → «A vowel is in every word» → долгие A E I O U → правило собирается
+const BEATS=[1.78,2.51,3.22,3.97,4.74,5.40,5.98,6.57,7.16,7.74,8.28,8.73,9.17,9.61,10.05];
+const LONGT=[23.84,25.22,26.62,28.01,29.42], HEAD_T=30.3, FOOT_T=33.3, LYR=[13.0,22.6];
+const VS=[...H.querySelectorAll('.v')], QS=[...H.querySelectorAll('.q')], LVS=[...H.querySelectorAll('.lv')], ST=[...document.querySelectorAll('.board .st')], LY=document.getElementById('lyr');
+let lastBeat=-1;
+const paint=()=>{const t=song.currentTime;
+  const b=BEATS.findIndex((x,i)=>t>=x&&t<(BEATS[i+1]||x+.7));if(b!==lastBeat&&b>=0){const v=VS[b%5];v.classList.remove('beat');void v.offsetWidth;v.classList.add('beat');}lastBeat=b;
+  LY.classList.toggle('on',t>=LYR[0]&&t<LYR[1]);
+  LONGT.forEach((x,i)=>{const on=t>=x,now=on&&t<(LONGT[i+1]||x+1.6);QS[i].classList.toggle('open',on);LVS[i].classList.toggle('now',now);ST[i+1].classList.toggle('on',on);ST[i+1].classList.toggle('now',now);});
+  ST[0].classList.toggle('on',t>=HEAD_T);ST[6].classList.toggle('on',t>=FOOT_T||song.ended);
+  if(!song.paused)requestAnimationFrame(paint);};
+const toggle=()=>{if(song.paused){au&&au.pause();R.classList.remove('on');if(song.ended||song.currentTime>=song.duration-.2)song.currentTime=0;document.body.classList.add('sung');song.play();document.body.classList.add('singing');requestAnimationFrame(paint);}else{song.pause();document.body.classList.remove('singing');}};
+song.addEventListener('timeupdate',()=>{if(document.body.classList.contains('sung'))paint();});song.addEventListener('seeked',()=>{if(document.body.classList.contains('sung'))paint();});
+ST.forEach(st=>st.onclick=()=>{if(st.dataset.g){say(st.dataset.g);st.classList.add('on');}});
+song.onended=()=>{document.body.classList.remove('singing');ST.forEach(x=>{x.classList.add('on');x.classList.remove('now');});LVS.forEach(l=>l.classList.remove('now'));LY.classList.remove('on');};
 document.getElementById('song').onclick=toggle;document.getElementById('songBtn').onclick=toggle;
 document.getElementById('all').onclick=()=>document.querySelectorAll('.q').forEach(q=>q.classList.add('open'));
-document.getElementById('reset').onclick=()=>document.querySelectorAll('.q').forEach(q=>q.classList.remove('open'));
+document.getElementById('reset').onclick=()=>{song.pause();song.currentTime=0;document.body.classList.remove('singing','sung');document.querySelectorAll('.q').forEach(q=>q.classList.remove('open'));ST.forEach(x=>x.classList.remove('on','now'));};
 // правило «When two vowels go walking…»: строки плаката говорят свою долгую гласную
 const R=document.getElementById('rule'),RP=document.getElementById('rulePw');
 [['ai',12.7,14.4],['ee',28.1,14.9],['ie',43.8,15.2],['oa',59.9,15.3],['ue',76.2,15.3]].forEach(([g,t,h])=>{const b=document.createElement('button');b.className='row';b.style.top=t+'%';b.style.height=h+'%';b.setAttribute('aria-label',g);b.onclick=()=>say(g,b);RP.appendChild(b);});
