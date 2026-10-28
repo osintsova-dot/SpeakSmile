@@ -40,7 +40,7 @@ textarea{width:100%;min-height:70px;font:inherit;border:1.5px solid var(--line);
 <script>
 // Страница учителя: слушает записи «Урока дома» и ставит баллы (nihao-bot /speak/get, /speak/audio, /speak/grade).
 var SRV=['https://d5d6o4mldv5m1nj5hvih.6brbn2wz.apigw.yandexcloud.net/nihao','https://nihao-bot.o-sintsova.workers.dev'];
-var Q=new URLSearchParams(location.search), S=Q.get('s')||'', K=Q.get('k')||'';
+var Q=new URLSearchParams(location.search), R=(Q.get('r')||'').split('.'), S=Q.get('s')||R[0]||'', K=Q.get('k')||R[1]||''; // ?r=<sid>.<ключ> — без «&»: MAX обрезал ссылку на «&»
 var $=function(s){return document.querySelector(s);};
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function call(path,opt){
