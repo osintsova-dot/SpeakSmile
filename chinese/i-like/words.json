@@ -1,0 +1,23 @@
+{
+ "title_zh": "我喜欢！",
+ "title_ru": "Я люблю!",
+ "n": 10,
+ "words": [
+  {"id": "q_like",    "zh": "你喜欢吃什么？", "py": "Nǐ xǐhuan chī shénme?", "ru": "Что ты любишь есть?"},
+  {"id": "q_drink",   "zh": "你喜欢喝什么？", "py": "Nǐ xǐhuan hē shénme?", "ru": "Что ты любишь пить?"},
+  {"id": "like",      "zh": "我喜欢！", "py": "Wǒ xǐhuan!", "ru": "Люблю!"},
+  {"id": "dislike",   "zh": "我不喜欢。", "py": "Wǒ bù xǐhuan.", "ru": "Не люблю."},
+  {"id": "rice",      "zh": "我喜欢吃米饭。", "py": "Wǒ xǐhuan chī mǐfàn.", "ru": "Я люблю рис."},
+  {"id": "noodles",   "zh": "我喜欢吃面条。", "py": "Wǒ xǐhuan chī miàntiáo.", "ru": "Я люблю лапшу."},
+  {"id": "dumplings", "zh": "我喜欢吃饺子。", "py": "Wǒ xǐhuan chī jiǎozi.", "ru": "Я люблю пельмени."},
+  {"id": "apple",     "zh": "我喜欢吃苹果。", "py": "Wǒ xǐhuan chī píngguǒ.", "ru": "Я люблю яблоки."},
+  {"id": "icecream",  "zh": "我喜欢吃冰淇淋。", "py": "Wǒ xǐhuan chī bīngqílín.", "ru": "Я люблю мороженое."},
+  {"id": "water",     "zh": "我喜欢喝水。", "py": "Wǒ xǐhuan hē shuǐ.", "ru": "Я люблю пить воду."},
+  {"id": "tea",       "zh": "我喜欢喝茶。", "py": "Wǒ xǐhuan hē chá.", "ru": "Я люблю чай."},
+  {"id": "milk",      "zh": "我喜欢喝牛奶。", "py": "Wǒ xǐhuan hē niúnǎi.", "ru": "Я люблю молоко."},
+  {"id": "juice",     "zh": "我喜欢喝果汁。", "py": "Wǒ xǐhuan hē guǒzhī.", "ru": "Я люблю сок."},
+  {"id": "bugs",      "zh": "我不喜欢吃虫子！", "py": "Wǒ bù xǐhuan chī chóngzi!", "ru": "Я не люблю есть жуков!"},
+  {"id": "yummy",     "zh": "好吃！", "py": "Hǎochī!", "ru": "Вкусно!"},
+  {"id": "he_likes",  "zh": "他喜欢吃苹果。", "py": "Tā xǐhuan chī píngguǒ.", "ru": "Он любит яблоки."}
+ ]
+}
