@@ -627,7 +627,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать тест →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на урок"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку на урок</button></div>
-    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 50 баллов за пять письменных заданий, он отправится учителю. Шестое задание, Speaking (ещё 10 баллов, всего 60), учитель проверит на уроке. Аудио можно слушать два раза, как на уроке.</p>
+    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 50 баллов за пять письменных заданий, он отправится учителю. Шестое задание, Speaking (ещё 10 баллов, всего 60), ребёнок записывает голосом, учитель послушает и поставит баллы. Аудио можно слушать два раза, как на уроке.</p>
   </section>
   <section class="slide" data-key="num">
     <h2><span class="n"><span>1</span></span>Listen and number</h2>
@@ -669,10 +669,9 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   </section>
   <section class="slide" data-key="speak">
     <h2><span class="n"><span>6</span></span>Speaking</h2>
-    <p class="hint">Посмотри на зоопарк: каких животных ты видишь? Расскажи про них: «It's got four legs. It's got big ears». Нажми на предложение — услышишь образец, повтори. Это задание проверяет учитель на уроке.</p>
-    <img class="speakpic" src="img/t5_scene.jpg" alt="">
-    <div class="wchips" id="g6"></div>
-    <div class="btns"><button class="btn primary" id="c6">🎤 Я рассказал</button></div>
+    <p class="hint">Устная часть теста — 10 баллов. В каждом задании нажми ▶ и послушай, потом «🎙 Записать ответ», скажи ответ по-английски и нажми «Стоп». Себя можно послушать и перезаписать. Записи уйдут учителю вместе с тестом, баллы поставит учитель.</p>
+    <div id="g6"></div>
+    <div class="btns"><span class="score" id="s6"></span><button class="btn primary" id="c6">Дальше →</button></div>
   </section>
   <section class="slide finish" data-key="finish">
     <h2>Результат</h2>
@@ -691,6 +690,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <button class="btn primary" id="nextBtn">Дальше →</button>
 </div>
 
+<script src="/assets/speakrec.js"></script>
 <script>
 
 const LESSON='gmf2-u3-test';
@@ -780,24 +780,42 @@ function r4(){ gapTask(4,6,BANK4,ANS4,(i,gap)=>`<img class="shape" src="${img(T4
 // ── 5 read and write ──
 function r5(){ ynTask(5,T5,YN5,(t)=>`<img class="shape" src="${img(t.pic)}" alt="" style="width:90px;height:70px">`); } ynBind(5,T5,r5);
 // ── 6 speaking ──
-$('#g6').innerHTML=SPEAK.map(s=>`<button class="btn" data-id="${s.id}">${s.en}</button>`).join('');
-$('#g6').onclick=e=>{ const b=e.target.closest('.btn'); if(!b) return; $$('#g6 .btn').forEach(x=>x.classList.toggle('sel',x===b)); play(b.dataset.id,()=>b.classList.remove('sel')); };
-$('#c6').onclick=()=>{ P.speak=1; save(); burst(); go(cur+1); };
+// официальный Speaking Unit 3 (Standard): Vocabulary 5 + Sentences 5 = 10; задания читает Соня (Edge TTS), t — подсказка учителю
+const SPK=[{id:'v',label:'Vocabulary — назови 5 животных',max:5,a:'spk_v',q:"<b>What animals can you see?</b> Назови пять животных в зоопарке.",scene:'t5_scene'},
+  {id:'q1',label:'Sentences — the tiger',max:1,a:'spk_q1',q:"Про слона: <i>It's got big ears.</i> А теперь расскажи про тигра: <b>Tell me about the tiger.</b> (<i>It's got… / It hasn't got…</i>)",pic:'s_tiger',t:"Tell me about the tiger. (It's got four legs / a long tail…)"},
+  {id:'q2',label:'Sentences — the monkey',max:1,a:'spk_q2',q:"<b>Tell me about the monkey.</b>",pic:'s_monkey',t:"Tell me about the monkey."},
+  {id:'q3',label:'Sentences — the snake',max:1,a:'spk_q3',q:"<b>Tell me about the snake.</b>",pic:'s_snake',t:"Tell me about the snake."},
+  {id:'q4',label:'Sentences — the penguin',max:1,a:'spk_q4',q:"<b>Tell me about the penguin.</b>",pic:'s_penguin',t:"Tell me about the penguin."},
+  {id:'q5',label:'Sentences — the crocodile',max:1,a:'spk_q5',q:"<b>Tell me about the crocodile.</b>",pic:'s_crocodile',t:"Tell me about the crocodile."}];
+const spB=n=>n===1?'балл':n<5?'балла':'баллов';
+$('#g6').innerHTML=SPK.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff;color:#22183A;text-align:left">`+
+  `<div style="display:flex;gap:10px;align-items:flex-start"><button class="btn" data-a="${x.a}" aria-label="Послушать задание" style="flex:none;padding:8px 12px">▶</button><div><b>${i+1}. ${x.label}</b> <small style="color:#6B6280">· ${x.max} ${spB(x.max)}</small><div style="margin-top:3px">${x.q}</div></div></div>`+
+  (x.scene?`<img src="${img(x.scene)}" alt="" style="display:block;width:100%;margin-top:10px;border:1px solid #eee;border-radius:10px">`:'')+
+  (x.pic?`<img src="${img(x.pic)}" alt="" style="display:block;width:70%;max-width:220px;max-height:190px;object-fit:contain;margin:10px auto 0;border:1px solid #eee;border-radius:10px">`:'')+
+  `<div class="sprec" data-part="${x.id}"></div></div>`).join('');
+$('#g6').addEventListener('click',e=>{ const b=e.target.closest('[data-a]'); if(!b) return; play(b.dataset.a,()=>{}); });
+async function spkCount(){ P.speak=await SpeakRec.count(LESSON,SPK.map(x=>x.id)); save(); $('#s6').textContent=`🎙 ${P.speak} из ${SPK.length}`; }
+$$('#g6 .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:60,onchange:spkCount}));
+$('#c6').onclick=()=>{ if(P.speak) burst(); go(cur+1); };
 // ── результат ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key);
-function doneMap(){ return {num:!!P.done[1],circle:!!P.done[2],read:!!P.done[3],write:!!P.done[4],rw:!!P.done[5],speak:P.speak>=1}; }
+function doneMap(){ return {num:!!P.done[1],circle:!!P.done[2],read:!!P.done[3],write:!!P.done[4],rw:!!P.done[5],speak:P.speak>=SPK.length}; }
 function total(){ return [1,2,3,4,5].reduce((n,k)=>n+(P.score[k]||0),0); }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan]));
   const names={1:'Listen and number',2:'Listen and circle',3:'Read and match',4:'Look, read and write',5:'Read and write'}; const t=total(), all=[1,2,3,4,5].every(k=>P.done[k]);
-  $('#result').innerHTML=[1,2,3,4,5].map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>6. Speaking</span><b>${P.speak?'🎤 проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 50</b></div><div class="rrow sub"><span>+ Speaking у учителя</span><b>до 10 · из 60</b></div>`+(all?`<div class="grade">${t>=45?'🌟 Отлично!':t>=35?'👍 Хорошо!':t>=25?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все пять заданий</div>'); }
+  $('#result').innerHTML=[1,2,3,4,5].map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>6. Speaking</span><b>${P.speak?'🎙 '+P.speak+' из '+SPK.length+' · проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 50</b></div><div class="rrow sub"><span>+ Speaking (учитель послушает записи)</span><b>до 10 · из 60</b></div>`+(all?`<div class="grade">${t>=45?'🌟 Отлично!':t>=35?'👍 Хорошо!':t>=25?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все пять заданий</div>'); }
 paint(); paintNav(); r1(); r2(); r3(); r4(); r5();
 $('#kidName').value=ls.get('home:name')||'';
 $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя 🙂'; $('#kidName').focus(); return; } ls.set('home:name',n);
   const d=doneMap(), cnt=[1,2,3,4,5].filter(k=>P.done[k]).length; if(cnt<5){ m.textContent='Сначала сделай все пять заданий.'; return; } m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
   const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${total()}&m=50&f=${[1,2,3,4,5].map(k=>P.score[k]).join('-')}${P.speak?'-S':''}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
   const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
-  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
-$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P=FRESH(); save(); gcur={}; r1(); r2(); r3(); r4(); r5(); trackBtns(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; $$('[id^=c]').forEach(b=>{ if(/^c[1-5]$/.test(b.id)) b.hidden=false; }); go(1); };
+  try{ await Promise.any(SRV.map(one)); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; return; }
+  if(P.speak){ m.textContent='Письменная часть ушла. Отправляю записи Speaking…';
+    try{ await SpeakRec.submit({lesson:LESSON,name:n,written:total(),wmax:50,parts:SPK.map(x=>({id:x.id,label:x.label,max:x.max,q:x.t||x.q.replace(/<[^>]+>/g,'')}))}); }
+    catch(e){ m.textContent='Письменная часть ушла, а записи Speaking — нет. Проверь интернет и нажми «Отправить» ещё раз.'; $('#doneBtn').disabled=false; return; } }
+  m.textContent=P.speak?'🎉 Отправлено! Учитель видит результат и послушает Speaking.':'🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); };
+$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P=FRESH(); save(); SpeakRec.reset(LESSON,SPK.map(x=>x.id)).then(()=>{ $$('#g6 .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:60,onchange:spkCount})); }); gcur={}; r1(); r2(); r3(); r4(); r5(); trackBtns(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; $$('[id^=c]').forEach(b=>{ if(/^c[1-5]$/.test(b.id)) b.hidden=false; }); go(1); };
 function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
   const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
