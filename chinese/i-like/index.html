@@ -393,8 +393,8 @@ const WORDS=[
  {id:"yummy",zh:"好吃！",py:"Hǎochī!",ru:"Вкусно!"},
  {id:"he_likes",zh:"他喜欢吃苹果。",py:"Tā xǐhuan chī píngguǒ.",ru:"Он любит яблоки."},
 ];
-const SONG=[ // «你喜欢吃什么？»: припев — что любишь есть/пить + «我喜欢！», куплеты — вопрос «…吗？» и «люблю!», бридж — «жуков не люблю» (время строк — song.json)
- "like", "like", "q_like", "rice", "q_drink", "juice", "like", "like", "like", "q_dumplings", "like", "q_noodles", "like", "q_apple", "like", "like", "like", "q_like", "rice", "q_drink", "juice", "like", "like", "like", "q_tea", "like", "q_milk", "like", "q_water", "like", "like", "like", "q_bugs", "nolike", "nolike", "bugs", "q_icecream", "like", "icecream", "q_like", "dumplings", "yummy", "yummy", "so_yummy"];
+const SONG=[ // «你喜欢吃什么？»: как реально спето в Suno (припев — 5×我喜欢, куплеты — вопрос «…吗？» + 我喜欢 ×4, бридж — жуки, финал 好吃×3; время строк — song.json)
+ "like", "like", "q_like", "rice", "q_drink", "juice", "like", "like", "like", "like", "like", "q_dumplings", "like", "q_noodles", "like", "q_apple", "like", "like", "like", "like", "q_like", "rice", "q_drink", "juice", "like", "like", "like", "like", "like", "q_tea", "like", "q_milk", "like", "q_water", "like", "like", "like", "like", "q_bugs", "nolike", "nolike", "bugs", "q_icecream", "like", "icecream", "q_like", "q_like", "dumplings", "yummy", "yummy", "yummy", "so_yummy"];
 const EXTRA={q_dumplings:{zh:"你喜欢吃饺子吗？",py:"Nǐ xǐhuan chī jiǎozi ma?",ru:"Ты любишь пельмени?",id:"q_dumplings"},q_noodles:{zh:"你喜欢吃面条吗？",py:"Nǐ xǐhuan chī miàntiáo ma?",ru:"Ты любишь лапшу?",id:"q_noodles"},q_apple:{zh:"你喜欢吃苹果吗？",py:"Nǐ xǐhuan chī píngguǒ ma?",ru:"Ты любишь яблоки?",id:"q_apple"},q_tea:{zh:"你喜欢喝茶吗？",py:"Nǐ xǐhuan hē chá ma?",ru:"Ты любишь чай?",id:"q_tea"},q_milk:{zh:"你喜欢喝牛奶吗？",py:"Nǐ xǐhuan hē niúnǎi ma?",ru:"Ты любишь молоко?",id:"q_milk"},q_water:{zh:"你喜欢喝水吗？",py:"Nǐ xǐhuan hē shuǐ ma?",ru:"Ты любишь пить воду?",id:"q_water"},q_bugs:{zh:"你喜欢吃虫子吗？",py:"Nǐ xǐhuan chī chóngzi ma?",ru:"Ты любишь есть жуков?",id:"q_bugs"},q_icecream:{zh:"你喜欢吃冰淇淋吗？",py:"Nǐ xǐhuan chī bīngqílín ma?",ru:"Ты любишь мороженое?",id:"q_icecream"},nolike:{zh:"不喜欢！",py:"Bù xǐhuan!",ru:"Не люблю!",id:"nolike"},so_yummy:{zh:"太好吃了！",py:"Tài hǎochī le!",ru:"Как вкусно!",id:"so_yummy"}};
 const PIC={"q_dumplings": "dumplings", "q_noodles": "noodles", "q_apple": "apple", "q_tea": "tea", "q_milk": "milk", "q_water": "water", "q_bugs": "bugs", "q_icecream": "icecream", "nolike": "dislike", "so_yummy": "yummy", "outro": "like", "q_like": "rice"};
 const byId=Object.fromEntries(WORDS.map(w=>[w.id,w]));
@@ -446,7 +446,7 @@ const lines=SONG.map(k=>EXTRA[k]||byId[k]); let lineRow=[];
 })();
 const playBtn=document.getElementById('playSong'), stopBtn=document.getElementById('stopSong'), tempo=document.getElementById('tempo');
 let singing=false, songAudio=null, songTimes=null;
-fetch('song.json').then(r=>r.ok?r.json():null).then(j=>{if(j){songTimes=j;songAudio=new Audio('song.mp3');songAudio.preload='auto';stageBtn.hidden=false;songAudio.addEventListener('ended',()=>{ if(stageOn) closeStage(); });}}).catch(()=>{});
+fetch('song.json').then(r=>r.ok?r.json():null).then(j=>{if(j){songTimes=j;songAudio=new Audio('song.mp3?v=1');songAudio.preload='auto';stageBtn.hidden=false;songAudio.addEventListener('ended',()=>{ if(stageOn) closeStage(); });}}).catch(()=>{});
 function light(i){ const k=i<0?-1:lineRow[i];
   [...lyricsEl.children].forEach((el,r)=>{ el.classList.toggle('on',r===k);
     const dots=el.querySelectorAll('.rep i'); const row=ROWS[r]; dots.forEach((d,n)=>d.classList.toggle('done', i>=0 && row.idx[n]<=i && r===k)); if(r!==k) dots.forEach(d=>d.classList.remove('done')); });
