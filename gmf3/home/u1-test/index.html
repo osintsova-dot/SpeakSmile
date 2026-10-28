@@ -642,7 +642,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать тест →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на урок"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку на урок</button></div>
-    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 60 баллов за шесть письменных заданий, он отправится учителю. Speaking (ещё 20 баллов, всего 80) учитель проверит на уроке. Аудио можно слушать два раза, как на уроке.</p>
+    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 60 баллов за шесть письменных заданий, он отправится учителю. Speaking (ещё 20 баллов, всего 80) ребёнок записывает голосом, учитель послушает и поставит баллы. Аудио можно слушать два раза, как на уроке.</p>
   </section>
   <section class="slide" data-key="tick">
     <h2><span class="n"><span>1</span></span>Listen and tick or cross</h2>
@@ -695,9 +695,9 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   </section>
   <section class="slide" data-key="speak">
     <h2><span class="n"><span>7</span></span>Speaking</h2>
-    <p class="hint">Посмотри на расписание (задание 3) и расскажи: «We have Maths on Monday at nine o'clock in the classroom». Нажми на предложение — услышишь образец, повтори. Это задание проверяет учитель на уроке.</p>
-    <div class="wchips" id="g7"></div>
-    <div class="btns"><button class="btn primary" id="c7">🎤 Я рассказал</button></div>
+    <p class="hint">Устная часть теста — 20 баллов. В каждом задании нажми ▶ и послушай вопрос, потом «🎙 Записать ответ», скажи ответ по-английски и нажми «Стоп». Себя можно послушать и перезаписать. Записи уйдут учителю вместе с тестом, баллы поставит учитель.</p>
+    <div id="g7"></div>
+    <div class="btns"><span class="score" id="s7"></span><button class="btn primary" id="c7">Дальше →</button></div>
   </section>
   <section class="slide finish" data-key="finish">
     <h2>Результат</h2>
@@ -716,6 +716,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <button class="btn primary" id="nextBtn">Дальше →</button>
 </div>
 
+<script src="/assets/speakrec.js"></script>
 <script>
 
 const LESSON='gmf3-u1-test';
@@ -822,24 +823,45 @@ gapBind(5,10,ANS5,r5);
 function r6(){ const L=lock(6); $('#bank6').innerHTML=bankHTML(6,BANK6,L); let gi=0; $('#g6').innerHTML=T6.map((t,i)=>{ if(t.given) return `<div class="tk-row"><div class="num">1</div><img class="shape" src="${img(t.pic)}" alt=""><div class="tk-sent"><i>Where</i> ${t.qt}<br>${t.at} <i>${t.a}</i>. <small>(пример)</small></div></div>`; const a=gapHTML(6,gi++,L,ANS6), b=gapHTML(6,gi++,L,ANS6); const ok=L?(P.a6[gi-2]===ANS6[gi-2]&&P.a6[gi-1]===ANS6[gi-1]):null; return `<div class="tk-row${L?(ok?' ok':' bad'):''}"><div class="num">${i+1}</div><img class="shape" src="${img(t.pic)}" alt="" style="aspect-ratio:3/2;width:100px;height:auto"><div class="tk-sent">${a} ${t.qt}<br>${t.at} ${b}.</div></div>`; }).join(''); finishGap(6,10,L); }
 gapBind(6,10,ANS6,r6);
 // ── 7 speaking ──
-$('#g7').innerHTML=SPEAK.map(s=>`<button class="btn" data-id="${s.id}">${s.en}</button>`).join('');
-$('#g7').onclick=e=>{ const b=e.target.closest('.btn'); if(!b) return; $$('#g7 .btn').forEach(x=>x.classList.toggle('sel',x===b)); play(b.dataset.id,()=>b.classList.remove('sel')); };
-$('#c7').onclick=()=>{ P.speak=1; save(); burst(); go(cur+1); };
+// официальный Speaking Unit 1 (Standard): Vocabulary 4 + Sentences 8 + Questions 8 = 20; вопросы читает Соня (Edge TTS)
+const SPK=[{id:'v',label:'Vocabulary — назови 4 предмета',max:4,a:'spk_v',q:"What's this? Назови все четыре предмета по-английски.",pics:['s_drama','s_geo','s_music','s_science']},
+  {id:'s1',label:'Sentences — где',max:4,a:'spk_s1',q:'<i>We have Science in the classroom.</i> Скажи два таких предложения про другие предметы.',tt:true},
+  {id:'s2',label:'Sentences — когда',max:4,a:'spk_s2',q:"<i>We have Maths on Monday at nine o'clock.</i> Скажи два таких предложения про два других предмета."},
+  {id:'q1',label:'When do we have ICT?',max:2,a:'spk_q1',q:'<b>When do we have ICT?</b> Ответь полным предложением.'},
+  {id:'q2',label:'Where do we have Drama?',max:2,a:'spk_q2',q:'<b>Where do we have Drama?</b> Ответь полным предложением.'},
+  {id:'q3',label:'When do we have Music?',max:2,a:'spk_q3',q:'<b>When do we have Music?</b>'},
+  {id:'q4',label:'Where do we have PE?',max:2,a:'spk_q4',q:'<b>Where do we have PE?</b>'}];
+const spTT=()=>`<div style="overflow-x:auto;margin:8px 0"><table class="sptt" style="border-collapse:collapse;font-size:13px;min-width:460px;width:100%;text-align:center">`+
+  `<tr><th></th>${['Monday','Tuesday','Wednesday','Thursday','Friday'].map(d=>`<th style="padding:5px;border:1px solid #ddd;background:#F0EBFF">${d}</th>`).join('')}</tr>`+
+  TT.cells.map((r,ri)=>`<tr><th style="padding:5px;border:1px solid #ddd;background:#F0EBFF">${['9:00','11:00','3:00'][ri]}</th>${r.map(c=>{ const [a,b]=c.split('|'); return `<td style="padding:5px;border:1px solid #ddd"><b>${a}</b><br><small>(${b})</small></td>`; }).join('')}</tr>`).join('')+`</table></div>`;
+$('#g7').innerHTML=SPK.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff">`+
+  (x.tt?`<div style="font-size:13px;color:#6B6280;margin-bottom:4px">Расписание (нужно для заданий 2–7):</div>`+spTT():'')+
+  `<div style="display:flex;gap:10px;align-items:flex-start"><button class="btn" data-a="${x.a}" aria-label="Послушать вопрос" style="flex:none;padding:8px 12px">▶</button><div><b>${i+1}. ${x.label}</b> <small style="color:#6B6280">· ${x.max} ${x.max>4?'баллов':'балла'}</small><div style="margin-top:3px">${x.q}</div></div></div>`+
+  (x.pics?`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px">${x.pics.map((p,j)=>`<div style="text-align:center"><img src="${img(p)}" alt="" style="width:100%;max-width:120px;aspect-ratio:1;object-fit:contain;border:1px solid #eee;border-radius:10px"><div style="font-weight:700">${j+1}</div></div>`).join('')}</div>`:'')+
+  `<div class="sprec" data-part="${x.id}"></div></div>`).join('');
+$('#g7').addEventListener('click',e=>{ const b=e.target.closest('[data-a]'); if(!b) return; play(b.dataset.a,()=>{}); });
+async function spkCount(){ P.speak=await SpeakRec.count(LESSON,SPK.map(x=>x.id)); save(); $('#s7').textContent=`🎙 ${P.speak} из ${SPK.length}`; }
+$$('#g7 .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:60,onchange:spkCount}));
+$('#c7').onclick=()=>{ if(P.speak) burst(); go(cur+1); };
 // ── результат ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key); const TK=[1,2,3,4,5,6];
-function doneMap(){ return {tick:!!P.done[1],write:!!P.done[2],tt:!!P.done[3],map:!!P.done[4],good:!!P.done[5],qa:!!P.done[6],speak:P.speak>=1}; }
+function doneMap(){ return {tick:!!P.done[1],write:!!P.done[2],tt:!!P.done[3],map:!!P.done[4],good:!!P.done[5],qa:!!P.done[6],speak:P.speak>=SPK.length}; }
 function total(){ return TK.reduce((n,k)=>n+(P.score[k]||0),0); }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan]));
   const names={1:'Listen: tick or cross',2:'Listen and write',3:'Timetable',4:'True or false',5:'Good at…',6:'Questions'}; const t=total(), all=TK.every(k=>P.done[k]);
-  $('#result').innerHTML=TK.map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>7. Speaking</span><b>${P.speak?'🎤 проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 60</b></div><div class="rrow sub"><span>+ Speaking у учителя</span><b>до 20 · из 80</b></div>`+(all?`<div class="grade">${t>=54?'🌟 Отлично!':t>=42?'👍 Хорошо!':t>=30?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все шесть заданий</div>'); }
+  $('#result').innerHTML=TK.map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>7. Speaking</span><b>${P.speak?'🎙 '+P.speak+' из '+SPK.length+' · проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 60</b></div><div class="rrow sub"><span>+ Speaking (учитель послушает записи)</span><b>до 20 · из 80</b></div>`+(all?`<div class="grade">${t>=54?'🌟 Отлично!':t>=42?'👍 Хорошо!':t>=30?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все шесть заданий</div>'); }
 paint(); paintNav(); r1(); r2(); r3(); r4(); r5(); r6();
 $('#kidName').value=ls.get('home:name')||'';
 $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя 🙂'; $('#kidName').focus(); return; } ls.set('home:name',n);
   const d=doneMap(), cnt=TK.filter(k=>P.done[k]).length; if(cnt<6){ m.textContent='Сначала сделай все шесть заданий.'; return; } m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
   const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${total()}&m=60&f=${TK.map(k=>P.score[k]).join('-')}${P.speak?'-S':''}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
   const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
-  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
-$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P=FRESH(); save(); gcur={}; r1(); r2(); r3(); r4(); r5(); r6(); trackBtns(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; $$('[id^=c]').forEach(b=>{ if(/^c[1-6]$/.test(b.id)) b.hidden=false; }); go(1); };
+  try{ await Promise.any(SRV.map(one)); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; return; }
+  if(P.speak){ m.textContent='Письменная часть ушла. Отправляю записи Speaking…';
+    try{ await SpeakRec.submit({lesson:LESSON,name:n,written:total(),wmax:60,parts:SPK.map(x=>({id:x.id,label:x.label,max:x.max,q:x.q.replace(/<[^>]+>/g,'')}))}); }
+    catch(e){ m.textContent='Письменная часть ушла, а записи Speaking — нет. Проверь интернет и нажми «Отправить» ещё раз.'; $('#doneBtn').disabled=false; return; } }
+  m.textContent=P.speak?'🎉 Отправлено! Учитель видит результат и послушает Speaking.':'🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); };
+$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P=FRESH(); save(); SpeakRec.reset(LESSON,SPK.map(x=>x.id)).then(()=>{ $$('#g7 .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:60,onchange:spkCount})); }); gcur={}; r1(); r2(); r3(); r4(); r5(); r6(); trackBtns(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; $$('[id^=c]').forEach(b=>{ if(/^c[1-6]$/.test(b.id)) b.hidden=false; }); go(1); };
 function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
   const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
