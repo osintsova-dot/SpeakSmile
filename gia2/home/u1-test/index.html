@@ -291,12 +291,12 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
     
     <div><span class="gi-tag">Get Involved! · Unit 1 · тест</span></div>
     <h1>Unit 1 Test</h1>
-    <div class="gi-mission"><b>Правила:</b> отвечай сам, без подсказок. В каждом задании — кнопка «Проверить», после неё ответы не меняются. Всего 95 баллов онлайн, вместе с аудированием (запись Macmillan); Speaking-задание 17 (5) — на уроке.</div>
+    <div class="gi-mission"><b>Правила:</b> отвечай сам, без подсказок. В каждом задании — кнопка «Проверить», после неё ответы не меняются. Всего 95 баллов онлайн, вместе с аудированием (запись Macmillan); Speaking-задание 17 (5) — ты записываешь голосом, учитель послушает. Вместе — до 100.</div>
     <div class="book"><svg viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 18H6V4h5v8l2.5-1.5L16 12V4h2z"/></svg>Progress test Unit 1 (Standard) · 17 заданий · результат уходит учителю</div>
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать тест →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на занятие"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку</button></div>
-    <p class="parent">Для родителей: это тот же Progress test, который группа писала на уроке, — Vocabulary 25, Grammar 25, Reading 15, Listening 15 (оригинальная запись Macmillan, нужны звук или наушники), Speaking 5, Writing 10 = 95 баллов. Ребёнок отвечает сам, нажимает «Проверить» и видит, что верно. Итог отправляется учителю; устный диалог (5 баллов) — на уроке.</p>
+    <p class="parent">Для родителей: это тот же Progress test, который группа писала на уроке, — Vocabulary 25, Grammar 25, Reading 15, Listening 15 (оригинальная запись Macmillan, нужны звук или наушники), Speaking 5, Writing 10 = 95 баллов. Ребёнок отвечает сам, нажимает «Проверить» и видит, что верно. Итог отправляется учителю; устный диалог (Speaking-задание 17, ещё 5 баллов) ребёнок записывает голосом на слайде «Speaking 🎙» (нужен микрофон) — учитель послушает и поставит баллы, всего до 100.</p>
   </section>
   <section class="slide" data-key="t1">
     <h2><span class="n"><span>1</span></span>Vocabulary 1 · Kumiko’s day</h2>
@@ -375,9 +375,15 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
   </section>
   <section class="slide" data-key="t16">
     <h2><span class="n"><span>1</span></span>Speaking · Checking answers</h2>
-    <p class="hint">Дополни диалог Аны и Бена словами из рамки (четыре лишних). 5 баллов (ещё 5 — диалог с учителем на уроке).</p>
+    <p class="hint">Дополни диалог Аны и Бена словами из рамки (четыре лишних). 5 баллов (ещё 5 — диалог голосом на следующем слайде).</p>
 <div class="wchips" id="bank16"></div><div class="rows" id="g16"></div><div class="btns"><button class="btn primary" id="c16" disabled>Проверить</button><span class="score" id="s16">0 / 5</span></div>
   </section>
+  <!--spk--><section class="slide" data-key="sp">
+    <h2><span class="n"><span>1</span></span>Speaking 🎙 · диалог · 5</h2>
+    <p class="hint">Задание 17 — диалог с партнёром (5 баллов): вы с Аной сверяете ответы квиза. Ану голосом читает Соня: в каждой карточке нажми ▶ и послушай реплику, потом «🎙 Записать ответ», ответь по-английски и нажми «Стоп». Себя можно послушать и перезаписать. Записи уйдут учителю вместе с тестом, баллы поставит учитель.</p>
+    <div id="gSP"></div>
+    <div class="btns"><span class="score" id="sSP"></span></div>
+  </section><!--/spk-->
   <section class="slide" data-key="t18">
     <h2><span class="n"><span>1</span></span>Writing · My Saturday</h2>
     <p class="hint">Блог-пост о своей субботе (60–80 слов): утро, день, что больше всего нравится. Заполни поля — 10 баллов за полный пост из трёх абзацев.</p>
@@ -398,6 +404,7 @@ h1,h2,.sent,.cover h1{letter-spacing:-.01em}
   <span class="cnt" id="cnt"></span>
   <button class="btn primary" id="nextBtn">Дальше →</button>
 </div>
+<script src="/assets/speakrec.js"></script>
 <script>
 const LESSON='gia2-u1-test';
 
@@ -434,7 +441,7 @@ function flash(el,cls){ el.classList.add(cls); setTimeout(()=>el.classList.remov
 // ── слайды ──
 const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
 slides.slice(1,-1).forEach((s,i)=>{ const n=s.querySelector('h2 .n span'); if(n) n.textContent=i+1; });
-const TITLES={"cover": "Старт", "t1": "Voc 1", "t2": "Voc 2", "t3": "Voc 3", "t4": "Voc 4", "t5": "Gr 1", "t6": "Gr 2", "t7": "Gr 3", "t8": "Gr 4", "t9": "Gr 5", "t10": "Read 1", "t11": "Read 2", "t12": "Read 3", "t13": "Listen 1", "t14": "Listen 2", "t15": "Listen 3", "t16": "Speaking", "t18": "Writing", "finish": "Результат"};
+const TITLES={"sp": "Speaking 🎙", "cover": "Старт", "t1": "Voc 1", "t2": "Voc 2", "t3": "Voc 3", "t4": "Voc 4", "t5": "Gr 1", "t6": "Gr 2", "t7": "Gr 3", "t8": "Gr 4", "t9": "Gr 5", "t10": "Read 1", "t11": "Read 2", "t12": "Read 3", "t13": "Listen 1", "t14": "Listen 2", "t15": "Listen 3", "t16": "Speaking", "t18": "Writing", "finish": "Результат"};
 $('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]||s.dataset.key}"></button>`).join('');
 $('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]||s.dataset.key}</span>`).join('');
 let goT=null;
@@ -572,11 +579,13 @@ function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.k
 // ── финиш ──
 $('#kidName').value=ls.get('home:name')||'';
 $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя и фамилию'; $('#kidName').focus(); return; } ls.set('home:name',n);
-  const d=doneMap(), cnt=KEYS.filter(k=>d[k]).length; const need=17; if(cnt<need){ m.textContent='Сделай хотя бы '+need+' шагов из '+KEYS.length+' — тогда можно отправлять'; return; }
+  const d=doneMap(), cnt=KEYS.filter(k=>d[k]&&k!=='sp').length; const need=17; if(cnt<need){ m.textContent='Сделай хотя бы '+need+' шагов из '+KEYS.length+' — тогда можно отправлять'; return; }
   m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
   const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${typeof sendScore==='function'?sendScore():cnt}&m=${typeof sendMax==='function'?sendMax():KEYS.length}&f=${typeof sendF==='function'?sendF():cnt}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
   const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
-  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит.'; burst(); burst(); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
+  try{ await Promise.any(SRV.map(one)); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; return; }
+  if(typeof spkAfter==='function'&&!(await spkAfter(n,m))) return;
+  m.textContent=P.speak?'🎉 Отправлено! Учитель видит результат и послушает Speaking.':'🎉 Отправлено! Учитель уже видит.'; burst(); burst(); };
 function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
   const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
@@ -657,11 +666,32 @@ gapTask('t16',[{html:'<b>Ana:</b> What {0} you got for number one? <b>Ben:</b> I
   $('#wCopy').onclick=()=>copyText(text(),$('#wCopy')); render(); })();
 }
 function total(){ return TK.reduce((n,k)=>n+(P.score[k]||0),0); }
-function paintExtra(d){ const t=total(); $('#result').innerHTML=TK.map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${NAMES[k]}</span><b>${P.done[k]?P.score[k]+' / '+MAXP[k]:'—'}</b></div>`).join('')+`<div class="rrow tot"><span>Всего</span><b>${t} / 95</b></div><div class="rrow sub"><span>+ Speaking-задание 17 (5) — на уроке</span><b>до 100</b></div>`; }
+function paintExtra(d){ const t=total(); $('#result').innerHTML=TK.map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${NAMES[k]}</span><b>${P.done[k]?P.score[k]+' / '+MAXP[k]:'—'}</b></div>`).join('')+`<div class="rrow tot"><span>Всего</span><b>${t} / 95</b></div>`+spkRow(); }
 function sendScore(){ return total(); } function sendMax(){ return 95; } function sendF(){ return TK.map(k=>P.score[k]||0).join('-'); }
 init();
-$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P.a={}; P.done={}; P.score={}; save(); gcur={}; $$('[id^=c]').forEach(b=>{ if(/^c\d+$/.test(b.id)) b.hidden=false; }); init(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; go(1); };
+$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; if(typeof spkReset==='function') spkReset(); P.a={}; P.done={}; P.score={}; save(); gcur={}; $$('[id^=c]').forEach(b=>{ if(/^c\d+$/.test(b.id)) b.hidden=false; }); init(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; go(1); };
 
 paint(); paintNav();
+/*spk*/
+// ── Speaking голосом: реплики читает Соня (Edge TTS), ребёнок записывает ответ; баллы ставит учитель ──
+var SRP=[{"id": "p1", "label": "Say your answer", "max": 1, "a": "spk_p1", "q": "<b>Ana:</b> Hi! Let’s check our answers to the quiz. What have you got for number 1?<br><small style=\"color:#6B6280\">Скажи свой ответ: <i>I’ve got …</i></small>", "box": "<b>UK cities quiz</b> — твои ответы:<br>1 London · 2 Newcastle · 3 ? (не знаешь) · 4 Manchester (не уверен)"}, {"id": "p2", "label": "Disagree politely", "max": 1, "a": "spk_p2", "q": "<b>Ana:</b> Me too! What about number 2? I think it’s Birmingham.<br><small style=\"color:#6B6280\">У тебя другой ответ — удивись и скажи свой: <i>Really? I think …</i></small>"}, {"id": "p3", "label": "Be sure", "max": 1, "a": "spk_p3", "q": "<b>Ana:</b> Are you sure?<br><small style=\"color:#6B6280\">Ты уверен — так и скажи и повтори ответ.</small>"}, {"id": "p4", "label": "Say you don’t know", "max": 1, "a": "spk_p4", "q": "<b>Ana:</b> OK, let’s put Newcastle. And number 3? What have you got?<br><small style=\"color:#6B6280\">Ты не знаешь — скажи это и спроси, что думает Ана: <i>… Do you think it’s …?</i></small>"}, {"id": "p5", "label": "Not sure", "max": 1, "a": "spk_p5", "q": "<b>Ana:</b> Maybe. Let’s put Liverpool. And number 4?<br><small style=\"color:#6B6280\">Скажи свой ответ, но ты не уверен: <i>I’ve got …, but I’m not …</i></small>"}], SRP_W=95, SRP_REC=60, SRP_MAX=SRP.reduce((n,x)=>n+x.max,0);
+const spkPts=n=>n+' '+(n%10===1&&n%100!==11?'балл':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?'балла':'баллов');
+$('#gSP').innerHTML=SRP.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff;color:#22183A;text-align:left;font-size:15px;line-height:1.4">`+
+  (x.box?`<div style="background:#F4EFFF;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:14px;color:#22183A">${x.box}</div>`:'')+
+  (x.pics?`<div style="display:grid;grid-template-columns:repeat(${Math.min(x.pics.length,2)},1fr);gap:8px;margin-bottom:10px">${x.pics.map(p=>`<figure style="margin:0;text-align:center"><img loading="lazy" src="${p[0]}" alt="${p[1]}" style="width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;border:1px solid #eee;background:#f4f4f4"><figcaption style="font-size:12px;color:#6B6280;margin-top:3px">${p[1]}</figcaption></figure>`).join('')}</div>`:'')+
+  `<div style="display:flex;gap:10px;align-items:flex-start"><button type="button" data-a="${x.a}" aria-label="Послушать реплику" style="flex:none;width:44px;height:44px;border-radius:50%;border:0;background:#6C3FC5;color:#fff;font-size:17px;cursor:pointer;touch-action:manipulation">▶</button>`+
+  `<div style="min-width:0"><b style="color:#22183A">${i+1}. ${x.label}</b> <small style="color:#6B6280;white-space:nowrap">· ${spkPts(x.max)}</small><div style="margin-top:4px;color:#22183A">${x.q}</div></div></div>`+
+  `<div class="sprec" data-part="${x.id}"></div></div>`).join('');
+$('#gSP').addEventListener('click',e=>{ const b=e.target.closest('[data-a]'); if(!b) return; play(b.dataset.a,()=>{}); });
+function spkRow(){ if(!SRP) return ''; return `<div class="rrow${P.speak?'':' todo'}"><span>Speaking (запись голосом)</span><b>${P.speak?'🎙 '+P.speak+' из '+SRP.length+' · проверит учитель':'—'}</b></div><div class="rrow sub"><span>+ Speaking (учитель послушает записи)</span><b>до ${SRP_MAX} · из ${SRP_W+SRP_MAX}</b></div>`; }
+async function spkCount(){ P.speak=await SpeakRec.count(LESSON,SRP.map(x=>x.id)); P.done=P.done||{}; if(P.speak>=SRP.length) P.done.sp=1; else delete P.done.sp; save();
+  $('#sSP').textContent=`🎙 записано ${P.speak} из ${SRP.length}`; const t=$('#spkTot'); if(t) t.innerHTML=spkRow(); if(typeof paint==='function') paint(); }
+function spkMount(){ $$('#gSP .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:SRP_REC,onchange:spkCount})); }
+function spkReset(){ P.speak=0; if(P.done) delete P.done.sp; save(); SpeakRec.reset(LESSON,SRP.map(x=>x.id)).then(spkMount); }
+async function spkAfter(n,m){ if(!P.speak) return true; m.textContent='Письменная часть ушла. Отправляю записи Speaking…';
+  try{ await SpeakRec.submit({lesson:LESSON,name:n,written:total(),wmax:SRP_W,parts:SRP.map(x=>({id:x.id,label:x.label,max:x.max,q:x.q.replace(/<br>/g,' — ').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim()}))}); return true; }
+  catch(e){ m.textContent='Письменная часть ушла, а записи Speaking — нет. Проверь интернет и нажми «Отправить» ещё раз.'; $('#doneBtn').disabled=false; return false; } }
+spkMount();
+/*/spk*/
 </script>
 </body></html>
