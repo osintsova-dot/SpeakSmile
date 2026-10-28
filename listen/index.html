@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Проверка Speaking</title>
+<title>Проверка заданий</title>
 <style>
 :root{--p:#6C3FC5;--y:#F5C842;--ink:#22183A;--mut:#6B6280;--line:#E2D8F5;--bg:#F7F4FC;--ok:#1F8A4C;--bad:#C0392B}
 *{box-sizing:border-box}
@@ -30,11 +30,12 @@ textarea{width:100%;min-height:70px;font:inherit;border:1.5px solid var(--line);
 .msg{margin-top:10px;font-size:14px;min-height:20px}
 .msg.ok{color:var(--ok);font-weight:700}.msg.bad{color:var(--bad)}
 .graded{background:#EAF7EF;border-color:#BFE5CD}
+.txt{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:6px 0 4px;font-size:16px;line-height:1.5;white-space:normal}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header><h1>🎙 Проверка Speaking</h1><div class="sub" id="who">Загружаю…</div></header>
+  <header><h1>🎙 Проверка Speaking и Writing</h1><div class="sub" id="who">Загружаю…</div></header>
   <div id="app"></div>
 </div>
 <script>
@@ -65,7 +66,8 @@ function render(){
   if(g) PTS=Object.assign({},g.pts);
   var h=SET.parts.map(function(p){
     var b=''; for(var n=0;n<=p.max;n++) b+='<button type="button" data-p="'+esc(p.id)+'" data-n="'+n+'"'+(PTS[p.id]===n?' class="on"':'')+'>'+n+'</button>';
-    return '<div class="card part"><h3>'+esc(p.label)+'</h3><div class="q">'+esc(p.q)+'</div><div id="au-'+esc(p.id)+'"><div class="none">Загружаю запись…</div></div><div class="pts">'+b+'<span class="of">из '+p.max+'</span></div></div>';
+    var body=p.text!=null?'<div class="txt">'+(p.text.trim()?esc(p.text).replace(/\n/g,'<br>'):'<span class="none">Текст не написан — 0 баллов.</span>')+'</div><div class="q">Слов: '+(p.text.trim()?p.text.trim().split(/\s+/).length:0)+'</div>':'<div id="au-'+esc(p.id)+'"><div class="none">Загружаю запись…</div></div>';
+    return '<div class="card part"><h3>'+esc(p.label)+'</h3><div class="q">'+esc(p.q)+'</div>'+body+'<div class="pts">'+b+'<span class="of">из '+p.max+'</span></div></div>';
   }).join('');
   h+='<div class="card'+(g?' graded':'')+'"><div class="sum" id="sum"></div><div id="tot" style="color:var(--mut);margin-bottom:10px"></div>'+
      '<textarea id="cm" placeholder="Комментарий (необязательно): что получилось, над чем поработать">'+esc(g?g.comment:'')+'</textarea>'+
@@ -74,6 +76,7 @@ function render(){
   $('#app').addEventListener('click',function(e){ var b=e.target.closest('[data-n]'); if(!b) return; PTS[b.dataset.p]=+b.dataset.n; document.querySelectorAll('[data-p="'+b.dataset.p+'"]').forEach(function(x){x.classList.toggle('on',x===b);}); paintSum(); });
   $('#go').onclick=save;
   SET.parts.forEach(function(p){
+    if(p.text!=null) return; // Writing — текст уже на странице
     call('/speak/audio?s='+encodeURIComponent(S)+'&k='+encodeURIComponent(K)+'&p='+encodeURIComponent(p.id)).then(function(a){
       var box=document.getElementById('au-'+p.id);
       if(!a||!a.b64){ box.innerHTML='<div class="none">Ребёнок не записал эту часть — 0 баллов.</div>'; if(PTS[p.id]==null){ PTS[p.id]=0; paintSum(); } return; }

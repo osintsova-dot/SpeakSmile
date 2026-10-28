@@ -110,11 +110,11 @@
     if (!s) { s = ''; var a = crypto.getRandomValues(new Uint8Array(16)); for (var i = 0; i < a.length; i++) s += 'abcdefghijkmnpqrstuvwxyz23456789'[a[i] % 32]; try { localStorage.setItem(k, s); } catch (e) {} }
     return s;
   }
-  // o = {lesson, name, written, wmax, parts:[{id,label,max,q}]} → загрузить записи и отправить набор учителю
+  // o = {lesson, name, written, wmax, parts:[{id,label,max,q,text?}]} (text — письменный ответ, его учитель читает рядом с записями) → загрузить записи и отправить набор учителю
   function submit(o) {
     var sid = sidOf(o.lesson);
     return Promise.all(o.parts.map(function (p) { return getRec(o.lesson, p.id); })).then(function (recs) {
-      var have = o.parts.filter(function (p, i) { return recs[i]; });
+      var have = o.parts.filter(function (p, i) { return recs[i] || (p.text != null && String(p.text).trim()); }); // Writing: part с text — без записи
       if (!have.length) return { ok: true, none: true };
       var chain = Promise.resolve();
       o.parts.forEach(function (p, i) { if (recs[i]) chain = chain.then(function () { return b64(recs[i].blob).then(function (b) { return post('/speak/up', { sid: sid, part: p.id, mime: recs[i].mime, b64: b }); }); }); });
