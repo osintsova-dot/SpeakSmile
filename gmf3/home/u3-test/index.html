@@ -790,7 +790,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Начать тест →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на урок"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку на урок</button></div>
-    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 60 баллов за шесть письменных заданий, он отправится учителю. Speaking (ещё 20 баллов, всего 80) учитель проверит на уроке. Аудио можно слушать два раза, как на уроке.</p>
+    <p class="parent">Для родителей: это тот же тест, который группа писала на уроке. Ребёнок отвечает сам, без подсказок: нажимает ответы, потом «Проверить» — и видит, что верно. В конце — результат из 60 баллов за шесть письменных заданий, он отправится учителю. Speaking (ещё 20 баллов, всего 80) ребёнок записывает голосом, учитель послушает и поставит баллы. Аудио можно слушать два раза, как на уроке.</p>
   </section>
   <section class="slide" data-key="t1">
     <h2><span class="n"><span>1</span></span>Listen and match</h2>
@@ -845,10 +845,10 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   </section>
   <section class="slide" data-key="speak">
     <h2><span class="n"><span>7</span></span>Speaking</h2>
-    <p class="hint">Посмотри на картинку: что у кого болит? Нажми на предложение — услышишь образец, повтори. Потом скажи, как оставаться здоровым: You must… You mustn't… Это задание проверяет учитель на уроке.</p>
+    <p class="hint">Устная часть теста — 20 баллов. В каждом задании нажми ▶ и послушай вопрос, потом «🎙 Записать ответ», скажи ответ по-английски и нажми «Стоп». Себя можно послушать и перезаписать. Записи уйдут учителю вместе с тестом, баллы поставит учитель. Картинка — для заданий 1–3.</p>
     <img class="speakpic" src="img/t_scene.jpg" alt="">
-    <div class="wchips" id="g7"></div>
-    <div class="btns"><button class="btn primary" id="c7">🎤 Я рассказал</button></div>
+    <div id="g7"></div>
+    <div class="btns"><span class="score" id="s7"></span><button class="btn primary" id="c7">Дальше →</button></div>
   </section>
   <section class="slide finish" data-key="finish">
     <h2>Результат</h2>
@@ -867,6 +867,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
   <button class="btn primary" id="nextBtn">Дальше →</button>
 </div>
 
+<script src="/assets/speakrec.js"></script>
 <script>
 
 const LESSON='gmf3-u3-test';
@@ -950,25 +951,42 @@ function r4(){ gapTask(4,6,BANK4,ANS4,(i,gap)=>`<div class="tk-sent">${T4[i]} �
 function r5(){ gapTask(5,6,BANK5,ANS5,(i,gap)=>`<img class="shape" src="${img('t5_'+(i+1))}" alt="" style="width:96px;height:76px;object-fit:cover"><div class="tk-sent">${T5[i][0]} ${gap}?<br><small>${T5[i][1]}</small></div>`,true,[0]); } gapBind(5,6,ANS5,r5,[0]);
 // 6
 function r6(){ gapTask(6,6,BANK6,ANS6,(i,gap)=>`<img class="shape" src="${img('t6_'+(i+1))}" alt="" style="width:96px;height:70px;object-fit:cover"><div class="tk-sent">How often ${gap}?</div>`,true,[0]); } gapBind(6,6,ANS6,r6,[0]);
-// 7 speaking
-$('#g7').innerHTML=SPEAK.map((s,i)=>`<button class="btn" data-id="sp${i+1}">${s}</button>`).join('');
-$('#g7').onclick=e=>{ const b=e.target.closest('.btn'); if(!b) return; $$('#g7 .btn').forEach(x=>x.classList.toggle('sel',x===b)); play(b.dataset.id,()=>b.classList.remove('sel')); };
-$('#c7').onclick=()=>{ P.speak=1; save(); burst(); go(cur+1); };
+// ── 7 speaking ──
+// официальный Speaking Unit 3 (Standard): Vocabulary 4 + Sentences 8 + Questions 8 = 20; вопросы читает Соня (Edge TTS)
+const SPK=[{"id": "v", "label": "Vocabulary — назови 4 болезни", "max": 4, "a": "spk_v", "q": "Посмотри на картинку. Например: <i>cough</i>. What's this? Назови ещё четыре болезни по-английски."},
+  {"id": "s1", "label": "Sentences — What's the matter? (1)", "max": 4, "a": "spk_s1", "q": "<i>She's got a broken leg.</i> What's the matter? Скажи два таких предложения про другие картинки."},
+  {"id": "s2", "label": "Sentences — What's the matter? (2)", "max": 4, "a": "spk_s2", "q": "Ещё два предложения про две другие картинки."},
+  {"id": "q1", "label": "How can you stay fit and healthy?", "max": 4, "a": "spk_q1", "q": "<b>How can you stay fit and healthy?</b> Дай два совета: <i>You must… / You mustn't…</i>"},
+  {"id": "q2", "label": "Do you eat lots of sweets?", "max": 2, "a": "spk_q2", "q": "<b>Do you eat lots of sweets?</b> Ответь: <i>Yes, I do. / No, I don't.</i>"},
+  {"id": "q3", "label": "Do you go to bed early?", "max": 2, "a": "spk_q3", "q": "<b>Do you go to bed early?</b>"}];
+const spPics=x=>`<div style="display:grid;grid-template-columns:repeat(${x.cols},minmax(0,1fr));gap:6px;margin-top:10px">${x.pics.map(p=>`<div style="text-align:center"><img src="${img(p.p)}" alt="" style="width:100%;border:1px solid #eee;border-radius:8px;display:block;background:#fff">${p.c?`<div style="font-size:11px;line-height:1.2;color:#22183A;margin-top:2px">${p.c}</div>`:''}</div>`).join('')}</div>`;
+$('#g7').innerHTML=SPK.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff;color:#22183A;text-align:left">`+
+  `<div style="display:flex;gap:10px;align-items:flex-start"><button class="btn" data-a="${x.a}" aria-label="Послушать вопрос" style="flex:none;padding:8px 12px">▶</button><div><b>${i+1}. ${x.label}</b> <small style="color:#6B6280">· ${x.max} ${x.max>4?'баллов':'балла'}</small><div style="margin-top:3px">${x.q}</div></div></div>`+
+  (x.pics?spPics(x):'')+
+  `<div class="sprec" data-part="${x.id}"></div></div>`).join('');
+$('#g7').addEventListener('click',e=>{ const b=e.target.closest('[data-a]'); if(!b) return; play(b.dataset.a,()=>{}); });
+async function spkCount(){ P.speak=await SpeakRec.count(LESSON,SPK.map(x=>x.id)); save(); $('#s7').textContent=`🎙 ${P.speak} из ${SPK.length}`; }
+$$('#g7 .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:60,onchange:spkCount}));
+$('#c7').onclick=()=>{ if(P.speak) burst(); go(cur+1); };
 // ── результат ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key); const TK=[1,2,3,4,5,6];
-function doneMap(){ const d={speak:P.speak>=1}; TK.forEach(k=>d['t'+k]=!!P.done[k]); return d; }
+function doneMap(){ const d={speak:P.speak>=SPK.length}; TK.forEach(k=>d['t'+k]=!!P.done[k]); return d; }
 function total(){ return TK.reduce((n,k)=>n+(P.score[k]||0),0); }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan]));
   const names={1:'Listen and match',2:'Listen and number',3:'Look, read and write',4:'Read and match',5:'Look and write',6:'How often…?'}; const t=total(), all=TK.every(k=>P.done[k]);
-  $('#result').innerHTML=TK.map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>7. Speaking</span><b>${P.speak?'🎤 проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 60</b></div><div class="rrow sub"><span>+ Speaking у учителя</span><b>до 20 · из 80</b></div>`+(all?`<div class="grade">${t>=54?'🌟 Отлично!':t>=42?'👍 Хорошо!':t>=30?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все шесть заданий</div>'); }
+  $('#result').innerHTML=TK.map(k=>`<div class="rrow${P.done[k]?'':' todo'}"><span>${k}. ${names[k]}</span><b>${P.done[k]?P.score[k]+' / 10':'—'}</b></div>`).join('')+`<div class="rrow${P.speak?'':' todo'}"><span>7. Speaking</span><b>${P.speak?'🎙 '+P.speak+' из '+SPK.length+' · проверит учитель':'—'}</b></div><div class="rrow tot"><span>Всего</span><b>${t} / 60</b></div><div class="rrow sub"><span>+ Speaking (учитель послушает записи)</span><b>до 20 · из 80</b></div>`+(all?`<div class="grade">${t>=54?'🌟 Отлично!':t>=42?'👍 Хорошо!':t>=30?'🙂 Неплохо, повтори слова':'💪 Повтори юнит и попробуй ещё раз'}</div>`:'<div class="grade small">Сделай все шесть заданий</div>'); }
 paint(); paintNav(); r1(); r2(); r3(); r4(); r5(); r6();
 $('#kidName').value=ls.get('home:name')||'';
 $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя 🙂'; $('#kidName').focus(); return; } ls.set('home:name',n);
   const d=doneMap(), cnt=TK.filter(k=>P.done[k]).length; if(cnt<NT){ m.textContent='Сначала сделай все шесть заданий.'; return; } m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
   const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${total()}&m=60&f=${TK.map(k=>P.score[k]).join('-')}${P.speak?'-S':''}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
   const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
-  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
-$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P=FRESH(); save(); gcur={}; r1(); r2(); r3(); r4(); r5(); r6(); trackBtns(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; $$('[id^=c]').forEach(b=>{ if(/^c[1-6]$/.test(b.id)) b.hidden=false; }); go(1); };
+  try{ await Promise.any(SRV.map(one)); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; return; }
+  if(P.speak){ m.textContent='Письменная часть ушла. Отправляю записи Speaking…';
+    try{ await SpeakRec.submit({lesson:LESSON,name:n,written:total(),wmax:60,parts:SPK.map(x=>({id:x.id,label:x.label,max:x.max,q:x.q.replace(/<[^>]+>/g,'')}))}); }
+    catch(e){ m.textContent='Письменная часть ушла, а записи Speaking — нет. Проверь интернет и нажми «Отправить» ещё раз.'; $('#doneBtn').disabled=false; return; } }
+  m.textContent=P.speak?'🎉 Отправлено! Учитель видит результат и послушает Speaking.':'🎉 Отправлено! Учитель уже видит результат.'; burst(); burst(); };
+$('#resetBtn').onclick=()=>{ if(!confirm('Стереть ответы и пройти тест заново?')) return; P=FRESH(); save(); SpeakRec.reset(LESSON,SPK.map(x=>x.id)).then(()=>{ $$('#g7 .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:60,onchange:spkCount})); }); gcur={}; r1(); r2(); r3(); r4(); r5(); r6(); trackBtns(); $('#doneBtn').disabled=false; $('#doneMsg').textContent=''; $$('[id^=c]').forEach(b=>{ if(/^c[1-6]$/.test(b.id)) b.hidden=false; }); go(1); };
 function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
   const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
