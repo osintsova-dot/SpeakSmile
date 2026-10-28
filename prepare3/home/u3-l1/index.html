@@ -401,7 +401,7 @@ details.txt summary::-webkit-details-marker{display:none}
     <div class="plan" id="plan"></div>
     <div style="margin-top:22px"><button class="btn primary big" data-next>Поехали →</button></div>
     <div><button class="btn ghost copy" id="copyLink" aria-label="Скопировать ссылку на урок"><svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 0 1 0-1.4 1 1 0 0 1 1.4 0 3 3 0 0 0 4.2 0l3-3a3 3 0 0 0-4.2-4.2l-1.2 1.2a1 1 0 1 1-1.4-1.4l1.2-1.2a5 5 0 0 1 7 7l-3 3a5 5 0 0 1-7 0zm2.8-2.8a1 1 0 0 1 0 1.4 1 1 0 0 1-1.4 0 3 3 0 0 0-4.2 0l-3 3a3 3 0 0 0 4.2 4.2l1.2-1.2a1 1 0 1 1 1.4 1.4l-1.2 1.2a5 5 0 0 1-7-7l3-3a5 5 0 0 1 7 0z"/></svg>Скопировать ссылку</button></div>
-    <p class="parent">Для родителей: это урок 10 курса Prepare 3 (Unit 3, Student’s Book стр. 20–21) для самостоятельной работы дома, 30–35 минут. Звучат оригинальные записи Cambridge к учебнику; лексика и грамматика — через определения и примеры, мини-игры на время. В конце — задания в Workbook и кнопка «Я сделал(а)»: учитель увидит результат. Прогресс сохраняется на этом устройстве.</p>
+    <p class="parent">Для родителей: это урок 10 курса Prepare 3 (Unit 3, Student’s Book стр. 20–21) для самостоятельной работы дома, 30–35 минут. Звучат оригинальные записи Cambridge к учебнику; лексика и грамматика — через определения и примеры, мини-игры на время. В конце — задания в Workbook и кнопка «Я сделал(а)»: учитель увидит результат. Прогресс сохраняется на этом устройстве. В конце раздела Speaking — шаг «Speaking 🎙»: ребёнок слушает реплику и отвечает голосом (5 записей, нужен микрофон). Записи уходят учителю вместе с «Я сделал(а)», учитель слушает и ставит до 10 баллов.</p>
   </section>
   <section class="slide" data-key="warm">
     <h2><span class="n"><span>1</span></span>Warm-up: 6 verbs, 40 seconds</h2>
@@ -448,6 +448,12 @@ details.txt summary::-webkit-details-marker{display:none}
     <p class="hint"><span class="en">Tap the letter you can’t hear.</span>Упр. 5. В каждом слове одна буква (или две) пишется, но не читается. Нажми 🔊 — послушай, потом найди «немую» букву. Первые 8 слов — оригинальная запись, последние 4 — бонус.</p>
 <div class="swl" id="slBox"></div><div class="btns"><span class="score">С первого раза: <b id="slScore">0</b> / 12</span><button class="btn ghost sm" id="slReset">↺</button></div><div class="say" id="slMsg"></div>
   </section>
+  <!--spk--><section class="slide" data-key="sp">
+    <h2><span class="n"><span>1</span></span>Speaking 🎙 · Part 2 · ways of travelling</h2>
+    <p class="hint">Student’s Book стр. 21, упр. 6 (Speaking Part 2) — обсуждаем фото со стр. 20. Твой собеседник — партнёр (голос Сони): в каждой карточке нажми ▶, послушай, потом «🎙 Записать ответ», ответь по-английски (2–3 предложения) и нажми «Стоп». Себя можно послушать и перезаписать. Записи уйдут учителю вместе с «Я сделал(а)» — он послушает и поставит до 10 баллов (по 2 за ответ).</p>
+    <div id="gSP"></div>
+    <div class="btns"><span class="score" id="sSP"></span></div>
+  </section><!--/spk-->
   <section class="slide" data-key="rule">
     <h2><span class="n"><span>1</span></span>Past simple: the rules from the story</h2>
     <p class="hint"><span class="en">Tap a sentence to hear it.</span>Student’s Book стр. 21, упр. 1. Все правила — на примерах из той же статьи. Послушай каждое предложение.</p>
@@ -512,6 +518,7 @@ details.txt summary::-webkit-details-marker{display:none}
   <span class="cnt" id="cnt"></span>
   <button class="btn primary" id="nextBtn">Дальше →</button>
 </div>
+<script src="/assets/speakrec.js"></script>
 <script>
 const LESSON='prep3-u3-l1';
 
@@ -548,7 +555,7 @@ function flash(el,cls){ el.classList.add(cls); setTimeout(()=>el.classList.remov
 // ── слайды ──
 const deck=$('#deck'), slides=$$('.slide'), N=slides.length; let cur=0;
 slides.slice(1,-1).forEach((s,i)=>{ const n=s.querySelector('h2 .n span'); if(n) n.textContent=i+1; });
-const TITLES={"cover": "Старт", "warm": "Разогрев", "words": "Слова", "photo": "Фото", "speed": "На скорость", "trap": "on foot", "read": "Чтение", "detail": "Вопросы", "twords": "Слова текста", "silent": "Немые буквы", "rule": "Правило", "sortv": "Reg / Irr", "irr": "Irregular", "ex3": "Упр. 3", "errors": "Ошибки", "build": "Вопросы did", "who": "Who…?", "trip": "Мой рассказ", "book": "Тетрадь", "finish": "Финиш"};
+const TITLES={"sp": "Speaking 🎙", "cover": "Старт", "warm": "Разогрев", "words": "Слова", "photo": "Фото", "speed": "На скорость", "trap": "on foot", "read": "Чтение", "detail": "Вопросы", "twords": "Слова текста", "silent": "Немые буквы", "rule": "Правило", "sortv": "Reg / Irr", "irr": "Irregular", "ex3": "Упр. 3", "errors": "Ошибки", "build": "Вопросы did", "who": "Who…?", "trip": "Мой рассказ", "book": "Тетрадь", "finish": "Финиш"};
 $('#dots').innerHTML=slides.map((s,i)=>`<button data-go="${i}" aria-label="${TITLES[s.dataset.key]||s.dataset.key}"></button>`).join('');
 $('#plan').innerHTML=slides.slice(1,-1).map(s=>`<span data-plan="${s.dataset.key}">${TITLES[s.dataset.key]||s.dataset.key}</span>`).join('');
 let goT=null;
@@ -722,16 +729,18 @@ function xpCalc(){ let s=0; for(const k in P){ const v=P[k]; if(typeof v!=='numb
 $$('[data-task]').forEach(cb=>{ cb.checked=(P.tasks||[]).includes(cb.dataset.task); cb.onchange=()=>{ P.tasks=$$('[data-task]').filter(x=>x.checked).map(x=>x.dataset.task); save(); }; });
 // ── прогресс ──
 const KEYS=slides.slice(1,-1).map(s=>s.dataset.key);
-function doneMap(){ return {warm:P.wm>=5, words:P.f>=8, photo:P.ph>=9, speed:P.sp>=9, trap:P.pr>=1&&P.so>=1, read:P.gs>=1, detail:P.dt>=4, twords:P.tw>=4, silent:P.sl>=8, rule:(P.ru||[]).length>=5, sortv:P.ri>=1, irr:P.ir>=16, ex3:P.e3>=7, errors:P.er>=10, build:P.qb>=1, who:P.wh>=6, trip:P.wr>=1, book:P.tasks.length>=2}; }
+function doneMap(){ return {sp:!!(P.done&&P.done.sp), warm:P.wm>=5, words:P.f>=8, photo:P.ph>=9, speed:P.sp>=9, trap:P.pr>=1&&P.so>=1, read:P.gs>=1, detail:P.dt>=4, twords:P.tw>=4, silent:P.sl>=8, rule:(P.ru||[]).length>=5, sortv:P.ri>=1, irr:P.ir>=16, ex3:P.e3>=7, errors:P.er>=10, build:P.qb>=1, who:P.wh>=6, trip:P.wr>=1, book:P.tasks.length>=2}; }
 function paint(){ const d=doneMap(); slides.forEach((s,i)=>{ const k=s.dataset.key; const ok=!!d[k]; s.classList.toggle('done',ok); $$('#dots button')[i].classList.toggle('done',ok); }); $$('[data-plan]').forEach(p=>p.classList.toggle('done',!!d[p.dataset.plan])); const st=$('#stars'); if(st) st.innerHTML=KEYS.map(k=>`<i class="${d[k]?'on':''}">⭐</i>`).join(''); const xp=xpCalc(); const xn=$('#xpN'); if(xn&&+xn.textContent!==xp){ xn.textContent=xp; const c=$('#xp'); c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); } const xb=$('#xpBig'); if(xb) xb.textContent=xp; if(typeof paintExtra==='function') paintExtra(d); }
 // ── финиш ──
 $('#kidName').value=ls.get('home:name')||'';
 $('#doneBtn').onclick=async()=>{ const n=$('#kidName').value.trim(); const m=$('#doneMsg'); if(n.length<2){ m.textContent='Напиши имя и фамилию'; $('#kidName').focus(); return; } ls.set('home:name',n);
-  const d=doneMap(), cnt=KEYS.filter(k=>d[k]).length; const need=13; if(cnt<need){ m.textContent='Сделай хотя бы '+need+' шагов из '+KEYS.length+' — тогда можно отправлять'; return; }
+  const d=doneMap(), cnt=KEYS.filter(k=>d[k]&&k!=='sp').length; const need=13; if(cnt<need){ m.textContent='Сделай хотя бы '+need+' шагов из '+KEYS.filter(k=>k!=='sp').length+' — тогда можно отправлять'; return; }
   m.textContent='Отправляю…'; $('#doneBtn').disabled=true;
-  const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${typeof sendScore==='function'?sendScore():cnt}&m=${typeof sendMax==='function'?sendMax():KEYS.length}&f=${typeof sendF==='function'?sendF():cnt}&d=${KEYS.map(k=>d[k]?1:0).join('')}`;
+  const q=`/home-done?l=${LESSON}&n=${encodeURIComponent(n)}&s=${typeof sendScore==='function'?sendScore():cnt}&m=${typeof sendMax==='function'?sendMax():KEYS.filter(k=>k!=='sp').length}&f=${typeof sendF==='function'?sendF():cnt}&d=${KEYS.filter(k=>k!=='sp').map(k=>d[k]?1:0).join('')}`;
   const one=s=>fetch(s+q,{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject());
-  try{ await Promise.any(SRV.map(one)); m.textContent='🎉 Отправлено! Учитель уже видит.'; burst(); burst(); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; } };
+  try{ await Promise.any(SRV.map(one)); } catch(e){ m.textContent='Не отправилось — проверь интернет и нажми ещё раз.'; $('#doneBtn').disabled=false; return; }
+  if(typeof spkAfter==='function'&&!(await spkAfter(n,m))) return;
+  m.textContent=P.speak?'🎉 Отправлено! Учитель видит результат и послушает Speaking.':'🎉 Отправлено! Учитель уже видит.'; burst(); burst(); };
 function copyLink(btn,url){ const done=ok=>{ toast(ok?'Ссылка скопирована ✓':'Не скопировалось — скопируй адрес из строки браузера'); if(ok&&btn){ btn.classList.add('ok'); setTimeout(()=>btn.classList.remove('ok'),1600); } };
   const legacy=()=>{ try{ const t=document.createElement('textarea'); t.value=url; t.setAttribute('readonly',''); t.style.cssText='position:fixed;top:0;left:0;opacity:0;font-size:16px'; document.body.appendChild(t); t.select(); t.setSelectionRange(0,url.length); const ok=document.execCommand('copy'); t.remove(); return ok; }catch(e){ return false; } };
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>done(true),()=>done(legacy())); else done(legacy()); }
@@ -770,5 +779,26 @@ writeCheck({area:'#wrText',out:'#wrOut',count:'#wrCount',pkey:'wr',need:4,
     [/\b(?:we|they|you) was\b|\bwas (?:we|they|you)\b/i,'we / they / you → were']]});
 
 paint(); paintNav();
+/*spk*/
+// ── Speaking голосом: реплики читает Соня (Edge TTS), ребёнок записывает ответ; баллы ставит учитель ──
+var SRP=[{"id": "p1", "label": "Different ways of travelling", "max": 2, "a": "spk_p1", "q": "<b>Partner:</b> Do you like these different ways of travelling? Why? / Why not?<br><small style=\"color:#6B6280\">Выбери 2–3 и скажи почему: <i>I like travelling by plane because it’s fast. I don’t like … because …</i></small>", "pics": [["img/w_plane.webp", "by plane"], ["img/w_coach.webp", "by coach"], ["img/w_bike.webp", "by bike"], ["img/w_ship.webp", "by ship"]]}, {"id": "p2", "label": "Riding a bike", "max": 2, "a": "spk_p2", "q": "<b>Partner:</b> Do you think riding a bike is difficult? Why? / Why not?<br><small style=\"color:#6B6280\"><i>I think it’s easy / difficult because …</i></small>"}, {"id": "p3", "label": "A boat or a ship", "max": 2, "a": "spk_p3", "q": "<b>Partner:</b> Do you think going in a boat or a ship is enjoyable? Why? / Why not?<br><small style=\"color:#6B6280\"><i>Yes, I think it’s enjoyable because … / No, I don’t, because …</i></small>"}, {"id": "p4", "label": "Your favourite", "max": 2, "a": "spk_p4", "q": "<b>Partner:</b> Now tell me which of these ways of travelling you like best.<br><small style=\"color:#6B6280\"><i>I like travelling by … best because …</i></small>"}, {"id": "p5", "label": "Hot weather and holidays", "max": 2, "a": "spk_p5", "q": "<b>Partner:</b> How do you like to travel when it’s very hot? And do you prefer going on holiday to the sea or in the mountains?<br><small style=\"color:#6B6280\">Ответь на оба вопроса: <i>When it’s very hot, I like … I prefer … because …</i></small>"}], SRP_W=null, SRP_REC=60, SRP_MAX=SRP.reduce((n,x)=>n+x.max,0);
+const spkPts=n=>n+' '+(n%10===1&&n%100!==11?'балл':(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20))?'балла':'баллов');
+$('#gSP').innerHTML=SRP.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff;color:#22183A;text-align:left;font-size:15px;line-height:1.4">`+
+  (x.box?`<div style="background:#F4EFFF;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:14px;color:#22183A">${x.box}</div>`:'')+
+  (x.pics?`<div style="display:grid;grid-template-columns:repeat(${Math.min(x.pics.length,2)},1fr);gap:8px;margin-bottom:10px">${x.pics.map(p=>`<figure style="margin:0;text-align:center"><img src="${p[0]}" alt="${p[1]}" style="width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;border:1px solid #eee;background:#f4f4f4"><figcaption style="font-size:12px;color:#6B6280;margin-top:3px">${p[1]}</figcaption></figure>`).join('')}</div>`:'')+
+  `<div style="display:flex;gap:10px;align-items:flex-start"><button type="button" data-a="${x.a}" aria-label="Послушать реплику" style="flex:none;width:44px;height:44px;border-radius:50%;border:0;background:#6C3FC5;color:#fff;font-size:17px;cursor:pointer;touch-action:manipulation">▶</button>`+
+  `<div style="min-width:0"><b style="color:#22183A">${i+1}. ${x.label}</b> <small style="color:#6B6280;white-space:nowrap">· ${spkPts(x.max)}</small><div style="margin-top:4px;color:#22183A">${x.q}</div></div></div>`+
+  `<div class="sprec" data-part="${x.id}"></div></div>`).join('');
+$('#gSP').addEventListener('click',e=>{ const b=e.target.closest('[data-a]'); if(!b) return; play(b.dataset.a,()=>{}); });
+function spkRow(){ if(!SRP) return ''; return `<div class="rrow${P.speak?'':' todo'}"><span>Speaking (запись голосом)</span><b>${P.speak?'🎙 '+P.speak+' из '+SRP.length+' · проверит учитель':'—'}</b></div><div class="rrow sub"><span>+ Speaking (учитель послушает записи)</span><b>до ${SRP_MAX} · из ${SRP_W+SRP_MAX}</b></div>`; }
+async function spkCount(){ P.speak=await SpeakRec.count(LESSON,SRP.map(x=>x.id)); P.done=P.done||{}; if(P.speak>=SRP.length) P.done.sp=1; else delete P.done.sp; save();
+  $('#sSP').textContent=`🎙 записано ${P.speak} из ${SRP.length}`; const t=$('#spkTot'); if(t) t.innerHTML=spkRow(); if(typeof paint==='function') paint(); }
+function spkMount(){ $$('#gSP .sprec').forEach(el=>SpeakRec.mount(el,{lesson:LESSON,part:el.dataset.part,max:SRP_REC,onchange:spkCount})); }
+function spkReset(){ P.speak=0; if(P.done) delete P.done.sp; save(); SpeakRec.reset(LESSON,SRP.map(x=>x.id)).then(spkMount); }
+async function spkAfter(n,m){ if(!P.speak) return true; m.textContent='Урок отправлен. Отправляю записи Speaking…';
+  try{ await SpeakRec.submit({lesson:LESSON,name:n,written:null,wmax:SRP_W,parts:SRP.map(x=>({id:x.id,label:x.label,max:x.max,q:x.q.replace(/<br>/g,' — ').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim()}))}); return true; }
+  catch(e){ m.textContent='Урок отправлен, а записи Speaking — нет. Проверь интернет и нажми «Отправить» ещё раз.'; $('#doneBtn').disabled=false; return false; } }
+spkMount();
+/*/spk*/
 </script>
 </body></html>
