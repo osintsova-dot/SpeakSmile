@@ -680,7 +680,7 @@ body{font-family:var(--f);color:#fff;position:relative;text-align:center;
     <h2><span class="n"><span>5</span></span>Look and write</h2>
     <p class="hint">У Mary, John и Beth оценки: ✗ not very good, ✓ good, ✓✓ very good, ★ brilliant. Заполни пропуски: нажми на пропуск, потом на слово.</p>
     <div class="btns"><span class="score" id="s5">0 / 10</span></div>
-    <div class="table" id="ktab"></div>
+    <div id="ktab"></div>
     <div class="wchips" id="bank5" style="margin-top:8px"></div>
     <div class="rows" id="g5"></div>
     <div class="btns"><button class="btn primary" id="c5" disabled>Проверить</button></div>
@@ -831,10 +831,10 @@ const SPK=[{id:'v',label:'Vocabulary — назови 4 предмета',max:4,
   {id:'q2',label:'Where do we have Drama?',max:2,a:'spk_q2',q:'<b>Where do we have Drama?</b> Ответь полным предложением.'},
   {id:'q3',label:'When do we have Music?',max:2,a:'spk_q3',q:'<b>When do we have Music?</b>'},
   {id:'q4',label:'Where do we have PE?',max:2,a:'spk_q4',q:'<b>Where do we have PE?</b>'}];
-const spTT=()=>`<div style="overflow-x:auto;margin:8px 0"><table class="sptt" style="border-collapse:collapse;font-size:13px;min-width:460px;width:100%;text-align:center">`+
-  `<tr><th></th>${['Monday','Tuesday','Wednesday','Thursday','Friday'].map(d=>`<th style="padding:5px;border:1px solid #ddd;background:#F0EBFF">${d}</th>`).join('')}</tr>`+
-  TT.cells.map((r,ri)=>`<tr><th style="padding:5px;border:1px solid #ddd;background:#F0EBFF">${['9:00','11:00','3:00'][ri]}</th>${r.map(c=>{ const [a,b]=c.split('|'); return `<td style="padding:5px;border:1px solid #ddd"><b>${a}</b><br><small>(${b})</small></td>`; }).join('')}</tr>`).join('')+`</table></div>`;
-$('#g7').innerHTML=SPK.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff">`+
+const spTT=()=>`<div style="overflow-x:auto;margin:8px 0"><table class="sptt" style="border-collapse:collapse;font-size:11px;width:100%;table-layout:fixed;text-align:center;line-height:1.2">`+
+  `<tr><th></th>${['Mon','Tue','Wed','Thu','Fri'].map(d=>`<th style="padding:4px 1px;border:1px solid #ddd;background:#F0EBFF;color:#4B278F">${d}</th>`).join('')}</tr>`+
+  TT.cells.map((r,ri)=>`<tr><th style="padding:4px 1px;width:38px;border:1px solid #ddd;background:#F0EBFF;color:#4B278F">${['9:00','11:00','3:00'][ri]}</th>${r.map(c=>{ const [a,b]=c.split('|'); return `<td style="padding:4px 1px;border:1px solid #ddd;color:#22183A;overflow-wrap:anywhere"><b>${a}</b><br><small style="color:#6B6280">(${b})</small></td>`; }).join('')}</tr>`).join('')+`</table></div>`;
+$('#g7').innerHTML=SPK.map((x,i)=>`<div class="spcard" style="border:1.5px solid #E2D8F5;border-radius:14px;padding:12px 14px;margin:10px 0;background:#fff;color:#22183A;text-align:left">`+
   (x.tt?`<div style="font-size:13px;color:#6B6280;margin-bottom:4px">Расписание (нужно для заданий 2–7):</div>`+spTT():'')+
   `<div style="display:flex;gap:10px;align-items:flex-start"><button class="btn" data-a="${x.a}" aria-label="Послушать вопрос" style="flex:none;padding:8px 12px">▶</button><div><b>${i+1}. ${x.label}</b> <small style="color:#6B6280">· ${x.max} ${x.max>4?'баллов':'балла'}</small><div style="margin-top:3px">${x.q}</div></div></div>`+
   (x.pics?`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px">${x.pics.map((p,j)=>`<div style="text-align:center"><img src="${img(p)}" alt="" style="width:100%;max-width:120px;aspect-ratio:1;object-fit:contain;border:1px solid #eee;border-radius:10px"><div style="font-weight:700">${j+1}</div></div>`).join('')}</div>`:'')+
