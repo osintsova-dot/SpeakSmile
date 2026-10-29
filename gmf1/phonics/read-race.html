@@ -426,3 +426,5 @@
   (function loop(){ cx.clearRect(0,0,cc.width,cc.height); for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.a-=.008;if(p.a<=0||p.y>cc.height+20){parts.splice(i,1);continue;}cx.save();cx.globalAlpha=Math.max(p.a,0);cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore();} requestAnimationFrame(loop); })();
 })();
 </script>
+
+<script src="/assets/backto.js"></script>

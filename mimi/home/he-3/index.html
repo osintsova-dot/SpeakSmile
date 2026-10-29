@@ -234,7 +234,7 @@ const SC={
    ${today!=null&&G[today]?`<a class="play" id="phLes" href="${PH}#beg-${today}-1">🔤 Урок фоникса: ${G[today].join(' · ')}</a>`:''}
    <a class="play" id="phRead" href="${PH}?read=beg-${done}">📚 Читаем слова</a></div>
    ${hint(s.hint||'Фоникс идёт в своём темпе. Нажимайте на буквы — ребёнок слушает звук и повторяет. Песня учит звуки и названия букв, «Читаем слова» — только слова из пройденных звуков.')}`;
-   $$('.phT').forEach(t=>t.onclick=()=>say(t.dataset.g));['phSong','phLes','phRead'].forEach(id=>{const e=$('#'+id);if(e)e.onclick=()=>{P.done[s.k]=1;save();};});};
+   $$('.phT').forEach(t=>t.onclick=()=>say(t.dataset.g));['phSong','phLes','phRead'].forEach(id=>{const e=$('#'+id);if(e)e.onclick=()=>{P.done[s.k]=1;save();try{sessionStorage.setItem('ssBack',location.pathname)}catch(_){}};});};
   draw({done:6,today:7});fetch('../phonics.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(c=>{if(c&&$('#phSong'))draw(c);}).catch(()=>{});},
  // Genki-мультик (swf)
  swf(b,s){const here=location.pathname.split('/').filter(Boolean).pop();
