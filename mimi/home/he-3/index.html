@@ -268,11 +268,11 @@ const SC={
   const v=$('#vd');v.onended=()=>finish(s.k);sceneStop=()=>{try{v.pause();}catch(e){}};$('#vOk').onclick=()=>{finish(s.k);closeScene();};},
  // аудио с синхронной картинкой (мини-урок / песня)
  sync(b,s){const kar=s.kar;b.innerHTML=`<div class="big"><img id="syImg" src="img/${s.cover||'speaky.png'}" alt=""></div><div class="say" id="syTxt">&nbsp;</div><div class="gest" id="syG"></div>
-   <div><button class="play" id="syPlay">▶ ${s.btn||'Слушать'}</button>${kar?'<button class="play y sm" id="syKar">🎤 Поём сами</button>':''}</div>${hint(s.hint)}`;
-  let on=false;const go=(file)=>{if(on){stopAll();on=false;$('#syPlay').textContent='▶ '+(s.btn||'Слушать');return;}on=true;$('#syPlay').textContent='⏸ Пауза';let li=-1;
-   play(file,()=>{on=false;$('#syPlay').textContent='▶ Ещё раз';finish(s.k);},{tick:(ct)=>{let i=-1;for(let j=0;j<s.cues.length;j++)if(ct>=s.cues[j][0])i=j;if(i!==li){li=i;if(i<0)return;const c=s.cues[i];
+   <div><button class="play" id="syPlay">▶ ${s.btn||'Слушать'}</button>${kar?'<button class="play y sm" id="syKar">🎤 Поём сами</button>':''}<button class="play y sm" id="syDone" hidden>✓ Спели!</button></div>${hint(s.hint)}`;
+  let on=false;const go=(file)=>{if(on){stopAll();on=false;$('#syPlay').textContent='▶ '+(s.btn||'Слушать');return;}on=true;$('#syPlay').textContent='⏸ Пауза';let li=-1;if(!P.done[s.k])setTimeout(()=>{const g=$('#syDone');if(g)g.hidden=false;},20000);
+   play(file,()=>{on=false;$('#syPlay').textContent='▶ Ещё раз';finish(s.k);},{tick:(ct,d)=>{if(d&&isFinite(d)&&ct>=d*.9&&!P.done[s.k])finish(s.k);let i=-1;for(let j=0;j<s.cues.length;j++)if(ct>=s.cues[j][0])i=j;if(i!==li){li=i;if(i<0)return;const c=s.cues[i];
      const im=$('#syImg');if(c[1]){im.src=img(c[1]);im.classList.remove('bump');void im.offsetWidth;im.classList.add('bump');}$('#syTxt').textContent=c[2]||'';$('#syG').textContent=c[3]||'';}}});};
-  $('#syPlay').onclick=()=>go(s.file);if(kar)$('#syKar').onclick=()=>{on=false;go(s.kar);};},
+  $('#syPlay').onclick=()=>go(s.file);$('#syDone').onclick=()=>{$('#syDone').hidden=true;finish(s.k);};if(kar)$('#syKar').onclick=()=>{on=false;go(s.kar);};},
 
  // карточки: нажми — услышь
  cards(b,s){const WS=s.ids?s.ids.map(i=>BY[i]):D.words;b.innerHTML=`<div class="grid ${WS.length>9?'g3':''}">${WS.map(w=>`<button class="card cap ${P.heard.includes(w.id)?'heard':''}" data-id="${w.id}"><img src="img/${w.img}" alt="${w.en}"><span class="lbl">${w.en}</span></button>`).join('')}</div>${hint(s.hint||'Нажимайте на картинки — Спики говорит фразу. Повторяйте вслух вместе и показывайте жестом.')}`;
