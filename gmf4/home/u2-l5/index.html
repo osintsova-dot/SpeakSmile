@@ -996,7 +996,7 @@ $('#fAll').onclick=fAll; fRender();
 // ── 7 после чтения ──
 let qQ=[], qCur=null, qScore=0, qDone=0, qLock=true, qFirst=true;
 function qStart(){ qQ=[...QUIZ]; qScore=0; qDone=0; $('#qScore').textContent=0; $('#qStartWrap').hidden=true; $('#qMsg').textContent=''; qNext(); }
-function qNext(){ if(!qQ.length) return qFinish(); qCur=qQ.shift(); qFirst=true; $('#qProg').style.width=(qDone/QUIZ.length*100)+'%'; $('#qText').textContent=qCur.q; $('#qOpts').innerHTML=qCur.opts.map((o,i)=>`<button class="btn" data-i="${i}">${o}</button>`).join(''); $$('#qOpts .btn').forEach(b=>b.onclick=()=>qPick(b)); qLock=false; }
+function qNext(){ if(!qQ.length) return qFinish(); qCur=qQ.shift(); qFirst=true; $('#qProg').style.width=(qDone/QUIZ.length*100)+'%'; $('#qText').textContent=qCur.q; $('#qOpts').innerHTML=shuffle(qCur.opts.map((o,i)=>[o,i])).map(([o,i])=>`<button class="btn" data-i="${i}">${o}</button>`).join(''); $$('#qOpts .btn').forEach(b=>b.onclick=()=>qPick(b)); qLock=false; }
 function qPick(b){ if(qLock||!qCur) return; if(+b.dataset.i===qCur.ok){ qLock=true; qDone++; if(qFirst){ qScore++; $('#qScore').textContent=qScore; } b.classList.add('right'); $('#qMsg').textContent='✓ Повтори вслух'; play(qCur.a,()=>setTimeout(()=>{ $('#qMsg').textContent=''; qNext(); },500)); } else { qFirst=false; flash(b,'wrong'); $('#qMsg').textContent='Нет. Перечитай биографию'; } }
 function qFinish(){ $('#qProg').style.width='100%'; $('#qText').textContent=''; $('#qOpts').innerHTML=''; $('#qStartWrap').hidden=false; $('#qStart').textContent='Ещё раз'; $('#qMsg').textContent=qScore>=7?'🏆 Отлично: '+qScore+' из 8!':'С первого раза '+qScore+' из 8. Попробуй ещё!'; if(qScore>P.quiz) P.quiz=qScore; save(); if(qScore>=7) burst(); }
 $('#qStart').onclick=qStart;
