@@ -537,7 +537,7 @@
     .bg{display:none}
     .cube[data-poster]{background-size:cover;background-position:50% 50%}
   }
-</style>
+form label.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:400;line-height:1.45;margin:6px 0 12px;text-align:left;cursor:pointer;opacity:.92;text-transform:none;letter-spacing:0}form label.agree input[type=checkbox]{-webkit-appearance:auto;appearance:auto;width:18px;height:18px;min-height:0;flex:none;margin:1px 0 0;padding:0;border:0;background:none;box-shadow:none;accent-color:#F5C842;cursor:pointer}form label.agree a{color:inherit;text-decoration:underline}</style>
 </head>
 <body>
 
@@ -870,11 +870,10 @@
             <option>14–18 лет (ОГЭ / ЕГЭ)</option>
           </select>
         </div>
+        <label class="agree"><input type="checkbox" id="f-agree"><span>Я даю <a href="/soglasie.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a></span></label>
         <button type="submit" class="cta big leadbtn" id="f-btn">Перезвоните мне</button>
         <p class="leadmsg" id="f-msg" hidden></p>
-        <p class="consent">Нажимая «Перезвоните мне», вы соглашаетесь с
-          <a href="privacy.html" target="_blank" rel="noopener">Политикой обработки персональных данных</a> и
-          <a href="oferta.html" target="_blank" rel="noopener">офертой</a>.</p>
+        <p class="consent"><a href="privacy.html" target="_blank" rel="noopener">Политика обработки персональных данных</a> · <a href="oferta.html" target="_blank" rel="noopener">Оферта</a></p>
       </form>
       <div class="alt-contacts">
         <a class="cta ghost" href="https://t.me/SPeakSmilebot" target="_blank" rel="noopener">Тест в Telegram</a>
@@ -1012,6 +1011,7 @@
         var age = document.getElementById('f-age').value;
         if(document.getElementById('f-course').value==='zh') age = 'КИТАЙСКИЙ · ' + age;
         if(!name || !phone){ show('Пожалуйста, заполните имя и телефон', false); return; }
+        if(!document.getElementById('f-agree').checked){ show('Отметьте галочку согласия на обработку данных', false); return; }
         btn.disabled = true; btn.textContent = 'Отправляем…';
         fetch('https://ss-lead.o-sintsova.workers.dev/', {
           method: 'POST', headers: {'Content-Type':'application/json'},

@@ -14,6 +14,7 @@
     var phone = document.getElementById('f-phone').value.trim();
     var age   = document.getElementById('f-age').value;
     if(!name || !phone){ show('Пожалуйста, заполните имя и телефон', false); return; }
+    var ag=document.getElementById('f-agree'); if(ag && !ag.checked){ show('Отметьте галочку согласия на обработку данных', false); return; }
     btn.disabled = true; btn.textContent = 'Отправляем…';
     fetch('https://ss-lead.o-sintsova.workers.dev/', {
       method:'POST', headers:{'Content-Type':'application/json'},

@@ -130,7 +130,7 @@ footer a{color:var(--p)}
   section{padding:30px 0}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style></head>
+form label.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;font-weight:400;line-height:1.45;margin:6px 0 12px;text-align:left;cursor:pointer;opacity:.92;text-transform:none;letter-spacing:0}form label.agree input[type=checkbox]{-webkit-appearance:auto;appearance:auto;width:18px;height:18px;min-height:0;flex:none;margin:1px 0 0;padding:0;border:0;background:none;box-shadow:none;accent-color:#F5C842;cursor:pointer}form label.agree a{color:inherit;text-decoration:underline}</style></head>
 <body>
 <svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .12 0 0 0 0 .1 0 0 0 0 .08 0 0 0 .08 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
 <div class="wrap">
@@ -211,6 +211,7 @@ footer a{color:var(--p)}
         <div class="field"><label for="f-name">Как вас зовут</label><input id="f-name" name="name" autocomplete="name" placeholder="Имя родителя"></div>
         <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 …"></div>
         <div class="field"><label for="f-age">Класс ребёнка</label><select id="f-age" name="age"><option>5 класс</option><option>6 класс</option><option>7 класс</option><option>другой</option></select></div>
+        <label class="agree"><input type="checkbox" id="f-agree"><span>Я даю <a href="/soglasie.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a></span></label>
         <button class="btn ink" id="f-btn" type="submit">Записаться</button>
         <div class="msg" id="f-msg"></div>
       </form>
@@ -236,6 +237,7 @@ footer a{color:var(--p)}
   form.addEventListener('submit',function(e){ e.preventDefault();
     var name=document.getElementById('f-name').value.trim(), phone=document.getElementById('f-phone').value.trim(), age=document.getElementById('f-age').value;
     if(!name||!phone){ show('Заполните, пожалуйста, имя и телефон',false); return; }
+    if(!document.getElementById('f-agree').checked){ show('Отметьте галочку согласия на обработку данных',false); return; }
     btn.disabled=true; btn.textContent='Отправляем…';
     fetch('https://ss-lead.o-sintsova.workers.dev/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,phone:phone,age:'Китайский · '+age})})
       .then(function(r){return r.json();}).catch(function(){return {ok:false};})
