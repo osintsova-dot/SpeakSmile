@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#6C3FC5">
+<title>Тест на уровень · Speak&amp;Smile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#6C3FC5;--pd:#4B278F;--honey:#F5C842;--ink:#2A2140;--muted:#6A5B9A;--f:"Baloo 2","Segoe UI Rounded",ui-rounded,system-ui,sans-serif;--ease:cubic-bezier(.2,.9,.25,1.1)}
+*{box-sizing:border-box}
+html{background:#5B3FCF}
+body{margin:0;font-family:var(--f);color:#fff;min-height:100vh;padding:28px 16px 60px;text-align:center;
+  background:radial-gradient(120% 90% at 15% 0%,rgba(241,127,190,.35),transparent 55%),radial-gradient(120% 90% at 100% 10%,rgba(99,179,255,.40),transparent 55%),linear-gradient(180deg,#7C4DE0 0%,#5B3FCF 55%,#4A2FB0 100%);background-attachment:fixed}
+.wrap{max-width:560px;margin:0 auto}
+.brand{display:inline-flex;gap:6px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px}
+.brand b{color:var(--honey)}
+.mascot{width:92px;height:92px;margin:18px auto 0;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25));animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+h1{font-size:clamp(32px,8.5vw,46px);line-height:1.02;margin:10px 0 6px;text-shadow:0 4px 0 rgba(74,32,150,.28),0 14px 30px rgba(0,0,0,.28)}
+.sub{font-weight:800;color:var(--honey);margin:0 0 6px;font-size:18px;text-shadow:0 2px 6px rgba(40,10,100,.35)}
+.lead{font-weight:600;margin:0 auto 22px;max-width:30em;line-height:1.45}
+.q{font-weight:800;font-size:14px;margin:18px 4px 10px;text-transform:uppercase;letter-spacing:.06em}
+.card{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;text-align:left;background:#fff;color:var(--ink);border-radius:22px;padding:16px;margin:0 0 12px;text-decoration:none;box-shadow:0 12px 26px rgba(30,10,80,.22);transition:transform .2s var(--ease),box-shadow .2s;opacity:0;transform:translateY(10px);animation:in .45s var(--ease) forwards}
+.card:nth-of-type(2){animation-delay:.07s}.card:nth-of-type(3){animation-delay:.14s}
+@keyframes in{to{opacity:1;transform:none}}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(30,10,80,.28)}
+.card:active{transform:scale(.98)}
+.card .n{width:54px;height:54px;border-radius:16px;background:#F3EEFF;display:grid;place-items:center;font-weight:800;color:var(--p);font-size:17px;line-height:1}
+.card h2{margin:0;font-size:20px;color:var(--p);line-height:1.15}
+.card p{margin:3px 0 0;font-size:14px;font-weight:600;color:var(--muted);line-height:1.35}
+.card .go{font-size:26px;color:var(--honey);font-weight:800}
+.foot{margin-top:24px;font-size:14px;font-weight:600;line-height:1.5}
+@media (prefers-reduced-motion:reduce){.mascot{animation:none}.card{animation:none;opacity:1;transform:none}}
+</style></head>
+<body><div class="wrap">
+<span class="brand">Speak<b>&amp;</b>Smile</span>
+<img class="mascot" src="/assets/speaky.png" alt="">
+<h1>Тест на уровень</h1>
+<p class="sub">английский · бесплатно · онлайн</p>
+<p class="lead">Поможет понять, в какую группу пойти. Отвечайте сами, без переводчика: так результат будет честным. Результат сразу получит администратор школы и свяжется с вами.</p>
+
+<div class="q">В каком классе ребёнок?</div>
+<a class="card" href="kids/"><span class="n">1–4</span><div><h2>Начальная школа</h2><p>С картинками и аудио, 10–20 минут. Лучше проходить вместе с родителем.</p></div><span class="go">›</span></a>
+<a class="card" href="gi/"><span class="n">5–6</span><div><h2>5–6 класс</h2><p>Слова, грамматика, чтение и аудирование, 20–30 минут. Нужны наушники.</p></div><span class="go">›</span></a>
+<a class="card" href="teen/"><span class="n">7–11</span><div><h2>7–11 класс</h2><p>Тест Cambridge: 60 вопросов, около 30 минут. Подходит и для 5–6 класса с сильным английским.</p></div><span class="go">›</span></a>
+
+<p class="foot">Вопросы — администратору в бот школы или по телефону +7&nbsp;995&nbsp;124-21-12.</p>
+</div></body></html>

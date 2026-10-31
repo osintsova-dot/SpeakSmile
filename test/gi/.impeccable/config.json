@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "pulsing-dot",
+        "value": "*",
+        "files": [
+          "/Users/oksanasintsova/Проекты с Claude/speak-smile-site/test/gi/index.html"
+        ],
+        "createdAt": "2026-10-31T16:38:24.244Z",
+        "reason": "Claude: dot pulses only while the result is actually being sent (status 'Отправляем результат…'), then is replaced"
+      }
+    ]
+  }
+}

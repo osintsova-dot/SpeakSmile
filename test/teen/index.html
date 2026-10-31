@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#4B278F">
+<title>Тест на уровень английского · 5–11 класс · Speak&amp;Smile</title>
+<style>
+:root{
+  --p:#6C3FC5;--pd:#4B278F;--pdd:#2E1766;--honey:#F5C842;--good:#1FA85C;--red:#E25A5A;
+  --ink:#231B3A;--muted:#6E6488;--line:#E6E0F3;--soft:#F5F2FC;--paper:#fff;
+  --f:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --out:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;font-family:var(--f);color:var(--ink);
+  background:radial-gradient(110% 70% at 10% -10%,rgba(245,200,66,.16),transparent 60%),
+    radial-gradient(90% 60% at 110% 0%,rgba(140,110,240,.45),transparent 60%),
+    linear-gradient(180deg,#5A33B4 0%,#4B278F 45%,#2E1766 100%);background-attachment:fixed;
+  display:flex;flex-direction:column;align-items:center}
+::selection{background:var(--honey);color:var(--ink)}
+:focus-visible{outline:3px solid var(--honey);outline-offset:3px}
+.wrap{width:100%;max-width:560px;padding:calc(14px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;flex:1}
+
+/* верх */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;min-height:40px}
+.brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;letter-spacing:.01em;white-space:nowrap}
+.brand img{width:32px;height:32px;object-fit:contain}
+.brand b{color:var(--honey);font-weight:700}
+.count{font-size:14px;font-weight:600;opacity:.9;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden;margin:10px 0 18px}
+.bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--honey);transition:width .35s var(--out)}
+
+/* карточка */
+.card{background:var(--paper);border-radius:24px;padding:24px 20px;box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 20px 50px rgba(20,6,60,.35)}
+.enter{animation:enter .28s var(--out) both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* старт */
+.hero{color:#fff;text-align:center;padding:6px 0 18px}
+.hero img{width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(0,0,0,.28))}
+.hero h1{font-size:clamp(26px,7vw,34px);line-height:1.12;margin:10px 0 8px;letter-spacing:-.01em}
+.hero p{margin:0;font-size:16px;line-height:1.45;opacity:.9}
+.facts{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none}
+.facts li{padding:7px 12px;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);font-size:14px;font-weight:600}
+.rules{margin:0 0 18px;padding:0;list-style:none;display:grid;gap:10px;font-size:15px;line-height:1.4;color:var(--ink)}
+.rules li{display:flex;gap:10px;align-items:flex-start}
+.rules li::before{content:"";flex:none;width:8px;height:8px;margin-top:7px;border-radius:50%;background:var(--honey);box-shadow:0 0 0 3px rgba(245,200,66,.25)}
+label{display:block;font-size:14px;font-weight:600;color:var(--muted);margin:14px 0 6px}
+label .opt{font-weight:400}
+input,select{width:100%;font:inherit;font-size:17px;color:var(--ink);background:var(--soft);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;-webkit-appearance:none;appearance:none;transition:border-color .2s,background-color .2s}
+select{background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+input:focus,select:focus{outline:none;border-color:var(--p);background-color:#fff}
+.err{color:var(--red);font-size:14px;margin:10px 0 0;min-height:1em}
+.bad{border-color:var(--red)!important}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;margin-top:20px;border:0;border-radius:16px;background:var(--p);color:#fff;font:inherit;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(108,63,197,.35);transition:transform .16s var(--out),background-color .2s}
+.btn:active{transform:scale(.98)}
+.btn:hover{background:#5E33B4}
+.resume{color:#fff;text-align:center;font-size:14px;margin:14px 0 0;opacity:.85}
+
+/* вопрос */
+.qn{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--p);margin:0 0 10px}
+.qt{font-size:clamp(20px,5.4vw,24px);line-height:1.45;font-weight:600;margin:0 0 20px;letter-spacing:-.005em}
+.gap{display:inline-block;min-width:4.2em;border-bottom:2.5px solid var(--honey);margin:0 .15em;transform:translateY(-.2em);height:1em;vertical-align:baseline}
+.opts{display:grid;gap:10px}
+.o{display:flex;align-items:center;gap:14px;width:100%;min-height:58px;padding:10px 14px;border-radius:16px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-size:18px;text-align:left;cursor:pointer;transition:transform .16s var(--out),border-color .18s,background-color .18s,color .18s}
+.o .l{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--soft);color:var(--p);font-size:15px;font-weight:700;transition:background-color .18s,color .18s}
+.o:active{transform:scale(.985)}
+@media(hover:hover){.o:hover{border-color:#C9BBEA;background:#FBFAFE}}
+.o.sel{border-color:var(--p);background:var(--p);color:#fff}
+.o.sel .l{background:rgba(255,255,255,.2);color:#fff}
+.idk{display:block;width:100%;margin:12px 0 0;padding:14px;border:1.5px dashed #D6CDEE;border-radius:16px;background:transparent;color:var(--muted);font:inherit;font-size:16px;font-weight:600;cursor:pointer;transition:background-color .18s,color .18s,border-color .18s}
+.idk.sel{background:var(--soft);border-style:solid;border-color:var(--muted);color:var(--ink)}
+.under{display:flex;justify-content:space-between;align-items:center;margin-top:16px;min-height:44px;color:#fff}
+.back{background:none;border:0;color:#fff;font:inherit;font-size:16px;font-weight:600;padding:10px 4px;cursor:pointer;opacity:.9}
+.back:disabled{visibility:hidden}
+.tip{font-size:13px;opacity:.7}
+
+/* результат */
+.res{text-align:center}
+.res img{width:110px;height:110px;object-fit:contain}
+.res h2{font-size:clamp(24px,6.4vw,30px);margin:6px 0 4px;letter-spacing:-.01em}
+.res .hi{color:var(--muted);margin:0 0 18px;font-size:16px}
+.lvl{border-radius:20px;padding:20px 16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff}
+.lvl .k{font-size:13px;font-weight:600;opacity:.8;letter-spacing:.05em;text-transform:uppercase}
+.lvl .v{font-size:clamp(28px,8vw,36px);font-weight:800;margin:4px 0 2px;letter-spacing:-.01em}
+.lvl .v span{color:var(--honey)}
+.lvl p{margin:10px 0 0;font-size:16px;line-height:1.45;opacity:.95}
+.next{margin:18px 0 0;font-size:16px;line-height:1.45}
+.st{display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;padding:8px 14px;border-radius:99px;background:var(--soft);font-size:14px;font-weight:600;color:var(--muted)}
+.st.ok{background:#E7F6EE;color:var(--good)}
+.st.wait::before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fail{margin:16px 0 0;padding:16px;border-radius:16px;background:#FFF7DC;border:1.5px solid var(--honey);text-align:left;font-size:15px;line-height:1.5}
+.fail b{display:block;font-size:16px;margin-bottom:6px}
+.fail dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:8px 0 0}
+.fail dt{color:var(--muted)}.fail dd{margin:0;font-weight:600}
+.again{margin:18px 0 0;background:none;border:0;color:var(--muted);font:inherit;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:8px}
+.foot{color:#fff;opacity:.55;text-align:center;font-size:12px;margin-top:auto;padding-top:20px}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="brand"><img src="/assets/speaky.png" alt="" width="32" height="32">Speak<b>&amp;</b>Smile</span>
+    <span class="count" id="count" hidden></span>
+  </header>
+  <div class="bar" id="bar" hidden><i></i></div>
+
+  <!-- 1. старт -->
+  <section id="start">
+    <div class="hero">
+      <h1>Тест на уровень английского</h1>
+      <p>Подберём группу, в которой будет не скучно и не слишком сложно.</p>
+      <ul class="facts"><li>60 вопросов</li><li>около 30 минут</li><li>5–11 класс</li></ul>
+    </div>
+    <form class="card" id="form" novalidate>
+      <ul class="rules">
+        <li>Отвечай сам, без переводчика и подсказок — так мы точнее подберём группу.</li>
+        <li>Не знаешь ответ — выбирай «Не знаю». Это нормально: вопросы идут от простых к сложным.</li>
+        <li>Можно вернуться на шаг назад и поменять ответ.</li>
+      </ul>
+      <label for="fName">Имя и фамилия ученика</label>
+      <input id="fName" autocomplete="name" maxlength="80" placeholder="Например, Маша Иванова">
+      <label for="fKlass">Класс</label>
+      <select id="fKlass"><option value="">Выбери класс</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option></select>
+      <label for="fContact">Телефон или ник родителя для связи <span class="opt">(необязательно)</span></label>
+      <input id="fContact" maxlength="80" inputmode="text" placeholder="+7… или @ник">
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" type="submit">Начать</button>
+    </form>
+  </section>
+
+  <!-- 2. вопрос -->
+  <section id="quiz" hidden>
+    <div class="card" id="qcard" aria-live="polite">
+      <p class="qn" id="qn"></p>
+      <p class="qt" id="qt"></p>
+      <div class="opts" id="opts" role="group" aria-label="Варианты ответа"></div>
+      <button class="idk" id="idk" type="button">Не знаю</button>
+    </div>
+    <div class="under">
+      <button class="back" id="back" type="button">← Назад</button>
+      <span class="tip">Выбери один ответ</span>
+    </div>
+  </section>
+
+  <!-- 3. результат -->
+  <section id="result" hidden>
+    <div class="card res enter">
+      <img src="/assets/speaky.png" alt="" width="110" height="110">
+      <h2 id="rTitle">Готово!</h2>
+      <p class="hi">Спасибо за ответы!</p>
+      <div class="lvl">
+        <div class="k">Твой уровень</div>
+        <div class="v" id="rLevel"></div>
+        <p id="rText"></p>
+      </div>
+      <p class="next" id="rNext">Администратор школы получил результат и свяжется с вами, чтобы подобрать группу.</p>
+      <div class="st wait" id="rStatus">Отправляем…</div>
+      <div class="fail" id="rFail" hidden>
+        <b>Покажите этот экран администратору</b>
+        Результат не отправился автоматически — мы попробуем ещё раз при следующем открытии страницы.
+        <dl id="rDl"></dl>
+      </div>
+      <button class="again" id="again" type="button">Пройти тест заново (другой ученик)</button>
+    </div>
+  </section>
+
+  <p class="foot">Speak&amp;Smile · Норильск · по материалам Cambridge Prepare</p>
+</div>
+
+<script src="/assets/place.js"></script>
+<script>
+(function () {
+'use strict';
+/* Cambridge Prepare 2nd ed. Placement Test: [вопрос, [A,B,C,D], ключ]. «___» = пропуск.
+   Вопросы 1–10 = Prepare 2, 11–20 = P3, 21–30 = P4, 31–40 = P5, 41–50 = P6, 51–60 = P7.
+   Q31: в ключе и накладке Cambridge стоит A (should), но по смыслу верно D (don't have to) —
+   засчитываем оба варианта (ключ "AD"). Q34: в оригинале опечатка «forestfire» → «forest fire». */
+var Q = [
+["What ___ you got in your bag today?", ["has", "have", "does", "do"], "B"],
+["We eat fresh fruit with some ___ for dessert.", ["onion", "salt", "butter", "cream"], "D"],
+["Paul and Lisa ___ lunch at the moment.", ["eat", "eats", "are eating", "is eating"], "C"],
+["A ___ grows fruit and vegetables and looks after animals.", ["customer", "boss", "farmer", "mechanic"], "C"],
+["It ___ my birthday yesterday.", ["is", "was", "are", "were"], "B"],
+["Ivan usually wears a red ___ on his head.", ["sock", "jacket", "jumper", "cap"], "D"],
+["Sarah ___ to school last week.", ["didn’t go", "didn’t went", "doesn’t go", "doesn’t went"], "A"],
+["You can send a letter at the ___.", ["supermarket", "post office", "museum", "library"], "B"],
+["This is the ___ mobile phone in the shop.", ["small", "smaller", "smallest", "most small"], "C"],
+["Your ___ is your mother’s sister.", ["cousin", "aunt", "uncle", "grandmother"], "B"],
+["Sasha ___ TV when her phone rang.", ["watched", "was watching", "watches", "is watching"], "B"],
+["My friend Tony is very ___. He always makes me laugh.", ["funny", "friendly", "kind", "popular"], "A"],
+["Every home ___ a robot in the future.", ["is having", "has", "will have", "had"], "C"],
+["We studied birds and fish in our ___ lesson today.", ["chemistry", "physics", "biology", "maths"], "C"],
+["You ___ be late with your homework.", ["must", "mustn’t", "don’t have to", "have to"], "B"],
+["It’s easy to ___ this game from the internet to your smartphone.", ["post", "search", "upload", "download"], "D"],
+["I’ve played the guitar ___ three years.", ["from", "since", "for", "during"], "C"],
+["We ___ a great time at the party.", ["did", "were", "felt", "had"], "D"],
+["Cheese ___ from milk.", ["is made", "is make", "has made", "makes"], "A"],
+["Your ___ is between your head and your body.", ["stomach", "ear", "heart", "neck"], "D"],
+["Australia isn’t ___ Alaska.", ["as cold", "as cold as", "as cold than", "colder as"], "B"],
+["In the UK, you can’t ___ school before you are 16 years old.", ["get", "start", "leave", "go to"], "C"],
+["There aren’t ___ places to go skateboarding in my town.", ["some", "many", "much", "a few"], "B"],
+["Could you ___ me a favour?", ["do", "make", "have", "give"], "A"],
+["You look tired – I think you ___ go to bed now.", ["should", "shouldn’t", "must", "mustn’t"], "A"],
+["You can return these shoes to the shop if you keep the ___.", ["account", "change", "receipt", "ticket"], "C"],
+["If I ___ too much coffee, I can’t get to sleep at night.", ["am drinking", "will drink", "drank", "drink"], "D"],
+["I went running this morning and now I’m ___.", ["exhausted", "confused", "stressed", "disappointed"], "A"],
+["This dress ___ by an Italian fashion company.", ["designed", "was design", "was designed", "has designed"], "C"],
+["Please ___ some juice into each glass.", ["fill", "give", "pour", "throw"], "C"],
+["It’s quite warm today – you ___ wear a jacket.", ["should", "mustn’t", "have to", "don’t have to"], "AD"],
+["We played really well and we easily ___ the other team.", ["beat", "won", "passed", "scored"], "A"],
+["We arrived here on Monday and so far we ___ to the beach three times.", ["went", "have been", "are going", "were going"], "B"],
+["The river level rose by three metres last year and there was a big ___.", ["snowstorm", "forest fire", "earthquake", "flood"], "D"],
+["I can’t meet you tomorrow because I ___ the football match on TV.", ["watch", "will have watched", "will watch", "will be watching"], "D"],
+["We have to check ___ at the airport two hours before our flight.", ["out", "off", "in", "up"], "C"],
+["The café, ___ owner is originally from Mexico, is very popular with young people.", ["who", "which", "what", "whose"], "D"],
+["I forgot Nina’s birthday, so I sent her an email to ___.", ["apologise", "complain", "remind", "remember"], "A"],
+["Robert usually goes to the hairdresser’s once a month to ___.", ["have cut his hair", "get cut his hair", "have his hair cut", "cut his hair"], "C"],
+["When she was younger, my mum ___ of being a famous writer.", ["imagined", "dreamed", "encouraged", "admired"], "B"],
+["We can’t use the computers in the library because they ___ at the moment.", ["are repaired", "are repairing", "are be repaired", "are being repaired"], "D"],
+["Tina always puts ___ doing her homework until Sunday evening.", ["away", "on", "off", "up"], "C"],
+["If people ___ their cars less often, it would reduce pollution in the environment.", ["used", "would use", "had used", "use"], "A"],
+["A tidal wave is big enough to ___ trees.", ["erupt", "knock over", "fall down", "collapse"], "B"],
+["His passport is still here, so he ___ have left the country.", ["might", "must", "can’t", "may"], "C"],
+["The tour guide took us ___ the Old Town and told us about the local history.", ["around", "at", "on", "about"], "A"],
+["If you had left home earlier, you ___ missed the train.", ["wouldn’t", "would have", "wouldn’t have", "didn’t"], "C"],
+["Tonia encountered many problems on her expedition to the North Pole but she showed great ___ and refused to give up.", ["definition", "direction", "decision", "determination"], "D"],
+["The competition, ___ of swimming, running and cycling events, is the hardest I’ve ever attempted.", ["consist", "consisted", "consisting", "consists"], "C"],
+["A neighbour who ___ the burglary called the police and the suspects were arrested.", ["charged", "witnessed", "sentenced", "committed"], "B"],
+["I don’t want to go to the party but I can’t really get ___.", ["it out of", "out it of", "out of it", "of it out"], "C"],
+["The judges were very impressed ___ her unique designs.", ["about", "of", "at", "by"], "D"],
+["At first, it was difficult, but now we ___ up early.", ["used to get", "used to getting", "are used to get", "are used to getting"], "D"],
+["My dream is to ___ a difference in the world.", ["make", "take", "do", "put"], "A"],
+["In fifty years, people ___ using oil and gas for energy.", ["will be stopped", "will have stopped", "will have been stopping", "will be stopping"], "B"],
+["Their concerts always sell out quickly. We should buy our tickets ___ advance.", ["on", "at", "by", "in"], "D"],
+["Julie wanted to meet the boy ___ sent her an email.", ["that had", "he had", "which had", "had"], "A"],
+["Marie and Jackie haven’t spoken since they fell ___ with each other last year.", ["over", "out", "away", "down"], "B"],
+["Abby ___ such a successful swimmer now if she hadn’t practised so much as a child.", ["won’t be", "wouldn’t be", "wouldn’t have been", "hadn’t been"], "B"],
+["Our English exam was so easy! It ___.", ["was a piece of cake", "broke the ice", "crossed my mind", "was a pain"], "A"]
+];
+var N = Q.length, LET = ['A', 'B', 'C', 'D'], KEY = 'ss_place_teen_v1';
+var CEFR = ['', 'A1', 'A1+/A2', 'A2', 'A2+/B1', 'B1', 'B1+', 'B2'];
+var ABOUT = ['',
+  'Начальный уровень: ты знаешь базовые слова и простые фразы. Отличная точка, чтобы уверенно выстроить основу.',
+  'Ты понимаешь простые фразы о себе и повседневной жизни и можешь рассказать о себе короткими предложениями.',
+  'Уверенная база: справляешься с темами про школу, хобби и планы, понимаешь короткие тексты.',
+  'Хорошая грамматическая база, можешь общаться на знакомые темы. Это уровень, с которого идёт подготовка к ОГЭ.',
+  'Самостоятельный уровень: понимаешь главное в текстах и разговорах и можешь выразить своё мнение.',
+  'Сильный уровень: свободно говоришь на многие темы и разбираешься в сложной грамматике.',
+  'Продвинутый уровень: понимаешь сложные тексты и говоришь уверенно — это уровень сильного ЕГЭ.'];
+
+function levelOf(score) { // таблица Teacher's Guide
+  return score <= 9 ? 1 : score <= 18 ? 2 : score <= 27 ? 3 : score <= 36 ? 4 : score <= 45 ? 5 : score <= 54 ? 6 : 7;
+}
+/* ЧЕРНОВИК — подтвердить у Оксаны: соответствие уровня Prepare и класса нашим группам.
+   Линейка: Get Involved A1+/A2 = 5–6 кл; Prepare 3 ≈ 7 кл; Prepare 4 = 8–9 (ОГЭ); Prepare 5 = 10–11 (ЕГЭ); Gateway B2 = сильные 10–11.
+   «Ожидаемый» уровень по классу: 5–6 → 2, 7 → 3, 8–9 → 4, 10–11 → 5. Разрыв ≥2 = явное несоответствие. */
+function recOf(lvl, klass) {
+  var k = +klass, young = k <= 6, rec;
+  if (lvl === 1) rec = young ? 'Get Involved A1+' : 'Prepare 3 с поддержкой (сначала повторить базу)';
+  else if (lvl === 2) rec = young ? 'Get Involved A2' : 'Prepare 3';
+  else if (lvl <= 5) rec = 'Prepare ' + lvl;
+  else rec = 'Gateway B2 (или Prepare 5 по возрасту)';
+  var exp = k <= 6 ? 2 : k === 7 ? 3 : k <= 9 ? 4 : 5;
+  if (exp - lvl >= 2) rec += ' — уровень ниже класса, обсудить с родителями';
+  else if (lvl - exp >= 2) rec += ' — уровень выше класса, учесть возраст при выборе группы';
+  return rec;
+}
+function ok(i, a) { return !!a && a !== 'X' && Q[i][2].indexOf(a) >= 0; }
+function scoreRange(ans, from, to) { var s = 0; for (var i = from; i < to; i++) if (ok(i, ans[i])) s++; return s; }
+
+/* состояние */
+var S = load() || fresh();
+function fresh() { return { stage: 'start', name: '', klass: '', contact: '', ans: [], i: 0, t0: 0, res: null, sent: false }; }
+function load() { try { var s = JSON.parse(localStorage.getItem(KEY)); return s && s.stage ? s : null; } catch (e) { return null; } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+var $ = function (id) { return document.getElementById(id); };
+var elStart = $('start'), elQuiz = $('quiz'), elRes = $('result'), elBar = $('bar'), elCount = $('count');
+
+function show(stage) {
+  elStart.hidden = stage !== 'start'; elQuiz.hidden = stage !== 'quiz'; elRes.hidden = stage !== 'result';
+  elBar.hidden = elCount.hidden = stage !== 'quiz';
+  window.scrollTo(0, 0);
+}
+
+/* старт */
+$('fName').value = S.name || ''; $('fKlass').value = S.klass || ''; $('fContact').value = S.contact || '';
+$('form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var name = $('fName').value.replace(/\s+/g, ' ').trim(), klass = $('fKlass').value, err = '';
+  $('fName').classList.toggle('bad', name.length < 2); $('fKlass').classList.toggle('bad', !klass);
+  if (name.length < 2) err = 'Напиши имя и фамилию ученика.'; else if (!klass) err = 'Выбери класс.';
+  $('err').textContent = err;
+  if (err) { (name.length < 2 ? $('fName') : $('fKlass')).focus(); return; }
+  S = fresh(); S.name = name; S.klass = klass; S.contact = $('fContact').value.trim(); S.stage = 'quiz'; S.t0 = Date.now();
+  save(); show('quiz'); renderQ();
+});
+
+/* вопрос */
+var lock = false, timer = 0;
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function renderQ() {
+  var i = S.i, q = Q[i], a = S.ans[i];
+  elCount.textContent = 'Вопрос ' + (i + 1) + ' из ' + N;
+  elBar.firstElementChild.style.width = (i / N * 100) + '%';
+  $('qn').textContent = 'Вопрос ' + (i + 1);
+  $('qt').innerHTML = esc(q[0]).replace('___', '<span class="gap" aria-label="пропуск"></span>');
+  var h = '';
+  for (var k = 0; k < 4; k++) h += '<button type="button" class="o' + (a === LET[k] ? ' sel' : '') + '" data-a="' + LET[k] + '"><span class="l">' + LET[k] + '</span><span>' + esc(q[1][k]) + '</span></button>';
+  $('opts').innerHTML = h;
+  $('idk').className = 'idk' + (a === 'X' ? ' sel' : '');
+  $('back').disabled = i === 0;
+  var c = $('qcard'); c.classList.remove('enter'); void c.offsetWidth; c.classList.add('enter');
+  lock = false;
+}
+function pick(a) {
+  if (lock) return; lock = true;
+  S.ans[S.i] = a; save();
+  var bs = $('opts').children;
+  for (var k = 0; k < bs.length; k++) bs[k].classList.toggle('sel', bs[k].getAttribute('data-a') === a);
+  $('idk').classList.toggle('sel', a === 'X');
+  timer = setTimeout(advance, 250);
+}
+function advance() {
+  var i = S.i;
+  // Правило Teacher's Guide: после 30 вопросов меньше 25 верных — тест заканчивается.
+  if (i === 29 && scoreRange(S.ans, 0, 30) < 25) return finish(true);
+  if (i >= N - 1) return finish(false);
+  S.i = i + 1; save(); renderQ();
+}
+$('opts').addEventListener('click', function (e) { var b = e.target.closest('.o'); if (b) pick(b.getAttribute('data-a')); });
+$('idk').addEventListener('click', function () { pick('X'); });
+$('back').addEventListener('click', function () { if (S.i > 0) { clearTimeout(timer); S.i--; save(); renderQ(); } });
+document.addEventListener('keydown', function (e) {
+  if (S.stage !== 'quiz' || e.metaKey || e.ctrlKey || e.altKey) return;
+  var k = e.key.toUpperCase(), m = { '1': 'A', '2': 'B', '3': 'C', '4': 'D' };
+  if (LET.indexOf(k) >= 0) pick(k); else if (m[k]) pick(m[k]); else if (k === '0' || k === '?') pick('X');
+});
+
+/* итог */
+function finish(stopped) {
+  var ans = S.ans, upto = stopped ? 30 : N, score = scoreRange(ans, 0, upto), lvl = levelOf(score);
+  var sections = [], errs = [], idk = 0;
+  for (var b = 0; b < upto / 10; b++) sections.push({ label: 'Prepare ' + (b + 2) + ' (' + (b * 10 + 1) + '–' + (b * 10 + 10) + ')', score: scoreRange(ans, b * 10, b * 10 + 10), max: 10 });
+  for (var i = 0; i < upto; i++) { if (!ok(i, ans[i])) errs.push(i + 1); if (ans[i] === 'X') idk++; }
+  var detail = (errs.length ? 'Ошибки: ' + errs.join(',') : 'Ошибок нет') + (idk ? ' · «Не знаю»: ' + idk : '') + (stopped ? ' · остановлен после 30 (меньше 25)' : '');
+  S.res = { score: score, max: N, lvl: lvl, level: 'Prepare ' + lvl + ' (' + CEFR[lvl] + ')', rec: recOf(lvl, S.klass), sections: sections, detail: detail, stopped: stopped, ms: Date.now() - (S.t0 || Date.now()) };
+  S.stage = 'result'; S.sent = false; save();
+  renderResult(); send();
+}
+function renderResult() {
+  var r = S.res; show('result');
+  $('rTitle').textContent = 'Готово, ' + S.name.split(' ')[0] + '!';
+  $('rLevel').innerHTML = 'Prepare ' + r.lvl + ' <span>· ' + CEFR[r.lvl] + '</span>';
+  $('rText').textContent = ABOUT[r.lvl];
+  $('rDl').innerHTML = '<dt>Ученик</dt><dd>' + esc(S.name) + ', ' + esc(S.klass) + ' кл.</dd><dt>Уровень</dt><dd>' + esc(r.level) + '</dd><dt>Баллы</dt><dd>' + r.score + ' из ' + r.max + (r.stopped ? ' (стоп после 30)' : '') + '</dd><dt>Группа</dt><dd>' + esc(r.rec) + '</dd>' + (S.contact ? '<dt>Связь</dt><dd>' + esc(S.contact) + '</dd>' : '');
+  status(S.sent === 'ok' ? 'ok' : S.sent === 'queued' ? 'fail' : 'wait');
+}
+function status(s) {
+  var el = $('rStatus');
+  el.className = 'st' + (s === 'ok' ? ' ok' : s === 'wait' ? ' wait' : '');
+  el.textContent = s === 'ok' ? 'Результат отправлен ✓' : s === 'wait' ? 'Отправляем…' : 'Не отправилось';
+  el.hidden = s === 'fail'; $('rFail').hidden = s !== 'fail'; $('rNext').hidden = s === 'fail';
+}
+var sending = false;
+function send() {
+  if (S.sent || sending || !S.res) return;
+  if (!window.SSPlace || !window.SSPlace.send) { status('fail'); return; }
+  sending = true; status('wait');
+  var r = S.res;
+  var p;
+  try {
+    p = window.SSPlace.send({ test: 'teen', name: S.name, klass: S.klass, contact: S.contact, score: r.score, max: r.max, level: r.level, rec: r.rec, sections: r.sections, detail: r.detail, ms: r.ms });
+  } catch (e) { p = Promise.resolve(false); }
+  Promise.resolve(p).then(function (okk) {
+    sending = false;
+    // place.js сам кладёт неотправленное в очередь и дошлёт — отмечаем как «передано», чтобы не задвоить
+    S.sent = okk ? 'ok' : 'queued'; save();
+    status(okk ? 'ok' : 'fail');
+  }, function () { sending = false; S.sent = 'queued'; save(); status('fail'); });
+}
+$('again').addEventListener('click', function () {
+  if (!confirm('Начать тест заново для другого ученика?')) return;
+  S = fresh(); save(); $('fName').value = ''; $('fKlass').value = ''; $('fContact').value = ''; show('start');
+});
+
+/* продолжение после перезагрузки */
+if (S.stage === 'quiz' && S.i >= 0 && S.i < N) { show('quiz'); renderQ(); }
+else if (S.stage === 'result' && S.res) { renderResult(); if (!S.sent) send(); }
+else { S.stage = 'start'; show('start'); }
+
+window.__teen = { Q: Q, levelOf: levelOf, recOf: recOf, finish: finish, state: function () { return S; } }; // для проверки
+})();
+</script>
+</body>
+</html>

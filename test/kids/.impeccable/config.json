@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "/Users/oksanasintsova/Проекты с Claude/speak-smile-site/test/kids/index.html"
+        ],
+        "createdAt": "2026-10-31T17:14:30.765Z",
+        "reason": "Brand: S&S purple #6C3FC5 family per brand kit; same as gmf*/home pages"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "/Users/oksanasintsova/Проекты с Claude/speak-smile-site/test/kids/index.html"
+        ],
+        "createdAt": "2026-10-31T17:14:30.960Z",
+        "reason": "Claude: remaining hits measure white/honey text against faint decorative radial blobs (#fbd6ea/#c7e4ff at low alpha) over a dark purple base; screenshots show high contrast. Real grey-on-white hit fixed."
+      }
+    ]
+  }
+}

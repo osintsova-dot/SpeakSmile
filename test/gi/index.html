@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#2B1670">
+<title>Тест на уровень · 5–6 класс · Speak &amp; Smile</title>
+<style>
+:root{
+  --p:#6C3FC5;--pd:#3F1F8F;--pdd:#2B1670;--y:#F5C842;--yd:#E2AE14;--ink:#231942;--mut:#6B5F8C;--line:#E7E1F5;
+  --soft:#F5F1FD;--ok:#1FA85C;--card:#fff;
+  --f:ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{background:var(--pdd)}
+body{margin:0;min-height:100vh;min-height:100dvh;font-family:var(--f);color:var(--ink);font-size:17px;line-height:1.45;
+  background:radial-gradient(90% 60% at 0% 0%,rgba(245,200,66,.18),transparent 60%),
+    radial-gradient(80% 60% at 100% 20%,rgba(140,110,255,.45),transparent 60%),
+    linear-gradient(170deg,#4A26A8 0%,#33188A 55%,#24105F 100%);background-attachment:fixed}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px;border-radius:12px}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px calc(110px + env(safe-area-inset-bottom))}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background:linear-gradient(180deg,rgba(36,16,95,.96) 60%,rgba(36,16,95,0));color:#fff}
+.top .in{max-width:640px;margin:0 auto}
+.top .row{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:700;font-size:14px;letter-spacing:.01em}
+.top .lvl{background:rgba(255,255,255,.14);border-radius:99px;padding:4px 10px}
+.top .cnt{opacity:.8;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:9px;background:rgba(255,255,255,.16);margin-top:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,var(--y),#FFE08A);transition:width .5s var(--ease)}
+
+/* screens */
+.scr{animation:in .42s var(--ease) both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero{color:#fff;text-align:center;padding:calc(26px + env(safe-area-inset-top)) 4px 8px}
+.hero img{display:block;margin:0 auto;width:118px;height:auto;filter:drop-shadow(0 12px 22px rgba(0,0,0,.35));animation:bob 4.5s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-2deg)}}
+.hero .kick{display:block;font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--y);margin:8px 0 6px}
+.hero h1{font-size:clamp(28px,8vw,38px);line-height:1.08;margin:0 0 10px;letter-spacing:-.01em}
+.hero p{margin:0 auto;max-width:30em;opacity:.88;font-size:16px}
+.card{background:var(--card);border-radius:24px;padding:20px 18px;margin:14px 0;box-shadow:0 18px 40px -18px rgba(10,0,40,.55),0 1px 0 rgba(255,255,255,.6) inset}
+.facts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 4px}
+.facts span{background:rgba(255,255,255,.12);color:#fff;border-radius:99px;padding:6px 12px;font-size:14px;font-weight:700}
+
+label.f{display:block;font-weight:800;font-size:14px;color:var(--mut);margin:14px 0 6px}
+label.f:first-child{margin-top:0}
+.inp{width:100%;border:2px solid var(--line);border-radius:14px;padding:13px 14px;font-size:17px;background:#fff;transition:border-color .2s}
+.inp:focus{outline:0;border-color:var(--p)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:2px solid var(--line);border-radius:14px;padding:12px 0;font-weight:800;font-size:17px;transition:transform .15s,background .2s,border-color .2s}
+.seg button[aria-pressed=true]{background:var(--p);border-color:var(--p);color:#fff}
+.note{font-size:14px;color:var(--mut);margin:8px 0 0}
+.note a{color:var(--p);font-weight:800}
+.err{color:#C2185B;font-size:14px;font-weight:700;margin-top:8px;min-height:1px}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;border-radius:18px;font-weight:900;font-size:18px;
+  background:var(--y);color:var(--ink);box-shadow:0 6px 0 var(--yd),0 14px 26px -10px rgba(0,0,0,.5);transition:transform .12s var(--ease),box-shadow .12s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--yd),0 8px 18px -10px rgba(0,0,0,.5)}
+.btn.ghost{background:rgba(255,255,255,.12);color:#fff;box-shadow:none;border:2px solid rgba(255,255,255,.28)}
+.btn.ghost.dark{background:var(--soft);color:var(--p);border-color:var(--line)}
+.btn+.btn{margin-top:12px}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(0deg,rgba(36,16,95,.97) 55%,rgba(36,16,95,0))}
+.dock .in{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.dock .back{flex:0 0 56px;min-height:56px;border-radius:18px;background:rgba(255,255,255,.12);color:#fff;font-size:22px;font-weight:900}
+.dock .btn{flex:1}
+
+/* exercise */
+.exh{color:#fff;padding:6px 2px 0}
+.exh .ru{font-size:19px;font-weight:800;line-height:1.3;margin:0 0 4px}
+.exh .en{font-size:14px;opacity:.72;margin:0;font-style:italic}
+.text{font-size:16px;line-height:1.55}
+.text h4{margin:0 0 10px;font-size:18px;color:var(--p)}
+.text p{margin:0 0 10px}
+.text .ad{background:var(--soft);border-radius:16px;padding:12px 14px;margin:0 0 10px}
+.text .ad p:last-child{margin:0}
+.text .sig{font-weight:800;color:var(--p);font-size:14px}
+.tog{display:flex;align-items:center;justify-content:space-between;width:100%;font-weight:800;color:var(--p);font-size:15px}
+.tog .ch{transition:transform .25s var(--ease)}
+.tog[aria-expanded=false] .ch{transform:rotate(-90deg)}
+
+.q{padding:14px 0;border-top:1px solid var(--line)}
+.q:first-child{border-top:0;padding-top:2px}
+.qt{display:flex;gap:10px;align-items:baseline;font-weight:600}
+.num{flex:none;min-width:26px;height:26px;border-radius:50%;background:var(--soft);color:var(--p);font-weight:900;font-size:14px;display:inline-grid;place-items:center}
+.opts{display:grid;gap:8px;margin-top:10px}
+.opts.row{grid-template-columns:repeat(auto-fit,minmax(70px,1fr))}
+.opt{border:2px solid var(--line);border-radius:14px;padding:11px 14px;text-align:left;font-weight:700;background:#fff;min-height:48px;transition:transform .14s var(--ease),background .18s,border-color .18s,color .18s}
+.opts.row .opt{text-align:center;padding:11px 6px}
+.opt:active{transform:scale(.97)}
+.opt[aria-pressed=true]{background:var(--p);border-color:var(--p);color:#fff;animation:pop .28s var(--ease)}
+@keyframes pop{40%{transform:scale(1.04)}}
+.opt .l{display:inline-block;width:22px;opacity:.6;font-weight:900}
+
+.para{line-height:2.25}
+.para p{margin:0 0 6px}
+.para b{color:var(--p);margin-right:4px}
+.para sup{color:var(--p);font-weight:900;font-size:12px;margin-right:1px}
+.ip{display:inline-flex;gap:4px;vertical-align:middle;margin:0 2px}
+.ip button{border:2px solid var(--line);border-radius:11px;padding:3px 10px;font-weight:800;line-height:1.4;background:#fff;transition:transform .14s var(--ease),background .18s,border-color .18s,color .18s,opacity .18s}
+.ip button[aria-pressed=true]{background:var(--p);border-color:var(--p);color:#fff;animation:pop .28s var(--ease)}
+.ip.has button[aria-pressed=false]{opacity:.45}
+.ti{display:inline-block;width:5.6em;max-width:100%;border:0;border-bottom:3px solid var(--p);background:var(--soft);border-radius:10px 10px 4px 4px;padding:3px 8px;font-size:17px;font-weight:800;color:var(--pd);vertical-align:baseline;line-height:1.5}
+.ti:focus{outline:0;background:#FFF6D6;border-bottom-color:var(--yd)}
+.slot{display:inline-flex;align-items:center;min-width:6.5em;justify-content:center;border:2px dashed #C9BCEB;border-radius:11px;padding:2px 10px;font-weight:800;color:var(--mut);background:#fff;line-height:1.5;vertical-align:baseline;transition:background .18s,border-color .18s,color .18s,box-shadow .18s}
+.slot.on{border-color:var(--y);border-style:solid;box-shadow:0 0 0 3px rgba(245,200,66,.35)}
+.slot.full{border-style:solid;border-color:var(--p);background:var(--p);color:#fff;animation:pop .28s var(--ease)}
+.box{position:sticky;top:64px;z-index:5;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;background:#FFF6D6;border:2px solid #F8DE8A;border-radius:18px;padding:10px;margin:0 0 12px}
+.chip{border-radius:12px;background:#fff;padding:8px 12px;font-weight:800;box-shadow:0 2px 0 #EBCB63;transition:opacity .2s,transform .14s var(--ease)}
+.chip:active{transform:scale(.95)}
+.chip.used{opacity:.38;text-decoration:line-through}
+table.tb{width:100%;border-collapse:separate;border-spacing:0 8px}
+table.tb th{font-size:14px;color:var(--mut);text-align:left;padding:0 6px}
+table.tb td{padding:0 6px;font-weight:700;width:50%}
+table.tb .slot{width:100%}
+
+.multi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.multi .opt{display:flex;align-items:center;gap:8px}
+.multi .opt::before{content:"";flex:none;width:20px;height:20px;border-radius:6px;border:2px solid #C9BCEB;background:#fff;transition:background .18s}
+.multi .opt[aria-pressed=true]::before{background:var(--y) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' fill='none' stroke='%23231942' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;border-color:var(--y)}
+.cntl{font-size:14px;font-weight:800;color:var(--mut);margin:0 0 10px}
+
+/* audio */
+.aud{display:flex;align-items:center;gap:14px}
+.play{flex:none;width:62px;height:62px;border-radius:50%;background:var(--p);color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px -8px rgba(20,10,50,.45);transition:transform .14s var(--ease),opacity .2s}
+.play:active{transform:scale(.94)}
+.play:disabled{opacity:.35;box-shadow:none}
+.play svg{width:26px;height:26px}
+.aud .meta{flex:1;min-width:0}
+.aud .t1{font-weight:800}
+.aud .t2{font-size:14px;color:var(--mut)}
+.track{height:6px;border-radius:6px;background:var(--line);margin-top:8px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--p);border-radius:6px}
+
+/* result */
+.big{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:0 0 6px}
+.course{font-size:clamp(24px,6.6vw,30px);font-weight:900;line-height:1.15;color:var(--pd);margin:0 0 8px}
+.sec{margin:12px 0}
+.sec .h{display:flex;justify-content:space-between;font-weight:800;font-size:15px}
+.sec .h span:last-child{color:var(--mut);font-variant-numeric:tabular-nums}
+.sec .track{height:10px}
+.sec .track i{background:linear-gradient(90deg,var(--p),#9B78F0);transition:width 1s var(--ease)}
+.stat{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;padding:12px 14px;border-radius:14px;background:var(--soft);color:var(--p)}
+.stat.ok{background:#E6F7EE;color:var(--ok)}
+.stat.bad{background:#FFF1D0;color:#8A5A00}
+.dot{width:10px;height:10px;border-radius:50%;background:currentColor;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:40;background:#fff;color:var(--ink);font-weight:800;font-size:15px;padding:12px 16px;border-radius:14px;box-shadow:0 14px 30px -10px rgba(0,0,0,.5);width:max-content;max-width:calc(100% - 32px);transition:opacity .25s,transform .35s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.small{font-size:14px;color:var(--mut)}
+.link{color:#fff;opacity:.75;font-weight:700;font-size:14px;text-decoration:underline;display:block;text-align:center;margin:18px auto 0}
+.conf{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.conf i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:fall 2.6s cubic-bezier(.3,.6,.5,1) forwards}
+@keyframes fall{to{transform:translate3d(var(--dx),110vh,0) rotate(var(--r));opacity:.9}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.conf{display:none}}
+</style>
+</head>
+<body>
+<div class="top" id="top" hidden><div class="in">
+  <div class="row"><span class="lvl" id="tLvl">A1+</span><span id="tSec">Vocabulary</span><span class="cnt" id="tCnt">1/12</span></div>
+  <div class="bar"><i id="tBar"></i></div>
+</div></div>
+<main class="wrap" id="app"></main>
+<div class="dock" id="dock" hidden><div class="in"><button class="back" id="bBack" aria-label="Назад">‹</button><button class="btn" id="bNext">Дальше</button></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script src="/assets/place.js"></script>
+<script>
+(function(){
+'use strict';
+var T = window.GI_TESTS, TX = window.GI_TEXTS;
+var LS = 'ss_test_gi_v1';
+var app = document.getElementById('app');
+var ICON_PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg>';
+var ICON_PAUSE = '<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4.2" height="14" rx="1.4" fill="currentColor"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.4" fill="currentColor"/></svg>';
+
+/* flat list of exercises per test */
+function exList(t){ var out=[]; T[t].sections.forEach(function(s){ s.ex.forEach(function(e){ e._sec=s; out.push(e); }); }); return out; }
+var EX = { a1: exList('a1'), a2: exList('a2') };
+
+/* state */
+var S;
+function fresh(){ return { v:1, phase:'start', prof:null, t0:0, test:'a1', idx:0, ans:{a1:{},a2:{}}, plays:{}, declined:false, sent:false }; }
+function load(){ try{ var s=JSON.parse(localStorage.getItem(LS)||'null'); if(s && s.v===1) return s; }catch(e){} return null; }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} }
+S = load() || fresh();
+
+/* helpers */
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function norm(s){ return String(s==null?'':s).toLowerCase().replace(/[’‘`´ʼ′]/g,"'").replace(/\s+/g,' ').replace(/^[\s.,!?;:]+|[\s.,!?;:]+$/g,'').trim(); }
+function bare(s){ return norm(s).replace(/'/g,''); }
+var toastT;
+function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){t.classList.remove('on');},2600); }
+function getAns(t,i){ var k=String(i); if(!S.ans[t][k]){ var e=EX[t][i]; S.ans[t][k] = e.type==='multi' ? [] : e.items.map(function(){return null;}); } return S.ans[t][k]; }
+
+/* scoring */
+function exScore(e, a){
+  if(!a) return 0;
+  if(e.type==='multi'){ var n=0; a.forEach(function(x){ if(e.a.indexOf(x)>=0) n++; }); return Math.min(n, e.max); }
+  var s=0;
+  e.items.forEach(function(it,j){
+    var v=a[j]; if(v==null || v==='') return;
+    if(e.type==='type'){ var b=bare(v); if(it.a.some(function(x){ return bare(x)===b; })) s++; }
+    else if(v===it.a) s++;
+  });
+  return s;
+}
+function exMax(e){ return e.type==='multi' ? e.max : e.items.length; }
+function testScore(t){
+  var res={ score:0, max:0, secs:[], weak:[] };
+  T[t].sections.forEach(function(s){
+    var sc=0, mx=0;
+    s.ex.forEach(function(e){ var i=EX[t].indexOf(e), x=exScore(e, S.ans[t][String(i)]), m=exMax(e); sc+=x; mx+=m; if(x/m<=0.4) res.weak.push(e.tag+' '+x+'/'+m); });
+    res.secs.push({ label:T[t].key+' '+s.ru, score:sc, max:mx }); res.score+=sc; res.max+=mx;
+  });
+  res.pct = res.max ? res.score/res.max : 0;
+  return res;
+}
+function unanswered(t,i){
+  var e=EX[t][i], a=getAns(t,i);
+  if(e.type==='multi') return a.length<e.max ? 1 : 0;
+  return a.filter(function(v){ return v==null || String(v).trim()===''; }).length;
+}
+
+/* recommendation (draft mapping, see README) */
+function recommend(){
+  var r1=testScore('a1'), took2 = S.test==='a2';
+  var r2 = took2 ? testScore('a2') : null, lvl;
+  if(r1.pct < 0.4) lvl='Get Involved A1+ с нуля (группа 🐣)';
+  else if(r1.pct < 0.7) lvl='Get Involved A1+';
+  else if(r2 && r2.pct >= 0.85) lvl='Get Involved A2 или Prepare 3 — проверить тестом для 7–11 класса (/test/teen/)';
+  else if(r2 && r2.pct >= 0.7) lvl='Get Involved A2';
+  else lvl='Get Involved A1+ 🚀 (продолжающие)';
+  return { r1:r1, r2:r2, level:lvl };
+}
+
+/* audio: one element, play on tap (iOS) */
+var AU = new Audio(); AU.preload='none'; var auKey=null, auUI=null;
+function stopAudio(){ try{ AU.pause(); }catch(e){} auKey=null; auUI=null; }
+AU.addEventListener('timeupdate', function(){ if(auUI && AU.duration) auUI.bar.style.width=(AU.currentTime/AU.duration*100)+'%'; });
+AU.addEventListener('ended', function(){ if(!auUI) return; S.plays[auUI.pk]=(S.plays[auUI.pk]||0)+1; save(); auUI.bar.style.width='0'; var u=auUI; auKey=null; paintAudio(u); });
+AU.addEventListener('pause', function(){ if(auUI) paintAudio(auUI); });
+AU.addEventListener('play', function(){ if(auUI) paintAudio(auUI); });
+AU.addEventListener('error', function(){ if(auUI){ toast('Звук не загрузился. Проверьте интернет и нажмите ещё раз.'); paintAudio(auUI); } });
+var MAXPLAY=2;
+function paintAudio(u){
+  var used=S.plays[u.pk]||0, left=Math.max(0,MAXPLAY-used), playing = auKey===u.pk && !AU.paused;
+  u.btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+  u.btn.setAttribute('aria-label', playing ? 'Пауза' : 'Слушать');
+  u.btn.disabled = !playing && left===0 && !(auKey===u.pk && AU.currentTime>0);
+  u.t2.textContent = playing ? 'Слушаем…' : (left ? 'Можно прослушать: '+left+' '+(left===1?'раз':'раза') : 'Прослушано 2 раза — отвечай по памяти');
+}
+function mountAudio(el, file, pk){
+  el.innerHTML='<div class="aud"><button class="play" type="button"></button><div class="meta"><div class="t1">Аудиозапись</div><div class="t2"></div><div class="track"><i></i></div></div></div>';
+  var u={ btn:el.querySelector('.play'), t2:el.querySelector('.t2'), bar:el.querySelector('.track i'), pk:pk, file:file };
+  u.btn.onclick=function(){
+    if(auKey===u.pk){ if(AU.paused){ AU.play().catch(function(){}); } else AU.pause(); return; }
+    if((S.plays[pk]||0)>=MAXPLAY) return;
+    stopAudio(); auKey=u.pk; auUI=u; AU.src='audio/'+file+'.mp3'; AU.currentTime=0;
+    var p=AU.play(); if(p && p.catch) p.catch(function(){ toast('Нажмите ещё раз, чтобы включить звук'); auKey=null; paintAudio(u); });
+    paintAudio(u);
+  };
+  paintAudio(u);
+}
+
+/* ---------- screens ---------- */
+function setChrome(top, dock){ document.getElementById('top').hidden=!top; document.getElementById('dock').hidden=!dock; }
+function scrollTop(){ try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){ window.scrollTo(0,0); } }
+
+function scrStart(){
+  setChrome(false,false); stopAudio();
+  var p=S.prof||{first:'',last:'',klass:'',contact:''};
+  var resume = S.phase!=='start' && S.prof;
+  app.innerHTML =
+   '<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
+   '<div class="kick">Speak &amp; Smile · тест на уровень</div><h1>Английский<br>для 5–6 класса</h1>'+
+   '<p>Узнаем, с какого курса тебе будет интересно и по силам начать. Здесь нет «плохих» результатов — только подсказка для нас.</p>'+
+   '<div class="facts"><span>⏱ 25–30 мин</span><span>🎧 нужен звук</span><span>📱 можно с телефона</span></div></div>'+
+   (resume ? '<div class="card"><b>Тест уже начат</b><p class="note" style="margin:4px 0 14px">'+esc(S.prof.first+' '+S.prof.last)+' — можно продолжить с того же места.</p><button class="btn" id="bRes">Продолжить</button><button class="btn ghost dark" id="bNew">Начать заново</button></div>' : '')+
+   '<form class="card" id="fm" novalidate'+(resume?' hidden':'')+'>'+
+   '<div class="two"><div><label class="f" for="iF">Имя ученика</label><input class="inp" id="iF" autocomplete="given-name" value="'+esc(p.first)+'"></div>'+
+   '<div><label class="f" for="iL">Фамилия</label><input class="inp" id="iL" autocomplete="family-name" value="'+esc(p.last)+'"></div></div>'+
+   '<label class="f">Класс</label><div class="seg" id="seg">'+['5','6','7'].map(function(k){return '<button type="button" data-k="'+k+'" aria-pressed="'+(p.klass===k)+'">'+k+'</button>';}).join('')+'</div>'+
+   '<p class="note" id="n7" '+(p.klass==='7'?'':'hidden')+'>Для 7–11 класса есть свой тест: <a href="/test/teen/">открыть</a>. Этот тоже можно пройти.</p>'+
+   '<label class="f" for="iC">Телефон или ник родителя <span style="font-weight:600">(необязательно)</span></label><input class="inp" id="iC" inputmode="text" autocomplete="tel" placeholder="+7… или @ник" value="'+esc(p.contact)+'">'+
+   '<div class="err" id="er"></div><div style="height:12px"></div><button class="btn" type="submit">Начать тест</button></form></section>';
+  var kl=p.klass;
+  var seg=document.getElementById('seg');
+  seg.onclick=function(ev){ var b=ev.target.closest('button'); if(!b) return; kl=b.dataset.k; seg.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed', x===b);}); document.getElementById('n7').hidden = kl!=='7'; };
+  document.getElementById('fm').onsubmit=function(ev){
+    ev.preventDefault();
+    var f=document.getElementById('iF').value.trim(), l=document.getElementById('iL').value.trim(), c=document.getElementById('iC').value.trim(), er=document.getElementById('er');
+    if(f.length<2){ er.textContent='Напиши имя ученика'; document.getElementById('iF').focus(); return; }
+    if(l.length<2){ er.textContent='Напиши фамилию'; document.getElementById('iL').focus(); return; }
+    if(!kl){ er.textContent='Выбери класс'; return; }
+    S=fresh(); S.prof={first:f,last:l,klass:kl,contact:c}; S.t0=Date.now(); S.phase='intro'; S.test='a1'; save(); render();
+  };
+  if(resume){
+    document.getElementById('bRes').onclick=function(){ if(S.phase==='start') S.phase='intro'; render(); };
+    document.getElementById('bNew').onclick=function(){ var pr=S.prof; S=fresh(); S.prof=pr; save(); render(); };
+  }
+}
+
+function scrIntro(){
+  setChrome(false,false); stopAudio();
+  var t=S.test, is2 = t==='a2';
+  app.innerHTML='<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
+   '<div class="kick">'+(is2?'Следующий уровень':'Поехали')+'</div><h1>'+T[t].title+'</h1>'+
+   '<p>'+(is2?'Чуть сложнее. Отвечай спокойно — что не знаешь, можно пропустить.':'Привет, '+esc(S.prof.first)+'! '+EX[t].length+' коротких заданий: слова, грамматика, чтение и аудирование.')+'</p>'+
+   '<div class="facts"><span>'+EX[t].length+' заданий</span><span>⏱ ~'+(is2?'20':'15')+' мин</span><span>🎧 в конце — аудио</span></div></div>'+
+   '<div class="card"><p class="small" style="margin:0">Задания на английском, подсказки — на русском. Ответы сохраняются: если страница закроется, продолжишь с того же места.</p></div>'+
+   '<div style="height:6px"></div><button class="btn" id="bGo">Начать</button></section>';
+  document.getElementById('bGo').onclick=function(){ S.phase='ex'; S.idx=0; save(); render(); };
+}
+
+function scrBreak(){
+  setChrome(false,false); stopAudio(); confetti();
+  app.innerHTML='<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
+   '<div class="kick">Первая часть готова</div><h1>Отлично!<br>Попробуешь следующий уровень?</h1>'+
+   '<p>У тебя хорошо получается. Можно сделать перерыв: встань, потянись, попей воды — и продолжай, когда будешь готов(а).</p></div>'+
+   '<div style="height:10px"></div><button class="btn" id="bY">Да, попробую A2 →</button><button class="btn ghost" id="bN">Нет, закончить</button></section>';
+  document.getElementById('bY').onclick=function(){ S.test='a2'; S.idx=0; S.phase='intro'; save(); render(); };
+  document.getElementById('bN').onclick=function(){ S.declined=true; S.phase='result'; save(); render(); };
+}
+
+function scrEx(){
+  setChrome(true,true);
+  var t=S.test, i=S.idx, e=EX[t][i], a=getAns(t,i), sec=e._sec;
+  document.getElementById('tLvl').textContent=T[t].key;
+  document.getElementById('tSec').textContent=sec.en;
+  document.getElementById('tCnt').textContent=(i+1)+'/'+EX[t].length;
+  document.getElementById('tBar').style.width=((i)/EX[t].length*100)+'%';
+  document.getElementById('bBack').style.visibility = i>0 ? 'visible' : 'hidden';
+  var h='<section class="scr" id="exs"><div class="exh"><p class="ru">'+esc(e.ru)+'</p><p class="en">'+e.n+'. '+esc(e.en)+'</p></div>';
+  if(e.audio) h+='<div class="card" id="au"></div>';
+  if(e.text) h+='<div class="card"><button class="tog" id="tg" aria-expanded="true"><span>📖 Текст</span><span class="ch">▾</span></button><div class="text" id="txt" style="margin-top:12px">'+TX[e.text]+'</div></div>';
+  h+='<div class="card" id="body"></div></section>';
+  app.innerHTML=h;
+  if(e.audio) mountAudio(document.getElementById('au'), e.audio, t+'_'+e.n);
+  if(e.text){ var tg=document.getElementById('tg'); tg.onclick=function(){ var o=tg.getAttribute('aria-expanded')==='true'; tg.setAttribute('aria-expanded', !o); document.getElementById('txt').hidden=o; }; }
+  var body=document.getElementById('body');
+  ({box:rBox, pick:rPick, type:rType, multi:rMulti, tf:rTf})[e.type](body, e, a);
+  confirmSkip=false;
+}
+
+function blank(n){ return '<span class="num">'+n+'</span>'; }
+function fillTpl(e, widget){
+  if(e.tpl) return '<div class="para">'+e.tpl.replace(/\[\[(\d+)\]\]/g,function(_,k){ return widget(+k); })+'</div>';
+  return e.items.map(function(it,k){ var q=it.q.replace(/\[\[\]\]|___/, function(){ return widget(k); }); return '<div class="q"><div class="qt">'+blank(k+1)+'<span class="para" style="line-height:2">'+q+'</span></div></div>'; }).join('');
+}
+
+/* box: tap slot, then a word; each word once */
+function rBox(body, e, a){
+  var on = a.indexOf(null); if(on<0) on=0;
+  function slot(k){ return '<button type="button" class="slot" data-s="'+k+'">'+(a[k]?esc(a[k]):(e.table?(k+1)+' ':'')+'…')+'</button>'; }
+  function draw(){
+    var h='<div class="box" id="bx">'+e.box.map(function(w){ return '<button type="button" class="chip'+(a.indexOf(w)>=0?' used':'')+'" data-w="'+esc(w)+'">'+esc(w)+'</button>'; }).join('')+'</div>';
+    if(e.table){
+      h+='<table class="tb"><tr><th>'+e.table.head[0]+'</th><th>'+e.table.head[1]+'</th></tr>'+e.table.rows.map(function(r){ return '<tr>'+r.map(function(c){ return '<td>'+(typeof c==='number'?slot(c):esc(c))+'</td>'; }).join('')+'</tr>'; }).join('')+'</table>';
+    } else h+=fillTpl(e, slot);
+    body.innerHTML=h; mark();
+  }
+  function mark(){ body.querySelectorAll('.slot').forEach(function(s){ var k=+s.dataset.s; s.classList.toggle('on', k===on); s.classList.toggle('full', !!a[k]); }); }
+  body.onclick=function(ev){
+    var s=ev.target.closest('.slot'), c=ev.target.closest('.chip');
+    if(s){ var k=+s.dataset.s; if(k===on && a[k]){ a[k]=null; save(); draw(); return; } on=k; mark(); return; }
+    if(c){ var w=c.dataset.w, prev=a.indexOf(w); if(prev>=0) a[prev]=null; a[on]=w; save();
+      var nx=-1; for(var j=1;j<=a.length;j++){ var q=(on+j)%a.length; if(!a[q]){ nx=q; break; } } if(nx>=0) on=nx; draw(); }
+  };
+  draw();
+}
+
+/* pick: inline toggles or option list */
+function rPick(body, e, a){
+  var L='abc';
+  if(e.inline){
+    body.innerHTML=fillTpl(e, function(k){ var it=e.items[k]; return '<span class="ip'+(a[k]!=null?' has':'')+'" data-k="'+k+'">'+it.o.map(function(o){ return '<button type="button" data-v="'+esc(o)+'" aria-pressed="'+(a[k]===o)+'">'+esc(o)+'</button>'; }).join('')+'</span>'; });
+  } else {
+    body.innerHTML=e.items.map(function(it,k){
+      return '<div class="q"><div class="qt">'+blank(k+1)+'<span>'+esc(it.q)+'</span></div><div class="opts'+(e.row?' row':'')+'" data-k="'+k+'">'+
+        it.o.map(function(o,j){ var lab = e.labels ? e.labels[o] : o; return '<button type="button" class="opt" data-v="'+esc(o)+'" aria-pressed="'+(a[k]===o)+'">'+(e.row?'':'<span class="l">'+L[j]+'</span>')+esc(lab)+'</button>'; }).join('')+'</div></div>';
+    }).join('');
+  }
+  body.onclick=function(ev){
+    var b=ev.target.closest('button[data-v]'); if(!b) return; var g=b.parentNode, k=+g.dataset.k;
+    a[k]=b.dataset.v; save();
+    g.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===b); }); g.classList.add('has');
+  };
+}
+function rTf(body, e, a){
+  var O=e.ni?['T','F','NI']:['T','F'], N={T:'True',F:'False',NI:'No info'};
+  body.innerHTML=e.items.map(function(it,k){
+    return '<div class="q"><div class="qt">'+blank(k+1)+'<span>'+esc(it.q)+'</span></div><div class="opts row" data-k="'+k+'">'+
+      O.map(function(o){ return '<button type="button" class="opt" data-v="'+o+'" aria-pressed="'+(a[k]===o)+'">'+N[o]+'</button>'; }).join('')+'</div></div>';
+  }).join('');
+  body.onclick=function(ev){ var b=ev.target.closest('button[data-v]'); if(!b) return; var g=b.parentNode,k=+g.dataset.k; a[k]=b.dataset.v; save(); g.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x===b); }); };
+}
+function rType(body, e, a){
+  body.innerHTML=fillTpl(e, function(k){ return '<input class="ti" data-k="'+k+'" value="'+esc(a[k]||'')+'" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next" aria-label="Ответ '+(k+1)+'">'; });
+  var ins=body.querySelectorAll('.ti');
+  ins.forEach(function(inp,j){
+    inp.oninput=function(){ a[+inp.dataset.k]=inp.value; save(); };
+    inp.onkeydown=function(ev){ if(ev.key==='Enter'){ ev.preventDefault(); if(ins[j+1]) ins[j+1].focus(); else inp.blur(); } };
+  });
+}
+function rMulti(body, e, a){
+  function draw(){
+    body.innerHTML='<p class="cntl" id="mc">Отмечено: '+a.length+' из '+e.max+'</p><div class="multi">'+e.opts.map(function(o){ return '<button type="button" class="opt" data-v="'+esc(o)+'" aria-pressed="'+(a.indexOf(o)>=0)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
+  }
+  body.onclick=function(ev){
+    var b=ev.target.closest('button[data-v]'); if(!b) return; var v=b.dataset.v, p=a.indexOf(v);
+    if(p>=0) a.splice(p,1); else { if(a.length>=e.max){ toast('Можно отметить только '+e.max+'. Сними одну галочку.'); return; } a.push(v); }
+    save(); b.setAttribute('aria-pressed', a.indexOf(v)>=0); document.getElementById('mc').textContent='Отмечено: '+a.length+' из '+e.max;
+  };
+  draw();
+}
+
+var confirmSkip=false;
+document.getElementById('bNext').onclick=function(){
+  if(S.phase!=='ex') return;
+  var t=S.test, i=S.idx;
+  if(unanswered(t,i) && !confirmSkip){ confirmSkip=true; toast('Есть пустые ответы. Нажми «Дальше» ещё раз, чтобы пропустить.'); return; }
+  stopAudio();
+  if(i+1 < EX[t].length){ S.idx=i+1; save(); render(); scrollTop(); return; }
+  if(t==='a1' && testScore('a1').pct >= T.a1.pass){ S.phase='break'; }
+  else S.phase='result';
+  save(); render(); scrollTop();
+};
+document.getElementById('bBack').onclick=function(){ if(S.phase==='ex' && S.idx>0){ stopAudio(); S.idx--; save(); render(); scrollTop(); } };
+
+/* result + send */
+var sending=false;
+function payload(){
+  var R=recommend(), secs=R.r1.secs.slice(), score=R.r1.score, max=R.r1.max;
+  var rec='A1+ '+R.r1.score+'/'+R.r1.max+' ('+Math.round(R.r1.pct*100)+'%)';
+  if(R.r2){ secs=secs.concat(R.r2.secs); score+=R.r2.score; max+=R.r2.max; rec+=', A2 '+R.r2.score+'/'+R.r2.max+' ('+Math.round(R.r2.pct*100)+'%)'; }
+  else if(S.declined) rec+=', A2 — предложен, отказался';
+  else rec+=', A2 не проходил (A1+ < 70%)';
+  rec = R.level+'. Тесты: '+rec+'. Speaking и Writing не проверялись.';
+  var weak=R.r1.weak.map(function(w){return 'A1+ '+w;}); if(R.r2) weak=weak.concat(R.r2.weak.map(function(w){return 'A2 '+w;}));
+  return { test:'gi', name:S.prof.first+' '+S.prof.last, klass:S.prof.klass, contact:S.prof.contact||'', score:score, max:max,
+    level:R.level, rec:rec, sections:secs, detail: weak.length ? 'Слабее: '+weak.join('; ') : 'Явных пробелов нет', ms: Date.now()-(S.t0||Date.now()) };
+}
+function doSend(st, manual){
+  if(S.sent){ paintSt(st,'ok'); return; }
+  if(sending) return;
+  if(S.tried && !manual){ paintSt(st,'bad'); return; } /* place.js already queued the failed body and re-sends it itself — avoid a duplicate */ sending=true; paintSt(st,'busy');
+  var p; try{ p = window.SSPlace && window.SSPlace.send ? window.SSPlace.send(payload()) : Promise.resolve(false); }catch(err){ p=Promise.resolve(false); }
+  Promise.resolve(p).then(function(ok){ sending=false; S.tried=true; if(ok){ S.sent=true; save(); paintSt(st,'ok'); } else { save(); paintSt(st,'bad'); } }, function(){ sending=false; S.tried=true; save(); paintSt(st,'bad'); });
+}
+function paintSt(st,k){
+  if(k==='busy'){ st.className='stat'; st.innerHTML='<span class="dot"></span>Отправляем результат…'; }
+  else if(k==='ok'){ st.className='stat ok'; st.innerHTML='✓ Отправлено. Администратор школы получил результат и свяжется с вами.'; }
+  else { st.className='stat bad'; st.innerHTML='<div>Не получилось отправить. Покажите этот экран администратору.<br><button class="btn ghost dark" id="bRetry" style="margin-top:10px;min-height:46px;font-size:16px">Попробовать ещё раз</button></div>';
+    document.getElementById('bRetry').onclick=function(){ doSend(st, true); }; }
+}
+function scrResult(){
+  setChrome(false,false); stopAudio();
+  var R=recommend(), secs=R.r1.secs.concat(R.r2?R.r2.secs:[]);
+  var tot=R.r1.score+(R.r2?R.r2.score:0), mx=R.r1.max+(R.r2?R.r2.max:0);
+  if(R.r1.pct>=0.7) confetti();
+  app.innerHTML='<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
+   '<div class="kick">Тест пройден</div><h1>Готово, '+esc(S.prof.first)+'!</h1><p>Спасибо, ты молодец. Вот что получилось.</p></div>'+
+   '<div class="card"><p class="big">Рекомендуем курс</p><p class="course">'+esc(R.level.replace(' — проверить тестом для 7–11 класса (/test/teen/)',''))+'</p>'+
+   (R.r2 && R.r2.pct>=0.85 ? '<p class="note" style="margin:0 0 8px">Сильный результат! Можно ещё пройти <a href="/test/teen/">тест для 7–11 класса</a> — посмотрим, подойдёт ли Prepare 3.</p>' : '')+
+   '<p class="small" style="margin:0">Итог: <b id="cu">0</b> из '+mx+' баллов · '+(R.r2?'2 теста':'1 тест')+'</p></div>'+
+   '<div class="card">'+secs.map(function(s){ return '<div class="sec"><div class="h"><span>'+esc(s.label)+'</span><span>'+s.score+'/'+s.max+'</span></div><div class="track"><i data-w="'+Math.round(s.score/s.max*100)+'"></i></div></div>'; }).join('')+
+   '<p class="small" style="margin:10px 0 0">Говорение и письмо посмотрим на пробном уроке.</p></div>'+
+   '<div class="stat" id="st"></div>'+
+   '<button class="link" id="bAgain" type="button">Пройти заново (другой ученик)</button></section>';
+  requestAnimationFrame(function(){ setTimeout(function(){ document.querySelectorAll('.sec .track i').forEach(function(i){ i.style.width=i.dataset.w+'%'; }); },120); });
+  countUp(document.getElementById('cu'), tot);
+  document.getElementById('bAgain').onclick=function(){ if(confirm('Начать тест заново для другого ученика?')){ S=fresh(); save(); render(); scrollTop(); } };
+  doSend(document.getElementById('st'));
+}
+function countUp(el,n){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent=n; return; }
+  var t0=performance.now(); (function f(t){ var k=Math.min(1,(t-t0)/900); el.textContent=Math.round(n*(1-Math.pow(1-k,3))); if(k<1) requestAnimationFrame(f); })(t0);
+}
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c=document.createElement('div'); c.className='conf'; var col=['#F5C842','#FFFFFF','#9B78F0','#FF8FC7','#6EE7C8'];
+  for(var k=0;k<36;k++){ var i=document.createElement('i'); i.style.left=(Math.random()*100)+'%'; i.style.background=col[k%col.length]; i.style.setProperty('--dx',(Math.random()*120-60)+'px'); i.style.setProperty('--r',(Math.random()*720-360)+'deg'); i.style.animationDelay=(Math.random()*.5)+'s'; c.appendChild(i); }
+  document.body.appendChild(c); setTimeout(function(){ c.remove(); },3400);
+}
+
+function render(){
+  if(!S.prof && S.phase!=='start') S.phase='start';
+  ({start:scrStart, intro:scrIntro, ex:scrEx, 'break':scrBreak, result:scrResult})[S.phase]();
+}
+window.__gi = { get S(){return S;}, set S(v){S=v;}, EX:EX, testScore:testScore, recommend:recommend, payload:payload, render:render, save:save, exScore:exScore, norm:norm };
+render();
+})();
+</script>
+</body></html>

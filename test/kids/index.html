@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#6C3FC5">
+<title>Тест на уровень английского · 1–4 класс · Speak &amp; Smile</title>
+<meta name="description" content="Онлайн-тест на уровень английского для детей 1–4 классов: какой курс Give Me Five! подходит ребёнку.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kids.css?v=1">
+</head>
+<body>
+<div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="top">
+  <a class="brand" href="/" aria-label="Speak &amp; Smile — на главную">Speak <b>&amp;</b> Smile</a>
+  <div class="topinfo" id="topinfo" hidden></div>
+</header>
+
+<main id="app">
+
+  <!-- 1. Родителю: анкета -->
+  <section class="screen" id="s-form">
+    <div class="hero">
+      <img class="mascot" src="/assets/speaky.png" alt="" width="107" height="150">
+      <div>
+        <p class="eyebrow">Тест на уровень · 1–4 класс</p>
+        <h1>Какой курс подойдёт ребёнку?</h1>
+      </div>
+    </div>
+    <p class="lead">Короткие весёлые задания с картинками и звуком: <b>15–30 минут</b>. Начните вы, дальше ребёнок отвечает сам — подсказывать не нужно, так результат точнее.</p>
+    <div class="tips">
+      <span>🎧 Включите звук</span><span>📱 Телефон или планшет</span><span>☕ Можно делать перерывы</span>
+    </div>
+
+    <form class="card form" id="form" novalidate>
+      <label class="fld"><span>Имя и фамилия ребёнка <i>*</i></span>
+        <input id="f-name" name="name" autocomplete="off" required maxlength="60" placeholder="Например, Маша Иванова"></label>
+      <div class="fld"><span>Класс <i>*</i></span>
+        <div class="seg" id="f-klass" role="radiogroup" aria-label="Класс">
+          <button type="button" data-v="1">1</button><button type="button" data-v="2">2</button>
+          <button type="button" data-v="3">3</button><button type="button" data-v="4">4</button>
+        </div></div>
+      <label class="fld"><span>Телефон или ник родителя <small>(по желанию — чтобы администратор связался)</small></span>
+        <input id="f-contact" name="contact" autocomplete="tel" maxlength="60" placeholder="+7 … или @nick"></label>
+      <div class="fld"><span>Ребёнок уже учил английский? <i>*</i></span>
+        <div class="seg two" id="f-studied" role="radiogroup" aria-label="Учил английский">
+          <button type="button" data-v="yes">Да, учил</button><button type="button" data-v="no">Нет, с нуля</button>
+        </div></div>
+      <div class="fld" id="f-startbox" hidden><span>Что уже пройдено? <small>Подберём первое задание. Не уверены — оставьте «Не знаю».</small></span>
+        <div class="seg col" id="f-start" role="radiogroup" aria-label="Пройденный курс">
+          <button type="button" data-v="auto">Не знаю — по классу</button>
+          <button type="button" data-v="2">Школьный английский / GMF 1</button>
+          <button type="button" data-v="3">Give Me Five! 2</button>
+          <button type="button" data-v="4">Give Me Five! 3</button>
+          <button type="button" data-v="5">Give Me Five! 4</button>
+        </div></div>
+      <p class="err" id="f-err" role="alert" hidden></p>
+      <button class="btn primary big wide" type="submit" id="f-go">Начать</button>
+      <p class="fine">Данные увидит только администратор школы Speak &amp; Smile.</p>
+    </form>
+  </section>
+
+  <!-- 2. Продолжить незаконченный -->
+  <section class="screen center" id="s-resume" hidden>
+    <img class="mascot big bob" src="/assets/speaky.png" alt="" width="128" height="180">
+    <h2 id="r-title">С возвращением!</h2>
+    <p class="lead">Тест не закончен. Продолжим с того же места?</p>
+    <div class="btncol">
+      <button class="btn primary big" id="r-go">Продолжить</button>
+      <button class="btn ghost" id="r-new">Начать заново</button>
+    </div>
+  </section>
+
+  <!-- 3. Инструкция к заданию (с примером) -->
+  <section class="screen" id="s-intro" hidden>
+    <p class="exno" id="i-no"></p>
+    <h2 class="instr" id="i-ru"></h2>
+    <p class="en-sub" id="i-en"></p>
+    <div class="example">
+      <span class="tag">Пример</span>
+      <div id="i-example"></div>
+    </div>
+    <button class="btn primary big wide" id="i-go">Понятно, начинаем!</button>
+  </section>
+
+  <!-- 4. Вопрос -->
+  <section class="screen" id="s-q" hidden>
+    <div class="qhead">
+      <div class="bar" aria-hidden="true"><b id="q-bar"></b></div>
+      <p class="instr sm" id="q-ru"></p>
+    </div>
+    <div id="q-body"></div>
+    <div class="qnav">
+      <button class="btn ghost sm" id="q-back" aria-label="Предыдущий вопрос">← Назад</button>
+      <span class="qcount" id="q-count"></span>
+    </div>
+  </section>
+
+  <!-- 5. Перерыв между тестами -->
+  <section class="screen center" id="s-break" hidden>
+    <div class="stars" aria-hidden="true">⭐</div>
+    <img class="mascot big stretch" src="/assets/speaky.png" alt="" width="128" height="180">
+    <h2 id="b-title">Отлично поработали!</h2>
+    <p class="lead" id="b-text">Встань, потянись вверх, как Спики, и помаши руками. Готов к ещё одному заданию?</p>
+    <div class="btncol">
+      <button class="btn primary big" id="b-go">Дальше!</button>
+      <button class="btn ghost sm" id="b-stop">Закончить и узнать результат</button>
+    </div>
+  </section>
+
+  <!-- 6. Результат -->
+  <section class="screen center" id="s-result" hidden>
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <img class="mascot big bob" src="/assets/speaky.png" alt="" width="128" height="180">
+    <h2 id="res-title">Молодец!</h2>
+    <p class="lead" id="res-lead">Все задания выполнены.</p>
+    <div class="card rec">
+      <p class="eyebrow dark">Рекомендуем курс</p>
+      <p class="rec-course" id="res-course"></p>
+      <p class="rec-note" id="res-note"></p>
+      <ul class="tests" id="res-tests"></ul>
+    </div>
+    <p class="send" id="res-send" role="status"></p>
+    <p class="fine light" id="res-admin">Администратор школы получил результат и свяжется с вами.</p>
+    <button class="btn ghost sm" id="res-new" style="margin-top:18px">Пройти тест за другого ребёнка</button>
+  </section>
+
+</main>
+
+<noscript><p class="noscript">Для теста нужен включённый JavaScript.</p></noscript>
+<p id="jserr" class="jserr" hidden></p>
+<script>window.onerror=function(m){var e=document.getElementById('jserr');if(e){e.hidden=false;e.textContent='Ошибка страницы: '+m+'. Обновите страницу — ответы сохранены.';}};</script>
+<script src="/assets/place.js"></script>
+<script src="data.js?v=1"></script>
+<script src="kids.js?v=1"></script>
+</body></html>
