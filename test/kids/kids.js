@@ -188,9 +188,10 @@
     });
     return { score: s, max: m, ex: ex, pass: s >= PASS * m };
   }
+  var TOP = 4;
   function decideNext(L, r) {
     if (st.seq.length >= MAXTESTS) return null;
-    if (r.pass) return (L < 5 && !st.res[L + 1]) ? L + 1 : null;
+    if (r.pass) return (L < TOP && !st.res[L + 1]) ? L + 1 : null; // 01.11.2026: GMF 5 в школе нет — цепочка до L4
     return (L > 2 && !st.res[L - 1]) ? L - 1 : null;
   }
   function finishTest() {
@@ -223,7 +224,7 @@
     if (hp === 5) return { level: 'Get Involved A1+', course: 'Get Involved! A1+', sub: 'после GMF 4',
       note: 'Ребёнок уверенно знает материал Give Me Five! 4 — готов к курсу для 5 класса.' };
     if (hp) {
-      var nt = (hp < 5 && st.res[hp + 1]) ? '' : (st.stopped ? ' Следующий уровень можно проверить на пробном занятии.' : '');
+      var nt = (hp < TOP && st.res[hp + 1]) ? '' : (st.stopped ? ' Следующий уровень можно проверить на пробном занятии.' : '') + (hp === TOP ? ' Если ребёнок уже закончил Give Me Five! 4, пройдите тест для 5–6 класса: speakandsmile.ru/test/gi/' : '');
       return { level: 'GMF ' + hp, course: COURSE[hp], sub: '',
         note: 'Ребёнок хорошо знает материал предыдущего уровня — этот курс будет в самый раз.' + nt };
     }

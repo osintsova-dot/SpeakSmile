@@ -180,3 +180,6 @@ h2{font-size:clamp(24px,6.6vw,32px);line-height:1.1;margin:10px 0 6px;font-weigh
 
 @media (min-width:600px){.opts.grid6{grid-template-columns:1fr 1fr 1fr}}
 @media (prefers-reduced-motion:reduce){.sky{display:none}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+.gi-hint{display:block;margin-top:8px;font-size:14px;font-weight:700;color:var(--muted)}
+.gi-hint a{color:var(--p);text-decoration:underline}
