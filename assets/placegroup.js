@@ -6,7 +6,7 @@
 (function () {
   var NAME = ['с нуля', 'Give Me Five! 1', 'Give Me Five! 2', 'Give Me Five! 3', 'Give Me Five! 4',
     'Get Involved A1+ (GIA1)', 'Get Involved A2 (GIA2)', 'Prepare 3', 'Prepare 4', 'Prepare 5', 'Gateway B2'];
-  var RANGE = { 1: [1, 1], 2: [1, 2], 3: [2, 3], 4: [3, 4], 5: [5, 5], 6: [5, 6], 7: [6, 7], 8: [7, 8], 9: [7, 8], 10: [8, 9], 11: [9, 10] };
+  var RANGE = { 1: [1, 1], 2: [1, 2], 3: [2, 3], 4: [3, 4], 5: [5, 5], 6: [5, 6], 7: [6, 7], 8: [7, 8], 9: [7, 9], 10: [8, 10], 11: [9, 10] };
   function name(k) { return NAME[Math.max(0, Math.min(10, Math.round(k)))]; }
   /* k — знания (может быть дробным: 4.5 = «между»), grade — класс в школе, o.strong — уверенно (для линии 🚀 GIA1) */
   function group(k, grade, o) {
