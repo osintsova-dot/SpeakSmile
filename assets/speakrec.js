@@ -125,7 +125,7 @@
         var next = 0, lane = function () { if (next >= n - 1) return Promise.resolve(); var j = next++; return one(j).then(lane); };
         var lanes = []; for (var k = 0; k < 4; k++) lanes.push(lane());
         return Promise.all(lanes).then(function () { return one(n - 1); }); }); }); });
-      return chain.then(function () { return post('/speak/done', { sid: sid, lesson: o.lesson, name: o.name, written: o.written, wmax: o.wmax, parts: have }); });
+      return chain.then(function () { return post('/speak/done', { sid: sid, lesson: o.lesson, name: o.name, written: o.written, wmax: o.wmax, parts: have, smaxAll: o.parts.reduce(function (a, x) { return a + (+x.max || 0); }, 0), partsAll: o.parts.length }); });
     });
   }
   function reset(lesson, parts) {
