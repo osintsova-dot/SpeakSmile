@@ -1,5 +1,5 @@
 /* Тест на уровень 1–4 класс: адаптивная цепочка диагностических тестов Give Me Five! L2→L5.
-   Порог 70 % → предлагаем следующий уровень; не прошёл стартовый → шаг вниз (до L2). Не больше 3 тестов подряд.
+   01.11.2026: ОДИН тест по классу/пройденному курсу, без перехода на другие уровни; группа — /assets/placegroup.js.
    Итог = самый высокий пройденный уровень N → «GMF N» (L5 → Get Involved A1+), ничего → «GMF 1». */
 (function () {
   'use strict';
@@ -190,6 +190,7 @@
   }
   var TOP = 4;
   function decideNext(L, r) {
+    return null; // 01.11.2026 Оксана: «сразу много тестов отпугнет» — один тест, без перехода на соседний уровень
     if (st.seq.length >= MAXTESTS) return null;
     if (r.pass) return (L < TOP && !st.res[L + 1]) ? L + 1 : null; // 01.11.2026: GMF 5 в школе нет — цепочка до L4
     return (L > 2 && !st.res[L - 1]) ? L - 1 : null;
@@ -216,23 +217,19 @@
 
   /* ── рекомендация ── */
   var COURSE = { 2: 'Give Me Five! 2', 3: 'Give Me Five! 3', 4: 'Give Me Five! 4', 5: 'Get Involved! A1+' };
+  /* 01.11.2026: знания → K (к какому курсу готов), группа — по знаниям и возрасту (/assets/placegroup.js); другие тесты не предлагаем */
+  function knowledge() { // один тест уровня L: ≥70% → готов к GMF L; 40–69% → GMF L−1; <40% → GMF L−2 (не ниже 1)
+    if (st.form.studied === 'no') return 0;
+    var L = st.seq[0], r = L && st.res[L]; if (!r) return 1;
+    var p = r.max ? r.score / r.max : 0;
+    if (p >= PASS) return (L === TOP && st.form.done === '5') ? 5 : L;
+    return Math.max(1, p >= 0.4 ? L - 1 : L - 2);
+  }
   function recommend() {
-    if (st.form.studied === 'no') return { level: 'GMF 1', course: 'Give Me Five! 1', sub: 'с нуля',
-      note: 'Начнём с самого начала: звуки, первые слова и песенки. Ребёнку будет легко и весело.' };
-    var passed = st.seq.filter(function (L) { return st.res[L] && st.res[L].pass; });
-    var hp = passed.length ? Math.max.apply(null, passed) : 0;
-    if (hp === 5) return { level: 'Get Involved A1+', course: 'Get Involved! A1+', sub: 'после GMF 4',
-      note: 'Ребёнок уверенно знает материал Give Me Five! 4 — готов к курсу для 5 класса.' };
-    if (hp) {
-      var nt = (hp < TOP && st.res[hp + 1]) ? '' : (st.stopped ? ' Следующий уровень можно проверить на пробном занятии.' : '') + (hp === TOP ? ' Если ребёнок уже закончил Give Me Five! 4, пройдите тест для 5–6 класса: speakandsmile.ru/test/gi/' : '');
-      return { level: 'GMF ' + hp, course: COURSE[hp], sub: '',
-        note: 'Ребёнок хорошо знает материал предыдущего уровня — этот курс будет в самый раз.' + nt };
-    }
-    var lo = Math.min.apply(null, st.seq.filter(function (L) { return st.res[L]; }));
-    if (lo === 2 || !isFinite(lo)) return { level: 'GMF 1', course: 'Give Me Five! 1', sub: 'для продолжающих',
-      note: 'Ребёнок уже знаком с английским — повторим основу и пойдём дальше в комфортном темпе.' };
-    return { level: 'GMF ' + (lo - 1), course: COURSE[lo - 1] || 'Give Me Five! 1', sub: '',
-      note: 'Уточним уровень на пробном занятии — преподаватель подберёт группу.' };
+    var k = knowledge(), g = window.SSGroup ? SSGroup.group(k, +st.form.klass) : { group: COURSE[k] || 'Give Me Five! 1', parent: '', admin: '', knowledge: '' };
+    var kn = k === 0 ? 'Английский с нуля' : k === 1 ? 'Знания уровня Give Me Five! 1' : k >= 5 ? 'Хорошо знает материал Give Me Five! 4' : 'Хорошо знает материал Give Me Five! ' + (k - 1) + ', готов к Give Me Five! ' + k;
+    return { level: 'GMF ' + Math.min(k, 4) + (k === 0 ? ' с нуля' : ''), course: g.group, sub: '', k: k, kn: kn, admin: g.admin,
+      note: kn + '.' + (g.parent ? ' ' + g.parent : '') + ' Точно определим группу на собеседовании с учителем в школе.' };
   }
   function payload(rec) {
     var last = st.seq.length ? st.res[st.seq[st.seq.length - 1]] : null;
@@ -241,13 +238,13 @@
       var g = {}; st.res[L].ex.forEach(function (e) { g[e.skill] = g[e.skill] || [0, 0]; g[e.skill][0] += e.score; g[e.skill][1] += e.max; });
       return 'L' + L + ': ' + Object.keys(g).map(function (k) { var v = g[k]; return k + ' ' + v[0] + '/' + v[1] + (v[0] < 0.6 * v[1] ? '!' : ''); }).join(', ');
     }).join(' · ');
-    var recTxt = rec.course + (rec.sub ? ' (' + rec.sub + ')' : '') + '. ';
+    var recTxt = 'Группа: ' + rec.course + (rec.admin ? ' — ' + rec.admin : '') + '. Знания: ' + rec.kn + '. Пригласить на собеседование с учителем. ' + (st.form.done === '5' ? 'Родитель: GMF 4 пройден. ' : '');
     if (st.form.studied === 'no') recTxt += 'Родитель: ребёнок не учил английский, тест не проходил.';
     else recTxt += 'Тесты: ' + (tests.map(function (L) { var r = st.res[L]; return 'Diagnostic L' + L + ' ' + r.score + '/' + r.max + (r.pass ? ' пройден' : ' ниже 70%'); }).join(', ') || 'не начат') +
       (st.stopped ? '. Остановились по желанию' : '') + '. Старт: L' + st.start + '.';
     return {
       test: 'kids', name: st.form.name, klass: st.form.klass + ' класс', contact: st.form.contact || '',
-      score: last ? last.score : 0, max: last ? last.max : 0, level: rec.level, rec: recTxt,
+      score: last ? last.score : 0, max: last ? last.max : 0, level: rec.kn, rec: recTxt,
       sections: tests.map(function (L) { return { label: 'Diagnostic L' + L, score: st.res[L].score, max: st.res[L].max }; }),
       detail: detail || '—', ms: Math.max(0, (st.tEnd || Date.now()) - st.t0)
     };
@@ -285,7 +282,7 @@
     st.seq.forEach(function (L) {
       var r = st.res[L]; if (!r) return;
       var li = document.createElement('li');
-      li.innerHTML = '<span>Задания по материалу ' + (L === 5 ? 'GMF 4' : 'GMF ' + (L - 1)) + '</span><b>' + r.score + ' из ' + r.max + '</b>';
+      li.innerHTML = '<span>Задания по материалу ' + 'GMF ' + (L - 1) + '</span><b>' + r.score + ' из ' + r.max + '</b>';
       ul.appendChild(li);
     });
     ul.hidden = !ul.children.length;
@@ -328,14 +325,15 @@
     $('f-start').children[0].setAttribute('aria-checked', 'true');
   }
   $('f-start').children[0].setAttribute('aria-checked', 'true');
+  (function () { var m = location.search.match(/[?&]k=([1-4])\b/); if (!m) return; var b = $('f-klass').querySelector('[data-v="' + m[1] + '"]'); if (b) b.click(); })();
   $('form').addEventListener('submit', function (e) {
     e.preventDefault();
     var name = $('f-name').value.trim().replace(/\s+/g, ' '), err = $('f-err');
     var miss = !name ? 'Напишите имя и фамилию ребёнка' : !form.klass ? 'Выберите класс' : !form.studied ? 'Ответьте, учил ли ребёнок английский' : '';
     if (miss) { err.hidden = false; err.textContent = miss; return; }
     err.hidden = true;
-    var start = form.start === 'auto' ? ({ 1: 2, 2: 2, 3: 3, 4: 4 })[form.klass] : +form.start;
-    st = { v: 1, form: { name: name, first: name.split(' ')[0], klass: form.klass, contact: $('f-contact').value.trim(), studied: form.studied },
+    var start = form.start === 'auto' ? ({ 1: 2, 2: 2, 3: 3, 4: 4 })[form.klass] : Math.min(4, +form.start); // GMF 5 нет: «прошли GMF 4» = начинаем с L4
+    st = { v: 1, form: { name: name, first: name.split(' ')[0], klass: form.klass, contact: $('f-contact').value.trim(), studied: form.studied, done: form.start },
       t0: Date.now(), start: start, seq: [], ans: {}, res: {}, cur: 0, ex: 0, it: 0, phase: 'form', next: null, sent: '' };
     if (form.studied === 'no') { st.phase = 'result'; save(); showResult(); return; }
     save(); startTest(start);

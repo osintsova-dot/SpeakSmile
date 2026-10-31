@@ -159,7 +159,7 @@ input:focus,select:focus{outline:none;border-color:var(--p);background-color:#ff
         <div class="v" id="rLevel"></div>
         <p id="rText"></p>
       </div>
-      <p class="next" id="rNext">Администратор школы получил результат и свяжется с вами, чтобы подобрать группу.</p>
+      <p class="next" id="rNext">Администратор школы получил результат, свяжется с вами и пригласит на собеседование с учителем в школе — там точно определим группу.</p>
       <div class="st wait" id="rStatus">Отправляем…</div>
       <div class="fail" id="rFail" hidden>
         <b>Покажите этот экран администратору</b>
@@ -174,6 +174,7 @@ input:focus,select:focus{outline:none;border-color:var(--p);background-color:#ff
 </div>
 
 <script src="/assets/place.js"></script>
+<script src="/assets/placegroup.js"></script>
 <script>
 (function () {
 'use strict';
@@ -262,14 +263,10 @@ function levelOf(score) { // таблица Teacher's Guide
    «Ожидаемый» уровень по классу: 5–6 → 2, 7 → 3, 8–9 → 4, 10–11 → 5. Разрыв ≥2 = явное несоответствие. */
 /* 01.11.2026 Оксана: Prepare 1 и 2 в школе нет — вместо них GIA1 (Get Involved A1+) и GIA2 (Get Involved A2). */
 function course(lvl) { return lvl === 1 ? 'Get Involved A1+ (GIA1)' : lvl === 2 ? 'Get Involved A2 (GIA2)' : lvl <= 5 ? 'Prepare ' + lvl : 'Gateway B2'; }
-function recOf(lvl, klass) {
-  var k = +klass, rec = course(lvl);
-  if (lvl >= 6) rec += ' (или Prepare 5 по возрасту)';
-  var exp = k <= 6 ? 2 : k === 7 ? 3 : k <= 9 ? 4 : 5;
-  if (exp - lvl >= 2) rec += ' — уровень ниже класса, обсудить с родителями';
-  else if (lvl - exp >= 2) rec += ' — уровень выше класса, учесть возраст при выборе группы';
-  return rec;
-}
+/* 01.11.2026: группа — по знаниям И возрасту, общее правило в /assets/placegroup.js */
+var KOF = [0, 5, 6, 7, 8, 9, 10, 10];
+function grp(lvl, klass) { return window.SSGroup ? SSGroup.group(KOF[lvl], klass) : { group: course(lvl), parent: '', admin: '' }; }
+function recOf(lvl, klass) { var g = grp(lvl, klass); return g.group + (g.admin ? ' — ' + g.admin : '') + '. Пригласить на собеседование с учителем.'; }
 function ok(i, a) { return !!a && a !== 'X' && Q[i][2].indexOf(a) >= 0; }
 function scoreRange(ans, from, to) { var s = 0; for (var i = from; i < to; i++) if (ok(i, ans[i])) s++; return s; }
 
@@ -289,7 +286,7 @@ function show(stage) {
 }
 
 /* старт */
-$('fName').value = S.name || ''; $('fKlass').value = S.klass || ''; $('fContact').value = S.contact || '';
+$('fName').value = S.name || ''; $('fKlass').value = S.klass || (location.search.match(/[?&]k=(\d+)/) || [])[1] || ''; $('fContact').value = S.contact || '';
 $('form').addEventListener('submit', function (e) {
   e.preventDefault();
   var name = $('fName').value.replace(/\s+/g, ' ').trim(), klass = $('fKlass').value, err = '';
@@ -356,9 +353,9 @@ function finish(stopped) {
 function renderResult() {
   var r = S.res; show('result');
   $('rTitle').textContent = 'Готово, ' + S.name.split(' ')[0] + '!';
-  $('rLevel').innerHTML = esc(course(r.lvl).replace(/ \(GIA\d\)/, '')) + ' <span>· ' + CEFR[r.lvl] + '</span>';
+  $('rLevel').innerHTML = 'Уровень ' + CEFR[r.lvl] + ' <span>· знания как в курсе ' + esc(course(r.lvl).replace(/ \(GIA\d\)/, '')) + '</span>';
   $('rText').textContent = ABOUT[r.lvl];
-  $('rDl').innerHTML = '<dt>Ученик</dt><dd>' + esc(S.name) + ', ' + esc(S.klass) + ' кл.</dd><dt>Уровень</dt><dd>' + esc(r.level) + '</dd><dt>Баллы</dt><dd>' + r.score + ' из ' + r.max + (r.stopped ? ' (стоп после 30)' : '') + '</dd><dt>Группа</dt><dd>' + esc(r.rec) + '</dd>' + (S.contact ? '<dt>Связь</dt><dd>' + esc(S.contact) + '</dd>' : '');
+  $('rDl').innerHTML = '<dt>Ученик</dt><dd>' + esc(S.name) + ', ' + esc(S.klass) + ' кл.</dd><dt>Знания</dt><dd>' + esc(r.level) + '</dd><dt>Баллы</dt><dd>' + r.score + ' из ' + r.max + (r.stopped ? ' (стоп после 30)' : '') + '</dd><dt>Группа</dt><dd>' + esc(grp(r.lvl, S.klass).group) + (grp(r.lvl, S.klass).parent ? '<br><small>' + esc(grp(r.lvl, S.klass).parent) + '</small>' : '') + '</dd>' + (S.contact ? '<dt>Связь</dt><dd>' + esc(S.contact) + '</dd>' : '');
   status(S.sent === 'ok' ? 'ok' : S.sent === 'queued' ? 'fail' : 'wait');
 }
 function status(s) {

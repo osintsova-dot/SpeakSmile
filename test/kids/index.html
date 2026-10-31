@@ -28,7 +28,7 @@
         <h1>Какой курс подойдёт ребёнку?</h1>
       </div>
     </div>
-    <p class="lead">Короткие весёлые задания с картинками и звуком: <b>15–30 минут</b>. Начните вы, дальше ребёнок отвечает сам — подсказывать не нужно, так результат точнее.</p>
+    <p class="lead">Короткие весёлые задания с картинками и звуком: <b>10–15 минут</b>. Начните вы, дальше ребёнок отвечает сам — подсказывать не нужно, так результат точнее.</p>
     <div class="tips">
       <span>🎧 Включите звук</span><span>📱 Телефон или планшет</span><span>☕ Можно делать перерывы</span>
     </div>
@@ -53,7 +53,8 @@
           <button type="button" data-v="2">Школьный английский / GMF 1</button>
           <button type="button" data-v="3">Give Me Five! 2</button>
           <button type="button" data-v="4">Give Me Five! 3</button>
-        </div><small class="gi-hint">Уже закончили Give Me Five! 4? Вам <a href="../gi/">тест для 5–6 класса</a>.</small></div>
+          <button type="button" data-v="5">Give Me Five! 4</button>
+        </div></div>
       <p class="err" id="f-err" role="alert" hidden></p>
       <button class="btn primary big wide" type="submit" id="f-go">Начать</button>
       <p class="fine">Данные увидит только администратор школы Speak &amp; Smile.</p>
@@ -121,7 +122,7 @@
       <ul class="tests" id="res-tests"></ul>
     </div>
     <p class="send" id="res-send" role="status"></p>
-    <p class="fine light" id="res-admin">Администратор школы получил результат и свяжется с вами.</p>
+    <p class="fine light" id="res-admin">Администратор школы получил результат, свяжется с вами и пригласит на собеседование с учителем в школе.</p>
     <button class="btn ghost sm" id="res-new" style="margin-top:18px">Пройти тест за другого ребёнка</button>
   </section>
 
@@ -131,6 +132,7 @@
 <p id="jserr" class="jserr" hidden></p>
 <script>window.onerror=function(m){var e=document.getElementById('jserr');if(e){e.hidden=false;e.textContent='Ошибка страницы: '+m+'. Обновите страницу — ответы сохранены.';}};</script>
 <script src="/assets/place.js"></script>
+<script src="/assets/placegroup.js"></script>
 <script src="data.js?v=1"></script>
 <script src="kids.js?v=1"></script>
 </body></html>

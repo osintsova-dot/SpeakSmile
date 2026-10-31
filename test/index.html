@@ -32,6 +32,13 @@ h1{font-size:clamp(32px,8.5vw,46px);line-height:1.02;margin:10px 0 6px;text-shad
 .card .go{font-size:26px;color:var(--honey);font-weight:800}
 .foot{margin-top:24px;font-size:14px;font-weight:600;line-height:1.5}
 @media (prefers-reduced-motion:reduce){.mascot{animation:none}.card{animation:none;opacity:1;transform:none}}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+.grid a{display:grid;place-items:center;height:64px;border-radius:18px;background:#fff;color:var(--p);font-weight:800;font-size:24px;text-decoration:none;box-shadow:0 10px 22px rgba(30,10,80,.22);transition:transform .18s var(--ease),box-shadow .18s;opacity:0;transform:translateY(8px);animation:in .4s var(--ease) forwards}
+.grid a:nth-child(n+5){animation-delay:.05s}.grid a:nth-child(n+9){animation-delay:.1s}
+.grid a:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(30,10,80,.3)}
+.grid a:active{transform:scale(.96)}
+.hint{font-weight:600;line-height:1.45;margin:6px auto 0;max-width:30em}
+@media (prefers-reduced-motion:reduce){.grid a{animation:none;opacity:1;transform:none}}
 </style></head>
 <body><div class="wrap">
 <span class="brand">Speak<b>&amp;</b>Smile</span>
@@ -40,10 +47,13 @@ h1{font-size:clamp(32px,8.5vw,46px);line-height:1.02;margin:10px 0 6px;text-shad
 <p class="sub">английский · бесплатно · онлайн</p>
 <p class="lead">Поможет понять, в какую группу пойти. Отвечайте сами, без переводчика: так результат будет честным. Результат сразу получит администратор школы и свяжется с вами.</p>
 
-<div class="q">В каком классе ребёнок?</div>
-<a class="card" href="kids/"><span class="n">1–4</span><div><h2>Начальная школа</h2><p>С картинками и аудио, 10–20 минут. Лучше проходить вместе с родителем.</p></div><span class="go">›</span></a>
-<a class="card" href="gi/"><span class="n">5–6</span><div><h2>5–6 класс</h2><p>Слова, грамматика, чтение и аудирование, 20–30 минут. Нужны наушники.</p></div><span class="go">›</span></a>
-<a class="card" href="teen/"><span class="n">7–11</span><div><h2>7–11 класс</h2><p>Тест Cambridge: 60 вопросов, около 30 минут. Подходит и для 5–6 класса с сильным английским.</p></div><span class="go">›</span></a>
+<div class="q">В каком классе учится ребёнок?</div>
+<div class="grid" id="grades">
+<a href="kids/?k=1">1</a><a href="kids/?k=2">2</a><a href="kids/?k=3">3</a><a href="kids/?k=4">4</a>
+<a href="gi/?k=5">5</a><a href="gi/?k=6">6</a><a href="teen/?k=7">7</a><a href="teen/?k=8">8</a>
+<a href="teen/?k=9">9</a><a href="teen/?k=10">10</a><a href="teen/?k=11">11</a>
+</div>
+<p class="hint">Один короткий тест под ваш класс. После него пригласим на собеседование с учителем в школе.</p>
 
 <p class="foot">Вопросы — администратору в бот школы или по телефону +7&nbsp;995&nbsp;124-21-12.</p>
 </div></body></html>

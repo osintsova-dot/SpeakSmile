@@ -171,6 +171,7 @@ table.tb .slot{width:100%}
 
 <script src="data.js"></script>
 <script src="/assets/place.js"></script>
+<script src="/assets/placegroup.js"></script>
 <script>
 (function(){
 'use strict';
@@ -228,18 +229,18 @@ function unanswered(t,i){
   return a.filter(function(v){ return v==null || String(v).trim()===''; }).length;
 }
 
-/* recommendation (draft mapping, see README) */
+/* 01.11.2026 Оксана: один тест по классу (5 → A1+, 6 → A2), без «следующего уровня» и без других тестов.
+   Знания → K (/assets/placegroup.js): A1+ <40% → 4, 40–69% → 5, ≥70% → 5 уверенно; A2 <40% → 4, 40–69% → 5, ≥70% → 6. Группа — по знаниям и возрасту. */
 function recommend(){
-  var r1=testScore('a1'), took2 = S.test==='a2';
-  var r2 = took2 ? testScore('a2') : null, lvl;
-  if(r1.pct < 0.4) lvl='Get Involved A1+ с нуля (группа 🐣)';
-  else if(r1.pct < 0.7) lvl='Get Involved A1+';
-  else if(r2 && r2.pct >= 0.85) lvl='Get Involved A2 или Prepare 3 — проверить тестом для 7–11 класса (/test/teen/)';
-  else if(r2 && r2.pct >= 0.7) lvl='Get Involved A2';
-  else lvl='Get Involved A1+ 🚀 (продолжающие)';
-  return { r1:r1, r2:r2, level:lvl };
+  var t=S.test, r1=testScore(t), p=r1.pct, k, strong=false;
+  if(t==='a1'){ k = p<0.4 ? 4 : 5; strong = p>=0.7; }
+  else { k = p<0.4 ? 4 : p<0.7 ? 5 : 6; }
+  var g = window.SSGroup ? SSGroup.group(k, +S.prof.klass, {strong:strong}) : { group:'Get Involved', parent:'', admin:'' };
+  var kn = t==='a1'
+    ? (p<0.4 ? 'База начальной школы пока слабая' : p<0.7 ? 'Знания начальной школы есть, есть пробелы' : 'Уверенно знает материал начальной школы')
+    : (p<0.4 ? 'Материал уровня A1+ пока слабый' : p<0.7 ? 'Материал уровня A1+ знает частично' : 'Уверенно знает материал уровня A1+');
+  return { r1:r1, r2:null, k:k, level:g.group, kn:kn, g:g };
 }
-
 /* audio: one element, play on tap (iOS) */
 var AU = new Audio(); AU.preload='none'; var auKey=null, auUI=null;
 function stopAudio(){ try{ AU.pause(); }catch(e){} auKey=null; auUI=null; }
@@ -281,25 +282,24 @@ function scrStart(){
    '<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
    '<div class="kick">Speak &amp; Smile · тест на уровень</div><h1>Английский<br>для 5–6 класса</h1>'+
    '<p>Узнаем, с какого курса тебе будет интересно и по силам начать. Здесь нет «плохих» результатов — только подсказка для нас.</p>'+
-   '<div class="facts"><span>⏱ 25–30 мин</span><span>🎧 нужен звук</span><span>📱 можно с телефона</span></div></div>'+
+   '<div class="facts"><span>⏱ 15–20 мин</span><span>🎧 нужен звук</span><span>📱 можно с телефона</span></div></div>'+
    (resume ? '<div class="card"><b>Тест уже начат</b><p class="note" style="margin:4px 0 14px">'+esc(S.prof.first+' '+S.prof.last)+' — можно продолжить с того же места.</p><button class="btn" id="bRes">Продолжить</button><button class="btn ghost dark" id="bNew">Начать заново</button></div>' : '')+
    '<form class="card" id="fm" novalidate'+(resume?' hidden':'')+'>'+
    '<div class="two"><div><label class="f" for="iF">Имя ученика</label><input class="inp" id="iF" autocomplete="given-name" value="'+esc(p.first)+'"></div>'+
    '<div><label class="f" for="iL">Фамилия</label><input class="inp" id="iL" autocomplete="family-name" value="'+esc(p.last)+'"></div></div>'+
-   '<label class="f">Класс</label><div class="seg" id="seg">'+['5','6','7'].map(function(k){return '<button type="button" data-k="'+k+'" aria-pressed="'+(p.klass===k)+'">'+k+'</button>';}).join('')+'</div>'+
-   '<p class="note" id="n7" '+(p.klass==='7'?'':'hidden')+'>Для 7–11 класса есть свой тест: <a href="/test/teen/">открыть</a>. Этот тоже можно пройти.</p>'+
+   '<label class="f">Класс</label><div class="seg" id="seg">'+['5','6'].map(function(k){return '<button type="button" data-k="'+k+'" aria-pressed="'+(p.klass===k)+'">'+k+'</button>';}).join('')+'</div>'+
    '<label class="f" for="iC">Телефон или ник родителя <span style="font-weight:600">(необязательно)</span></label><input class="inp" id="iC" inputmode="text" autocomplete="tel" placeholder="+7… или @ник" value="'+esc(p.contact)+'">'+
    '<div class="err" id="er"></div><div style="height:12px"></div><button class="btn" type="submit">Начать тест</button></form></section>';
-  var kl=p.klass;
+  var kl=p.klass || ((location.search.match(/[?&]k=([56])\b/)||[])[1]) || ''; if(kl && !p.klass) setTimeout(function(){ var b=document.querySelector('#seg [data-k="'+kl+'"]'); if(b) b.setAttribute('aria-pressed','true'); });
   var seg=document.getElementById('seg');
-  seg.onclick=function(ev){ var b=ev.target.closest('button'); if(!b) return; kl=b.dataset.k; seg.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed', x===b);}); document.getElementById('n7').hidden = kl!=='7'; };
+  seg.onclick=function(ev){ var b=ev.target.closest('button'); if(!b) return; kl=b.dataset.k; seg.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed', x===b);}); };
   document.getElementById('fm').onsubmit=function(ev){
     ev.preventDefault();
     var f=document.getElementById('iF').value.trim(), l=document.getElementById('iL').value.trim(), c=document.getElementById('iC').value.trim(), er=document.getElementById('er');
     if(f.length<2){ er.textContent='Напиши имя ученика'; document.getElementById('iF').focus(); return; }
     if(l.length<2){ er.textContent='Напиши фамилию'; document.getElementById('iL').focus(); return; }
     if(!kl){ er.textContent='Выбери класс'; return; }
-    S=fresh(); S.prof={first:f,last:l,klass:kl,contact:c}; S.t0=Date.now(); S.phase='intro'; S.test='a1'; save(); render();
+    S=fresh(); S.prof={first:f,last:l,klass:kl,contact:c}; S.t0=Date.now(); S.phase='intro'; S.test = kl==='6' ? 'a2' : 'a1'; save(); render();
   };
   if(resume){
     document.getElementById('bRes').onclick=function(){ if(S.phase==='start') S.phase='intro'; render(); };
@@ -311,8 +311,8 @@ function scrIntro(){
   setChrome(false,false); stopAudio();
   var t=S.test, is2 = t==='a2';
   app.innerHTML='<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
-   '<div class="kick">'+(is2?'Следующий уровень':'Поехали')+'</div><h1>'+T[t].title+'</h1>'+
-   '<p>'+(is2?'Чуть сложнее. Отвечай спокойно — что не знаешь, можно пропустить.':'Привет, '+esc(S.prof.first)+'! '+EX[t].length+' коротких заданий: слова, грамматика, чтение и аудирование.')+'</p>'+
+   '<div class="kick">Поехали</div><h1>'+T[t].title+'</h1>'+
+   '<p>'+'Привет, '+esc(S.prof.first)+'! '+EX[t].length+' коротких заданий: слова, грамматика, чтение и аудирование. Что не знаешь — можно пропустить.'+'</p>'+
    '<div class="facts"><span>'+EX[t].length+' заданий</span><span>⏱ ~'+(is2?'20':'15')+' мин</span><span>🎧 в конце — аудио</span></div></div>'+
    '<div class="card"><p class="small" style="margin:0">Задания на английском, подсказки — на русском. Ответы сохраняются: если страница закроется, продолжишь с того же места.</p></div>'+
    '<div style="height:6px"></div><button class="btn" id="bGo">Начать</button></section>';
@@ -428,8 +428,7 @@ document.getElementById('bNext').onclick=function(){
   if(unanswered(t,i) && !confirmSkip){ confirmSkip=true; toast('Есть пустые ответы. Нажми «Дальше» ещё раз, чтобы пропустить.'); return; }
   stopAudio();
   if(i+1 < EX[t].length){ S.idx=i+1; save(); render(); scrollTop(); return; }
-  if(t==='a1' && testScore('a1').pct >= T.a1.pass){ S.phase='break'; }
-  else S.phase='result';
+  S.phase='result';
   save(); render(); scrollTop();
 };
 document.getElementById('bBack').onclick=function(){ if(S.phase==='ex' && S.idx>0){ stopAudio(); S.idx--; save(); render(); scrollTop(); } };
@@ -437,15 +436,10 @@ document.getElementById('bBack').onclick=function(){ if(S.phase==='ex' && S.idx>
 /* result + send */
 var sending=false;
 function payload(){
-  var R=recommend(), secs=R.r1.secs.slice(), score=R.r1.score, max=R.r1.max;
-  var rec='A1+ '+R.r1.score+'/'+R.r1.max+' ('+Math.round(R.r1.pct*100)+'%)';
-  if(R.r2){ secs=secs.concat(R.r2.secs); score+=R.r2.score; max+=R.r2.max; rec+=', A2 '+R.r2.score+'/'+R.r2.max+' ('+Math.round(R.r2.pct*100)+'%)'; }
-  else if(S.declined) rec+=', A2 — предложен, отказался';
-  else rec+=', A2 не проходил (A1+ < 70%)';
-  rec = R.level+'. Тесты: '+rec+'. Speaking и Writing не проверялись.';
-  var weak=R.r1.weak.map(function(w){return 'A1+ '+w;}); if(R.r2) weak=weak.concat(R.r2.weak.map(function(w){return 'A2 '+w;}));
-  return { test:'gi', name:S.prof.first+' '+S.prof.last, klass:S.prof.klass, contact:S.prof.contact||'', score:score, max:max,
-    level:R.level, rec:rec, sections:secs, detail: weak.length ? 'Слабее: '+weak.join('; ') : 'Явных пробелов нет', ms: Date.now()-(S.t0||Date.now()) };
+  var R=recommend(), key=T[S.test].key;
+  var rec='Группа: '+R.g.group+(R.g.admin?' — '+R.g.admin:'')+'. Знания: '+R.kn+'. Тест Get Involved '+key+' diagnostic: '+R.r1.score+'/'+R.r1.max+' ('+Math.round(R.r1.pct*100)+'%). Speaking и Writing не проверялись. Пригласить на собеседование с учителем.';
+  return { test:'gi', name:S.prof.first+' '+S.prof.last, klass:S.prof.klass, contact:S.prof.contact||'', score:R.r1.score, max:R.r1.max,
+    level:R.kn, rec:rec, sections:R.r1.secs, detail: R.r1.weak.length ? 'Слабее: '+R.r1.weak.join('; ') : 'Явных пробелов нет', ms: Date.now()-(S.t0||Date.now()) };
 }
 function doSend(st, manual){
   if(S.sent){ paintSt(st,'ok'); return; }
@@ -456,7 +450,7 @@ function doSend(st, manual){
 }
 function paintSt(st,k){
   if(k==='busy'){ st.className='stat'; st.innerHTML='<span class="dot"></span>Отправляем результат…'; }
-  else if(k==='ok'){ st.className='stat ok'; st.innerHTML='✓ Отправлено. Администратор школы получил результат и свяжется с вами.'; }
+  else if(k==='ok'){ st.className='stat ok'; st.innerHTML='✓ Отправлено. Администратор школы свяжется с вами и пригласит на собеседование с учителем в школе.'; }
   else { st.className='stat bad'; st.innerHTML='<div>Не получилось отправить. Покажите этот экран администратору.<br><button class="btn ghost dark" id="bRetry" style="margin-top:10px;min-height:46px;font-size:16px">Попробовать ещё раз</button></div>';
     document.getElementById('bRetry').onclick=function(){ doSend(st, true); }; }
 }
@@ -467,9 +461,8 @@ function scrResult(){
   if(R.r1.pct>=0.7) confetti();
   app.innerHTML='<section class="scr"><div class="hero"><img src="/assets/speaky.png" alt="" width="118" height="118">'+
    '<div class="kick">Тест пройден</div><h1>Готово, '+esc(S.prof.first)+'!</h1><p>Спасибо, ты молодец. Вот что получилось.</p></div>'+
-   '<div class="card"><p class="big">Рекомендуем курс</p><p class="course">'+esc(R.level.replace(' — проверить тестом для 7–11 класса (/test/teen/)',''))+'</p>'+
-   (R.r2 && R.r2.pct>=0.85 ? '<p class="note" style="margin:0 0 8px">Сильный результат! Можно ещё пройти <a href="/test/teen/">тест для 7–11 класса</a> — посмотрим, подойдёт ли Prepare 3.</p>' : '')+
-   '<p class="small" style="margin:0">Итог: <b id="cu">0</b> из '+mx+' баллов · '+(R.r2?'2 теста':'1 тест')+'</p></div>'+
+   '<div class="card"><p class="big">Советуем группу</p><p class="course">'+esc(R.g.group)+'</p><p class="note" style="margin:0 0 8px">'+esc(R.kn)+'.'+(R.g.parent?' '+esc(R.g.parent):'')+' Точно определим группу на собеседовании с учителем в школе.</p>'+
+   '<p class="small" style="margin:0">Итог: <b id="cu">0</b> из '+mx+' баллов · '+'1 тест'+'</p></div>'+
    '<div class="card">'+secs.map(function(s){ return '<div class="sec"><div class="h"><span>'+esc(s.label)+'</span><span>'+s.score+'/'+s.max+'</span></div><div class="track"><i data-w="'+Math.round(s.score/s.max*100)+'"></i></div></div>'; }).join('')+
    '<p class="small" style="margin:10px 0 0">Говорение и письмо посмотрим на пробном уроке.</p></div>'+
    '<div class="stat" id="st"></div>'+
