@@ -260,12 +260,11 @@ function levelOf(score) { // таблица Teacher's Guide
 /* ЧЕРНОВИК — подтвердить у Оксаны: соответствие уровня Prepare и класса нашим группам.
    Линейка: Get Involved A1+/A2 = 5–6 кл; Prepare 3 ≈ 7 кл; Prepare 4 = 8–9 (ОГЭ); Prepare 5 = 10–11 (ЕГЭ); Gateway B2 = сильные 10–11.
    «Ожидаемый» уровень по классу: 5–6 → 2, 7 → 3, 8–9 → 4, 10–11 → 5. Разрыв ≥2 = явное несоответствие. */
+/* 01.11.2026 Оксана: Prepare 1 и 2 в школе нет — вместо них GIA1 (Get Involved A1+) и GIA2 (Get Involved A2). */
+function course(lvl) { return lvl === 1 ? 'Get Involved A1+ (GIA1)' : lvl === 2 ? 'Get Involved A2 (GIA2)' : lvl <= 5 ? 'Prepare ' + lvl : 'Gateway B2'; }
 function recOf(lvl, klass) {
-  var k = +klass, young = k <= 6, rec;
-  if (lvl === 1) rec = young ? 'Get Involved A1+' : 'Prepare 3 с поддержкой (сначала повторить базу)';
-  else if (lvl === 2) rec = young ? 'Get Involved A2' : 'Prepare 3';
-  else if (lvl <= 5) rec = 'Prepare ' + lvl;
-  else rec = 'Gateway B2 (или Prepare 5 по возрасту)';
+  var k = +klass, rec = course(lvl);
+  if (lvl >= 6) rec += ' (или Prepare 5 по возрасту)';
   var exp = k <= 6 ? 2 : k === 7 ? 3 : k <= 9 ? 4 : 5;
   if (exp - lvl >= 2) rec += ' — уровень ниже класса, обсудить с родителями';
   else if (lvl - exp >= 2) rec += ' — уровень выше класса, учесть возраст при выборе группы';
@@ -347,17 +346,17 @@ document.addEventListener('keydown', function (e) {
 function finish(stopped) {
   var ans = S.ans, upto = stopped ? 30 : N, score = scoreRange(ans, 0, upto), lvl = levelOf(score);
   var sections = [], errs = [], idk = 0;
-  for (var b = 0; b < upto / 10; b++) sections.push({ label: 'Prepare ' + (b + 2) + ' (' + (b * 10 + 1) + '–' + (b * 10 + 10) + ')', score: scoreRange(ans, b * 10, b * 10 + 10), max: 10 });
+  for (var b = 0; b < upto / 10; b++) sections.push({ label: 'Вопросы ' + (b * 10 + 1) + '–' + (b * 10 + 10) + ' (' + CEFR[b + 2] + ')', score: scoreRange(ans, b * 10, b * 10 + 10), max: 10 });
   for (var i = 0; i < upto; i++) { if (!ok(i, ans[i])) errs.push(i + 1); if (ans[i] === 'X') idk++; }
   var detail = (errs.length ? 'Ошибки: ' + errs.join(',') : 'Ошибок нет') + (idk ? ' · «Не знаю»: ' + idk : '') + (stopped ? ' · остановлен после 30 (меньше 25)' : '');
-  S.res = { score: score, max: N, lvl: lvl, level: 'Prepare ' + lvl + ' (' + CEFR[lvl] + ')', rec: recOf(lvl, S.klass), sections: sections, detail: detail, stopped: stopped, ms: Date.now() - (S.t0 || Date.now()) };
+  S.res = { score: score, max: N, lvl: lvl, level: course(lvl).replace(/ \(GIA\d\)/, '') + ' (' + CEFR[lvl] + '; по Cambridge Prepare ' + lvl + ')', rec: recOf(lvl, S.klass), sections: sections, detail: detail, stopped: stopped, ms: Date.now() - (S.t0 || Date.now()) };
   S.stage = 'result'; S.sent = false; save();
   renderResult(); send();
 }
 function renderResult() {
   var r = S.res; show('result');
   $('rTitle').textContent = 'Готово, ' + S.name.split(' ')[0] + '!';
-  $('rLevel').innerHTML = 'Prepare ' + r.lvl + ' <span>· ' + CEFR[r.lvl] + '</span>';
+  $('rLevel').innerHTML = esc(course(r.lvl).replace(/ \(GIA\d\)/, '')) + ' <span>· ' + CEFR[r.lvl] + '</span>';
   $('rText').textContent = ABOUT[r.lvl];
   $('rDl').innerHTML = '<dt>Ученик</dt><dd>' + esc(S.name) + ', ' + esc(S.klass) + ' кл.</dd><dt>Уровень</dt><dd>' + esc(r.level) + '</dd><dt>Баллы</dt><dd>' + r.score + ' из ' + r.max + (r.stopped ? ' (стоп после 30)' : '') + '</dd><dt>Группа</dt><dd>' + esc(r.rec) + '</dd>' + (S.contact ? '<dt>Связь</dt><dd>' + esc(S.contact) + '</dd>' : '');
   status(S.sent === 'ok' ? 'ok' : S.sent === 'queued' ? 'fail' : 'wait');
