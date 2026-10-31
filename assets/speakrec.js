@@ -117,7 +117,14 @@
       var have = o.parts.filter(function (p, i) { return recs[i] || (p.text != null && String(p.text).trim()); }); // Writing: part с text — без записи
       if (!have.length) return { ok: true, none: true };
       var chain = Promise.resolve();
-      o.parts.forEach(function (p, i) { if (recs[i]) chain = chain.then(function () { return b64(recs[i].blob).then(function (b) { return post('/speak/up', { sid: sid, part: p.id, mime: recs[i].mime, b64: b }); }); }); });
+      // частями по 12 КБ (31.10.2026): связь Яндекс→заграница замирает после ~16 КБ, длинная запись не уходила.
+      // Части 0…n-2 — по 4 сразу, последняя — после всех (на ней сервер склеивает запись)
+      o.parts.forEach(function (p, i) { if (recs[i]) chain = chain.then(function () { return b64(recs[i].blob).then(function (b) {
+        var CH = 12000, n = Math.max(1, Math.ceil(b.length / CH));
+        var one = function (j) { var body = { sid: sid, part: p.id, mime: recs[i].mime, b64: b.slice(j * CH, (j + 1) * CH), i: j, n: n }; var t = 0, go = function () { return post('/speak/up', body).catch(function (e) { if (++t >= 4) throw e; return go(); }); }; return go(); };
+        var next = 0, lane = function () { if (next >= n - 1) return Promise.resolve(); var j = next++; return one(j).then(lane); };
+        var lanes = []; for (var k = 0; k < 4; k++) lanes.push(lane());
+        return Promise.all(lanes).then(function () { return one(n - 1); }); }); }); });
       return chain.then(function () { return post('/speak/done', { sid: sid, lesson: o.lesson, name: o.name, written: o.written, wmax: o.wmax, parts: have }); });
     });
   }
