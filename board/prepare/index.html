@@ -131,7 +131,7 @@ main.focus #fbar{display:flex}
     <button class="sm" id="rate" title="Скорость">1×</button></div>
 </footer>
 </div>
-<script src="data.js?v=2"></script>
+<script src="data.js?v=3"></script>
 <script>
 const HASH='6f29c58da8aaca3e51ba00ea78ae7fcc503dd2a727d4651c999a202b997afe4d';
 const $=s=>document.querySelector(s);
@@ -217,7 +217,7 @@ function openEx(k,j){ const P=U().pages; if(!visible().includes(k)){S.i=k; rende
     x.t.map(src=>`<button data-src="${src}" class="${S.cur===src?'on':''}">🔊 ${src.match(/(\d+)\.mp3/)[1].replace(/^0+/,'')}</button>`).join('')+
     (x.k.length?`<button id="fans">🔑 Ответ</button>`:'')+`<button id="fnext" ${n>=L.length-1?'disabled style="opacity:.35"':''}>›</button><button class="x" id="fx" aria-label="Закрыть">✕</button>`;
   $('#fkey').classList.remove('open');
-  $('#fkey').innerHTML=x.k.map(i=>p.keys[i]?`<div class="q">${p.keys[i][0]}</div><div>${p.keys[i][1]}</div>`:'').join('');
+  $('#fkey').innerHTML=x.k.map(i=>Array.isArray(i)?i:p.keys[i]).filter(Boolean).map(q=>`<div class="q">${q[0]}</div><div>${q[1]}</div>`).join('');
   $('#fprev').onclick=()=>{ if(n>0) openEx(...L[n-1]) }; $('#fnext').onclick=()=>{ if(n<L.length-1) openEx(...L[n+1]) };
   $('#fx').onclick=closeEx; if($('#fans')) $('#fans').onclick=()=>$('#fkey').classList.toggle('open'); }
 function closeEx(){ S.focus=null; mn.classList.remove('focus'); $('#fkey').classList.remove('open'); resetZoom() }
