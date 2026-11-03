@@ -284,3 +284,15 @@ body.night-page .night{background:transparent}
 .prod.app:hover .icons img:first-child{transform:rotate(-4deg)}
 .prod.app:hover .icons img:nth-child(2){transform:rotate(7deg) translateY(2px)}
 @media (prefers-reduced-motion:reduce){.prod .icons img{transition:none}}
+
+/* летняя плашка — в цветах иконки бота Holiday English (бирюза, солнце, фиолет) */
+.prod.soon.summer{background:radial-gradient(110% 140% at 0% 0%,#3FD6D2 0%,#1BBFC2 45%,#0FA3B4 100%);box-shadow:0 26px 54px -36px rgba(15,163,180,.8);color:#fff}
+.prod.soon.summer:hover{box-shadow:0 30px 60px -32px rgba(15,163,180,.95)}
+.prod.soon.summer h3{color:#fff}
+.prod.soon.summer p{color:rgba(255,255,255,.9)}
+.prod.soon.summer .pill{background:#FFD84A;color:#4A2A00}
+.prod.soon.summer .go{background:#7A2FC0;color:#FFF3C4;box-shadow:none}
+.prod.soon.summer .bot{width:96px;height:96px;border-radius:24px;box-shadow:0 14px 28px -12px rgba(0,60,70,.55);transition:transform .4s var(--ease)}
+.prod.soon.summer:hover .bot{transform:rotate(-5deg) scale(1.04)}
+@media(min-width:900px){.prod.soon.summer{grid-template-columns:auto 1fr auto auto}}
+@media (prefers-reduced-motion:reduce){.prod.soon.summer .bot{transition:none}}
