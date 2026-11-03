@@ -269,3 +269,18 @@ body.night-page .contact .btn-o{color:var(--cream);box-shadow:inset 0 0 0 1.5px 
 body.night-page .contact .btn-o:hover{color:var(--gold);box-shadow:inset 0 0 0 1.5px var(--gold)}
 body.night-page .foot,body.night-page .foot a{color:var(--cream-3)}
 body.night-page .night{background:transparent}
+
+/* плашка тренажёра — в цветах иконок приложения */
+.prod.app{background:radial-gradient(120% 100% at 100% 0%,#C04DE6 0%,#8A3FE0 38%,#5B2FC4 100%);color:#fff;box-shadow:0 30px 60px -36px rgba(91,47,196,.7)}
+.prod.app h3{color:#fff}
+.prod.app p{color:rgba(255,255,255,.86)}
+.prod.app .meta{color:rgba(255,255,255,.72)}
+.prod.app .meta b{color:#FFE27A}
+.prod.app .go{background:#fff;color:#5B2FC4}
+.prod.app:hover{box-shadow:0 34px 70px -34px rgba(91,47,196,.85)}
+.prod .icons{display:flex;gap:12px;margin:-4px 0 6px}
+.prod .icons img{width:84px;height:84px;border-radius:22px;box-shadow:0 14px 28px -12px rgba(30,10,80,.6);transition:transform .4s var(--ease)}
+.prod .icons img:nth-child(2){transform:rotate(4deg) translateY(4px)}
+.prod.app:hover .icons img:first-child{transform:rotate(-4deg)}
+.prod.app:hover .icons img:nth-child(2){transform:rotate(7deg) translateY(2px)}
+@media (prefers-reduced-motion:reduce){.prod .icons img{transition:none}}
