@@ -62,6 +62,8 @@ aside h3{margin:0 0 10px;font-size:16px;color:var(--sun)}
 .hint{color:var(--mute);font-size:13px}
 .zoomhud{position:absolute;left:12px;bottom:12px;display:flex;gap:6px;z-index:4}
 .zoomhud button{width:40px;height:40px;border-radius:10px;background:rgba(38,33,51,.92);font-size:20px;font-weight:800}
+.sel{position:absolute;border:3px solid var(--sun);background:rgba(245,200,66,.12);border-radius:6px;pointer-events:none;z-index:6}
+main.picking{cursor:crosshair}
 .gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:20}
 .gate form{background:var(--panel);padding:28px;border-radius:16px;width:min(360px,90vw);display:grid;gap:12px;text-align:center}
 .gate input{padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--ink);color:var(--txt);font-size:18px;text-align:center}
@@ -80,6 +82,7 @@ aside h3{margin:0 0 10px;font-size:16px;color:var(--sun)}
   <div class="tabs" id="tabs"></div>
   <div class="sp"></div>
   <button class="tool" id="spread" aria-pressed="false" title="Разворот (S)">⧉ Разворот</button>
+  <button class="tool" id="area" aria-pressed="false" title="Выделить задание — на весь экран (Z)">🔍 Задание</button>
   <button class="tool" id="keys" aria-pressed="false" title="Ключи (K)">🔑 Ключи</button>
   <button class="tool" id="fs" title="Во весь экран (F)">⛶</button>
 </header>
@@ -154,8 +157,8 @@ $('#fs').onclick=()=>document.fullscreenElement?document.exitFullscreen():docume
 function go(d){const P=U().pages, vis=visible(); let k=d>0?Math.max(...vis)+1:Math.min(...vis)-1; if(k<0||k>=P.length) return; S.i=k; render()}
 addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; const k=e.key.toLowerCase();
   if(k==='arrowright'||k==='pagedown') go(1); else if(k==='arrowleft'||k==='pageup') go(-1);
-  else if(k===' '){e.preventDefault(); $('#pp').click()} else if(k==='k') $('#keys').click(); else if(k==='s') $('#spread').click(); else if(k==='f') $('#fs').click();
-  else if(k==='escape'){ $('#aside').classList.remove('open'); resetZoom() } });
+  else if(k===' '){e.preventDefault(); $('#pp').click()} else if(k==='k') $('#keys').click(); else if(k==='s') $('#spread').click(); else if(k==='f') $('#fs').click(); else if(k==='z') $('#area').click();
+  else if(k==='escape'){ $('#aside').classList.remove('open'); setArea(false); resetZoom() } });
 const st=$('#stage'), mn=$('#main');
 function apply(){st.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.z})`}
 function resetZoom(){S.z=1;S.x=0;S.y=0;st.style.transition='transform .25s cubic-bezier(.2,.8,.2,1)';apply()}
@@ -166,6 +169,22 @@ mn.addEventListener('wheel',e=>{ if(e.target.closest('aside')) return; e.prevent
 $('#zin').onclick=()=>{const r=mn.getBoundingClientRect(); zoomAt(1.4,r.left+r.width/2,r.top+r.height/2)};
 $('#zout').onclick=()=>{const r=mn.getBoundingClientRect(); zoomAt(1/1.4,r.left+r.width/2,r.top+r.height/2)};
 $('#z0').onclick=resetZoom;
+let pick=null, selEl=null;
+function setArea(on){S.area=on; $('#area').setAttribute('aria-pressed',on); mn.classList.toggle('picking',on)}
+$('#area').onclick=()=>{ if(S.z>1&&!S.area){resetZoom(); return} setArea(!S.area)};
+function zoomRect(x0,y0,x1,y1){ // экранные координаты внутри main → на весь экран
+  const r=mn.getBoundingClientRect(), w=Math.abs(x1-x0), h=Math.abs(y1-y0); if(w<20||h<20) return;
+  const lx=Math.min(x0,x1)-r.left, ly=Math.min(y0,y1)-r.top;
+  // в координаты сцены (с учётом текущего зума)
+  const sx=(lx-S.x)/S.z, sy=(ly-S.y)/S.z, sw=w/S.z, sh=h/S.z;
+  const z=Math.min(8,Math.min((r.width-24)/sw,(r.height-24)/sh));
+  S.z=z; S.x=(r.width-sw*z)/2-sx*z; S.y=(r.height-sh*z)/2-sy*z;
+  st.style.transition='transform .35s cubic-bezier(.2,.8,.2,1)'; apply(); }
+mn.addEventListener('pointerdown',e=>{ if(!S.area||e.target.closest('.hot,aside,.zoomhud')) return; e.stopImmediatePropagation();
+  pick={x:e.clientX,y:e.clientY}; selEl=document.createElement('div'); selEl.className='sel'; mn.appendChild(selEl); mn.setPointerCapture(e.pointerId)},true);
+mn.addEventListener('pointermove',e=>{ if(!pick) return; e.stopImmediatePropagation(); const r=mn.getBoundingClientRect();
+  Object.assign(selEl.style,{left:Math.min(pick.x,e.clientX)-r.left+'px',top:Math.min(pick.y,e.clientY)-r.top+'px',width:Math.abs(e.clientX-pick.x)+'px',height:Math.abs(e.clientY-pick.y)+'px'})},true);
+mn.addEventListener('pointerup',e=>{ if(!pick) return; e.stopImmediatePropagation(); selEl.remove(); zoomRect(pick.x,pick.y,e.clientX,e.clientY); pick=null; setArea(false)},true);
 let drag=null, sw=null; const pts=new Map(); let pinch=null;
 mn.addEventListener('pointerdown',e=>{ if(e.target.closest('.hot,aside,.zoomhud')) return; pts.set(e.pointerId,e); mn.setPointerCapture(e.pointerId);
   if(pts.size===2){const [a,b]=[...pts.values()]; pinch={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:S.z}; drag=null; return}
