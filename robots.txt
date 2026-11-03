@@ -4,5 +4,6 @@ Disallow: /oferta.html
 Disallow: /privacy.html
 Disallow: /video/
 Disallow: /home-video/
+Disallow: /board/
 
 Sitemap: https://speakandsmile.ru/sitemap.xml
