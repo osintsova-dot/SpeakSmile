@@ -12,14 +12,18 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font:15px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
-.app{display:grid;grid-template-rows:auto 1fr auto;height:100%}
-header{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.app{display:grid;grid-template-rows:auto 1fr auto;grid-template-columns:100%;height:100%}
+header,footer{min-width:0;overflow:hidden}
+header{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--ink);border-bottom:1px solid var(--line);flex-wrap:nowrap}
+.tabs{flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tools{display:flex;gap:6px;flex-shrink:0}
+header::-webkit-scrollbar,.tr::-webkit-scrollbar{display:none}
 .logo{font-weight:800;letter-spacing:.02em;color:var(--sun);white-space:nowrap}
 .logo span{color:var(--txt);font-weight:600;opacity:.8}
 .seg{display:flex;background:var(--panel);border-radius:999px;padding:3px;gap:2px}
 .seg button{padding:6px 12px;border-radius:999px;color:var(--mute);font-weight:600;transition:background .2s var(--ease),color .2s}
 .seg button[aria-pressed=true]{background:var(--brand);color:#fff}
-.tabs{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;align-items:center;flex-wrap:nowrap;white-space:nowrap}
 .tabs b{font-size:12px;color:var(--mute);margin:0 4px 0 8px;letter-spacing:.06em}
 .tabs button{min-width:40px;padding:6px 8px;border-radius:8px;background:var(--panel);font-weight:700;font-variant-numeric:tabular-nums;transition:background .15s}
 .tabs button[aria-current=true]{background:var(--sun);color:var(--ink)}
@@ -41,8 +45,8 @@ main{position:relative;overflow:hidden;touch-action:none}
 .hot.on::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--sun);animation:ring 1.4s var(--ease) infinite}
 @keyframes ring{from{opacity:.9;transform:scale(.85)}to{opacity:0;transform:scale(1.35)}}
 footer{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--ink);border-top:1px solid var(--line);min-height:56px}
-.tr{display:flex;gap:6px;flex-wrap:wrap}
-.tr button{padding:8px 12px;border-radius:999px;background:var(--panel);font-weight:700;font-variant-numeric:tabular-nums;transition:background .15s}
+.tr{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:45%}
+.tr button{white-space:nowrap;padding:8px 12px;border-radius:999px;background:var(--panel);font-weight:700;font-variant-numeric:tabular-nums;transition:background .15s}
 .tr button.on{background:var(--brand)}
 .tr .none{color:var(--mute)}
 .pl{display:flex;align-items:center;gap:8px;flex:1;min-width:220px}
@@ -69,6 +73,19 @@ main.picking{cursor:crosshair}
 .gate input{padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--ink);color:var(--txt);font-size:18px;text-align:center}
 .gate button{padding:12px;border-radius:10px;background:var(--brand);font-weight:700}
 .gate .err{color:#ff8a8a;min-height:1em;font-size:13px}
+@media (max-width:820px){
+  .logo,.tabs b.u{display:none}
+  .tool .lbl{display:none}
+  .tool{padding:7px 9px}
+  .seg button{padding:5px 9px}
+  .tabs button{min-width:34px;padding:5px 6px}
+  .tabs b{margin:0 2px 0 4px}
+  footer{gap:6px;padding:6px 8px;min-height:50px}
+  .tr{max-width:42%}.tr button{padding:7px 9px}
+  .pl{min-width:0}.pl .big{width:38px;height:38px}.pl .t{display:none}
+  .stage{padding:4px}
+}
+@media (pointer:coarse){.zoomhud{display:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -80,11 +97,10 @@ main.picking{cursor:crosshair}
   <div class="logo">S&amp;S <span>доска</span></div>
   <div class="seg" id="courses" role="group" aria-label="Курс"></div>
   <div class="tabs" id="tabs"></div>
-  <div class="sp"></div>
-  <button class="tool" id="spread" aria-pressed="false" title="Разворот (S)">⧉ Разворот</button>
-  <button class="tool" id="area" aria-pressed="false" title="Выделить задание — на весь экран (Z)">🔍 Задание</button>
-  <button class="tool" id="keys" aria-pressed="false" title="Ключи (K)">🔑 Ключи</button>
-  <button class="tool" id="fs" title="Во весь экран (F)">⛶</button>
+  <div class="tools"><button class="tool" id="spread" aria-pressed="false" title="Разворот (S)">⧉<span class="lbl"> Разворот</span></button>
+  <button class="tool" id="area" aria-pressed="false" title="Выделить задание — на весь экран (Z)">🔍<span class="lbl"> Задание</span></button>
+  <button class="tool" id="keys" aria-pressed="false" title="Ключи (K)">🔑<span class="lbl"> Ключи</span></button>
+  <button class="tool" id="fs" title="Во весь экран (F)">⛶</button></div>
 </header>
 <main id="main"><div class="stage" id="stage"></div>
   <div class="zoomhud"><button id="zin" title="Крупнее">+</button><button id="zout" title="Мельче">−</button><button id="z0" title="Целиком" style="font-size:14px">1:1</button></div>
@@ -123,7 +139,7 @@ function start(){ $('#app').hidden=false; S.spread=innerWidth>innerHeight*1.25; 
 function render(){ const u=U(), P=u.pages;
   document.querySelectorAll('#courses button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===S.c));
   const vis=visible();
-  $('#tabs').innerHTML=`<b>${u.course} · U${u.unit}</b>`+['sb','wb'].map(bk=>`<b>${bk==='sb'?'SB':'WB'}</b>`+P.map((p,k)=>p.book!==bk?'':
+  $('#tabs').innerHTML=`<b class="u">${u.course} · U${u.unit}</b>`+['sb','wb'].map(bk=>`<b>${bk==='sb'?'SB':'WB'}</b>`+P.map((p,k)=>p.book!==bk?'':
      `<button data-k="${k}" class="${p.tracks&&p.tracks.length?'has':''}" aria-current="${vis.includes(k)}" title="${bk.toUpperCase()} стр. ${p.n}">${p.n}</button>`).join('')).join('');
   $('#tabs').onclick=e=>{const b=e.target.closest('button[data-k]'); if(b){S.i=+b.dataset.k; render()}};
   $('#spread').setAttribute('aria-pressed',S.spread);
@@ -136,7 +152,7 @@ function render(){ const u=U(), P=u.pages;
   $('#klist').innerHTML=ks.length?ks.map(([n,q,a])=>`<div class="k"><div class="q">SB ${n} <small>${q||''}</small></div><div class="a">${a}</div></div>`).join(''):'<p class="hint">К этой странице ключей нет.</p>';
   location.replace('#c='+S.c+'&p='+P[S.i].id); fit(); resetZoom(); }
 function fit(){const r=$('#main').getBoundingClientRect(), pg=[...document.querySelectorAll('.pg')]; if(!pg.length) return;
-  const ars=pg.map(e=>+e.style.getPropertyValue('--ar')), W=r.width-20-10*(pg.length-1), Hh=r.height-20, sum=ars.reduce((a,b)=>a+b,0), h=Math.min(Hh, W/sum);
+  const ars=pg.map(e=>+e.style.getPropertyValue('--ar')), pad=innerWidth<=820?8:20, W=r.width-pad-10*(pg.length-1), Hh=r.height-pad, sum=ars.reduce((a,b)=>a+b,0), h=Math.min(Hh, W/sum);
   pg.forEach((e,i)=>{e.style.height=h+'px'; e.style.width=h*ars[i]+'px'})}
 function play(src,t,b){ if(S.cur===src){ audio.paused?audio.play():audio.pause(); return } S.cur=src; audio.src=src; audio.playbackRate=+($('#rate').textContent.replace('×',''))||1; audio.play(); mark(); }
 function stop(){audio.pause(); S.cur=null; audio.removeAttribute('src'); mark()}
