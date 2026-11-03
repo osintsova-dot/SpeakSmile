@@ -68,6 +68,23 @@ aside h3{margin:0 0 10px;font-size:16px;color:var(--sun)}
 .zoomhud button{width:40px;height:40px;border-radius:10px;background:rgba(38,33,51,.92);font-size:20px;font-weight:800}
 .sel{position:absolute;border:3px solid var(--sun);background:rgba(245,200,66,.12);border-radius:6px;pointer-events:none;z-index:6}
 main.picking{cursor:crosshair}
+.ex{position:absolute;z-index:1;border:2px solid transparent;border-radius:8px;cursor:zoom-in;transition:border-color .15s,background .15s}
+.ex:hover{border-color:rgba(108,63,197,.65);background:rgba(108,63,197,.07)}
+.ex .lb{position:absolute;left:-2px;top:-2px;background:var(--brand);color:#fff;font-size:11px;font-weight:700;padding:1px 7px;border-radius:7px 0 7px 0;opacity:0;transition:opacity .15s;white-space:nowrap}
+.ex:hover .lb{opacity:1}
+@media (pointer:coarse){.ex{border:1.5px dashed rgba(108,63,197,.35)}}
+.hot{z-index:2}
+main.focus .ex{pointer-events:none;opacity:0}
+#fbar{position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:7;display:none;align-items:center;gap:6px;background:rgba(22,19,31,.94);border:1px solid var(--line);
+  border-radius:999px;padding:5px;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:calc(100% - 16px);overflow-x:auto;scrollbar-width:none}
+main.focus #fbar{display:flex}
+#fbar button{padding:8px 12px;border-radius:999px;background:var(--panel);font-weight:700;white-space:nowrap}
+#fbar button.on{background:var(--brand)} #fbar .nm{padding:0 8px;font-weight:800;color:var(--sun);white-space:nowrap}
+#fbar .x{background:transparent;font-size:18px;padding:6px 10px}
+#fkey{position:absolute;left:50%;bottom:10px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:7;width:min(760px,calc(100% - 16px));max-height:45%;overflow:auto;
+  background:rgba(38,33,51,.97);border:1px solid var(--line);border-radius:14px;padding:12px 16px;transition:opacity .2s,transform .25s var(--ease);font-size:17px}
+#fkey.open{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#fkey .q{color:var(--sun);font-weight:700;font-size:14px;margin-top:6px}
 .gate{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:20}
 .gate form{background:var(--panel);padding:28px;border-radius:16px;width:min(360px,90vw);display:grid;gap:12px;text-align:center}
 .gate input{padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--ink);color:var(--txt);font-size:18px;text-align:center}
@@ -103,6 +120,7 @@ main.picking{cursor:crosshair}
   <button class="tool" id="fs" title="Во весь экран (F)">⛶</button></div>
 </header>
 <main id="main"><div class="stage" id="stage"></div>
+  <div id="fbar"></div><div id="fkey"></div>
   <div class="zoomhud"><button id="zin" title="Крупнее">+</button><button id="zout" title="Мельче">−</button><button id="z0" title="Целиком" style="font-size:14px">1:1</button></div>
   <aside id="aside"><h3>Ключи к странице</h3><div class="hint">Нажмите на ответ, чтобы показать его. <button class="tool" id="all" style="padding:4px 8px;margin-left:6px">показать все</button></div><div id="klist"></div></aside>
 </main>
@@ -113,7 +131,7 @@ main.picking{cursor:crosshair}
     <button class="sm" id="rate" title="Скорость">1×</button></div>
 </footer>
 </div>
-<script src="data.js?v=1"></script>
+<script src="data.js?v=2"></script>
 <script>
 const HASH='6f29c58da8aaca3e51ba00ea78ae7fcc503dd2a727d4651c999a202b997afe4d';
 const $=s=>document.querySelector(s);
@@ -145,6 +163,7 @@ function render(){ const u=U(), P=u.pages;
   $('#spread').setAttribute('aria-pressed',S.spread);
   $('#stage').innerHTML=vis.map(k=>{const p=P[k]; if(p.missing) return `<div class="pg" style="--ar:0.71"><div class="miss">Страницы ${p.book.toUpperCase()} ${p.n} нет в нашем скане.<br>Откройте её в бумажной тетради.</div></div>`;
      return `<div class="pg" style="--ar:${p.w/p.h}"><img src="${p.img}" alt="${u.course} ${p.book.toUpperCase()} page ${p.n}">`+
+       (p.ex||[]).map((x,j)=>`<div class="ex" data-k="${k}" data-j="${j}" style="left:${x.r[0]}%;top:${x.r[1]}%;width:${x.r[2]-x.r[0]}%;height:${x.r[3]-x.r[1]}%"><span class="lb">${x.l}</span></div>`).join('')+
        p.tracks.map(t=>`<button class="hot${S.cur===t.src?' on':''}" style="left:${t.x}%;top:${t.y}%" data-src="${t.src}" data-t="${t.t}" data-b="${p.book}" aria-label="Трек ${t.t}"></button>`).join('')+'</div>'}).join('');
   const tr=[]; vis.forEach(k=>{const p=P[k]; (p.tracks||[]).forEach(t=>{ if(!tr.find(x=>x.src===t.src)) tr.push({...t,b:p.book,n:p.n}) })});
   $('#trs').innerHTML=tr.length?tr.map(t=>`<button data-src="${t.src}" data-t="${t.t}" data-b="${t.b}" class="${S.cur===t.src?'on':''}">🔊 ${t.b.toUpperCase()} ${t.t}</button>`).join(''):'<span class="none hint">На этой странице аудио нет</span>';
@@ -172,20 +191,37 @@ $('#fs').onclick=()=>document.fullscreenElement?document.exitFullscreen():docume
 // листание и зум
 function go(d){const P=U().pages, vis=visible(); let k=d>0?Math.max(...vis)+1:Math.min(...vis)-1; if(k<0||k>=P.length) return; S.i=k; render()}
 addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; const k=e.key.toLowerCase();
-  if(k==='arrowright'||k==='pagedown') go(1); else if(k==='arrowleft'||k==='pageup') go(-1);
+  if(k==='arrowright'||k==='pagedown') (S.focus?$('#fnext').click():go(1)); else if(k==='arrowleft'||k==='pageup') (S.focus?$('#fprev').click():go(-1));
   else if(k===' '){e.preventDefault(); $('#pp').click()} else if(k==='k') $('#keys').click(); else if(k==='s') $('#spread').click(); else if(k==='f') $('#fs').click(); else if(k==='z') $('#area').click();
-  else if(k==='escape'){ $('#aside').classList.remove('open'); setArea(false); resetZoom() } });
+  else if(k==='escape'){ $('#aside').classList.remove('open'); setArea(false); S.focus?closeEx():resetZoom() } });
 const st=$('#stage'), mn=$('#main');
 function apply(){st.style.transform=`translate(${S.x}px,${S.y}px) scale(${S.z})`}
 function resetZoom(){S.z=1;S.x=0;S.y=0;st.style.transition='transform .25s cubic-bezier(.2,.8,.2,1)';apply()}
 function zoomAt(f,cx,cy){const r=mn.getBoundingClientRect(); cx-=r.left; cy-=r.top; const nz=Math.min(4,Math.max(1,S.z*f));
   S.x=cx-(cx-S.x)*nz/S.z; S.y=cy-(cy-S.y)*nz/S.z; S.z=nz; if(nz===1){S.x=0;S.y=0} st.style.transition='transform .25s cubic-bezier(.2,.8,.2,1)'; apply()}
-mn.addEventListener('dblclick',e=>{ if(e.target.closest('.hot,aside,.zoomhud')) return; S.z>1?resetZoom():zoomAt(2.2,e.clientX,e.clientY)});
+mn.addEventListener('dblclick',e=>{ if(e.target.closest('.hot,aside,.zoomhud,#fbar,#fkey')) return; S.z>1?resetZoom():zoomAt(2.2,e.clientX,e.clientY)});
 mn.addEventListener('wheel',e=>{ if(e.target.closest('aside')) return; e.preventDefault(); zoomAt(e.deltaY<0?1.15:1/1.15,e.clientX,e.clientY)},{passive:false});
 $('#zin').onclick=()=>{const r=mn.getBoundingClientRect(); zoomAt(1.4,r.left+r.width/2,r.top+r.height/2)};
 $('#zout').onclick=()=>{const r=mn.getBoundingClientRect(); zoomAt(1/1.4,r.left+r.width/2,r.top+r.height/2)};
-$('#z0').onclick=resetZoom;
+$('#z0').onclick=()=>S.focus?closeEx():resetZoom();
 let pick=null, selEl=null;
+// ---- задания: клик → на весь экран
+function exList(){const out=[]; U().pages.forEach((p,k)=>(p.ex||[]).forEach((x,j)=>out.push([k,j]))); return out}
+function openEx(k,j){ const P=U().pages; if(!visible().includes(k)){S.i=k; render()}
+  S.focus=[k,j]; mn.classList.add('focus'); const p=P[k], x=p.ex[j];
+  st.style.transition='none'; S.z=1;S.x=0;S.y=0; apply();
+  const el=document.querySelector(`.ex[data-k="${k}"][data-j="${j}"]`), b=el.getBoundingClientRect();
+  requestAnimationFrame(()=>zoomRect(b.left,b.top,b.right,b.bottom));
+  const L=exList(), n=L.findIndex(a=>a[0]==k&&a[1]==j);
+  $('#fbar').innerHTML=`<button id="fprev" ${n<=0?'disabled style="opacity:.35"':''}>‹</button><span class="nm">${x.l} · ${p.book.toUpperCase()} ${p.n}</span>`+
+    x.t.map(src=>`<button data-src="${src}" class="${S.cur===src?'on':''}">🔊 ${src.match(/(\d+)\.mp3/)[1].replace(/^0+/,'')}</button>`).join('')+
+    (x.k.length?`<button id="fans">🔑 Ответ</button>`:'')+`<button id="fnext" ${n>=L.length-1?'disabled style="opacity:.35"':''}>›</button><button class="x" id="fx" aria-label="Закрыть">✕</button>`;
+  $('#fkey').classList.remove('open');
+  $('#fkey').innerHTML=x.k.map(i=>p.keys[i]?`<div class="q">${p.keys[i][0]}</div><div>${p.keys[i][1]}</div>`:'').join('');
+  $('#fprev').onclick=()=>{ if(n>0) openEx(...L[n-1]) }; $('#fnext').onclick=()=>{ if(n<L.length-1) openEx(...L[n+1]) };
+  $('#fx').onclick=closeEx; if($('#fans')) $('#fans').onclick=()=>$('#fkey').classList.toggle('open'); }
+function closeEx(){ S.focus=null; mn.classList.remove('focus'); $('#fkey').classList.remove('open'); resetZoom() }
+
 function setArea(on){S.area=on; $('#area').setAttribute('aria-pressed',on); mn.classList.toggle('picking',on)}
 $('#area').onclick=()=>{ if(S.z>1&&!S.area){resetZoom(); return} setArea(!S.area)};
 function zoomRect(x0,y0,x1,y1){ // экранные координаты внутри main → на весь экран
@@ -193,22 +229,23 @@ function zoomRect(x0,y0,x1,y1){ // экранные координаты вну�
   const lx=Math.min(x0,x1)-r.left, ly=Math.min(y0,y1)-r.top;
   // в координаты сцены (с учётом текущего зума)
   const sx=(lx-S.x)/S.z, sy=(ly-S.y)/S.z, sw=w/S.z, sh=h/S.z;
-  const z=Math.min(8,Math.min((r.width-24)/sw,(r.height-24)/sh));
+  const z=Math.min(8,Math.min((r.width-24)/sw,(r.height-24)/sh)*(S.focus?0.9:1));
   S.z=z; S.x=(r.width-sw*z)/2-sx*z; S.y=(r.height-sh*z)/2-sy*z;
   st.style.transition='transform .35s cubic-bezier(.2,.8,.2,1)'; apply(); }
-mn.addEventListener('pointerdown',e=>{ if(!S.area||e.target.closest('.hot,aside,.zoomhud')) return; e.stopImmediatePropagation();
+mn.addEventListener('pointerdown',e=>{ if(!S.area||e.target.closest('.hot,aside,.zoomhud,#fbar,#fkey')) return; e.stopImmediatePropagation();
   pick={x:e.clientX,y:e.clientY}; selEl=document.createElement('div'); selEl.className='sel'; mn.appendChild(selEl); mn.setPointerCapture(e.pointerId)},true);
 mn.addEventListener('pointermove',e=>{ if(!pick) return; e.stopImmediatePropagation(); const r=mn.getBoundingClientRect();
   Object.assign(selEl.style,{left:Math.min(pick.x,e.clientX)-r.left+'px',top:Math.min(pick.y,e.clientY)-r.top+'px',width:Math.abs(e.clientX-pick.x)+'px',height:Math.abs(e.clientY-pick.y)+'px'})},true);
 mn.addEventListener('pointerup',e=>{ if(!pick) return; e.stopImmediatePropagation(); selEl.remove(); zoomRect(pick.x,pick.y,e.clientX,e.clientY); pick=null; setArea(false)},true);
 let drag=null, sw=null; const pts=new Map(); let pinch=null;
-mn.addEventListener('pointerdown',e=>{ if(e.target.closest('.hot,aside,.zoomhud')) return; pts.set(e.pointerId,e); mn.setPointerCapture(e.pointerId);
+mn.addEventListener('pointerdown',e=>{ if(e.target.closest('.hot,aside,.zoomhud,#fbar,#fkey')) return; pts.set(e.pointerId,e); mn.setPointerCapture(e.pointerId);
   if(pts.size===2){const [a,b]=[...pts.values()]; pinch={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),z:S.z}; drag=null; return}
-  drag={x:e.clientX,y:e.clientY,sx:S.x,sy:S.y,t:Date.now()}; st.style.transition='none'});
+  drag={x:e.clientX,y:e.clientY,sx:S.x,sy:S.y,t:Date.now(),ex:S.focus?null:e.target.closest('.ex')}; st.style.transition='none'});
 mn.addEventListener('pointermove',e=>{ if(!pts.has(e.pointerId)) return; pts.set(e.pointerId,e);
   if(pinch&&pts.size===2){const [a,b]=[...pts.values()]; const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY); const f=pinch.z*d/pinch.d/S.z; zoomAt(f,(a.clientX+b.clientX)/2,(a.clientY+b.clientY)/2); st.style.transition='none'; return}
   if(drag&&S.z>1){S.x=drag.sx+e.clientX-drag.x; S.y=drag.sy+e.clientY-drag.y; apply()} });
 mn.addEventListener('pointerup',e=>{ pts.delete(e.pointerId); if(pts.size<2) pinch=null;
+  if(drag&&drag.ex&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)<10){const el=drag.ex; drag=null; openEx(+el.dataset.k,+el.dataset.j); return}
   if(drag&&S.z===1){const dx=e.clientX-drag.x; if(Math.abs(dx)>70&&Date.now()-drag.t<600) go(dx<0?1:-1)} drag=null });
 addEventListener('resize',fit); document.addEventListener('fullscreenchange',()=>setTimeout(fit,50));
 gate();
