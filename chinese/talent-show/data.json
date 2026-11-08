@@ -1,0 +1,1033 @@
+{
+  "n": 11,
+  "zh": "才艺比赛",
+  "py": "Cáiyì bǐsài",
+  "ru": "Конкурс талантов",
+  "words": [
+    {
+      "id": "q_can",
+      "zh": "你会游泳吗？",
+      "py": "Nǐ huì yóuyǒng ma?",
+      "ru": "Ты умеешь плавать?",
+      "src": "i-can"
+    },
+    {
+      "id": "yes_can",
+      "zh": "我会！",
+      "py": "Wǒ huì!",
+      "ru": "Умею!",
+      "src": "i-can"
+    },
+    {
+      "id": "no_cant",
+      "zh": "我不会。",
+      "py": "Wǒ bú huì.",
+      "ru": "Не умею.",
+      "src": "i-can"
+    },
+    {
+      "id": "run",
+      "zh": "我会跑步。",
+      "py": "Wǒ huì pǎobù.",
+      "ru": "Я умею бегать.",
+      "src": "i-can"
+    },
+    {
+      "id": "jump",
+      "zh": "我会跳。",
+      "py": "Wǒ huì tiào.",
+      "ru": "Я умею прыгать.",
+      "src": "i-can"
+    },
+    {
+      "id": "swim",
+      "zh": "我会游泳。",
+      "py": "Wǒ huì yóuyǒng.",
+      "ru": "Я умею плавать.",
+      "src": "i-can"
+    },
+    {
+      "id": "sing",
+      "zh": "我会唱歌。",
+      "py": "Wǒ huì chànggē.",
+      "ru": "Я умею петь.",
+      "src": "i-can"
+    },
+    {
+      "id": "dance",
+      "zh": "我会跳舞。",
+      "py": "Wǒ huì tiàowǔ.",
+      "ru": "Я умею танцевать.",
+      "src": "i-can"
+    },
+    {
+      "id": "draw",
+      "zh": "我会画画。",
+      "py": "Wǒ huì huàhuà.",
+      "ru": "Я умею рисовать.",
+      "src": "i-can"
+    },
+    {
+      "id": "read",
+      "zh": "我会看书。",
+      "py": "Wǒ huì kànshū.",
+      "ru": "Я умею читать.",
+      "src": "i-can"
+    },
+    {
+      "id": "write",
+      "zh": "我会写字。",
+      "py": "Wǒ huì xiězì.",
+      "ru": "Я умею писать.",
+      "src": "i-can"
+    },
+    {
+      "id": "chinese",
+      "zh": "我会说中文。",
+      "py": "Wǒ huì shuō Zhōngwén.",
+      "ru": "Я умею говорить по-китайски.",
+      "src": "i-can"
+    },
+    {
+      "id": "english",
+      "zh": "我会说英语。",
+      "py": "Wǒ huì shuō Yīngyǔ.",
+      "ru": "Я умею говорить по-английски.",
+      "src": "i-can"
+    },
+    {
+      "id": "fly",
+      "zh": "我不会飞！",
+      "py": "Wǒ bú huì fēi!",
+      "ru": "Я не умею летать!",
+      "src": "i-can"
+    },
+    {
+      "id": "good_sing",
+      "zh": "他很会唱歌。",
+      "py": "Tā hěn huì chànggē.",
+      "ru": "Он здорово поёт.",
+      "src": "i-can"
+    },
+    {
+      "id": "but",
+      "zh": "我会说英语，但是不会说中文。",
+      "py": "Wǒ huì shuō Yīngyǔ, dànshì bú huì shuō Zhōngwén.",
+      "ru": "Я говорю по-английски, но не по-китайски.",
+      "src": "i-can"
+    },
+    {
+      "id": "q_like",
+      "zh": "你喜欢吃什么？",
+      "py": "Nǐ xǐhuan chī shénme?",
+      "ru": "Что ты любишь есть?",
+      "src": "i-like"
+    },
+    {
+      "id": "q_drink",
+      "zh": "你喜欢喝什么？",
+      "py": "Nǐ xǐhuan hē shénme?",
+      "ru": "Что ты любишь пить?",
+      "src": "i-like"
+    },
+    {
+      "id": "like",
+      "zh": "我喜欢！",
+      "py": "Wǒ xǐhuan!",
+      "ru": "Люблю!",
+      "src": "i-like"
+    },
+    {
+      "id": "dislike",
+      "zh": "我不喜欢。",
+      "py": "Wǒ bù xǐhuan.",
+      "ru": "Не люблю.",
+      "src": "i-like"
+    },
+    {
+      "id": "rice",
+      "zh": "我喜欢吃米饭。",
+      "py": "Wǒ xǐhuan chī mǐfàn.",
+      "ru": "Я люблю рис.",
+      "src": "i-like"
+    },
+    {
+      "id": "noodles",
+      "zh": "我喜欢吃面条。",
+      "py": "Wǒ xǐhuan chī miàntiáo.",
+      "ru": "Я люблю лапшу.",
+      "src": "i-like"
+    },
+    {
+      "id": "dumplings",
+      "zh": "我喜欢吃饺子。",
+      "py": "Wǒ xǐhuan chī jiǎozi.",
+      "ru": "Я люблю пельмени.",
+      "src": "i-like"
+    },
+    {
+      "id": "apple",
+      "zh": "我喜欢吃苹果。",
+      "py": "Wǒ xǐhuan chī píngguǒ.",
+      "ru": "Я люблю яблоки.",
+      "src": "i-like"
+    },
+    {
+      "id": "icecream",
+      "zh": "我喜欢吃冰淇淋。",
+      "py": "Wǒ xǐhuan chī bīngqílín.",
+      "ru": "Я люблю мороженое.",
+      "src": "i-like"
+    },
+    {
+      "id": "water",
+      "zh": "我喜欢喝水。",
+      "py": "Wǒ xǐhuan hē shuǐ.",
+      "ru": "Я люблю пить воду.",
+      "src": "i-like"
+    },
+    {
+      "id": "tea",
+      "zh": "我喜欢喝茶。",
+      "py": "Wǒ xǐhuan hē chá.",
+      "ru": "Я люблю чай.",
+      "src": "i-like"
+    },
+    {
+      "id": "milk",
+      "zh": "我喜欢喝牛奶。",
+      "py": "Wǒ xǐhuan hē niúnǎi.",
+      "ru": "Я люблю молоко.",
+      "src": "i-like"
+    },
+    {
+      "id": "juice",
+      "zh": "我喜欢喝果汁。",
+      "py": "Wǒ xǐhuan hē guǒzhī.",
+      "ru": "Я люблю сок.",
+      "src": "i-like"
+    },
+    {
+      "id": "bugs",
+      "zh": "我不喜欢吃虫子！",
+      "py": "Wǒ bù xǐhuan chī chóngzi!",
+      "ru": "Я не люблю есть жуков!",
+      "src": "i-like"
+    },
+    {
+      "id": "yummy",
+      "zh": "好吃！",
+      "py": "Hǎochī!",
+      "ru": "Вкусно!",
+      "src": "i-like"
+    },
+    {
+      "id": "he_likes",
+      "zh": "他喜欢吃苹果。",
+      "py": "Tā xǐhuan chī píngguǒ.",
+      "ru": "Он любит яблоки.",
+      "src": "i-like"
+    }
+  ],
+  "scene": [
+    {
+      "id": "l01",
+      "who": "teacher",
+      "voice": "Kore",
+      "frame": "class_teacher",
+      "zh": "你会唱歌吗？",
+      "py": "Nǐ huì chànggē ma?",
+      "ru": "Ты умеешь петь?",
+      "mood": "warmly asking a pupil",
+      "who_name": "Учительница",
+      "who_zh": "老师",
+      "color": "#C9B6FF",
+      "pieces": [
+        [
+          "你",
+          "Nǐ"
+        ],
+        [
+          "会",
+          "huì"
+        ],
+        [
+          "唱歌",
+          "chànggē"
+        ],
+        [
+          "吗？",
+          "ma?"
+        ]
+      ]
+    },
+    {
+      "id": "l02",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "class_mei",
+      "zh": "我会唱歌！",
+      "py": "Wǒ huì chànggē!",
+      "ru": "Я умею петь!",
+      "mood": "bright and confident",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "会",
+          "huì"
+        ],
+        [
+          "唱歌！",
+          "chànggē!"
+        ]
+      ]
+    },
+    {
+      "id": "l03",
+      "who": "teacher",
+      "voice": "Kore",
+      "frame": "class_teacher",
+      "zh": "你会跳舞吗？",
+      "py": "Nǐ huì tiàowǔ ma?",
+      "ru": "Ты умеешь танцевать?",
+      "mood": "warmly asking another pupil",
+      "who_name": "Учительница",
+      "who_zh": "老师",
+      "color": "#C9B6FF",
+      "pieces": [
+        [
+          "你",
+          "Nǐ"
+        ],
+        [
+          "会",
+          "huì"
+        ],
+        [
+          "跳舞",
+          "tiàowǔ"
+        ],
+        [
+          "吗？",
+          "ma?"
+        ]
+      ]
+    },
+    {
+      "id": "l04",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "class_long",
+      "zh": "我会跳舞！",
+      "py": "Wǒ huì tiàowǔ!",
+      "ru": "Я умею танцевать!",
+      "mood": "confident and happy",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "会",
+          "huì"
+        ],
+        [
+          "跳舞！",
+          "tiàowǔ!"
+        ]
+      ]
+    },
+    {
+      "id": "l05a",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "class_ming",
+      "zh": "我会唱歌！我会跳舞！我会画画！",
+      "py": "Wǒ huì chànggē! Wǒ huì tiàowǔ! Wǒ huì huàhuà!",
+      "ru": "Я умею петь! Танцевать! Рисовать!",
+      "mood": "excited, boasting playfully",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l05b",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "class_ming",
+      "zh": "我会游泳！我会跑步！",
+      "py": "Wǒ huì yóuyǒng! Wǒ huì pǎobù!",
+      "ru": "Я умею плавать! Бегать!",
+      "mood": "enthusiastic, boasting",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l06",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "class_long",
+      "zh": "你会飞吗？",
+      "py": "Nǐ huì fēi ma?",
+      "ru": "А летать умеешь?",
+      "mood": "innocently teasing his friend",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": [
+        [
+          "你",
+          "Nǐ"
+        ],
+        [
+          "会",
+          "huì"
+        ],
+        [
+          "飞",
+          "fēi"
+        ],
+        [
+          "吗？",
+          "ma?"
+        ]
+      ]
+    },
+    {
+      "id": "l07",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "class_ming",
+      "zh": "不会。",
+      "py": "Bú huì.",
+      "ru": "Не умею.",
+      "mood": "a short embarrassed admission after a pause",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l08",
+      "who": "teacher",
+      "voice": "Kore",
+      "frame": "class_teacher",
+      "zh": "太棒了！",
+      "py": "Tài bàng le!",
+      "ru": "Отлично!",
+      "mood": "encouraging and warm",
+      "who_name": "Учительница",
+      "who_zh": "老师",
+      "color": "#C9B6FF",
+      "pieces": null
+    },
+    {
+      "id": "stage_mei",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "stage_mei",
+      "zh": "我会唱歌！",
+      "py": "Wǒ huì chànggē!",
+      "ru": "Я умею петь!",
+      "mood": "bright and confident",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": null
+    },
+    {
+      "id": "l11",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "stage_ming_fail",
+      "zh": "我不会唱歌……",
+      "py": "Wǒ bú huì chànggē…",
+      "ru": "Я не умею петь…",
+      "mood": "quiet embarrassed speaking, not whispering or crying",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "不会",
+          "bú huì"
+        ],
+        [
+          "唱歌……",
+          "chànggē…"
+        ]
+      ]
+    },
+    {
+      "id": "l12",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "stage_ming_art",
+      "zh": "但是我会画画！",
+      "py": "Dànshì wǒ huì huàhuà!",
+      "ru": "Но я умею рисовать!",
+      "mood": "relieved and proud, showing his painting",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": [
+        [
+          "但是",
+          "Dànshì"
+        ],
+        [
+          "我",
+          "wǒ"
+        ],
+        [
+          "会",
+          "huì"
+        ],
+        [
+          "画画！",
+          "huàhuà!"
+        ]
+      ]
+    },
+    {
+      "id": "l13",
+      "who": "teacher",
+      "voice": "Kore",
+      "frame": "award",
+      "zh": "太棒了！",
+      "py": "Tài bàng le!",
+      "ru": "Отлично!",
+      "mood": "warm congratulations",
+      "who_name": "Учительница",
+      "who_zh": "老师",
+      "color": "#C9B6FF",
+      "pieces": null
+    },
+    {
+      "id": "l14",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "award",
+      "zh": "我很开心！",
+      "py": "Wǒ hěn kāixīn!",
+      "ru": "Мне весело!",
+      "mood": "very happy, smiling",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l15",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "cafe_long",
+      "zh": "我饿了！",
+      "py": "Wǒ è le!",
+      "ru": "Я хочу есть!",
+      "mood": "hungry and cheerful",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": null
+    },
+    {
+      "id": "l16",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_mei",
+      "zh": "你喜欢吃什么？",
+      "py": "Nǐ xǐhuan chī shénme?",
+      "ru": "Что ты любишь есть?",
+      "mood": "friendly question",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": [
+        [
+          "你",
+          "Nǐ"
+        ],
+        [
+          "喜欢",
+          "xǐhuan"
+        ],
+        [
+          "吃",
+          "chī"
+        ],
+        [
+          "什么？",
+          "shénme?"
+        ]
+      ]
+    },
+    {
+      "id": "l17",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "cafe_long",
+      "zh": "我喜欢吃饺子！",
+      "py": "Wǒ xǐhuan chī jiǎozi!",
+      "ru": "Я люблю пельмени!",
+      "mood": "happy and enthusiastic",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "喜欢",
+          "xǐhuan"
+        ],
+        [
+          "吃",
+          "chī"
+        ],
+        [
+          "饺子！",
+          "jiǎozi!"
+        ]
+      ]
+    },
+    {
+      "id": "l18",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "cafe_long",
+      "zh": "你呢？",
+      "py": "Nǐ ne?",
+      "ru": "А ты?",
+      "mood": "turning the question to his friend",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": null
+    },
+    {
+      "id": "l19",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_mei",
+      "zh": "我喜欢吃面条。小明，你呢？",
+      "py": "Wǒ xǐhuan chī miàntiáo. Xiǎo Míng, nǐ ne?",
+      "ru": "Я люблю лапшу. Сяо Мин, а ты?",
+      "mood": "friendly and curious",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": null
+    },
+    {
+      "id": "l20a",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_ming",
+      "zh": "我喜欢吃饺子，我喜欢吃面条。",
+      "py": "Wǒ xǐhuan chī jiǎozi, wǒ xǐhuan chī miàntiáo.",
+      "ru": "Я люблю пельмени, люблю лапшу.",
+      "mood": "excitedly reading a picture menu",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l20b",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_ming",
+      "zh": "我喜欢吃米饭，我喜欢吃苹果……",
+      "py": "Wǒ xǐhuan chī mǐfàn, wǒ xǐhuan chī píngguǒ…",
+      "ru": "Я люблю рис, люблю яблоки…",
+      "mood": "happily listing more food",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l21",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_mei",
+      "zh": "你喜欢吃虫子吗？",
+      "py": "Nǐ xǐhuan chī chóngzi ma?",
+      "ru": "А жуков любишь есть?",
+      "mood": "playful, teasing but kind",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": null
+    },
+    {
+      "id": "l22",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_ming",
+      "zh": "我不喜欢吃虫子！",
+      "py": "Wǒ bù xǐhuan chī chóngzi!",
+      "ru": "Я не люблю есть жуков!",
+      "mood": "comically surprised, clear speech, no scream",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "不喜欢",
+          "bù xǐhuan"
+        ],
+        [
+          "吃",
+          "chī"
+        ],
+        [
+          "虫子！",
+          "chóngzi!"
+        ]
+      ]
+    },
+    {
+      "id": "l23",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "cafe_long",
+      "zh": "你喜欢喝什么？",
+      "py": "Nǐ xǐhuan hē shénme?",
+      "ru": "Что ты любишь пить?",
+      "mood": "friendly question",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": [
+        [
+          "你",
+          "Nǐ"
+        ],
+        [
+          "喜欢",
+          "xǐhuan"
+        ],
+        [
+          "喝",
+          "hē"
+        ],
+        [
+          "什么？",
+          "shénme?"
+        ]
+      ]
+    },
+    {
+      "id": "l24",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_mei",
+      "zh": "我喜欢喝果汁。",
+      "py": "Wǒ xǐhuan hē guǒzhī.",
+      "ru": "Я люблю сок.",
+      "mood": "happy and relaxed",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "喜欢",
+          "xǐhuan"
+        ],
+        [
+          "喝",
+          "hē"
+        ],
+        [
+          "果汁。",
+          "guǒzhī."
+        ]
+      ]
+    },
+    {
+      "id": "l25",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_ming",
+      "zh": "我不喜欢喝牛奶。我喜欢喝茶！",
+      "py": "Wǒ bù xǐhuan hē niúnǎi. Wǒ xǐhuan hē chá!",
+      "ru": "Я не люблю молоко. Я люблю чай!",
+      "mood": "matter of fact, then enthusiastic",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l26",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "cafe_long_food",
+      "zh": "好吃！",
+      "py": "Hǎochī!",
+      "ru": "Вкусно!",
+      "mood": "delighted after tasting a dumpling; speak clearly without chewing",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": null
+    },
+    {
+      "id": "l27",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_mei_food",
+      "zh": "太好吃了！",
+      "py": "Tài hǎochī le!",
+      "ru": "Очень вкусно!",
+      "mood": "delighted, speaking clearly",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": null
+    },
+    {
+      "id": "l28",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_ming_icecream",
+      "zh": "冰淇淋！我喜欢！",
+      "py": "Bīngqílín! Wǒ xǐhuan!",
+      "ru": "Мороженое! Люблю!",
+      "mood": "pleasantly surprised and delighted",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    },
+    {
+      "id": "l29",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_mei_food",
+      "zh": "小明，你会什么？",
+      "py": "Xiǎo Míng, nǐ huì shénme?",
+      "ru": "Сяо Мин, а что ты умеешь?",
+      "mood": "playful and curious",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": null
+    },
+    {
+      "id": "l30",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_ming_icecream",
+      "zh": "我会吃！我很会吃！",
+      "py": "Wǒ huì chī! Wǒ hěn huì chī!",
+      "ru": "Я умею есть! Я мастер поесть!",
+      "mood": "proud and funny; clear articulation, not with food in mouth",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": [
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "会吃！",
+          "huì chī!"
+        ],
+        [
+          "我",
+          "Wǒ"
+        ],
+        [
+          "很会吃！",
+          "hěn huì chī!"
+        ]
+      ]
+    },
+    {
+      "id": "l31m",
+      "who": "mei",
+      "voice": "Leda",
+      "frame": "cafe_final",
+      "zh": "再见！",
+      "py": "Zàijiàn!",
+      "ru": "До свидания!",
+      "mood": "friendly farewell",
+      "who_name": "Мэймэй",
+      "who_zh": "美美",
+      "color": "#F7A8D4",
+      "pieces": null
+    },
+    {
+      "id": "l31l",
+      "who": "long",
+      "voice": "Puck",
+      "frame": "cafe_final",
+      "zh": "明天见！",
+      "py": "Míngtiān jiàn!",
+      "ru": "До завтра!",
+      "mood": "friendly farewell",
+      "who_name": "Сяо Лун",
+      "who_zh": "小龙",
+      "color": "#7FE3D6",
+      "pieces": null
+    },
+    {
+      "id": "l31x",
+      "who": "ming",
+      "voice": "Fenrir",
+      "frame": "cafe_final",
+      "zh": "拜拜！",
+      "py": "Báibái!",
+      "ru": "Пока-пока!",
+      "mood": "friendly farewell",
+      "who_name": "Сяо Мин",
+      "who_zh": "小明",
+      "color": "#FFB36B",
+      "pieces": null
+    }
+  ],
+  "tones": [
+    {
+      "id": "chi",
+      "zh": "吃",
+      "py": "chī",
+      "t": 1,
+      "ru": "есть"
+    },
+    {
+      "id": "he",
+      "zh": "喝",
+      "py": "hē",
+      "t": 1,
+      "ru": "пить"
+    },
+    {
+      "id": "shu",
+      "zh": "书",
+      "py": "shū",
+      "t": 1,
+      "ru": "книга"
+    },
+    {
+      "id": "fei",
+      "zh": "飞",
+      "py": "fēi",
+      "t": 1,
+      "ru": "летать"
+    },
+    {
+      "id": "cha",
+      "zh": "茶",
+      "py": "chá",
+      "t": 2,
+      "ru": "чай"
+    },
+    {
+      "id": "you",
+      "zh": "游",
+      "py": "yóu",
+      "t": 2,
+      "ru": "плавать"
+    },
+    {
+      "id": "shen",
+      "zh": "什",
+      "py": "shén",
+      "t": 2,
+      "ru": "что (什么)"
+    },
+    {
+      "id": "ping",
+      "zh": "苹",
+      "py": "píng",
+      "t": 2,
+      "ru": "яблоко (苹果)"
+    },
+    {
+      "id": "shui",
+      "zh": "水",
+      "py": "shuǐ",
+      "t": 3,
+      "ru": "вода"
+    },
+    {
+      "id": "mi",
+      "zh": "米",
+      "py": "mǐ",
+      "t": 3,
+      "ru": "рис"
+    },
+    {
+      "id": "xi",
+      "zh": "喜",
+      "py": "xǐ",
+      "t": 3,
+      "ru": "любить (喜欢)"
+    },
+    {
+      "id": "guo",
+      "zh": "果",
+      "py": "guǒ",
+      "t": 3,
+      "ru": "фрукт"
+    },
+    {
+      "id": "hui",
+      "zh": "会",
+      "py": "huì",
+      "t": 4,
+      "ru": "уметь"
+    },
+    {
+      "id": "tiao",
+      "zh": "跳",
+      "py": "tiào",
+      "t": 4,
+      "ru": "прыгать"
+    },
+    {
+      "id": "hua",
+      "zh": "画",
+      "py": "huà",
+      "t": 4,
+      "ru": "рисовать"
+    },
+    {
+      "id": "fan",
+      "zh": "饭",
+      "py": "fàn",
+      "t": 4,
+      "ru": "еда, рис"
+    }
+  ]
+}

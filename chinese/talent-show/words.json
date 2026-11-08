@@ -1,0 +1,263 @@
+{
+  "n": 11,
+  "title_zh": "才艺比赛",
+  "title_ru": "Конкурс талантов",
+  "words": [
+    {
+      "id": "q_can",
+      "zh": "你会游泳吗？",
+      "py": "Nǐ huì yóuyǒng ma?",
+      "ru": "Ты умеешь плавать?",
+      "src": "../i-can/",
+      "img": "img/q_can.webp"
+    },
+    {
+      "id": "yes_can",
+      "zh": "我会！",
+      "py": "Wǒ huì!",
+      "ru": "Умею!",
+      "src": "../i-can/",
+      "img": "img/yes_can.webp"
+    },
+    {
+      "id": "no_cant",
+      "zh": "我不会。",
+      "py": "Wǒ bú huì.",
+      "ru": "Не умею.",
+      "src": "../i-can/",
+      "img": "img/no_cant.webp"
+    },
+    {
+      "id": "run",
+      "zh": "我会跑步。",
+      "py": "Wǒ huì pǎobù.",
+      "ru": "Я умею бегать.",
+      "src": "../i-can/",
+      "img": "img/run.webp"
+    },
+    {
+      "id": "jump",
+      "zh": "我会跳。",
+      "py": "Wǒ huì tiào.",
+      "ru": "Я умею прыгать.",
+      "src": "../i-can/",
+      "img": "img/jump.webp"
+    },
+    {
+      "id": "swim",
+      "zh": "我会游泳。",
+      "py": "Wǒ huì yóuyǒng.",
+      "ru": "Я умею плавать.",
+      "src": "../i-can/",
+      "img": "img/swim.webp"
+    },
+    {
+      "id": "sing",
+      "zh": "我会唱歌。",
+      "py": "Wǒ huì chànggē.",
+      "ru": "Я умею петь.",
+      "src": "../i-can/",
+      "img": "img/sing.webp"
+    },
+    {
+      "id": "dance",
+      "zh": "我会跳舞。",
+      "py": "Wǒ huì tiàowǔ.",
+      "ru": "Я умею танцевать.",
+      "src": "../i-can/",
+      "img": "img/dance.webp"
+    },
+    {
+      "id": "draw",
+      "zh": "我会画画。",
+      "py": "Wǒ huì huàhuà.",
+      "ru": "Я умею рисовать.",
+      "src": "../i-can/",
+      "img": "img/draw.webp"
+    },
+    {
+      "id": "read",
+      "zh": "我会看书。",
+      "py": "Wǒ huì kànshū.",
+      "ru": "Я умею читать.",
+      "src": "../i-can/",
+      "img": "img/read.webp"
+    },
+    {
+      "id": "write",
+      "zh": "我会写字。",
+      "py": "Wǒ huì xiězì.",
+      "ru": "Я умею писать.",
+      "src": "../i-can/",
+      "img": "img/write.webp"
+    },
+    {
+      "id": "chinese",
+      "zh": "我会说中文。",
+      "py": "Wǒ huì shuō Zhōngwén.",
+      "ru": "Я умею говорить по-китайски.",
+      "src": "../i-can/",
+      "img": "img/chinese.webp"
+    },
+    {
+      "id": "english",
+      "zh": "我会说英语。",
+      "py": "Wǒ huì shuō Yīngyǔ.",
+      "ru": "Я умею говорить по-английски.",
+      "src": "../i-can/",
+      "img": "img/english.webp"
+    },
+    {
+      "id": "fly",
+      "zh": "我不会飞！",
+      "py": "Wǒ bú huì fēi!",
+      "ru": "Я не умею летать!",
+      "src": "../i-can/",
+      "img": "img/fly.webp"
+    },
+    {
+      "id": "good_sing",
+      "zh": "他很会唱歌。",
+      "py": "Tā hěn huì chànggē.",
+      "ru": "Он здорово поёт.",
+      "src": "../i-can/",
+      "img": "img/good_sing.webp"
+    },
+    {
+      "id": "but",
+      "zh": "我会说英语，但是不会说中文。",
+      "py": "Wǒ huì shuō Yīngyǔ, dànshì bú huì shuō Zhōngwén.",
+      "ru": "Я говорю по-английски, но не по-китайски.",
+      "src": "../i-can/",
+      "img": "img/but.webp"
+    },
+    {
+      "id": "q_like",
+      "zh": "你喜欢吃什么？",
+      "py": "Nǐ xǐhuan chī shénme?",
+      "ru": "Что ты любишь есть?",
+      "src": "../i-like/",
+      "img": "img/q_like.webp"
+    },
+    {
+      "id": "q_drink",
+      "zh": "你喜欢喝什么？",
+      "py": "Nǐ xǐhuan hē shénme?",
+      "ru": "Что ты любишь пить?",
+      "src": "../i-like/",
+      "img": "img/q_drink.webp"
+    },
+    {
+      "id": "like",
+      "zh": "我喜欢！",
+      "py": "Wǒ xǐhuan!",
+      "ru": "Люблю!",
+      "src": "../i-like/",
+      "img": "img/like.webp"
+    },
+    {
+      "id": "dislike",
+      "zh": "我不喜欢。",
+      "py": "Wǒ bù xǐhuan.",
+      "ru": "Не люблю.",
+      "src": "../i-like/",
+      "img": "img/dislike.webp"
+    },
+    {
+      "id": "rice",
+      "zh": "我喜欢吃米饭。",
+      "py": "Wǒ xǐhuan chī mǐfàn.",
+      "ru": "Я люблю рис.",
+      "src": "../i-like/",
+      "img": "img/rice.webp"
+    },
+    {
+      "id": "noodles",
+      "zh": "我喜欢吃面条。",
+      "py": "Wǒ xǐhuan chī miàntiáo.",
+      "ru": "Я люблю лапшу.",
+      "src": "../i-like/",
+      "img": "img/noodles.webp"
+    },
+    {
+      "id": "dumplings",
+      "zh": "我喜欢吃饺子。",
+      "py": "Wǒ xǐhuan chī jiǎozi.",
+      "ru": "Я люблю пельмени.",
+      "src": "../i-like/",
+      "img": "img/dumplings.webp"
+    },
+    {
+      "id": "apple",
+      "zh": "我喜欢吃苹果。",
+      "py": "Wǒ xǐhuan chī píngguǒ.",
+      "ru": "Я люблю яблоки.",
+      "src": "../i-like/",
+      "img": "img/apple.webp"
+    },
+    {
+      "id": "icecream",
+      "zh": "我喜欢吃冰淇淋。",
+      "py": "Wǒ xǐhuan chī bīngqílín.",
+      "ru": "Я люблю мороженое.",
+      "src": "../i-like/",
+      "img": "img/icecream.webp"
+    },
+    {
+      "id": "water",
+      "zh": "我喜欢喝水。",
+      "py": "Wǒ xǐhuan hē shuǐ.",
+      "ru": "Я люблю пить воду.",
+      "src": "../i-like/",
+      "img": "img/water.webp"
+    },
+    {
+      "id": "tea",
+      "zh": "我喜欢喝茶。",
+      "py": "Wǒ xǐhuan hē chá.",
+      "ru": "Я люблю чай.",
+      "src": "../i-like/",
+      "img": "img/tea.webp"
+    },
+    {
+      "id": "milk",
+      "zh": "我喜欢喝牛奶。",
+      "py": "Wǒ xǐhuan hē niúnǎi.",
+      "ru": "Я люблю молоко.",
+      "src": "../i-like/",
+      "img": "img/milk.webp"
+    },
+    {
+      "id": "juice",
+      "zh": "我喜欢喝果汁。",
+      "py": "Wǒ xǐhuan hē guǒzhī.",
+      "ru": "Я люблю сок.",
+      "src": "../i-like/",
+      "img": "img/juice.webp"
+    },
+    {
+      "id": "bugs",
+      "zh": "我不喜欢吃虫子！",
+      "py": "Wǒ bù xǐhuan chī chóngzi!",
+      "ru": "Я не люблю есть жуков!",
+      "src": "../i-like/",
+      "img": "img/bugs.webp"
+    },
+    {
+      "id": "yummy",
+      "zh": "好吃！",
+      "py": "Hǎochī!",
+      "ru": "Вкусно!",
+      "src": "../i-like/",
+      "img": "img/yummy.webp"
+    },
+    {
+      "id": "he_likes",
+      "zh": "他喜欢吃苹果。",
+      "py": "Tā xǐhuan chī píngguǒ.",
+      "ru": "Он любит яблоки.",
+      "src": "../i-like/",
+      "img": "img/he_likes.webp"
+    }
+  ]
+}

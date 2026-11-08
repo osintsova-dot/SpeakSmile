@@ -1,0 +1,483 @@
+{
+  "n": 12,
+  "title_zh": "我会，我喜欢！",
+  "title_ru": "Что я умею и что люблю",
+  "words": [
+    {
+      "id": "l01",
+      "zh": "你会唱歌吗？",
+      "py": "Nǐ huì chànggē ma?",
+      "ru": "Ты умеешь петь?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_teacher.jpg",
+      "who": [
+        "老师",
+        "Учительница",
+        "#C9B6FF"
+      ]
+    },
+    {
+      "id": "l02",
+      "zh": "我会唱歌！",
+      "py": "Wǒ huì chànggē!",
+      "ru": "Я умею петь!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_mei.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l03",
+      "zh": "你会跳舞吗？",
+      "py": "Nǐ huì tiàowǔ ma?",
+      "ru": "Ты умеешь танцевать?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_teacher.jpg",
+      "who": [
+        "老师",
+        "Учительница",
+        "#C9B6FF"
+      ]
+    },
+    {
+      "id": "l04",
+      "zh": "我会跳舞！",
+      "py": "Wǒ huì tiàowǔ!",
+      "ru": "Я умею танцевать!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_long.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l05a",
+      "zh": "我会唱歌！我会跳舞！我会画画！",
+      "py": "Wǒ huì chànggē! Wǒ huì tiàowǔ! Wǒ huì huàhuà!",
+      "ru": "Я умею петь! Танцевать! Рисовать!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l05b",
+      "zh": "我会游泳！我会跑步！",
+      "py": "Wǒ huì yóuyǒng! Wǒ huì pǎobù!",
+      "ru": "Я умею плавать! Бегать!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l06",
+      "zh": "你会飞吗？",
+      "py": "Nǐ huì fēi ma?",
+      "ru": "А летать умеешь?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_long.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l07",
+      "zh": "不会。",
+      "py": "Bú huì.",
+      "ru": "Не умею.",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l08",
+      "zh": "太棒了！",
+      "py": "Tài bàng le!",
+      "ru": "Отлично!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/class_teacher.jpg",
+      "who": [
+        "老师",
+        "Учительница",
+        "#C9B6FF"
+      ]
+    },
+    {
+      "id": "stage_mei",
+      "zh": "我会唱歌！",
+      "py": "Wǒ huì chànggē!",
+      "ru": "Я умею петь!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/stage_mei.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l11",
+      "zh": "我不会唱歌……",
+      "py": "Wǒ bú huì chànggē…",
+      "ru": "Я не умею петь…",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/stage_ming_fail.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l12",
+      "zh": "但是我会画画！",
+      "py": "Dànshì wǒ huì huàhuà!",
+      "ru": "Но я умею рисовать!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/stage_ming_art.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l13",
+      "zh": "太棒了！",
+      "py": "Tài bàng le!",
+      "ru": "Отлично!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/award.jpg",
+      "who": [
+        "老师",
+        "Учительница",
+        "#C9B6FF"
+      ]
+    },
+    {
+      "id": "l14",
+      "zh": "我很开心！",
+      "py": "Wǒ hěn kāixīn!",
+      "ru": "Мне весело!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/award.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l15",
+      "zh": "我饿了！",
+      "py": "Wǒ è le!",
+      "ru": "Я хочу есть!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_long.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l16",
+      "zh": "你喜欢吃什么？",
+      "py": "Nǐ xǐhuan chī shénme?",
+      "ru": "Что ты любишь есть?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_mei.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l17",
+      "zh": "我喜欢吃饺子！",
+      "py": "Wǒ xǐhuan chī jiǎozi!",
+      "ru": "Я люблю пельмени!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_long.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l18",
+      "zh": "你呢？",
+      "py": "Nǐ ne?",
+      "ru": "А ты?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_long.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l19",
+      "zh": "我喜欢吃面条。小明，你呢？",
+      "py": "Wǒ xǐhuan chī miàntiáo. Xiǎo Míng, nǐ ne?",
+      "ru": "Я люблю лапшу. Сяо Мин, а ты?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_mei.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l20a",
+      "zh": "我喜欢吃饺子，我喜欢吃面条。",
+      "py": "Wǒ xǐhuan chī jiǎozi, wǒ xǐhuan chī miàntiáo.",
+      "ru": "Я люблю пельмени, люблю лапшу.",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l20b",
+      "zh": "我喜欢吃米饭，我喜欢吃苹果……",
+      "py": "Wǒ xǐhuan chī mǐfàn, wǒ xǐhuan chī píngguǒ…",
+      "ru": "Я люблю рис, люблю яблоки…",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l21",
+      "zh": "你喜欢吃虫子吗？",
+      "py": "Nǐ xǐhuan chī chóngzi ma?",
+      "ru": "А жуков любишь есть?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_mei.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l22",
+      "zh": "我不喜欢吃虫子！",
+      "py": "Wǒ bù xǐhuan chī chóngzi!",
+      "ru": "Я не люблю есть жуков!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l23",
+      "zh": "你喜欢喝什么？",
+      "py": "Nǐ xǐhuan hē shénme?",
+      "ru": "Что ты любишь пить?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_long.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l24",
+      "zh": "我喜欢喝果汁。",
+      "py": "Wǒ xǐhuan hē guǒzhī.",
+      "ru": "Я люблю сок.",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_mei.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l25",
+      "zh": "我不喜欢喝牛奶。我喜欢喝茶！",
+      "py": "Wǒ bù xǐhuan hē niúnǎi. Wǒ xǐhuan hē chá!",
+      "ru": "Я не люблю молоко. Я люблю чай!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_ming.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l26",
+      "zh": "好吃！",
+      "py": "Hǎochī!",
+      "ru": "Вкусно!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_long_food.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l27",
+      "zh": "太好吃了！",
+      "py": "Tài hǎochī le!",
+      "ru": "Очень вкусно!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_mei_food.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l28",
+      "zh": "冰淇淋！我喜欢！",
+      "py": "Bīngqílín! Wǒ xǐhuan!",
+      "ru": "Мороженое! Люблю!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_ming_icecream.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l29",
+      "zh": "小明，你会什么？",
+      "py": "Xiǎo Míng, nǐ huì shénme?",
+      "ru": "Сяо Мин, а что ты умеешь?",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_mei_food.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l30",
+      "zh": "我会吃！我很会吃！",
+      "py": "Wǒ huì chī! Wǒ hěn huì chī!",
+      "ru": "Я умею есть! Я мастер поесть!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_ming_icecream.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    },
+    {
+      "id": "l31m",
+      "zh": "再见！",
+      "py": "Zàijiàn!",
+      "ru": "До свидания!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_final.jpg",
+      "who": [
+        "美美",
+        "Мэймэй",
+        "#F7A8D4"
+      ]
+    },
+    {
+      "id": "l31l",
+      "zh": "明天见！",
+      "py": "Míngtiān jiàn!",
+      "ru": "До завтра!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_final.jpg",
+      "who": [
+        "小龙",
+        "Сяо Лун",
+        "#7FE3D6"
+      ]
+    },
+    {
+      "id": "l31x",
+      "zh": "拜拜！",
+      "py": "Báibái!",
+      "ru": "Пока-пока!",
+      "wide": true,
+      "src": "../film/ep3/",
+      "img": "stills/cafe_final.jpg",
+      "who": [
+        "小明",
+        "Сяо Мин",
+        "#FFB36B"
+      ]
+    }
+  ]
+}

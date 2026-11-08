@@ -35,7 +35,7 @@ video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
 
 /* субтитры «как в кино»: без плашки, белый текст с тёмной обводкой */
 .subs{position:absolute;left:calc(4*var(--u));right:calc(4*var(--u));bottom:calc(5.5*var(--u));text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:calc(.6*var(--u))}
-.subs>*{paint-order:stroke fill;-webkit-text-stroke:calc(.55*var(--u)) rgba(18,10,36,.92);text-shadow:0 calc(.4*var(--u)) calc(1.6*var(--u)) rgba(0,0,0,.55)}
+.subs>*{max-width:100%;overflow-wrap:anywhere;paint-order:stroke fill;-webkit-text-stroke:calc(.55*var(--u)) rgba(18,10,36,.92);text-shadow:0 calc(.4*var(--u)) calc(1.6*var(--u)) rgba(0,0,0,.55)}
 .who{font:800 calc(2.1*var(--u))/1 var(--ru);padding:calc(.55*var(--u)) calc(1.3*var(--u));border-radius:99px;color:var(--ink);-webkit-text-stroke:0!important;text-shadow:none!important;margin-bottom:calc(.3*var(--u))}
 .who b{font-family:var(--zh);font-weight:900;margin-right:calc(.5*var(--u))}
 .zh{font:900 calc(6.2*var(--u))/1.15 var(--zh);letter-spacing:.02em}
@@ -127,7 +127,7 @@ const MODES=[
   {id:'watch',  b:'Смотрим',   s:'весь диалог',          h:'Просто смотри и слушай. Понятно без титров?'},
   {id:'repeat', b:'Повторяем', s:'пауза после фразы',    h:'После каждой фразы — пауза. Повтори вслух так же, как герой.'},
 ];
-function heroModes(){ (T.roles||Object.keys(T.heroes)).map(k=>[k,T.heroes[k]]).forEach(([k,h])=>MODES.push({id:'role_'+k,b:'Озвучь '+h.ru,s:'ты говоришь за героя',h:`Голос ${h.ru} выключен — говоришь ты! Подсказка появится, когда твоя очередь.`})); }
+function heroModes(){ (T.roles||Object.keys(T.heroes)).map(k=>[k,T.heroes[k]]).forEach(([k,h])=>MODES.push({id:'role_'+k,b:'Озвучь '+({teacher:'учительницу',long:'Сяо Луна',ming:'Сяо Мина'}[k]||h.ru),s:'ты говоришь за героя',h:'Реплики этого героя без звука — говоришь ты! Подсказка появится в твою очередь.'})); }
 
 function drawModes(){
   $('modes').innerHTML=MODES.map(m=>`<button class="mode${m.id===mode?' on':''}" data-m="${m.id}"><b>${m.b}</b><span>${m.s}</span></button>`).join('');
