@@ -17,3 +17,19 @@
 - **u1-l6** (SB 16–17): Grammar reference, Test yourself (40 баллов, ключ TB), слова на слух (звук из u1-l1), правописание, типичные ошибки, все тренажёры.
 - **u1-test** Unit 1 Test Standard: Vocabulary 20 · Grammar 25 · Use of English 8 · Listening 12 · Reading 15 · Writing 10 = 90 онлайн; Speaking 10 — на уроке. Reading 13 и Writing — заполненные поля засчитываются, текст смотрит учитель. `/home-done?l=gw-u1-test&s=…&m=90&f=<по заданиям>`.
 - Unit 2–3 — отдельная сборка (плашки `id="u2"` / `id="u3"`, маркеры `<!--U2-ITEMS-->`, `<!--U3-ITEMS-->`).
+
+## Unit 4 + Unit 5 L1–L2 (декабрь 2026)
+
+Сборка: `~/Проекты с Claude/home-lesson-tools/gateway/u45/` — копия движка u23 (`common.py` собирается `src/patch_common.py` из u23 + `src/common_tail.py`; тема `gw_theme.css`) + игры на запоминание **memo** (пары слово ↔ значение) и **ttt** (крестики-нолики против компьютера; движок из `prepare/extra_p5_dec.py`), `note()` — короткое объяснение нового материала с 1–2 примерами из книги со звуком. `python3 build.py <урок…> [--media]`, проверка нарезки `venv/bin/python vcheck.py u4_l1 …`, плашки — `python3 index_cards.py` (блоки `id="u4"`, `id="u5"`, маркеры `<!--U4-ITEMS-->`, `<!--U5-ITEMS-->`).
+Тексты книги не набирались вручную: OCR страниц (macOS Vision, `src/ocr`) через `bt.py` → `src/ocr_*.txt`, тексты с пропусками — `texts_u4.py`, `texts_u5.py` (якоря + ответы по ключам); аудиоскрипты — из TB (`scripts_as.py`), тест — из `B2_U4_Test_Standard.docx`.
+Медиа (Resource Centre, 08.11): SB треки 15–26, WB 15–22, Flipped classroom video U4 → `Методбаза/курсы/GatewayB2/media-macmillan/`; тест U4 — из `тесты/progress Tests`.
+
+- **u4-l1** (SB 44, WB 30): Personality adjectives 1–3 (треки 15–17), Big Five OCEAN, similar/opposite, идиомы (трек 18), Memory, WB 1–4 (What makes a good pilot?).
+- **u4-l2** (SB 45, WB 31): Lucy’s reflections (трек 19, по абзацам), multiple choice, подчёркнутые слова, Tanya’s blog (WB трек 15), Fact/Opinion, Memory.
+- **u4-l3** (SB 46–47, WB 32–33): Flipped video (comparatives), правила, ошибки, Happiness is a pencil!, as … as / the … the …, noun suffixes, Do nothing!, ttt, WB 32 + WB 33 ex. 1–2.
+- **u4-l4** (SB 50–51, WB 33–34): подкаст о Леонардо (трек 20 + реплики), articles, Isaac Newton, ability, Belzoni, WB listening (трек 16), WB 34, ttt.
+- **u4-l5** (SB 52–53, WB 35–36): presentation (трек 21), Speaking bank, Amal Clooney (WB трек 17), pronunciation (WB трек 18), статья о Klopp, Writing bank, Greta Thunberg, ttt, план.
+- **u4-l6** (SB 54–55): Grammar reference и Vocabulary (страницы книги), Test yourself 40, правописание, ошибки, самооценка, тренажёры.
+- **u4-test** Unit 4 Test Standard: Listening 12 · Vocabulary 20 · Grammar 25 · Use of English 8 · Reading 15 · Writing 10 = 90 онлайн; Speaking 10 — голосом (speak_rec). `/home-done?l=gw-u4-test…`.
+- **u5-l1** (SB 58, WB 40): Spending and saving money 1–2 (треки 22–23), US teens and money, идиомы, Memory, WB 1–5.
+- **u5-l2** (SB 59, WB 41): Without a penny in their pockets + Unusual tax facts (трек 24), вопросы, слова, The richest kids around (WB трек 19), Memory.
