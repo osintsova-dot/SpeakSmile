@@ -20,3 +20,17 @@
 - **u1-test** Progress test Unit 1 Standard: Vocabulary 25 · Grammar 25 · Reading 15 · Listening 15 (оригинальная запись GI_A2_U1_Test.mp3, ключ из AK) · Speaking (диалог с пропусками) 5 · Writing 10 = 95; Speaking-задание 17 (5) — на уроке. `/home-done?l=gia2-u1-test&s=…&m=95&f=<по заданиям>`.
 - Unit 2–3 — отдельная сборка (плашки `id="u2"` / `id="u3"`, маркеры `<!--U2-ITEMS-->`, `<!--U3-ITEMS-->`).
 - Проверить глазами: точность нарезки реплик в разговорах (whisper в треке 4 «плывёт», границы k1_1, k2_1–k2_2, k4_3, k4_5 и диалога видео выставлены вручную); «Who?» в треке 4 очень короткое.
+
+## Midterm + Unit 4 «Extremes» (собрано 08.11.2026, не закоммичено)
+Сетка `ktp.py parse_gia2()` (старт 01.09, 2 пары/нед.): пара 27 u3-l7 и 28 u3-test — 30.11–06.12; **пара 29 Midterm — 07.12–13.12** (ktp.py пока называет её `u3-l9`: маркер «MIDTERM —» не распознаётся); пары 30–37 = u4-l1…u4-l7, u4-test: 07.12–13.12 (l1), 14.12–20.12 (l2, l3), 21.12–27.12 (l4, l5), 28.12–03.01 (l6, l7), 04.01–10.01 (test). Хаб (data.js) ставит пары 26–33 на 30.11–27.12 со сдвигом на одну пару и каникулами — по нему декабрь кончается на «модальных» (u4-l5).
+Сборщики: `home-lesson-tools/gia2/u4/` — `common.py` (копия u23 + `memoGame` из gmf3, `rule()` — короткое объяснение по-русски с примерами-аудио), `media.py` (источники прямо из `Методбаза/…/A2/media-macmillan`, whisper-кэш `u4/cache/`), `cards.py` (флэшкарты U4 → `img/c4_*.jpg`), `midterm.py`, `u4_l1…u4_l7.py`, `u4_test.py`, `test_common.py` (+ title/sub; optTask перемешивает варианты через smix), `index_u4.py` (плашки mid + u4), `verify_words.py`. Запуск: `python3 build.py u4-l1 --media`.
+- **midterm** — официальный End-of-term test Units 1–3 Standard (Resource Centre: Tests/Endofterm…/Standard + AK + `GI_A2_U1to3_Test.mp3`): Vocabulary 25 · Grammar 25 · Reading 15 · Listening 15 · Speaking 18 (5) · Writing 10 = 95 + Speaking 19 голосом (5, партнёр — TTS) = 100. `LESSON='gia2-midterm'`.
+- **u4-l1** (SB 48–49, WB 28): 27 слов T28 (оригинал, нарезка по паузам) с флэшкартами, корзины, карта (ex 3), noun → adjective (правило + примеры), 5 звуков T24, Phoenix/New York, видео Four seasons in a week + 5 вопросов, мемо, WB 2–3.
+- **u4-l2** (SB 50–51, WB 32): fact files, M/O, subskill main idea, текст T25 по абзацам + 6 вопросов, M/O/Both, Word work (TTS 6 слов), ex 7, мемо, блог Матео (WB T7) + T/F.
+- **u4-l3** (SB 52, 57, WB 29): правило comparative/superlative (примеры из T25), spelling, таблица, ex 4, Brazil/Ecuador (TTS), квиз World records (T26 после ответа), Dubai, Brain teaser 26°C, WB 1 + 3.
+- **u4-l4** (SB 53, WB 30): листовка, 14 составных T29 с флэшкартами, one/two words (правило), таблица, фото A–K, мемо, subskill pictures, порядок картинок по T27 (a3 b5 c7 d1 e4 f6 g2), правила по репликам Бретта, WB 1/4/5.
+- **u4-l5** (SB 54, p116, WB 31): правило can/must/mustn’t (примеры гида из T27), форма, + – ? (ex 3), правила парка (TTS), can /kæn/ /kən/ T67 + диалог T68, Grammar round-up, WB 2–3.
+- **u4-l6** (SB 55–57, WB 33): видео Real-world speaking, Key phrases, диалог Кирсти и Сэма (реплики из звука видео), US/UK, How to pack (TTS), too/also, WB speaking 1–2 + подкаст WB T8.
+- **u4-l7** (SB 57–59, WB 34–35): видео проекта Finland, Model project, active listening, свои заметки, Vocabulary/Grammar review, Round-up Polar Academy, самооценка (TTS).
+- **u4-test** — Progress test Unit 4 Standard (+ AK, `GI_A2_U4_Test.mp3`): 95 онлайн + Speaking 16 голосом (5). Ex 14 — по 2 балла.
+Мемо (игра на запоминание) — в уроках со словами: u4-l1, u4-l2, u4-l4.
