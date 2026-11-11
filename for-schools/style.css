@@ -285,7 +285,7 @@ body.night-page .night{background:transparent}
 .prod.app:hover .icons img:nth-child(2){transform:rotate(7deg) translateY(2px)}
 @media (prefers-reduced-motion:reduce){.prod .icons img{transition:none}}
 
-/* летняя плашка — в цветах иконки бота Holiday English (бирюза, солнце, фиолет) */
+/* летняя плашка — в цветах иконки бота (бирюза, солнце, фиолет) */
 .prod.soon.summer{background:radial-gradient(110% 140% at 0% 0%,#3FD6D2 0%,#1BBFC2 45%,#0FA3B4 100%);box-shadow:0 26px 54px -36px rgba(15,163,180,.8);color:#fff}
 .prod.soon.summer:hover{box-shadow:0 30px 60px -32px rgba(15,163,180,.95)}
 .prod.soon.summer h3{color:#fff}
