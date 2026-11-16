@@ -223,20 +223,6 @@ svg .dot{fill:#fff;stroke:var(--c);stroke-width:4}
 .qz-o{display:flex;flex-wrap:wrap;gap:8px}.qz-o button{border:0;border-radius:14px;padding:10px 14px;background:#F3EEFF;color:#2A2140;font:inherit;font-weight:700;cursor:pointer;transition:transform .15s,background .2s}
 .qz-o button:hover{transform:translateY(-1px)}.qz-o button.right{background:#34D3C0;color:#fff}.qz-o button:disabled:not(.right){opacity:.45}.qz-o button.wrong{background:#FFD9D9;animation:qzsh .3s}
 @keyframes qzsh{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.film.soon{display:block;background:radial-gradient(90% 120% at 80% 10%,rgba(245,200,66,.35),transparent 55%),radial-gradient(90% 100% at 0% 100%,rgba(241,127,190,.35),transparent 60%),linear-gradient(150deg,#5B34C9,#2A1E4A)}
-.film.soon .soon-n{position:absolute;right:6%;top:50%;transform:translateY(-58%);font-family:var(--zh);font-weight:900;font-size:clamp(110px,34vw,210px);line-height:1;color:rgba(255,255,255,.14)}
-.film.soon .soon-b{position:absolute;left:18px;top:16px;padding:5px 12px;border-radius:999px;background:var(--honey);color:var(--ink);font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
-.ep{display:grid;gap:8px;text-align:left;margin-top:6px}
-.ep-act{font-weight:800;font-size:13px;color:var(--muted);text-align:center;margin:10px 0 0;letter-spacing:.02em}
-.ep-act::before,.ep-act::after{content:" — "}
-.ep-ln{appearance:none;border:0;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:10px 12px;border-radius:16px;background:#FBF9FF;color:var(--ink);text-align:left;box-shadow:inset 0 0 0 2px #EEE8FA;transition:box-shadow .2s,transform .15s var(--out)}
-.ep-ln:active{transform:scale(.98)}.ep-ln.on{box-shadow:inset 0 0 0 3px var(--p);background:#fff}
-.ep-ln .w{display:inline-flex;flex-direction:column;align-items:center;min-width:64px;padding:4px 8px;border-radius:12px;font-weight:800;font-size:11px;line-height:1.15}
-.ep-ln .w b{font-family:var(--zh);font-weight:900;font-size:15px}
-.ep-ln .t{display:flex;flex-direction:column;gap:1px;min-width:0}
-.ep-ln .z{font-family:var(--zh);font-weight:900;font-size:20px;line-height:1.25}
-.ep-ln .p{font-family:var(--pyf);font-weight:800;font-size:14px;color:var(--p)}
-.ep-ln .r{font-weight:600;font-size:13px;color:var(--muted)}
 .tabs{justify-content:flex-start}.tabs>.tab:first-child{margin-left:auto}.tabs>.tab:last-child{margin-right:auto}
 </style></head>
 <body>
@@ -265,33 +251,35 @@ document.addEventListener('error',e=>{ const t=e.target; if(!t||t.tagName!=='IMG
   <!-- ФИЛЬМ -->
   <section id="film" role="tabpanel">
     <div class="panel">
-      <div class="film soon" role="img" aria-label="Серия 4 «Мой питомец» скоро">
-        <span class="soon-n" aria-hidden="true">4</span>
-        <span class="soon-b">скоро</span>
-        <span class="shade"></span>
+      <a class="film" href="../film/?ep=4">
+        <img src="../film/ep4/poster.jpg" alt="Кадр из серии «Мой питомец»">
+        <span class="shade"></span><span class="pl"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
         <span class="cap"><span class="e">СЕРИАЛ «ГИНКГО В ПЕКИНЕ» · СЕРИЯ 4</span><span class="t"><b lang="zh">我的宠物</b>Мой питомец</span></span>
-      </div>
+      </a>
       <div class="heroes">
         <span class="hchip" style="background:#F7A8D4"><b lang="zh">美美</b>Мэймэй</span>
         <span class="hchip" style="background:#7FE3D6"><b lang="zh">小龙</b>Сяо Лун</span>
         <span class="hchip" style="background:#FFB36B"><b lang="zh">小明</b>Сяо Мин</span>
         <span class="hchip" style="background:#C9B8F5"><b lang="zh">老师</b>Учительница</span>
       </div>
-      <p class="sub" style="margin:14px auto 4px">Серия 4 ещё снимается. Пока прочитай её по репликам: нажми на фразу — услышишь, как она звучит.</p>
-      <div class="ep" id="epLines"></div>
+      <div class="modes">
+        <a class="mode" href="../film/?ep=4&m=watch"><i>1</i><b>Смотрим</b><span>Сначала без титров: что поняли на слух?</span></a>
+        <a class="mode" href="../film/?ep=4&m=repeat"><i>2</i><b>Повторяем</b><span>После каждой фразы пауза — повтори вслух</span></a>
+        <a class="mode" href="../film/?ep=4&m=role_long"><i>3</i><b>Озвучь героя</b><span>Голос Сяо Луна выключен — говоришь ты</span></a>
+      </div>
     </div>
     <div class="panel">
       <h2>Что произошло?</h2>
-      <p class="sub">Прочитал серию? Проверь, всё ли понял. Неверный ответ — просто попробуй ещё.</p>
+      <p class="sub">Посмотрел серию? Проверь, всё ли понял. Неверный ответ — просто попробуй ещё.</p>
       <div class="qz" id="quiz"></div>
     </div>
     <div class="panel">
       <h2>Дома до четверга</h2>
       <p class="sub">В четверг каждый расскажет о своём друге: как его зовут, сколько ему лет, что он умеет и что любит, — и разыграем сцену на скамейке по ролям.</p>
       <ol class="steps">
-        <li>Прочитай серию по репликам и послушай каждую фразу. Повтори вслух за героями.</li>
-        <li>Ответь на «Что произошло?».</li>
-        <li>Сыграй в «Тоны», «Мемори» и «Задания».</li>
+        <li>Посмотри серию два раза: один раз без титров, второй — с пиньинем. Что удалось понять на слух?</li>
+        <li>Включи «Повторяем» и говори вслух вместе с героями.</li>
+        <li>Озвучь Сяо Луна: у него самая трогательная реплика в конце.</li>
         <li>Подумай о друге: как его зовут, сколько ему лет, что он умеет и что любит есть.</li>
       </ol>
     </div>
@@ -490,12 +478,6 @@ $('quiz').innerHTML=QS.map(([q,o],i)=>`<div class="qz-q"><b>${i+1}. ${q}</b><div
 $('quiz').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const i=+b.dataset.q, ok=+b.dataset.a===QS[i][2], box=b.parentElement;
   if(ok){ box.querySelectorAll('button').forEach(x=>{ x.disabled=true; x.classList.toggle('right',x===b); }); box.parentElement.classList.add('done'); }
   else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); } });
-
-/* ── серия 4 по репликам: пока снимается фильм ── */
-const EP=[{"act": "Класс, утро. «Мой питомец»"}, {"id": "l01", "k": "tch", "zh": "你有宠物吗？", "py": "Nǐ yǒu chǒngwù ma?", "ru": "У тебя есть питомец?"}, {"id": "l02", "k": "mei", "zh": "我有！我有两只猫！", "py": "Wǒ yǒu! Wǒ yǒu liǎng zhī māo!", "ru": "Есть! У меня две кошки!"}, {"id": "l03", "k": "mei", "zh": "它叫咪咪。", "py": "Tā jiào Mīmi.", "ru": "Её зовут Мими."}, {"id": "l04", "k": "long", "zh": "好可爱！", "py": "Hǎo kě'ài!", "ru": "Какая прелесть!"}, {"id": "l05", "k": "tch", "zh": "小明，你有什么宠物？", "py": "Xiǎo Míng, nǐ yǒu shénme chǒngwù?", "ru": "Сяо Мин, какой у тебя питомец?"}, {"id": "l06", "k": "ming", "zh": "我有一只狗！它叫旺旺。", "py": "Wǒ yǒu yì zhī gǒu! Tā jiào Wàngwang.", "ru": "У меня есть собака! Её зовут Ванван."}, {"id": "l07", "k": "tch", "zh": "小龙，你有宠物吗？", "py": "Xiǎo Lóng, nǐ yǒu chǒngwù ma?", "ru": "Сяо Лун, а у тебя есть питомец?"}, {"id": "l08", "k": "long", "zh": "我没有。", "py": "Wǒ méiyǒu.", "ru": "Нету."}, {"id": "l09", "k": "tch", "zh": "明天我们去动物园！", "py": "Míngtiān wǒmen qù dòngwùyuán!", "ru": "Завтра мы идём в зоопарк!"}, {"id": "l10", "k": "long", "zh": "太棒了！", "py": "Tài bàng le!", "ru": "Ура!"}, {"act": "Зоопарк"}, {"id": "l11", "k": "tch", "zh": "这是什么？", "py": "Zhè shì shénme?", "ru": "Что это?"}, {"id": "l12", "k": "ming", "zh": "这是熊猫！", "py": "Zhè shì xióngmāo!", "ru": "Это панда!"}, {"id": "l13", "k": "mei", "zh": "它喜欢吃什么？", "py": "Tā xǐhuan chī shénme?", "ru": "Что она любит есть?"}, {"id": "l14", "k": "ming", "zh": "熊猫喜欢吃竹子。", "py": "Xióngmāo xǐhuan chī zhúzi.", "ru": "Панда любит бамбук."}, {"id": "l15", "k": "long", "zh": "熊猫会飞吗？", "py": "Xióngmāo huì fēi ma?", "ru": "А панда умеет летать?"}, {"id": "l16", "k": "ming", "zh": "不会！", "py": "Bú huì!", "ru": "Не умеет!"}, {"id": "l17", "k": "mei", "zh": "这是大象！好大！", "py": "Zhè shì dàxiàng! Hǎo dà!", "ru": "Это слон! Какой большой!"}, {"id": "l18", "k": "long", "zh": "猴子喜欢吃香蕉！", "py": "Hóuzi xǐhuan chī xiāngjiāo!", "ru": "Обезьяна любит бананы!"}, {"id": "l19", "k": "tch", "zh": "它会游泳吗？", "py": "Tā huì yóuyǒng ma?", "ru": "Он умеет плавать?"}, {"id": "l20", "k": "ming", "zh": "会！老虎会游泳！", "py": "Huì! Lǎohǔ huì yóuyǒng!", "ru": "Да! Тигр умеет плавать!"}, {"id": "l21", "k": "tch", "zh": "太棒了，小明！", "py": "Tài bàng le, Xiǎo Míng!", "ru": "Молодец, Сяо Мин!"}, {"id": "l22", "k": "long", "zh": "它会飞！", "py": "Tā huì fēi!", "ru": "Она умеет летать!"}, {"act": "Скамейка у выхода из зоопарка, вечер"}, {"id": "l23", "k": "mei", "zh": "小龙，你喜欢什么动物？", "py": "Xiǎo Lóng, nǐ xǐhuan shénme dòngwù?", "ru": "Сяо Лун, какое животное ты любишь?"}, {"id": "l24", "k": "long", "zh": "我喜欢熊猫！但是…我没有宠物。", "py": "Wǒ xǐhuan xióngmāo! Dànshì… wǒ méiyǒu chǒngwù.", "ru": "Я люблю панд! Но… у меня нет питомца."}, {"id": "l25", "k": "ming", "zh": "小龙，你有朋友！", "py": "Xiǎo Lóng, nǐ yǒu péngyou!", "ru": "Сяо Лун, у тебя есть друзья!"}, {"id": "l26", "k": "long", "zh": "我没有宠物，但是我有朋友！", "py": "Wǒ méiyǒu chǒngwù, dànshì wǒ yǒu péngyou!", "ru": "Питомца нет, но есть друзья!"}, {"id": "l27", "k": "mei", "zh": "我有一个朋友，他叫小龙！", "py": "Wǒ yǒu yí ge péngyou, tā jiào Xiǎo Lóng!", "ru": "У меня есть друг, его зовут Сяо Лун!"}, {"act": "Финал"}, {"id": "l28", "k": "mei", "zh": "再见！", "py": "Zàijiàn!", "ru": "До свидания!"}, {"id": "l29", "k": "long", "zh": "明天见！", "py": "Míngtiān jiàn!", "ru": "До завтра!"}, {"id": "l30", "k": "ming", "zh": "拜拜！", "py": "Báibái!", "ru": "Пока-пока!"}];
-const EPH={"mei": ["美美", "Мэймэй", "var(--mei)"], "long": ["小龙", "Сяо Лун", "var(--long)"], "ming": ["小明", "Сяо Мин", "var(--ming)"], "tch": ["老师", "Учительница", "var(--tch)"]};
-$('epLines').innerHTML=EP.map(l=>l.act?`<div class="ep-act">${l.act}</div>`:`<button class="ep-ln" data-id="${l.id}"><span class="w" style="background:${EPH[l.k][2]}"><b lang="zh">${EPH[l.k][0]}</b>${EPH[l.k][1]}</span><span class="t"><span class="z" lang="zh">${l.zh}</span><span class="p">${l.py}</span><span class="r">${l.ru}</span></span></button>`).join('');
-$('epLines').addEventListener('click',e=>{ const b=e.target.closest('.ep-ln'); if(!b) return; document.querySelectorAll('.ep-ln.on').forEach(x=>x.classList.remove('on')); b.classList.add('on'); play(au(b.dataset.id),()=>b.classList.remove('on')); });
 
 /* ── вкладки ── */
 const started={};
