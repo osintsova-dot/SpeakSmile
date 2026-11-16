@@ -242,7 +242,7 @@ document.addEventListener('error',e=>{ const t=e.target; if(!t||t.tagName!=='IMG
         <div class="bf-ru" id="bfRu"></div>
         <div class="slots" id="bfSlots"></div>
         <div class="tiles" id="bfTiles"></div>
-        <div class="clipbox voice"><div class="vsay" id="bfSay"></div><div class="ph" id="bfPh">Собери фразу — и услышишь её</div></div>
+        <div class="clipbox"><video id="bfVid" playsinline preload="metadata" src="../film/ep4/watch.mp4"></video><div class="ph" id="bfPh">Собери фразу — и герой её скажет</div></div>
         <div class="bf-acts"><button class="btn soft" id="bfHint">Подсказка</button><button class="btn soft" id="bfReplay" hidden>Ещё раз</button><button class="btn primary" id="bfNext" hidden>Дальше →</button></div>
       </div>
       <div class="bf-end" id="bfEnd"><div class="big">Все фразы собраны! 太棒了！</div><p class="sub" style="margin:0">Теперь ты знаешь серию «Мой питомец». Переходи к «Сцена по ролям».</p><button class="btn primary" id="bfAgain">Собрать ещё раз</button></div>
@@ -257,7 +257,7 @@ document.addEventListener('error',e=>{ const t=e.target; if(!t||t.tagName!=='IMG
       <div class="pick" id="rolePick"></div>
       <div class="script script-screen" id="roleScript"></div>
       <div class="print-wrap" id="printWrap"></div>
-      <div class="acts"><button class="btn primary" id="roleStage">На весь экран</button><button class="btn soft" id="rolePrint">Распечатать роли</button></div>
+      <div class="acts"><button class="btn primary" id="roleStage">На весь экран</button><button class="btn soft" id="rolePrint">Распечатать роли</button><a class="btn soft" href="../film/?ep=4&m=role_long">Озвучить в фильме</a></div>
     </div>
   </section>
 
@@ -316,42 +316,42 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const H={mei:{zh:'美美',ru:'Мэймэй',c:'var(--mei)'},long:{zh:'小龙',ru:'Сяо Лун',c:'var(--long)'},ming:{zh:'小明',ru:'Сяо Мин',c:'var(--ming)'},tch:{zh:'老师',ru:'Учительница',c:'var(--tch)'},all:{zh:'大家',ru:'Все вместе',c:'var(--honey)'}};
 const who=k=>`<span class="who" style="background:${H[k].c}"><b lang="zh">${H[k].zh}</b>${H[k].ru}</span>`;
 
-/* серия 4 «Мой питомец» (lessons/ep4/ep4_data.py); w — кусочки для «Собери фразу»; звук — audio/<id>.mp3 (Google TTS, фильма пока нет) */
+/* серия 4 «Мой питомец» (lessons/ep4/ep4_data.py); w — кусочки для «Собери фразу»; t — окно реплики в film/ep4/watch.mp4 */
 const ALLS=[
  {act:"Класс, утро. «Мой питомец»"},
- {id:"l01", k:"tch", zh:"你有宠物吗？", py:"Nǐ yǒu chǒngwù ma?", ru:"У тебя есть питомец?", w:[["你", "Nǐ"], ["有", "yǒu"], ["宠物", "chǒngwù"], ["吗？", "ma?"]]},
- {id:"l02", k:"mei", zh:"我有！我有两只猫！", py:"Wǒ yǒu! Wǒ yǒu liǎng zhī māo!", ru:"Есть! У меня две кошки!"},
- {id:"l03", k:"mei", zh:"它叫咪咪。", py:"Tā jiào Mīmi.", ru:"Её зовут Мими.", w:[["它", "Tā"], ["叫", "jiào"], ["咪咪。", "Mīmi."]]},
- {id:"l04", k:"long", zh:"好可爱！", py:"Hǎo kě'ài!", ru:"Какая прелесть!"},
- {id:"l05", k:"tch", zh:"小明，你有什么宠物？", py:"Xiǎo Míng, nǐ yǒu shénme chǒngwù?", ru:"Сяо Мин, какой у тебя питомец?", w:[["小明，", "Xiǎo Míng,"], ["你有", "nǐ yǒu"], ["什么", "shénme"], ["宠物？", "chǒngwù?"]]},
- {id:"l06", k:"ming", zh:"我有一只狗！它叫旺旺。", py:"Wǒ yǒu yì zhī gǒu! Tā jiào Wàngwang.", ru:"У меня есть собака! Её зовут Ванван.", w:[["我有", "Wǒ yǒu"], ["一只狗！", "yì zhī gǒu!"], ["它叫", "Tā jiào"], ["旺旺。", "Wàngwang."]]},
- {id:"l07", k:"tch", zh:"小龙，你有宠物吗？", py:"Xiǎo Lóng, nǐ yǒu chǒngwù ma?", ru:"Сяо Лун, а у тебя есть питомец?"},
- {id:"l08", k:"long", zh:"我没有。", py:"Wǒ méiyǒu.", ru:"Нету."},
- {id:"l09", k:"tch", zh:"明天我们去动物园！", py:"Míngtiān wǒmen qù dòngwùyuán!", ru:"Завтра мы идём в зоопарк!"},
- {id:"l10", k:"long", zh:"太棒了！", py:"Tài bàng le!", ru:"Ура!"},
+ {id:"l01", k:"tch", zh:"你有宠物吗？", py:"Nǐ yǒu chǒngwù ma?", ru:"У тебя есть питомец?", w:[["你", "Nǐ"], ["有", "yǒu"], ["宠物", "chǒngwù"], ["吗？", "ma?"]], t:[11.04,13.48]},
+ {id:"l02", k:"mei", zh:"我有！我有两只猫！", py:"Wǒ yǒu! Wǒ yǒu liǎng zhī māo!", ru:"Есть! У меня две кошки!", t:[13.48,16.58]},
+ {id:"l03", k:"mei", zh:"它叫咪咪。", py:"Tā jiào Mīmi.", ru:"Её зовут Мими.", w:[["它", "Tā"], ["叫", "jiào"], ["咪咪。", "Mīmi."]], t:[19.58,21.82]},
+ {id:"l04", k:"long", zh:"好可爱！", py:"Hǎo kě'ài!", ru:"Какая прелесть!", t:[21.82,23.86]},
+ {id:"l05", k:"tch", zh:"小明，你有什么宠物？", py:"Xiǎo Míng, nǐ yǒu shénme chǒngwù?", ru:"Сяо Мин, какой у тебя питомец?", w:[["小明，", "Xiǎo Míng,"], ["你有", "nǐ yǒu"], ["什么", "shénme"], ["宠物？", "chǒngwù?"]], t:[23.86,26.96]},
+ {id:"l06", k:"ming", zh:"我有一只狗！它叫旺旺。", py:"Wǒ yǒu yì zhī gǒu! Tā jiào Wàngwang.", ru:"У меня есть собака! Её зовут Ванван.", w:[["我有", "Wǒ yǒu"], ["一只狗！", "yì zhī gǒu!"], ["它叫", "Tā jiào"], ["旺旺。", "Wàngwang."]], t:[26.96,30.06]},
+ {id:"l07", k:"tch", zh:"小龙，你有宠物吗？", py:"Xiǎo Lóng, nǐ yǒu chǒngwù ma?", ru:"Сяо Лун, а у тебя есть питомец?", t:[33.06,35.58]},
+ {id:"l08", k:"long", zh:"我没有。", py:"Wǒ méiyǒu.", ru:"Нету.", t:[35.58,37.15]},
+ {id:"l09", k:"tch", zh:"明天我们去动物园！", py:"Míngtiān wǒmen qù dòngwùyuán!", ru:"Завтра мы идём в зоопарк!", t:[37.15,39.85]},
+ {id:"l10", k:"long", zh:"太棒了！", py:"Tài bàng le!", ru:"Ура!", t:[39.85,41.62]},
  {act:"Зоопарк"},
- {id:"l11", k:"tch", zh:"这是什么？", py:"Zhè shì shénme?", ru:"Что это?", w:[["这", "Zhè"], ["是", "shì"], ["什么？", "shénme?"]]},
- {id:"l12", k:"ming", zh:"这是熊猫！", py:"Zhè shì xióngmāo!", ru:"Это панда!"},
- {id:"l13", k:"mei", zh:"它喜欢吃什么？", py:"Tā xǐhuan chī shénme?", ru:"Что она любит есть?", w:[["它", "Tā"], ["喜欢", "xǐhuan"], ["吃", "chī"], ["什么？", "shénme?"]]},
- {id:"l14", k:"ming", zh:"熊猫喜欢吃竹子。", py:"Xióngmāo xǐhuan chī zhúzi.", ru:"Панда любит бамбук.", w:[["熊猫", "Xióngmāo"], ["喜欢", "xǐhuan"], ["吃", "chī"], ["竹子。", "zhúzi."]]},
- {id:"l15", k:"long", zh:"熊猫会飞吗？", py:"Xióngmāo huì fēi ma?", ru:"А панда умеет летать?", w:[["熊猫", "Xióngmāo"], ["会", "huì"], ["飞", "fēi"], ["吗？", "ma?"]]},
- {id:"l16", k:"ming", zh:"不会！", py:"Bú huì!", ru:"Не умеет!"},
- {id:"l17", k:"mei", zh:"这是大象！好大！", py:"Zhè shì dàxiàng! Hǎo dà!", ru:"Это слон! Какой большой!"},
- {id:"l18", k:"long", zh:"猴子喜欢吃香蕉！", py:"Hóuzi xǐhuan chī xiāngjiāo!", ru:"Обезьяна любит бананы!", w:[["猴子", "Hóuzi"], ["喜欢", "xǐhuan"], ["吃", "chī"], ["香蕉！", "xiāngjiāo!"]]},
- {id:"l19", k:"tch", zh:"它会游泳吗？", py:"Tā huì yóuyǒng ma?", ru:"Он умеет плавать?"},
- {id:"l20", k:"ming", zh:"会！老虎会游泳！", py:"Huì! Lǎohǔ huì yóuyǒng!", ru:"Да! Тигр умеет плавать!", w:[["会！", "Huì!"], ["老虎", "Lǎohǔ"], ["会", "huì"], ["游泳！", "yóuyǒng!"]]},
- {id:"l21", k:"tch", zh:"太棒了，小明！", py:"Tài bàng le, Xiǎo Míng!", ru:"Молодец, Сяо Мин!"},
- {id:"l22", k:"long", zh:"它会飞！", py:"Tā huì fēi!", ru:"Она умеет летать!"},
+ {id:"l11", k:"tch", zh:"这是什么？", py:"Zhè shì shénme?", ru:"Что это?", w:[["这", "Zhè"], ["是", "shì"], ["什么？", "shénme?"]], t:[50.18,51.55]},
+ {id:"l12", k:"ming", zh:"这是熊猫！", py:"Zhè shì xióngmāo!", ru:"Это панда!", t:[51.55,53.39]},
+ {id:"l13", k:"mei", zh:"它喜欢吃什么？", py:"Tā xǐhuan chī shénme?", ru:"Что она любит есть?", w:[["它", "Tā"], ["喜欢", "xǐhuan"], ["吃", "chī"], ["什么？", "shénme?"]], t:[53.39,56.56]},
+ {id:"l14", k:"ming", zh:"熊猫喜欢吃竹子。", py:"Xióngmāo xǐhuan chī zhúzi.", ru:"Панда любит бамбук.", w:[["熊猫", "Xióngmāo"], ["喜欢", "xǐhuan"], ["吃", "chī"], ["竹子。", "zhúzi."]], t:[56.56,59.2]},
+ {id:"l15", k:"long", zh:"熊猫会飞吗？", py:"Xióngmāo huì fēi ma?", ru:"А панда умеет летать?", w:[["熊猫", "Xióngmāo"], ["会", "huì"], ["飞", "fēi"], ["吗？", "ma?"]], t:[59.2,62.24]},
+ {id:"l16", k:"ming", zh:"不会！", py:"Bú huì!", ru:"Не умеет!", t:[62.24,63.76]},
+ {id:"l17", k:"mei", zh:"这是大象！好大！", py:"Zhè shì dàxiàng! Hǎo dà!", ru:"Это слон! Какой большой!", t:[67.28,70.85]},
+ {id:"l18", k:"long", zh:"猴子喜欢吃香蕉！", py:"Hóuzi xǐhuan chī xiāngjiāo!", ru:"Обезьяна любит бананы!", w:[["猴子", "Hóuzi"], ["喜欢", "xǐhuan"], ["吃", "chī"], ["香蕉！", "xiāngjiāo!"]], t:[74.85,77.55]},
+ {id:"l19", k:"tch", zh:"它会游泳吗？", py:"Tā huì yóuyǒng ma?", ru:"Он умеет плавать?", t:[81.07,84.11]},
+ {id:"l20", k:"ming", zh:"会！老虎会游泳！", py:"Huì! Lǎohǔ huì yóuyǒng!", ru:"Да! Тигр умеет плавать!", w:[["会！", "Huì!"], ["老虎", "Lǎohǔ"], ["会", "huì"], ["游泳！", "yóuyǒng!"]], t:[84.11,86.88]},
+ {id:"l21", k:"tch", zh:"太棒了，小明！", py:"Tài bàng le, Xiǎo Míng!", ru:"Молодец, Сяо Мин!", t:[86.88,89.32]},
+ {id:"l22", k:"long", zh:"它会飞！", py:"Tā huì fēi!", ru:"Она умеет летать!", t:[93.84,95.68]},
  {act:"Скамейка у выхода из зоопарка, вечер"},
- {id:"l23", k:"mei", zh:"小龙，你喜欢什么动物？", py:"Xiǎo Lóng, nǐ xǐhuan shénme dòngwù?", ru:"Сяо Лун, какое животное ты любишь?"},
- {id:"l24", k:"long", zh:"我喜欢熊猫！但是…我没有宠物。", py:"Wǒ xǐhuan xióngmāo! Dànshì… wǒ méiyǒu chǒngwù.", ru:"Я люблю панд! Но… у меня нет питомца.", w:[["我喜欢", "Wǒ xǐhuan"], ["熊猫！", "xióngmāo!"], ["但是…", "Dànshì…"], ["我没有", "wǒ méiyǒu"], ["宠物。", "chǒngwù."]]},
- {id:"l25", k:"ming", zh:"小龙，你有朋友！", py:"Xiǎo Lóng, nǐ yǒu péngyou!", ru:"Сяо Лун, у тебя есть друзья!", w:[["小龙，", "Xiǎo Lóng,"], ["你有", "nǐ yǒu"], ["朋友！", "péngyou!"]]},
- {id:"l26", k:"long", zh:"我没有宠物，但是我有朋友！", py:"Wǒ méiyǒu chǒngwù, dànshì wǒ yǒu péngyou!", ru:"Питомца нет, но есть друзья!", w:[["我没有", "Wǒ méiyǒu"], ["宠物，", "chǒngwù,"], ["但是", "dànshì"], ["我有", "wǒ yǒu"], ["朋友！", "péngyou!"]]},
- {id:"l27", k:"mei", zh:"我有一个朋友，他叫小龙！", py:"Wǒ yǒu yí ge péngyou, tā jiào Xiǎo Lóng!", ru:"У меня есть друг, его зовут Сяо Лун!", w:[["我有", "Wǒ yǒu"], ["一个朋友，", "yí ge péngyou,"], ["他叫", "tā jiào"], ["小龙！", "Xiǎo Lóng!"]]},
+ {id:"l23", k:"mei", zh:"小龙，你喜欢什么动物？", py:"Xiǎo Lóng, nǐ xǐhuan shénme dòngwù?", ru:"Сяо Лун, какое животное ты любишь?", t:[98.68,102.0]},
+ {id:"l24", k:"long", zh:"我喜欢熊猫！但是…我没有宠物。", py:"Wǒ xǐhuan xióngmāo! Dànshì… wǒ méiyǒu chǒngwù.", ru:"Я люблю панд! Но… у меня нет питомца.", w:[["我喜欢", "Wǒ xǐhuan"], ["熊猫！", "xióngmāo!"], ["但是…", "Dànshì…"], ["我没有", "wǒ méiyǒu"], ["宠物。", "chǒngwù."]], t:[102.0,106.9]},
+ {id:"l25", k:"ming", zh:"小龙，你有朋友！", py:"Xiǎo Lóng, nǐ yǒu péngyou!", ru:"Сяо Лун, у тебя есть друзья!", w:[["小龙，", "Xiǎo Lóng,"], ["你有", "nǐ yǒu"], ["朋友！", "péngyou!"]], t:[111.42,114.59]},
+ {id:"l26", k:"long", zh:"我没有宠物，但是我有朋友！", py:"Wǒ méiyǒu chǒngwù, dànshì wǒ yǒu péngyou!", ru:"Питомца нет, но есть друзья!", w:[["我没有", "Wǒ méiyǒu"], ["宠物，", "chǒngwù,"], ["但是", "dànshì"], ["我有", "wǒ yǒu"], ["朋友！", "péngyou!"]], t:[114.59,119.11]},
+ {id:"l27", k:"mei", zh:"我有一个朋友，他叫小龙！", py:"Wǒ yǒu yí ge péngyou, tā jiào Xiǎo Lóng!", ru:"У меня есть друг, его зовут Сяо Лун!", w:[["我有", "Wǒ yǒu"], ["一个朋友，", "yí ge péngyou,"], ["他叫", "tā jiào"], ["小龙！", "Xiǎo Lóng!"]], t:[119.11,122.28]},
  {act:"Финал"},
- {id:"l28", k:"mei", zh:"再见！", py:"Zàijiàn!", ru:"До свидания!"},
- {id:"l29", k:"long", zh:"明天见！", py:"Míngtiān jiàn!", ru:"До завтра!"},
- {id:"l30", k:"ming", zh:"拜拜！", py:"Báibái!", ru:"Пока-пока!"},
+ {id:"l28", k:"mei", zh:"再见！", py:"Zàijiàn!", ru:"До свидания!", t:[122.28,123.92]},
+ {id:"l29", k:"long", zh:"明天见！", py:"Míngtiān jiàn!", ru:"До завтра!", t:[123.92,126.76]},
+ {id:"l30", k:"ming", zh:"拜拜！", py:"Báibái!", ru:"Пока-пока!", t:[126.76,127.93]},
 ];
 /* сцена по ролям — сцена 3 (скамейка), реплики 23–27 */
 const SCENE=[
@@ -366,10 +366,9 @@ const SCENE=[
 
 /* ── собери фразу ── */
 const BF=ALLS.filter(s=>s.w); let bi=0, need=0, placed=[];
-let bfA=null; const vid={pause(){ if(bfA){ bfA.pause(); bfA=null; } }};   // «видео» урока 12 → звук реплики
-function playLine(s){ vid.pause(); $('bfPh').classList.add('off');
-  $('bfSay').innerHTML=`<span class="who" style="background:${H[s.k].c}"><b lang="zh">${H[s.k].zh}</b>${H[s.k].ru}</span><span class="z" lang="zh">${s.zh}</span><span class="p">${s.py}</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>`;
-  $('bfSay').classList.add('on'); bfA=new Audio('audio/'+s.id+'.mp3'); bfA.onended=()=>$('bfSay').classList.remove('on'); bfA.play().catch(()=>$('bfSay').classList.remove('on')); }
+const vid=$('bfVid'); let stopAt=0;
+vid.addEventListener('timeupdate',()=>{ if(stopAt && vid.currentTime>=stopAt){ vid.pause(); stopAt=0; } });
+function playLine(s){ $('bfPh').classList.add('off'); vid.currentTime=s.t[0]; stopAt=s.t[1]; vid.play().catch(()=>{ $('bfPh').classList.remove('off'); }); }
 function bfRound(){
   const s=BF[bi]; need=0; placed=[];
   $('bfN').textContent=bi+1; $('bfT').textContent=BF.length; $('bfWho').outerHTML=`<span class="who" id="bfWho" style="background:${H[s.k].c}"><b lang="zh">${H[s.k].zh}</b>${H[s.k].ru}</span>`;
@@ -377,7 +376,7 @@ function bfRound(){
   $('bfSlots').className='slots'; $('bfSlots').innerHTML=s.w.map(()=>'<span class="slot"></span>').join('');
   let order=shuffle(s.w.map((w,i)=>i)); if(order.every((v,i)=>v===i)&&order.length>1) order.reverse();
   $('bfTiles').innerHTML=order.map((i,n)=>`<button class="tile" style="--i:${n}" data-i="${i}"><span class="z" lang="zh">${s.w[i][0]}</span><span class="p">${s.w[i][1]}</span></button>`).join('');
-  $('bfNext').hidden=true; $('bfReplay').hidden=true; $('bfHint').hidden=false; $('bfPh').classList.remove('off'); $('bfSay').innerHTML=''; vid.pause();
+  $('bfNext').hidden=true; $('bfReplay').hidden=true; $('bfHint').hidden=false; $('bfPh').classList.remove('off'); vid.pause(); stopAt=0;
 }
 $('bfTiles').addEventListener('click',e=>{ const t=e.target.closest('.tile'); if(!t) return; const s=BF[bi];
   if(+t.dataset.i===need){ const slot=$('bfSlots').children[need]; const c=t.cloneNode(true); c.classList.add('placed'); c.style.animationDelay='0ms'; slot.replaceWith(c); t.classList.add('used'); need++;
