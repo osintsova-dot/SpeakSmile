@@ -44,14 +44,6 @@ button{font:inherit;-webkit-tap-highlight-color:transparent}
 .hero .py{font-size:clamp(19px,4.8vw,25px);font-weight:800;color:var(--honey);margin:8px 0 0}
 .hero .ru{font-size:clamp(15px,3.6vw,18px);font-weight:600;opacity:.92;margin:4px 0 0}
 
-/* ── что произошло? ── */
-const QS=[['Кто первым выходит на сцену?',['Мэймэй','Сяо Лун','Сяо Мин'],0],['Что спасает выступление Сяо Мина?',['Танец','Картина','Плавание'],1],['Что любит есть Сяо Лун?',['Лапшу','Яблоки','Пельмени'],2],
-  ['Что НЕ любит пить Сяо Мин?',['Молоко','Чай','Сок'],0],['Почему в конце все смеются?',['Кубок пропал','Сяо Мин говорит: «Я мастер поесть!»','Сяо Лун улетел'],1]];
-$('quiz').innerHTML=QS.map(([q,o],i)=>`<div class="qz-q"><b>${i+1}. ${q}</b><div class="qz-o">${o.map((x,j)=>`<button data-q="${i}" data-a="${j}">${x}</button>`).join('')}</div></div>`).join('');
-$('quiz').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const i=+b.dataset.q, ok=+b.dataset.a===QS[i][2], box=b.parentElement;
-  if(ok){ box.querySelectorAll('button').forEach(x=>{ x.disabled=true; x.classList.toggle('right',x===b); }); box.parentElement.classList.add('done'); }
-  else { b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong'); } });
-
 /* ── вкладки ── */
 .tabs{display:flex;justify-content:center;gap:4px;margin:24px auto 22px;padding:5px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none}

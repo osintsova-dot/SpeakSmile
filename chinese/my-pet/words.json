@@ -1,0 +1,243 @@
+{
+ "title_zh": "我的宠物",
+ "title_ru": "Мой питомец — повторяем уроки 13–14",
+ "n": 15,
+ "words": [
+  {
+   "div": true,
+   "zh": "我有！",
+   "ru": "Урок 13 · У меня есть",
+   "py": ""
+  },
+  {
+   "id": "q_pet",
+   "zh": "你有宠物吗？",
+   "py": "Nǐ yǒu chǒngwù ma?",
+   "ru": "У тебя есть питомец?",
+   "src": "../i-have/"
+  },
+  {
+   "id": "have",
+   "zh": "我有！",
+   "py": "Wǒ yǒu!",
+   "ru": "Есть!",
+   "src": "../i-have/"
+  },
+  {
+   "id": "nohave",
+   "zh": "我没有。",
+   "py": "Wǒ méiyǒu.",
+   "ru": "Нету.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "cat",
+   "zh": "我有一只猫。",
+   "py": "Wǒ yǒu yì zhī māo.",
+   "ru": "У меня есть кошка.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "dog",
+   "zh": "我有一只狗。",
+   "py": "Wǒ yǒu yì zhī gǒu.",
+   "ru": "У меня есть собака.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "fish",
+   "zh": "我有一条鱼。",
+   "py": "Wǒ yǒu yì tiáo yú.",
+   "ru": "У меня есть рыбка.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "bird",
+   "zh": "我有一只鸟。",
+   "py": "Wǒ yǒu yì zhī niǎo.",
+   "ru": "У меня есть птичка.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "rabbit",
+   "zh": "我有一只兔子。",
+   "py": "Wǒ yǒu yì zhī tùzi.",
+   "ru": "У меня есть кролик.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "hamster",
+   "zh": "我有一只仓鼠。",
+   "py": "Wǒ yǒu yì zhī cāngshǔ.",
+   "ru": "У меня есть хомяк.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "two_cats",
+   "zh": "我有两只猫！",
+   "py": "Wǒ yǒu liǎng zhī māo!",
+   "ru": "У меня две кошки!",
+   "src": "../i-have/"
+  },
+  {
+   "id": "q_what",
+   "zh": "你有什么宠物？",
+   "py": "Nǐ yǒu shénme chǒngwù?",
+   "ru": "Какой у тебя питомец?",
+   "src": "../i-have/"
+  },
+  {
+   "id": "name_pet",
+   "zh": "它叫咪咪。",
+   "py": "Tā jiào Mīmi.",
+   "ru": "Её зовут Мими.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "cute",
+   "zh": "好可爱！",
+   "py": "Hǎo kě'ài!",
+   "ru": "Какая прелесть!",
+   "src": "../i-have/"
+  },
+  {
+   "id": "he_has",
+   "zh": "他有一只狗。",
+   "py": "Tā yǒu yì zhī gǒu.",
+   "ru": "У него есть собака.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "but",
+   "zh": "我没有猫，但是我有狗。",
+   "py": "Wǒ méiyǒu māo, dànshì wǒ yǒu gǒu.",
+   "ru": "У меня нет кошки, но есть собака.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "friend",
+   "zh": "我有一个朋友。",
+   "py": "Wǒ yǒu yí ge péngyou.",
+   "ru": "У меня есть друг.",
+   "src": "../i-have/"
+  },
+  {
+   "div": true,
+   "zh": "动物",
+   "ru": "Урок 14 · Животные",
+   "py": ""
+  },
+  {
+   "id": "q_what",
+   "zh": "这是什么？",
+   "py": "Zhè shì shénme?",
+   "ru": "Что это?",
+   "src": "../animals/"
+  },
+  {
+   "id": "panda",
+   "zh": "这是熊猫。",
+   "py": "Zhè shì xióngmāo.",
+   "ru": "Это панда.",
+   "src": "../animals/"
+  },
+  {
+   "id": "tiger",
+   "zh": "这是老虎。",
+   "py": "Zhè shì lǎohǔ.",
+   "ru": "Это тигр.",
+   "src": "../animals/"
+  },
+  {
+   "id": "monkey",
+   "zh": "这是猴子。",
+   "py": "Zhè shì hóuzi.",
+   "ru": "Это обезьяна.",
+   "src": "../animals/"
+  },
+  {
+   "id": "elephant",
+   "zh": "这是大象。",
+   "py": "Zhè shì dàxiàng.",
+   "ru": "Это слон.",
+   "src": "../animals/"
+  },
+  {
+   "id": "snake",
+   "zh": "这是蛇。",
+   "py": "Zhè shì shé.",
+   "ru": "Это змея.",
+   "src": "../animals/"
+  },
+  {
+   "id": "lion",
+   "zh": "这是狮子。",
+   "py": "Zhè shì shīzi.",
+   "ru": "Это лев.",
+   "src": "../animals/"
+  },
+  {
+   "id": "bear",
+   "zh": "这是熊。",
+   "py": "Zhè shì xióng.",
+   "ru": "Это медведь.",
+   "src": "../animals/"
+  },
+  {
+   "id": "q_fly",
+   "zh": "它会飞吗？",
+   "py": "Tā huì fēi ma?",
+   "ru": "Оно умеет летать?",
+   "src": "../animals/"
+  },
+  {
+   "id": "can_fly",
+   "zh": "会！鸟会飞。",
+   "py": "Huì! Niǎo huì fēi.",
+   "ru": "Да! Птица умеет летать.",
+   "src": "../animals/"
+  },
+  {
+   "id": "cant_fly",
+   "zh": "不会！大象不会飞。",
+   "py": "Bú huì! Dàxiàng bú huì fēi.",
+   "ru": "Нет! Слон не умеет летать.",
+   "src": "../animals/"
+  },
+  {
+   "id": "q_eat",
+   "zh": "它喜欢吃什么？",
+   "py": "Tā xǐhuan chī shénme?",
+   "ru": "Что оно любит есть?",
+   "src": "../animals/"
+  },
+  {
+   "id": "bamboo",
+   "zh": "熊猫喜欢吃竹子。",
+   "py": "Xióngmāo xǐhuan chī zhúzi.",
+   "ru": "Панда любит бамбук.",
+   "src": "../animals/"
+  },
+  {
+   "id": "banana",
+   "zh": "猴子喜欢吃香蕉。",
+   "py": "Hóuzi xǐhuan chī xiāngjiāo.",
+   "ru": "Обезьяна любит бананы.",
+   "src": "../animals/"
+  },
+  {
+   "id": "tiger_swim",
+   "zh": "老虎会游泳！",
+   "py": "Lǎohǔ huì yóuyǒng!",
+   "ru": "Тигр умеет плавать!",
+   "src": "../animals/"
+  },
+  {
+   "id": "big",
+   "zh": "好大！",
+   "py": "Hǎo dà!",
+   "ru": "Какой большой!",
+   "src": "../animals/"
+  }
+ ]
+}

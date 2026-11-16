@@ -1,0 +1,67 @@
+{
+ "title_zh": "我的朋友",
+ "title_ru": "Мой друг — итог модуля 2",
+ "n": 16,
+ "words": [
+  {
+   "div": true,
+   "zh": "我的朋友",
+   "ru": "Мой друг — рассказ",
+   "py": "Wǒ de péngyou"
+  },
+  {
+   "id": "friend",
+   "zh": "我有一个朋友。",
+   "py": "Wǒ yǒu yí ge péngyou.",
+   "ru": "У меня есть друг.",
+   "src": "../i-have/"
+  },
+  {
+   "id": "his_name",
+   "zh": "他叫小明。",
+   "py": "Tā jiào Xiǎo Míng.",
+   "ru": "Его зовут Сяо Мин.",
+   "src": "../whats-your-name/"
+  },
+  {
+   "id": "ta_age",
+   "zh": "他十二岁。",
+   "py": "Tā shí'èr suì.",
+   "ru": "Ему двенадцать лет.",
+   "src": "../numbers/",
+   "imgs": [
+    "img/h10.webp",
+    "img/h2.webp"
+   ],
+   "fit": "contain"
+  },
+  {
+   "id": "but",
+   "zh": "我会说英语，但是不会说中文。",
+   "py": "Wǒ huì shuō Yīngyǔ, dànshì bú huì shuō Zhōngwén.",
+   "ru": "Я говорю по-английски, но не по-китайски.",
+   "src": "../i-can/"
+  },
+  {
+   "id": "good_sing",
+   "zh": "他很会唱歌。",
+   "py": "Tā hěn huì chànggē.",
+   "ru": "Он здорово поёт.",
+   "src": "../i-can/"
+  },
+  {
+   "id": "he_likes",
+   "zh": "他喜欢吃苹果。",
+   "py": "Tā xǐhuan chī píngguǒ.",
+   "ru": "Он любит яблоки.",
+   "src": "../i-like/"
+  },
+  {
+   "id": "he_has",
+   "zh": "他有一只狗。",
+   "py": "Tā yǒu yì zhī gǒu.",
+   "ru": "У него есть собака.",
+   "src": "../i-have/"
+  }
+ ]
+}
