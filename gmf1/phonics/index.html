@@ -227,7 +227,7 @@ const SND={
  ay:{act:'🖐 «эй» (play/day)'}, oy:{act:'🧒 «ой» (boy/toy)'}, ea:{act:'🌊 «и» (sea/meat)'}, ow:{act:'🐄 «оу/ау» (grow/cow)'}, ew:{act:'💙 «ю/у» (new/chew)'}, aw:{act:'🐾 «о» (saw/paw)'}, au:{act:'🍂 «о» (sauce/autumn)'}, ph:{act:'📱 «ф» (phone)'}, y:{act:'🪀 «й/и/ай» (yes/happy/sky)'},
  'a-e':{act:'✨ e в конце → a звучит «эй» (game)'}, 'i-e':{act:'✨ i→«ай» (bike)'}, 'o-e':{act:'✨ o→«оу» (nose)'}, 'u-e':{act:'✨ u→«ю» (cube)'}, 'al':{act:'⚽ «ол» (ball/tall)'}, ir:{act:'👧 «ё» (girl/bird) — как er'}, ur:{act:'⛪ «ё» (church/turn) — как er'},
 };
-// Начинающие · по тетради «Phonics Hero» (26 звуков → заглавные → гласные сочетания)
+// Начинающие (26 звуков → заглавные → гласные сочетания)
 const GROUPS=[
  {id:1,title:'s a t i p n',letters:['s','a','t','i','p','n'],desc:'Урок 1 · satipn',
   blend:[{w:'sat',img:'pics/w_sat.jpg'},{w:'pin',e:'📌',img:'pics/w_pin.jpg'},{w:'tap',e:'🚰',img:'pics/w_tap.jpg'},{w:'pan',e:'🍳',img:'pics/w_pan.jpg'},{w:'nap',e:'😴',img:'pics/w_nap.jpg'},{w:'tin',e:'🥫',img:'pics/w_tin.jpg'},{w:'sit',img:'pics/w_sit.jpg'},{w:'tip',img:'pics/w_tip.jpg'},{w:'ant',e:'🐜',img:'pics/w_ant.jpg'},{w:'spin',img:'pics/w_spin.jpg'}],
@@ -261,35 +261,29 @@ const GROUPS=[
   tricky:['they','so'],story:[{t:'Blue glue.',img:'stories/ue_1.jpg'},{t:'Sue has the glue.',img:'stories/ue_2.jpg'},{t:'Sue glues a blue box.',img:'stories/ue_3.jpg'},{t:'The glue is on the hand!',img:'stories/ue_4.jpg'},{t:'Sue is stuck! Ha ha!',img:'stories/ue_5.jpg'}]},
 ];
 const STATIONS=["🔤 Звуки","🔠 Заглавные","🔗 Блендинг","✍️ Сегментинг","⭐ Tricky","🎈 Шарики"];
-// Продолжающие · диграфы (по Pupil Book 1, стр. 21–41) — согласные и гласные сочетания
+// Продолжающие · новые сочетания (ai oa ie ee or ue qu уже пройдены в «Начинающих» — здесь не повторяем)
 const DIGRAPHS=[
- {id:1,title:'ai · oa',letters:['ai','oa'],desc:'rain · goat · Book 1 стр.21,23',
-  blend:[{w:'rain',e:'🌧️',img:'pics/w_rain.jpg'},{w:'train',e:'🚂',img:'pics/w_train.jpg'},{w:'paid'},{w:'snail',e:'🐌',img:'pics/w_snail.jpg'},{w:'wait'},{w:'tail',img:'pics/w_tail.jpg'},{w:'goat',e:'🐐',img:'pics/w_goat.jpg'},{w:'road',img:'pics/w_road.jpg'},{w:'soap',e:'🧼',img:'pics/w_soap.jpg'},{w:'coat',e:'🧥',img:'pics/w_coat.jpg'},{w:'toast',e:'🍞',img:'pics/w_toast.jpg'},{w:'soak'}],
-  tricky:['the','he','she'],story:[{t:'Rain on the hills.',img:'stories/digoa_1.jpg'},{t:'A goat waits in the rain.',img:'stories/digoa_2.jpg'},{t:'A snail is on the road.',img:'stories/digoa_3.jpg'},{t:'The goat spots a boat.',img:'stories/digoa_4.jpg'},{t:'The goat sits in the boat.',img:'stories/digoa_5.jpg'}]},
- {id:2,title:'ie · ee',letters:['ie','ee'],desc:'pie · tree · стр.24,25',
-  blend:[{w:'pie',e:'🥧',img:'pics/w_pie.jpg'},{w:'tie',img:'pics/w_tie.jpg'},{w:'lie'},{w:'die'},{w:'tree',e:'🌳',img:'pics/w_tree.jpg'},{w:'feet',e:'🦶',img:'pics/w_feet.jpg'},{w:'green',img:'pics/w_green.jpg'},{w:'seen'},{w:'bee',e:'🐝',img:'pics/w_bee.jpg'}],
-  tricky:['me','we','be'],story:[{t:'A green tree.',img:'stories/digee_1.jpg'},{t:'Bees buzz in the tree.',img:'stories/digee_2.jpg'},{t:'I see a pie!',img:'stories/digee_3.jpg'},{t:'The pie is at the tree.',img:'stories/digee_4.jpg'},{t:'A bee lies on the pie. Sweet!',img:'stories/digee_5.jpg'}]},
- {id:3,title:'or · ng',letters:['or','ng'],desc:'fork · king · стр.25,28',
-  blend:[{w:'fork',e:'🍴',img:'pics/w_fork.jpg'},{w:'corn',e:'🌽',img:'pics/w_corn.jpg'},{w:'horn',img:'pics/w_horn.jpg'},{w:'storm',e:'⛈️',img:'pics/w_storm.jpg'},{w:'king',e:'👑',img:'pics/w_king.jpg'},{w:'ring',e:'💍',img:'pics/w_ring.jpg'},{w:'sing',e:'🎤'},{w:'long'},{w:'wing',img:'pics/w_wing.jpg'},{w:'song',img:'pics/w_song.jpg'}],
-  tricky:['was','to','do'],story:[{t:'A king.',img:'stories/digng_1.jpg'},{t:'The king has corn.',img:'stories/digng_2.jpg'},{t:'The king gets a fork.',img:'stories/digng_3.jpg'},{t:'Ring, ring! The king sings.',img:'stories/digng_4.jpg'},{t:'The king is on a long swing!',img:'stories/digng_5.jpg'}]},
- {id:4,title:'oo (короткое/длинное)',letters:['oo'],desc:'moon · book · стр.30',
+ {id:1,title:'ng',letters:['ng'],desc:'king · ring',
+  blend:[{w:'king',img:'pics/w_king.jpg'},{w:'ring',img:'pics/w_ring.jpg'},{w:'sing'},{w:'long'},{w:'wing',img:'pics/w_wing.jpg'},{w:'song',img:'pics/w_song.jpg'},{w:'bang'},{w:'hang'},{w:'swing'},{w:'strong'}],
+  tricky:['she','be','was'],story:[{t:'A king.',img:'stories/digng_1.jpg'},{t:'The king has corn.',img:'stories/digng_2.jpg'},{t:'The king gets a fork.',img:'stories/digng_3.jpg'},{t:'Ring, ring! The king sings.',img:'stories/digng_4.jpg'},{t:'The king is on a long swing!',img:'stories/digng_5.jpg'}]},
+ {id:2,title:'oo (короткое/длинное)',letters:['oo'],desc:'moon · book',
   blend:[{w:'moon',e:'🌙',img:'pics/w_moon.jpg'},{w:'food',e:'🍔',img:'pics/w_food.jpg'},{w:'zoo',e:'🦁',img:'pics/w_zoo.jpg'},{w:'boot',e:'👢',img:'pics/w_boot.jpg'},{w:'spoon',e:'🥄',img:'pics/w_spoon.jpg'},{w:'book',e:'📖',img:'pics/w_book.jpg'},{w:'foot',e:'🦶',img:'pics/w_foot.jpg'},{w:'look',e:'👀',img:'pics/w_look.jpg'},{w:'wood',e:'🪵',img:'pics/w_wood.jpg'},{w:'good'}],
   tricky:['are','all','my'],story:[{t:'The moon is up.',img:'stories/digoo_1.jpg'},{t:'A cat is on the roof.',img:'stories/digoo_2.jpg'},{t:'The cat looks at the moon.',img:'stories/digoo_3.jpg'},{t:'The cat has good food.',img:'stories/digoo_4.jpg'},{t:'The cat naps.',img:'stories/digoo_5.jpg'}]},
- {id:5,title:'ch · sh · th',letters:['ch','sh','th'],desc:'согласные диграфы · стр.33–35',
+ {id:3,title:'ch · sh · th',letters:['ch','sh','th'],desc:'chip · ship · thin',
   blend:[{w:'chop',img:'pics/w_chop.jpg'},{w:'chin',img:'pics/w_chin.jpg'},{w:'chip',e:'🍟',img:'pics/w_chip.jpg'},{w:'rich'},{w:'bunch'},{w:'shop',e:'🛍️',img:'pics/w_shop.jpg'},{w:'fish',e:'🐟',img:'pics/w_fish.jpg'},{w:'ship',e:'🚢',img:'pics/w_ship.jpg'},{w:'brush',e:'🖌️',img:'pics/w_brush.jpg'},{w:'thin'},{w:'this'},{w:'that'},{w:'then'},{w:'moth',e:'🦋',img:'pics/w_moth.jpg'}],
   tricky:['by','you','your'],story:[{t:'A big ship.',img:'stories/digsh_1.jpg'},{t:'Fish and chips on the ship!',img:'stories/digsh_2.jpg'},{t:'This fish is thin.',img:'stories/digsh_3.jpg'},{t:'That fish is fat!',img:'stories/digsh_4.jpg'},{t:'Munch, munch! Yum!',img:'stories/digsh_5.jpg'}]},
- {id:6,title:'qu · ou',letters:['qu','ou'],desc:'queen · cloud · стр.36,37',
-  blend:[{w:'quick'},{w:'quilt',img:'pics/w_quilt.jpg'},{w:'queen',e:'👸',img:'pics/w_queen.jpg'},{w:'quiz',e:'❓',img:'pics/w_quiz.jpg'},{w:'squid',e:'🦑',img:'pics/w_squid.jpg'},{w:'out',img:'pics/w_out.jpg'},{w:'loud'},{w:'cloud',e:'☁️',img:'pics/w_cloud.jpg'},{w:'proud'},{w:'shout'},{w:'mouth',e:'👄',img:'pics/w_mouth.jpg'},{w:'round'}],
+ {id:4,title:'ou',letters:['ou'],desc:'cloud · mouth',
+  blend:[{w:'out',img:'pics/w_out.jpg'},{w:'loud'},{w:'cloud',img:'pics/w_cloud.jpg'},{w:'proud'},{w:'shout'},{w:'mouth',img:'pics/w_mouth.jpg'},{w:'round'},{w:'found'},{w:'sound'},{w:'count'}],
   tricky:['come','some','said'],story:[{t:'A queen.',img:'stories/digqu_1.jpg'},{t:'The queen looks out.',img:'stories/digqu_2.jpg'},{t:'A big cloud is loud!',img:'stories/digqu_3.jpg'},{t:'The queen is quick.',img:'stories/digqu_4.jpg'},{t:'Shh! The queen is proud.',img:'stories/digqu_5.jpg'}]},
- {id:7,title:'oi · ue',letters:['oi','ue'],desc:'coin · blue · стр.38,39',
-  blend:[{w:'coin',e:'🪙',img:'pics/w_coin.jpg'},{w:'soil',img:'pics/w_soil.jpg'},{w:'join'},{w:'point'},{w:'boil'},{w:'oil',img:'pics/w_oil.jpg'},{w:'blue',e:'💙',img:'pics/w_blue.jpg'},{w:'glue',img:'pics/w_glue.jpg'},{w:'true'},{w:'fuel',e:'⛽',img:'pics/w_fuel.jpg'},{w:'rescue',img:'pics/w_rescue.jpg'},{w:'statue',e:'🗽',img:'pics/w_statue.jpg'}],
+ {id:5,title:'oi',letters:['oi'],desc:'coin · oil',
+  blend:[{w:'coin',img:'pics/w_coin.jpg'},{w:'soil',img:'pics/w_soil.jpg'},{w:'join'},{w:'point'},{w:'boil'},{w:'oil',img:'pics/w_oil.jpg'},{w:'spoil'},{w:'foil'},{w:'moist'},{w:'joint'}],
   tricky:['here','there','they'],story:[{t:'A big coin.',img:'stories/digoi_1.jpg'},{t:'The coin is in the soil.',img:'stories/digoi_2.jpg'},{t:'A man digs for the coin.',img:'stories/digoi_3.jpg'},{t:'He gets it! Blue glue on it?',img:'stories/digoi_4.jpg'},{t:'The man is glad. Such a coin!',img:'stories/digoi_5.jpg'}]},
- {id:8,title:'er · ar',letters:['er','ar'],desc:'winter · star · стр.40,41',
+ {id:6,title:'er · ar',letters:['er','ar'],desc:'winter · star',
   blend:[{w:'her'},{w:'fern',e:'🌿',img:'pics/w_fern.jpg'},{w:'winter',e:'❄️',img:'pics/w_winter.jpg'},{w:'verb'},{w:'mitten',e:'🧤',img:'pics/w_mitten.jpg'},{w:'car',e:'🚗',img:'pics/w_car.jpg'},{w:'star',e:'⭐',img:'pics/w_star.jpg'},{w:'farm',e:'🚜',img:'pics/w_farm.jpg'},{w:'park',e:'🏞️',img:'pics/w_park.jpg'},{w:'arm',e:'💪',img:'pics/w_arm.jpg'},{w:'shark',e:'🦈',img:'pics/w_shark.jpg'},{w:'scarf',e:'🧣',img:'pics/w_scarf.jpg'}],
   tricky:['go','no','so'],story:[{t:'It is winter.',img:'stories/diger_1.jpg'},{t:'A star in the dark.',img:'stories/diger_2.jpg'},{t:'A farmer sees the star.',img:'stories/diger_3.jpg'},{t:'The farmer has a soft scarf.',img:'stories/diger_4.jpg'},{t:'The star is far. So far!',img:'stories/diger_5.jpg'}]},
 ];
 
-// Продвинутые · Шаг 4 (magic-e) + Шаг 5 (альт. написания) — по TCRW (Sue Lloyd)
+// Продвинутые · magic-e + альтернативные написания
 const ADV=[
  {id:1,title:'y = /и/',letters:['y'],desc:'Шаг 4 · happy',alias:{y:'ee'},acts:{y:'🐝 «и» на конце слова (happy, funny) — как ee'},blend:[{w:'happy',img:'pics/w_happy.jpg'},{w:'funny',img:'pics/w_funny.jpg'},{w:'sunny',img:'pics/w_sunny.jpg'},{w:'muddy',img:'pics/w_muddy.jpg'},{w:'jelly',img:'pics/w_jelly.jpg'},{w:'puppy',img:'pics/w_puppy.jpg'},{w:'story',img:'pics/w_story.jpg'},{w:'lucky',img:'pics/w_lucky.jpg'},{w:'silly',img:'pics/w_silly.jpg'}],tricky:['made','their'],story:[{t:'A happy puppy.',img:'stories/advy_1.jpg'},{t:'The puppy is funny.',img:'stories/advy_2.jpg'},{t:'The puppy is muddy!',img:'stories/advy_3.jpg'},{t:'Daddy is not happy.',img:'stories/advy_4.jpg'},{t:'But the puppy is so happy!',img:'stories/advy_5.jpg'}]},
  {id:2,title:'a-e',letters:['a-e'],desc:'Шаг 4 · game',blend:[{w:'game',img:'pics/w_game.jpg'},{w:'made'},{w:'cake',img:'pics/w_cake.jpg'},{w:'wave',img:'pics/w_wave.jpg'},{w:'plate',img:'pics/w_plate.jpg'},{w:'skate',img:'pics/w_skate.jpg'},{w:'name'},{w:'snake',img:'pics/w_snake.jpg'},{w:'late',img:'pics/w_late.jpg'}],tricky:['does','put'],story:[{t:'A cake!',img:'stories/adva_1.jpg'},{t:'Jane made the cake.',img:'stories/adva_2.jpg'},{t:'It is a game to bake.',img:'stories/adva_3.jpg'},{t:'A snake is at the cake!',img:'stories/adva_4.jpg'},{t:'No, snake! The cake is safe!',img:'stories/adva_5.jpg'}]},
@@ -326,34 +320,34 @@ const ADV=[
   let track='beg', gi=0, station=0;
 // Гласные: «ладошка» (краткий/долгий) + сортировка альтернативных написаний
 const VOW=[
- {id:1,title:'Краткий или долгий? 🖐',letters:['a','ai','e','ee','i','ie','o','oa','u','ue'],desc:'ладошка · ran/rain · PB3 стр.4',tricky:[],
+ {id:1,title:'Краткий или долгий? 🖐',letters:['a','ai','e','ee','i','ie','o','oa','u','ue'],desc:'ладошка · ran/rain',tricky:[],
   palm:[['ran','rain'],['cot','coat'],['bat','bait'],['net','neat'],['kit','kite'],['bed','bead'],['cub','cube'],['tap','tape'],['hop','hope'],['pin','pine']],
   blend:[{w:'ran'},{w:'rain',img:'pics/w_rain.jpg'},{w:'cot'},{w:'coat',img:'pics/w_coat.jpg'},{w:'kit'},{w:'kite',img:'pics/w_kite.jpg'},{w:'net'},{w:'neat'},{w:'cub'},{w:'cube',img:'pics/w_cube.jpg'}]},
- {id:2,title:'/эй/ · ai · ay · a-e',letters:['ai','ay','a-e'],desc:'rain · play · cake · PB3 стр.13',tricky:[],
+ {id:2,title:'/эй/ · ai · ay · a-e',letters:['ai','ay','a-e'],desc:'rain · play · cake',tricky:[],
   sort:{groups:['ai','ay','a-e'],words:[['rain','ai'],['snail','ai'],['paint','ai'],['train','ai'],['play','ay'],['may','ay'],['day','ay'],['hay','ay'],['name','a-e'],['cake','a-e'],['game','a-e']]},
   blend:[{w:'rain',img:'pics/w_rain.jpg'},{w:'snail',img:'pics/w_snail.jpg'},{w:'paint',img:'pics/w_paint.jpg'},{w:'train',img:'pics/w_train.jpg'},{w:'play',img:'pics/w_play.jpg'},{w:'day',img:'pics/w_day.jpg'},{w:'cake',img:'pics/w_cake.jpg'},{w:'game',img:'pics/w_game.jpg'},{w:'may'}]},
- {id:3,title:'/и/ · ee · ea · e-e',letters:['ee','ea','e-e'],desc:'tree · sea · these · PB3 стр.16',tricky:[],
+ {id:3,title:'/и/ · ee · ea · e-e',letters:['ee','ea','e-e'],desc:'tree · sea · these',tricky:[],
   sort:{groups:['ee','ea','e-e'],words:[['bee','ee'],['tree','ee'],['green','ee'],['three','ee'],['sea','ea'],['meat','ea'],['eat','ea'],['leaf','ea'],['these','e-e'],['theme','e-e'],['eve','e-e']]},
   blend:[{w:'bee',img:'pics/w_bee.jpg'},{w:'tree',img:'pics/w_tree.jpg'},{w:'green',img:'pics/w_green.jpg'},{w:'three'},{w:'sea',img:'pics/w_sea.jpg'},{w:'meat',img:'pics/w_meat.jpg'},{w:'leaf',img:'pics/w_leaf.jpg'},{w:'eat'},{w:'these'},{w:'theme'}]},
- {id:4,title:'/ай/ · ie · igh · y · i-e',letters:['ie','igh','y2','i-e'],alias:{y2:'ie'},acts:{y2:'🌌 «ай» на конце (sky, my)'},desc:'pie · light · sky · kite · PB3 стр.20',tricky:[],
+ {id:4,title:'/ай/ · ie · igh · y · i-e',letters:['ie','igh','y2','i-e'],alias:{y2:'ie'},acts:{y2:'🌌 «ай» на конце (sky, my)'},desc:'pie · light · sky · kite',tricky:[],
   sort:{groups:['ie','igh','y','i-e'],words:[['pie','ie'],['tie','ie'],['lie','ie'],['light','igh'],['night','igh'],['right','igh'],['high','igh'],['my','y'],['sky','y'],['fly','y'],['try','y'],['kite','i-e'],['time','i-e'],['five','i-e'],['like','i-e']]},
   blend:[{w:'pie',img:'pics/w_pie.jpg'},{w:'tie',img:'pics/w_tie.jpg'},{w:'light',img:'pics/w_light.jpg'},{w:'night',img:'pics/w_night.jpg'},{w:'high',img:'pics/w_high.jpg'},{w:'sky',img:'pics/w_sky.jpg'},{w:'fly',img:'pics/w_fly.jpg'},{w:'kite',img:'pics/w_kite.jpg'},{w:'time',img:'pics/w_time.jpg'},{w:'five',img:'pics/w_five.jpg'}]},
- {id:5,title:'/оу/ · oa · ow · o-e',letters:['oa','ow','o-e'],alias:{ow:'oa'},desc:'goat · snow · home · PB3 стр.23',tricky:[],
+ {id:5,title:'/оу/ · oa · ow · o-e',letters:['oa','ow','o-e'],alias:{ow:'oa'},desc:'goat · snow · home',tricky:[],
   sort:{groups:['oa','ow','o-e'],words:[['goat','oa'],['boat','oa'],['coat','oa'],['toast','oa'],['snow','ow'],['show','ow'],['slow','ow'],['window','ow'],['home','o-e'],['nose','o-e'],['rose','o-e'],['bone','o-e']]},
   blend:[{w:'goat',img:'pics/w_goat.jpg'},{w:'boat',img:'pics/w_boat.jpg'},{w:'coat',img:'pics/w_coat.jpg'},{w:'toast',img:'pics/w_toast.jpg'},{w:'snow',img:'pics/w_snow.jpg'},{w:'window',img:'pics/w_window.jpg'},{w:'home',img:'pics/w_home.jpg'},{w:'nose',img:'pics/w_nose.jpg'},{w:'rose'},{w:'bone',img:'pics/w_bone.jpg'}]},
- {id:6,title:'/ю/ · ue · ew · u-e',letters:['ue','ew','u-e'],desc:'blue · new · cube · PB3 стр.27',tricky:[],
+ {id:6,title:'/ю/ · ue · ew · u-e',letters:['ue','ew','u-e'],desc:'blue · new · cube',tricky:[],
   sort:{groups:['ue','ew','u-e'],words:[['blue','ue'],['glue','ue'],['true','ue'],['statue','ue'],['new','ew'],['chew','ew'],['stew','ew'],['blew','ew'],['cube','u-e'],['cute','u-e'],['mule','u-e'],['tune','u-e']]},
   blend:[{w:'blue',img:'pics/w_blue.jpg'},{w:'glue',img:'pics/w_glue.jpg'},{w:'statue',img:'pics/w_statue.jpg'},{w:'true'},{w:'new',img:'pics/w_new.jpg'},{w:'stew',img:'pics/w_stew.jpg'},{w:'chew'},{w:'cube',img:'pics/w_cube.jpg'},{w:'cute',img:'pics/w_cute.jpg'},{w:'mule',img:'pics/w_mule.jpg'}]},
- {id:7,title:'/ау/ · ou · ow',letters:['ou','ow2'],alias:{ow2:'ou'},acts:{ow2:'🐄 «ау» (cow, owl) — как ou'},desc:'house · cow · PB3 стр.31',tricky:[],
+ {id:7,title:'/ау/ · ou · ow',letters:['ou','ow2'],alias:{ow2:'ou'},acts:{ow2:'🐄 «ау» (cow, owl) — как ou'},desc:'house · cow',tricky:[],
   sort:{groups:['ou','ow'],words:[['out','ou'],['house','ou'],['mouse','ou'],['cloud','ou'],['sound','ou'],['mouth','ou'],['cow','ow'],['owl','ow'],['town','ow'],['brown','ow'],['down','ow'],['flower','ow']]},
   blend:[{w:'out',img:'pics/w_out.jpg'},{w:'cloud',img:'pics/w_cloud.jpg'},{w:'mouth',img:'pics/w_mouth.jpg'},{w:'house'},{w:'mouse'},{w:'cow',img:'pics/w_cow.jpg'},{w:'owl',img:'pics/w_owl.jpg'},{w:'town',img:'pics/w_town.jpg'},{w:'brown',img:'pics/w_brown.jpg'},{w:'flower',img:'pics/w_flower.jpg'}]},
- {id:8,title:'/ой/ · oi · oy',letters:['oi','oy'],desc:'coin · boy · PB3 стр.35',tricky:[],
+ {id:8,title:'/ой/ · oi · oy',letters:['oi','oy'],desc:'coin · boy',tricky:[],
   sort:{groups:['oi','oy'],words:[['oil','oi'],['coin','oi'],['join','oi'],['point','oi'],['soil','oi'],['boil','oi'],['boy','oy'],['toy','oy'],['joy','oy'],['enjoy','oy'],['annoy','oy'],['royal','oy']]},
   blend:[{w:'oil',img:'pics/w_oil.jpg'},{w:'coin',img:'pics/w_coin.jpg'},{w:'soil',img:'pics/w_soil.jpg'},{w:'join'},{w:'point'},{w:'boy',img:'pics/w_boy.jpg'},{w:'toy',img:'pics/w_toy.jpg'},{w:'joy',img:'pics/w_joy.jpg'},{w:'enjoy'},{w:'royal'}]},
- {id:9,title:'/ё/ · er · ir · ur',letters:['er','ir','ur'],desc:'sister · bird · turn · PB3 стр.39',tricky:[],
+ {id:9,title:'/ё/ · er · ir · ur',letters:['er','ir','ur'],desc:'sister · bird · turn',tricky:[],
   sort:{groups:['er','ir','ur'],words:[['sister','er'],['dinner','er'],['letter','er'],['number','er'],['cooker','er'],['bird','ir'],['third','ir'],['shirt','ir'],['girl','ir'],['thirst','ir'],['turn','ur'],['hurt','ur'],['burn','ur']]},
   blend:[{w:'bird',img:'pics/w_bird.jpg'},{w:'girl',img:'pics/w_girl.jpg'},{w:'shirt',img:'pics/w_shirt.jpg'},{w:'sister'},{w:'dinner'},{w:'letter'},{w:'turn',img:'pics/w_turn.jpg'},{w:'hurt'},{w:'burn',img:'pics/w_burn.jpg'}]},
- {id:10,title:'/эа/ · air · ear · are',letters:['air','ear','are'],desc:'chair · bear · hare · PB3 стр.44',tricky:[],
+ {id:10,title:'/эа/ · air · ear · are',letters:['air','ear','are'],desc:'chair · bear · hare',tricky:[],
   acts:{air:'🪜 «эа» (chair, stairs, pair)',ear:'🐻 «эа» пишется ear (bear, pear, wear)',are:'🐇 «эа» пишется are (hare, square, dare)'},
   sort:{groups:['air','ear','are'],words:[['chair','air'],['stairs','air'],['pair','air'],['fairy','air'],['hair','air'],['bear','ear'],['pear','ear'],['wear','ear'],['hare','are'],['square','are'],['dare','are'],['scarecrow','are']]},
   blend:[{w:'chair'},{w:'stairs'},{w:'pair'},{w:'hair'},{w:'fairy'},{w:'bear'},{w:'pear'},{w:'wear'},{w:'hare'},{w:'square'}]},
@@ -361,7 +355,7 @@ const VOW=[
   const TRACKS={ beg:GROUPS, dig:DIGRAPHS, adv:ADV, vow:VOW };
   function DATA(){ return TRACKS[track]; }
   function LES(){ return DATA()[gi]; }
-  function priorLetters(){ if(track==='vow') return []; let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); return a; } // у Гласных уроки автономные
+  function priorLetters(){ if(track==='vow') return []; let a=[]; for(let k=0;k<gi;k++) a=a.concat(DATA()[k].letters); if(track==='dig') a=['ai','oa','ie','ee','or','ue','qu'].concat(a); return a; } // у Гласных уроки автономные
   // ===== Новые игры (идеи Оксаны: jigsaw / anagram / read&reveal / пчёлки) =====
   function imgWords(){ return LES().blend.filter(x=>x.img); }
   function renderJigsaw(){ // 🧩 картинка ↔ слово
@@ -453,7 +447,7 @@ const VOW=[
           busyB=false; },1000); }
       else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } });
   }
-  // ===== Дорожка «Гласные» (PB3): Ладошка (краткий/долгий) + Сортировка написаний =====
+  // ===== Дорожка «Гласные»: Ладошка (краткий/долгий) + Сортировка написаний =====
   function renderPalm(){ // 🖐 краткий (✊) или долгий (🖐)? Долгий гласный «называет своё имя»
     const P=LES().palm, p=$("#panel"); if(!P){ p.innerHTML='<div class="lead">Нет данных.</div>'; return; }
     const items=shuffle(P.flatMap(([s,l])=>[{w:s,long:false},{w:l,long:true}]));
@@ -470,7 +464,7 @@ const VOW=[
       else { const b=isLong?$("#pmL"):$("#pmS"); b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),400); } };
     $("#pmS").onclick=()=>ans(false); $("#pmL").onclick=()=>ans(true); show();
   }
-  function renderSort(){ // 🏠 сортировка: слово → домик с его написанием (как колонки в PB3)
+  function renderSort(){ // 🏠 сортировка: слово → домик с его написанием (колонки)
     const S=LES().sort, p=$("#panel"); if(!S){ p.innerHTML='<div class="lead">Нет данных.</div>'; return; }
     const queue=shuffle(S.words.slice()); let qi=0;
     p.innerHTML=`<div class="lead">🏠 Прочитай слово и тапни <b>домик</b> с его написанием звука.</div>
@@ -528,8 +522,8 @@ const VOW=[
   function known(){ const K=new Set(), F={endy:false,softc:false,yie:false};
     const add=L=>{ (L.letters||[]).forEach(c=>K.add(dispG(c))); if(L.alias){ if(L.alias.y==='ee') F.endy=true; if(L.alias.y2==='ie'){ F.yie=true; F.endy=true; } if(L.alias.c==='s') F.softc=true; } };
     if(track==='beg'){ for(let k=0;k<=gi;k++) add(GROUPS[k]); }
-    else if(track==='dig'){ ALPHA.forEach(c=>K.add(c)); for(let k=0;k<=gi;k++) add(DIGRAPHS[k]); }
-    else { ALPHA.forEach(c=>K.add(c)); K.add('qu'); DIGRAPHS.forEach(add); for(let k=0;k<=gi;k++) add(ADV[k]); }
+    else if(track==='dig'){ ALPHA.forEach(c=>K.add(c)); GROUPS.forEach(add); for(let k=0;k<=gi;k++) add(DIGRAPHS[k]); }
+    else { ALPHA.forEach(c=>K.add(c)); K.add('qu'); GROUPS.forEach(add); DIGRAPHS.forEach(add); for(let k=0;k<=gi;k++) add(ADV[k]); }
     return [K,F]; }
   function tokens(w){ const out=[]; let i=0; while(i<w.length){ let m=null; for(const g of GR){ if(w.substr(i,g.length)===g){ m=g; break; } } if(m){ out.push(m); i+=m.length; } else { out.push(w[i]); i++; } } return out; }
   function magicE(w){ const m=w.match(/([aeiou])([^aeiouy]{1,2})e$/); return (m && !/ee$/.test(w) && m[2][0]!=='r') ? m[1]+'-e' : null; } // car-e/large — не magic-e
@@ -680,9 +674,9 @@ const VOW=[
       <a class="tile" href="read-race.html" style="text-decoration:none"><div class="big">🚀🐝</div><div class="t">Гонка чтения</div><div class="d">2 команды · кто первый к финишу</div></a>
       <a class="tile" href="read-quiz.html" style="text-decoration:none"><div class="big">🎳🏀</div><div class="t">Боулинг · Баскетбол</div><div class="d">прочитай слово — сбей кегли / забрось мяч</div></a></div>`;
     h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
-    h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Согласные и гласные сочетания (Finger Phonics 4–7) — «дифтонги»</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
-    h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Шаг 4–5 по TCRW (Sue Lloyd): magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
-    h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">По Pupil Book 3: «ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
+    h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Новые сочетания: ng · oo · ch sh th · ou · oi · er ar</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
+    h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
+    h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">«Ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
     wrap.innerHTML=h;
     wrap.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{ if(!t.dataset.t) return; if(t.dataset.t==="caps"){openCaps();return;} openLesson(t.dataset.t,+t.dataset.i); }); // <a>-плитки игр не трогаем
   }
