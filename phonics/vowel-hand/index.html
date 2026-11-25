@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>The vowel hand · песня гласных</title>
-<meta name="description" content="Ладошка гласных (Jolly Phonics, Step 3): короткие a e i o u на пальцах, долгие ai ee ie oa ue под кружками, песня гласных.">
+<meta name="description" content="Ладошка гласных: короткие a e i o u на пальцах, долгие ai ee ie oa ue под кружками, песня гласных.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +25,7 @@ button{font:inherit;cursor:pointer;color:inherit;border:0;background:none}
 /* короткие гласные на пальцах — прозрачные кнопки поверх букв */
 .v{position:absolute;width:9%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%}
 .v:active,.v.say{background:rgba(108,63,197,.18)}
-/* кружки «?» над долгими гласными — как в Jolly */
+/* кружки «?» над долгими гласными */
 .q{position:absolute;width:9.4%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:var(--c);border:.35vh solid #111;box-shadow:0 .4vh 0 rgba(0,0,0,.25);display:grid;place-items:center;font-weight:700;font-size:min(4.4vh,6vw);color:#111;transition:transform .45s var(--ease),opacity .35s}
 .q.open{transform:translate(-50%,-50%) scale(.2) rotate(-90deg);opacity:0;pointer-events:none}
 .lv{position:absolute;width:11%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%}
@@ -62,7 +62,7 @@ body.sung .hint{display:none}
 </style>
 </head>
 <body>
-<div class="top"><a class="back" href="../../gmf1/phonics/">← Phonics Hub</a><div class="title">✋ The vowel hand<small>Jolly Phonics · Step 3 · Alternatives</small></div></div>
+<div class="top"><a class="back" href="../../gmf1/phonics/">← Phonics Hub</a><div class="title">✋ The vowel hand<small>Alternatives</small></div></div>
 <div class="stage">
   <div class="hand" id="hand"><img src="hand.jpg" alt="Ладошка гласных: a e i o u на пальцах, ai ee ie oa ue у оснований"><div class="lyr" id="lyr">A vowel is in every word!</div></div>
   <div class="board" id="board"><img class="st" data-g="" src="p_head.jpg" alt="When two vowels go walking, the first does the talking!"><img class="st" data-g="ai" src="p_ai.jpg" alt="ai: rain, train"><img class="st" data-g="ee" src="p_ee.jpg" alt="ee: bee, tree"><img class="st" data-g="ie" src="p_ie.jpg" alt="ie: pie, tie"><img class="st" data-g="oa" src="p_oa.jpg" alt="oa: boat, goat"><img class="st" data-g="ue" src="p_ue.jpg" alt="ue: blue, glue"><img class="st" data-g="" src="p_foot.jpg" alt="Look out for exceptions!"></div>
@@ -78,7 +78,7 @@ body.sung .hint{display:none}
 <div class="rule" id="rule"><div class="pw" id="rulePw"><img src="rule.jpg" alt="When two vowels go walking, the first does the talking: rain, train, bee, tree, pie, tie, boat, goat, blue, glue"><button class="x" id="ruleX" aria-label="Закрыть">✕</button></div></div>
 <script>
 const SND='../../gmf1/phonics/sounds/';
-// координаты в % картинки (из урока Jolly lesson_step3_unit5, кадр 1000×1200)
+// координаты в % картинки (кадр 1000×1200)
 const SHORT=[['a',21,37.4],['e',28.7,20.2],['i',41.5,16.6],['o',53.7,18.5],['u',67.6,29.4]];
 const LONG=[['ai',29.6,51.8,'#FFE94A'],['ee',35.6,38.9,'#F7A23C'],['ie',44.9,35.1,'#FFE94A'],['oa',53.1,39.6,'#B04A9E'],['ue',61.8,42.6,'#A86A33']];
 const H=document.getElementById('hand');let au=null;
