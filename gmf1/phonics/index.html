@@ -205,6 +205,7 @@
   <div class="wrap" id="wrap"></div>
 </div>
 
+<script src="voice/manifest.js?v=1"></script>
 <script>
 const SND={
  s:{act:'🐍 Рука волной, «ссссс» (змея)'}, a:{act:'🐜 Пальцы у локтя, «а-а-а» (муравей)'},
@@ -316,7 +317,11 @@ const ADV=[
   function pv(){ const vs=speechSynthesis.getVoices(); voice=vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null; }
   pv(); if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=pv;
   const SAY_AS={ "I":"eye", "a":"uh", "paid":"payed" };   // I=/aɪ/(eye); артикль a=/ə/(schwa); paid — синтез читал «paik», фонетич. написание чинит
-  function say(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(SAY_AS[t]||t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
+  function tts(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(SAY_AS[t]||t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
+  // Живая озвучка (voice/manifest.js → window.PH_VOICE): слово → voice/w/<слово>.mp3, фраза рассказа → voice/s/<id>.mp3. Нет записи или не загрузилась — говорит синтезатор.
+  let phAu=null;
+  function voiceFile(t){ const V=window.PH_VOICE; if(!V) return null; t=String(t); if(V.s&&V.s[t]) return 's/'+V.s[t]; if(/^[A-Za-z']+$/.test(t)){ const k=t.toLowerCase().replace(/[^a-z]/g,''); if(V.w&&V.w[k]) return 'w/'+k; } return null; }
+  function say(t){ try{ speechSynthesis.cancel(); }catch(e){} try{ if(phAu){ phAu.onerror=null; phAu.pause(); phAu=null; } const f=voiceFile(t); if(f){ const a=new Audio('voice/'+f+'.mp3?v='+((window.PH_VOICE||{}).v||1)); phAu=a; a.onerror=()=>{ if(phAu===a) tts(t); }; const pr=a.play(); if(pr&&pr.catch) pr.catch(()=>{ if(phAu===a) tts(t); }); return; } }catch(e){} tts(t); }
 
   let track='beg', gi=0, station=0;
 // Гласные: «ладошка» (краткий/долгий) + сортировка альтернативных написаний

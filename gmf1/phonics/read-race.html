@@ -200,6 +200,7 @@
   <div class="cbtns"><button class="cbtn ok" id="againBtn">Ещё раз ⚔️</button><button class="cbtn say" onclick="location.href='index.html'">← Назад</button></div>
 </div></div>
 
+<script src="voice/manifest.js?v=1"></script>
 <script>
 (function(){
   "use strict";
@@ -389,7 +390,9 @@
   let voice=null;
   function pv(){ const vs=speechSynthesis.getVoices(); voice=vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/en-US/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null; }
   pv(); if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=pv;
-  function speak(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
+  function tts(t){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.lang="en-GB"; if(voice)u.voice=voice; u.rate=.85; u.pitch=1.05; speechSynthesis.speak(u);}catch(e){} }
+  let phAu=null; // живая озвучка, синтезатор — запасной
+  function speak(t){ try{ speechSynthesis.cancel(); }catch(e){} try{ if(phAu){ phAu.onerror=null; phAu.pause(); phAu=null; } const V=window.PH_VOICE, k=String(t).toLowerCase().replace(/[^a-z]/g,''); if(V&&V.w&&/^[A-Za-z']+$/.test(String(t))&&V.w[k]){ const a=new Audio('voice/w/'+k+'.mp3?v='+(V.v||1)); phAu=a; a.onerror=()=>{ if(phAu===a) tts(t); }; const pr=a.play(); if(pr&&pr.catch) pr.catch(()=>{ if(phAu===a) tts(t); }); return; } }catch(e){} tts(t); }
   function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1400); }
   function zap(){ try{ const AC=window.AudioContext||window.webkitAudioContext; const ac=window.__ac||(window.__ac=new AC());
     const o=ac.createOscillator(), g=ac.createGain(); o.type="sawtooth";
