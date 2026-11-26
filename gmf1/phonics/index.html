@@ -482,13 +482,14 @@ const VOW=[
   }
 
   // ===== 🌈 ПОВТОР ЗВУКОВ (флеш-карточки): яркая плашка, клик → следующий звук, вразброс, за круг каждый по разу =====
-  function reviewLetters(){ const L=LES(); let a=priorLetters().concat(L.letters);
+  // withNew=false — «Повтор» в начале урока: только звуки ПРОШЛЫХ уроков (новый звук ещё не представлен, Оксана 26.11); true — игры после знакомства со звуком
+  function reviewLetters(withNew){ const L=LES(); let a=priorLetters().concat(withNew?L.letters:[]);
     if(track==='dig' && a.length<8) a=a.concat(shuffle('satipnckehrmdgoulfbjvwxyz'.split('')).slice(0,8-a.length)); // диграфов мало → добиваем пройденными буквами
     if(track==='adv' && a.length<8) a=a.concat(shuffle(DIGRAPHS.flatMap(x=>x.letters)).slice(0,8-a.length));
     return [...new Set(a)]; }
   let rvPic=true; // картинка-подсказка на карточке (выкл = только буквы, сложнее)
   function renderReview(){
-    const letters=reviewLetters(), p=$("#panel");
+    const letters=reviewLetters(false), p=$("#panel");
     let order=[], pos=0, lastC=null, busy=false;
     const deal=()=>{ order=shuffle(letters); if(order.length>1 && order[0]===lastC){ order.push(order.shift()); } pos=0; };
     p.innerHTML=`<div class="lead">🌈 <b>Повтор звуков:</b> клик по карточке — следующий звук. Дети хором называют звук (и показывают движение). Вразброс, за круг каждый звук по разу.</div>
@@ -632,7 +633,7 @@ const VOW=[
     wrap.innerHTML='<div class="panel" id="panel"></div>'; applyZoom(); renderHomeWords(); }
   // ===== ⭕ КРЕСТИКИ-НОЛИКИ по группе: звуки (все пройденные) или слова для чтения → read-ttt.html с набором урока =====
   function renderTTT(){ const p=$("#panel"), L=LES();
-    const snd=reviewLetters(), ws=lessonWordSets().sets.flat();
+    const snd=reviewLetters(true), ws=lessonWordSets().sets.flat();
     const t=encodeURIComponent(L.title), fr=(()=>{ try{ const f=new URLSearchParams(location.search).get("from")||sessionStorage.getItem("ph_from"); return f?'&from='+f:''; }catch(e){ return ''; } })();
     const uS='read-ttt.html?snd='+snd.map(c=>encodeURIComponent(dispG(c)+':'+skey(c))).join(',')+'&title='+t+fr;
     const uW='read-ttt.html?w='+ws.map(encodeURIComponent).join(',')+'&title='+t+fr;
