@@ -1,0 +1,54 @@
+/* Speaky Phonics: оформление хаба «как тетрадь». Только для продукта (подключается сборкой build_site.py после phonics-theme.css).
+   Цвета частей с обложек: 1 фиолетовый, 2 медовый, 3 розовый, 4 бирюзовый. */
+:root{--sp900:#2A1763;--sp700:#4B28A6;--sp500:#6C3FC5;--sp100:#EFE8FF;--sphoney:#F5C842;--sphoneyd:#D9A400;--sppink:#C73A62;--spteal:#17756A;--spink:#22154A}
+body{background-color:#FBF9FF;background-image:radial-gradient(circle at 20px 24px,#E3D8FA 0 2px,transparent 3px),radial-gradient(circle at 92px 78px,#F7E3A0 0 2px,transparent 3px);background-size:140px 120px;color:var(--spink)}
+.topbar{background:var(--sp900);border-bottom:4px solid var(--sphoney);box-shadow:none}
+.topbar .btn{background:#4B28A6;border:1px solid #8E73DA}
+.topbar .btn:hover,.topbar .btn:focus-visible{background:#5B33B0}
+
+/* главный экран: шапка как обложка */
+.sphero{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px;margin:4px 0 8px;padding:34px 36px 0 36px;border-radius:30px;color:#fff;background-color:#4B28A6;
+  background-image:radial-gradient(circle at 9% 22%,#fff 0 2px,transparent 3px),radial-gradient(circle at 34% 12%,#FFE27A 0 2.5px,transparent 3.5px),radial-gradient(circle at 57% 30%,#fff 0 1.5px,transparent 2.5px),radial-gradient(circle at 71% 14%,#FFE27A 0 2px,transparent 3px),linear-gradient(150deg,#3B2180 0%,#5B33B0 62%,#6238BE 100%)}
+.sphero::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-2px;height:54px;background:var(--sphoney);border-radius:50% 50% 0 0/100% 100% 0 0}
+.sphero>div{position:relative;z-index:1;padding-bottom:86px}
+.sphero h1{color:#fff;margin:0 0 10px;font-size:clamp(36px,5.4vw,64px);text-shadow:0 4px 0 #2A1763}
+.sphero h1 b{color:var(--sphoney)}
+.sphero .sub{color:#EDE6FF;max-width:520px}
+.sphero img{position:relative;z-index:1;width:clamp(120px,19vw,230px);height:auto;margin-bottom:8px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.3))}
+
+/* заголовки разделов: полоска с ярлыком, как шапка урока в тетради */
+h2.sec{display:flex;align-items:center;gap:10px;margin:40px 0 10px;padding:11px 20px 11px 20px;border-radius:18px;background:var(--sp500);color:#fff;font-size:clamp(19px,2.2vw,26px);text-shadow:none}
+.wrap>h2.sec:nth-of-type(4){background:var(--sphoney);color:var(--spink)}
+.wrap>h2.sec:nth-of-type(5){background:var(--sppink)}
+.wrap>h2.sec:nth-of-type(6){background:var(--spteal)}
+.subsec{margin:0 0 12px 4px;color:#5B5378}
+
+/* плитки уроков: цвет части */
+.tile{border:2px solid #E6DEF7;box-shadow:0 10px 22px -18px rgba(52,26,120,.55);background:#fff}
+.tile:hover,.tile:focus-visible{border-color:#B9A2F2;box-shadow:0 16px 28px -18px rgba(52,26,120,.6)}
+.tile.pt1{background:#F5F0FF;border-color:#D9CCF7}.tile.pt1 .big{color:#5B33B0}
+.tile.pt2{background:#FFF7DC;border-color:#F3DD94}.tile.pt2 .big{color:#8A5A00}
+.tile.pt3{background:#FFEDF2;border-color:#F4C3D0}.tile.pt3 .big{color:#B02A55}
+.tile.pt4{background:#E6F6F3;border-color:#B4DDD6}.tile.pt4 .big{color:#12665C}
+.tile.locked{background:#F3F1F7;border-color:#E2DEEA}
+
+/* тетрадь: обложки */
+.tile.wb{display:grid;grid-template-columns:86px 1fr;gap:6px 16px;align-items:start;min-height:0}
+.tile.wb .wbc{grid-row:span 3;width:86px;height:auto;border-radius:8px;box-shadow:0 8px 16px -10px rgba(40,20,90,.6)}
+.tile.wb .wbl{grid-column:1/-1}
+.wbl a{background:var(--sp500)}
+
+/* экран урока */
+.panel{background-color:#4B28A6;background-image:radial-gradient(circle at 6% 10%,#fff 0 1.5px,transparent 2.5px),radial-gradient(circle at 93% 16%,#FFE27A 0 2px,transparent 3px),radial-gradient(circle at 88% 86%,#fff 0 1.5px,transparent 2.5px),linear-gradient(150deg,#4B28A6 0%,#5B33B0 55%,#5A55C4 100%);box-shadow:0 18px 36px -22px rgba(42,23,99,.8)}
+.stbar{background:var(--sp900)}
+.stbar .mid{background:var(--sphoney)}
+.spbar{color:#5B5378}
+
+@media(max-width:600px){
+  .sphero{padding:24px 20px 0 20px;border-radius:24px}
+  .sphero>div{padding-bottom:70px}
+  .sphero img{width:104px}
+  h2.sec{margin-top:30px;padding:9px 16px 9px 16px;border-radius:15px}
+  .tile.wb{grid-template-columns:64px 1fr}
+  .tile.wb .wbc{width:64px}
+}

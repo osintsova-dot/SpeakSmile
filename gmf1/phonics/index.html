@@ -195,6 +195,7 @@
   @keyframes shk{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
 </style>
 <link rel="stylesheet" href="phonics-theme.css">
+<link rel="stylesheet" href="skin/skin.css?v=1">
 
 <div id="app">
   <div class="topbar">
@@ -660,10 +661,12 @@ const VOW=[
     window.PZ=Z; p.style.zoom=Z; wrap.style.maxWidth=Math.round(920*Z)+'px'; }
   window.addEventListener('resize',()=>{ if($("#panel")) applyZoom(); });
   // ---------- HUB ----------
+  // цвет плитки по части тетради (оформление «как тетрадь», 26.11): 1 алфавит, 2 диграфы, 3 Magic E и «Краткий или долгий?», 4 остальное
+  const PT=(tr,i)=>tr==="beg"?1:tr==="dig"?2:tr==="adv"?((i>=1&&i<=3)?3:4):tr==="vow"?(i===0?3:4):1;
   function renderHub(){
     window._stGo=null; window.PZ=1; wrap.style.maxWidth=""; $("#back").style.display="none"; $("#htitle").textContent="🔤 Phonics Hub"; setHash('');
-    const tile=(tr,i,g)=>`<button class="tile" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.map(dispG).join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc}${g.tricky.length?' · '+g.tricky.length+' tricky':''}</div></button>`;
-    let h=`<h1>🔤 Phonics Hub</h1><div class="sub">Для проектора · звуки говорит учитель, слова целиком можно послушать 🔊</div>`;
+    const tile=(tr,i,g)=>`<button class="tile pt${PT(tr,i)}" data-t="${tr}" data-i="${i}"><div class="big">${g.letters.map(dispG).join(' ')}</div><div class="t">${g.title}</div><div class="d">${g.desc}${g.tricky.length?' · '+g.tricky.length+' tricky':''}</div></button>`;
+    let h=`<div class="sphero"><div><h1>Phonics <b>Hub</b></h1><div class="sub">Для проектора: звуки говорит учитель, слова целиком можно послушать 🔊</div></div><img src="skin/pose-cheer.png" alt=""></div>`;
     h+=`<h2 class="sec">🎵 Песня</h2><div class="grid">
       <a class="tile" href="../../phonics/alphabet-game/" style="text-decoration:none;background:linear-gradient(135deg,#6C3FC5,#8a5cf0);color:#fff"><div class="big">🎵 a–z · A–Zed</div><div class="t" style="color:#fff">The Alphabet Game</div><div class="d" style="color:rgba(255,255,255,.8)">звуки → названия букв · анимация на экран · пробел — пауза, F — во весь экран</div></a>
       <a class="tile" href="../../phonics/alphabet-song/" style="text-decoration:none;background:linear-gradient(135deg,#F5C842,#ffb347);color:#2a1253"><div class="big" style="color:#2a1253">🔤 A–Z</div><div class="t" style="color:#2a1253">The Alphabet · песня</div><div class="d" style="color:rgba(42,18,83,.75)">Give Me Five! 2 · нажми букву — её название · буквы загораются под песню · просто алфавит</div></a>
@@ -673,7 +676,7 @@ const VOW=[
       <a class="tile" href="read-ttt.html" style="text-decoration:none"><div class="big">⭕✖️</div><div class="t">Крестики-нолики</div><div class="d">прочитай слово — займи клетку</div></a>
       <a class="tile" href="read-race.html" style="text-decoration:none"><div class="big">🚀🐝</div><div class="t">Гонка чтения</div><div class="d">2 команды · кто первый к финишу</div></a>
       <a class="tile" href="read-quiz.html" style="text-decoration:none"><div class="big">🎳🏀</div><div class="t">Боулинг · Баскетбол</div><div class="d">прочитай слово — сбей кегли / забрось мяч</div></a></div>`;
-    h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
+    h+=`<h2 class="sec">🐣 Начинающие · звуки</h2><div class="grid">`+GROUPS.map((g,i)=>tile('beg',i,g)).join('')+`<button class="tile pt1" data-t="caps"><div class="big">A a</div><div class="t">Заглавные A–Z</div><div class="d">строчная ↔ ЗАГЛАВНАЯ</div></button></div>`;
     h+=`<h2 class="sec">🚀 Продолжающие · диграфы</h2><div class="subsec">Две буквы — один звук: ai · oa ie · ee or · ue · ng · oo · ch sh th · ou · oi · er ar</div><div class="grid">`+DIGRAPHS.map((g,i)=>tile('dig',i,g)).join('')+`</div>`;
     h+=`<h2 class="sec">🏆 Продвинутые · magic-e и альт. написания</h2><div class="subsec">Magic-e, ay/oy, ea, igh, ow, ir/ur, ew/aw, soft c/g, ph…</div><div class="grid">`+ADV.map((g,i)=>tile('adv',i,g)).join('')+`</div>`;
     h+=`<h2 class="sec">🖐 Гласные · краткие/долгие + написания</h2><div class="subsec">«Ладошка» ran/rain + сортировка написаний одного звука (ai·ay·a-e…)</div><div class="grid">`+VOW.map((g,i)=>tile('vow',i,g)).join('')+`</div>`;
