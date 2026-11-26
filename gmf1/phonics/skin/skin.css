@@ -8,10 +8,10 @@ body{background-color:#FBF9FF;background-image:radial-gradient(circle at 20px 24
 
 /* главный экран: шапка как обложка */
 .sphero{position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px;margin:4px 0 8px;padding:34px 36px 0 36px;border-radius:30px;color:#fff;background-color:#4B28A6;
-  background-image:radial-gradient(circle at 9% 22%,#fff 0 2px,transparent 3px),radial-gradient(circle at 34% 12%,#FFE27A 0 2.5px,transparent 3.5px),radial-gradient(circle at 57% 30%,#fff 0 1.5px,transparent 2.5px),radial-gradient(circle at 71% 14%,#FFE27A 0 2px,transparent 3px),linear-gradient(150deg,#3B2180 0%,#5B33B0 62%,#6238BE 100%)}
+  background-image:radial-gradient(circle at 52% 9%,#fff 0 2px,transparent 3px),radial-gradient(circle at 66% 20%,#FFE27A 0 2.5px,transparent 3.5px),radial-gradient(circle at 80% 8%,#fff 0 1.5px,transparent 2.5px),radial-gradient(circle at 92% 22%,#FFE27A 0 2px,transparent 3px),linear-gradient(150deg,#3B2180 0%,#5B33B0 62%,#6238BE 100%)}
 .sphero::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-2px;height:54px;background:var(--sphoney);border-radius:50% 50% 0 0/100% 100% 0 0}
 .sphero>div{position:relative;z-index:1;padding-bottom:86px}
-.sphero h1{color:#fff;margin:0 0 10px;font-size:clamp(36px,5.4vw,64px);text-shadow:0 4px 0 #2A1763}
+.sphero h1{color:#fff;margin:0 0 10px;font-size:clamp(36px,5.4vw,64px);text-shadow:0 2px 0 rgba(26,12,70,.35)}
 .sphero h1 b{color:var(--sphoney)}
 .sphero .sub{color:#EDE6FF;max-width:520px}
 .sphero img{position:relative;z-index:1;width:clamp(120px,19vw,230px);height:auto;margin-bottom:8px;filter:drop-shadow(0 12px 12px rgba(0,0,0,.3))}
