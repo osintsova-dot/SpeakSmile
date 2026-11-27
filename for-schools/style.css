@@ -422,3 +422,25 @@ body.camp-page .film{margin-top:36px}
 .camp-link{margin-top:18px;font-size:15px}
 .camp-link a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(245,200,66,.4);padding-bottom:2px}
 .camp-link a:hover{border-bottom-color:var(--gold)}
+
+/* плашка Speaky Phonics — новинка, в цветах обложек тетради (мёд и фиолет) */
+.prod.phon{background:radial-gradient(120% 100% at 100% 0%,#FFE892 0%,#F9D45C 46%,#F2BE38 100%);color:#2A1B05;box-shadow:0 30px 60px -38px rgba(190,140,20,.75)}
+.prod.phon:hover{box-shadow:0 34px 70px -34px rgba(190,140,20,.9)}
+.prod.phon h3{color:#2A1B05}
+.prod.phon p{color:#4A3610}
+.prod.phon .meta{color:#6B5220}
+.prod.phon .meta b{color:#4E2A99}
+.prod.phon .go{background:#5B2FC4;color:#fff}
+.prod.phon .tag{margin:-2px 0 -4px}
+.prod.phon .pill{background:#5B2FC4;color:#fff;letter-spacing:.02em}
+.prod.phon .art{gap:0;margin:-4px 0 4px}
+.prod.phon .art img{width:72px;aspect-ratio:240/339;object-position:50% 0;border-radius:10px;box-shadow:0 12px 22px -12px rgba(80,50,0,.6);transition:transform .4s var(--ease)}
+.prod.phon .art img+img{margin-left:-12px}
+.prod.phon .art img:nth-child(1){transform:rotate(-5deg)}
+.prod.phon .art img:nth-child(2){transform:rotate(-1.5deg) translateY(-3px)}
+.prod.phon .art img:nth-child(3){transform:rotate(2deg) translateY(-3px)}
+.prod.phon .art img:nth-child(4){transform:rotate(5.5deg)}
+.prod.phon:hover .art img:nth-child(1){transform:rotate(-8deg) translateX(-3px)}
+.prod.phon:hover .art img:nth-child(4){transform:rotate(8.5deg) translateX(3px)}
+@media (prefers-reduced-motion:reduce){.prod.phon .art img{transition:none}}
+@media(min-width:900px){.prod.phon{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px 36px}.prod.phon .art{grid-row:1/span 4;margin:0 6px 0 4px}.prod.phon .art img{width:92px}.prod.phon .tag{margin:0}.prod.phon .meta{margin-top:0;padding-top:0}.prod.phon .go{grid-column:3;grid-row:1/span 4}}
