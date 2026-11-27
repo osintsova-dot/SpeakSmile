@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Гость у костра — пятиминутка на уроке · Speak &amp; Smile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+:root{--ink:#1d1830;--mut:#625b78;--line:#e7e2f3;--bg:#f7f5fb;--card:#fff;--pur:#6c3fc5;--pur-s:#f0eafb;--gold:#f5c842;--gold-s:#fff6d6;--teal:#0f766e;--teal-s:#e2f4f1}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right)) 56px max(16px,env(safe-area-inset-left))}
+header{padding:8px 0 4px}
+.eyebrow{margin:0 0 8px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--pur)}
+h1{margin:0 0 10px;font-size:clamp(26px,6vw,36px);line-height:1.12;letter-spacing:-.01em;text-wrap:balance}
+.lead{margin:0;color:var(--mut);font-size:17px;max-width:60ch}
+h2{margin:36px 0 12px;font-size:21px;line-height:1.2;text-wrap:balance}
+h3{margin:0 0 6px;font-size:17px}
+p{margin:0 0 12px}
+.rule{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:var(--gold-s);border:1px solid #f1dc8a;font-weight:500}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.tabs button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;font-size:15px;padding:9px 14px;border-radius:999px;cursor:pointer;min-height:44px;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.tabs button i{font-style:normal;font-weight:500;color:var(--mut);margin-left:2px}
+.tabs button[aria-pressed="true"]{background:var(--pur);border-color:var(--pur);color:#fff}
+.tabs button[aria-pressed="true"] i{color:#e3d8fb}
+.tabs button:focus-visible,.dl:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.t{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:0 0 12px}
+.t h3{font-size:19px;margin-bottom:2px}
+.day{margin:14px 0 6px;font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mut)}
+.g{list-style:none;margin:0;padding:0}
+.g li{display:grid;grid-template-columns:54px 1fr auto;gap:2px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.g li:first-child{border-top:0}
+.tm{font-variant-numeric:tabular-nums;font-size:17px}
+.gn{font-weight:600;min-width:0}.gn small{display:block;font-weight:400;color:var(--mut);font-size:13px}
+.v{font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.v-pic{background:var(--gold-s);color:#7a5a00}.v-abc{background:var(--pur-s);color:var(--pur)}.v-teen{background:var(--teal-s);color:var(--teal)}
+.sp{grid-column:2/-1;color:var(--mut);font-size:13px}
+.note{color:var(--mut);font-size:14px;margin:8px 0 0}
+.video{display:grid;grid-template-columns:minmax(0,220px) 1fr;gap:16px;align-items:center}
+.video video{width:100%;aspect-ratio:9/16;border-radius:12px;background:#120d24;display:block}
+.dl{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border-radius:12px;background:var(--pur);color:#fff;font-weight:600;text-decoration:none}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps>li{counter-increment:s;position:relative;padding:14px 0 14px 46px;border-top:1px solid var(--line);min-width:0}
+.steps>li:first-child{border-top:0}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:14px;width:32px;height:32px;border-radius:50%;background:var(--pur-s);color:var(--pur);font-weight:700;display:grid;place-items:center}
+.steps h3 span{font-weight:500;color:var(--mut);font-size:14px;margin-left:6px}
+.say{margin:8px 0 0;padding:10px 12px;border-left:3px solid var(--gold);background:#fffbea;border-radius:0 10px 10px 0}
+.say em{font-style:normal;font-weight:600}
+.vars{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:10px 0 0}
+.vars div{padding:10px 12px;border-radius:12px;border:1px solid var(--line);min-width:0;overflow-wrap:anywhere}.vars .v{margin-right:6px}
+.words{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;letter-spacing:.04em}.words span{white-space:nowrap}
+footer{margin-top:36px;color:var(--mut);font-size:14px}
+@media (max-width:520px){.video{grid-template-columns:1fr}.video video{max-width:240px;margin:0 auto}.g li{grid-template-columns:50px 1fr auto}}
+@media print{body{background:#fff}.tabs,.dl,video{display:none!important}.t,.card{break-inside:avoid;border-color:#ccc}.t[hidden]{display:block!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Учителям Speak &amp; Smile · 7–12 декабря</p>
+  <h1>Гость у костра: пятиминутка на уроке</h1>
+  <p class="lead">Один раз в каждой группе, в конце урока или вместо разминки. Дети пробуют зимний квест «Истории у костра» в миниатюре и уходят с вопросом «а что дальше?».</p>
+  <p class="rule">Задача одна: заинтриговать. Про покупку и цену с детьми не говорим и не просим их уговаривать родителей. Родителям школа напишет сама.</p>
+</header>
+
+<h2>Когда и в какой группе</h2>
+<div class="tabs" role="group" aria-label="Чьё расписание показать"><button type="button" data-f="">Все <i>19</i></button><button type="button" data-f="Екатерина">Екатерина <i>8</i></button><button type="button" data-f="Ксения">Ксения <i>8</i></button><button type="button" data-f="Оксана">Оксана <i>3</i></button></div>
+<section class="t" data-t="Екатерина"><h3>Екатерина</h3><p class="day">Понедельник, 7.12</p><ul class="g"><li><b class="tm">15:00</b><span class="gn">GMF 4B<small>Adventure</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: пт 11.12, 15:00</small></li><li><b class="tm">16:05</b><span class="gn">GMF 3B<small>Adventure</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: пт 11.12, 16:05</small></li><li><b class="tm">17:10</b><span class="gn">Get Involved 2B<small>Adventure</small></span><span class="v v-teen">старшие</span><small class="sp">запасной день: пт 11.12, 17:10</small></li></ul><p class="day">Вторник, 8.12</p><ul class="g"><li><b class="tm">15:00</b><span class="gn">Get Involved 1A<small>Adventure</small></span><span class="v v-teen">старшие</span><small class="sp">запасной день: чт 10.12, 15:00</small></li><li><b class="tm">16:35</b><span class="gn">Prepare 3A<small>Adventure</small></span><span class="v v-teen">старшие</span><small class="sp">запасной день: чт 10.12, 16:35</small></li><li><b class="tm">18:10</b><span class="gn">GMF 1B<small>Adventure</small></span><span class="v v-pic">картинки</span><small class="sp">запасной день: чт 10.12, 18:10</small></li><li><b class="tm">19:15</b><span class="gn">GMF 2A<small>Adventure</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: чт 10.12, 19:15</small></li></ul><p class="day">Среда, 9.12</p><ul class="g"><li><b class="tm">18:30</b><span class="gn">Get Involved 1B<small>Innovation</small></span><span class="v v-teen">старшие</span><small class="sp">запасной день: сб 12.12, 14:30</small></li></ul></section>
+<section class="t" data-t="Ксения"><h3>Ксения</h3><p class="day">Понедельник, 7.12</p><ul class="g"><li><b class="tm">15:00</b><span class="gn">GMF 4A<small>Discovery</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: пт 11.12, 15:00</small></li><li><b class="tm">17:40</b><span class="gn">GMF 2B<small>Discovery</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: пт 11.12, 17:40</small></li></ul><p class="day">Вторник, 8.12</p><ul class="g"><li><b class="tm">17:10</b><span class="gn">GMF 3D<small>Discovery</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: чт 10.12, 17:10</small></li><li><b class="tm">18:35</b><span class="gn">GMF 3A<small>Innovation</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: чт 10.12, 18:35</small></li></ul><p class="day">Среда, 9.12</p><ul class="g"><li><b class="tm">15:00</b><span class="gn">GMF 3C<small>Adventure</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: сб 12.12, 12:40</small></li><li><b class="tm">16:05</b><span class="gn">GMF 2C<small>Discovery</small></span><span class="v v-abc">буквы</span><small class="sp">запасной день: сб 12.12, 13:50</small></li><li><b class="tm">17:10</b><span class="gn">Get Involved 2A<small>Adventure</small></span><span class="v v-teen">старшие</span><small class="sp">запасной день: сб 12.12, 11:00</small></li><li><b class="tm">18:50</b><span class="gn">GMF 1C<small>Adventure</small></span><span class="v v-pic">картинки</span><small class="sp">запасной день: сб 12.12, 15:00</small></li></ul></section>
+<section class="t" data-t="Оксана"><h3>Оксана</h3><p class="day">Вторник, 8.12</p><ul class="g"><li><b class="tm">18:20</b><span class="gn">Mimi 3<small>Discovery</small></span><span class="v v-pic">картинки</span><small class="sp">запасной день: чт 10.12, 18:20</small></li><li><b class="tm">19:30</b><span class="gn">GMF 1A<small>Discovery</small></span><span class="v v-pic">картинки</span><small class="sp">запасной день: чт 10.12, 19:30</small></li></ul><p class="day">Среда, 9.12</p><ul class="g"><li><b class="tm">19:00</b><span class="gn">Genki<small>Discovery</small></span><span class="v v-pic">картинки</span><small class="sp">запасной день: сб 12.12, 13:20</small></li></ul></section>
+<p class="note">Проводим на первом уроке недели. Запасной день — второй урок, если на первом не получилось. Пометка справа подсказывает вариант испытания: картинки, буквы или старшие.</p>
+<p class="note">Без пятиминутки: Gateway B2, Prepare 4A, Prepare 5A, Китайский. Квест рассчитан на 5–14 лет, в этих группах его не показываем.</p>
+
+<h2>Видео для начала</h2>
+<div class="card video">
+  <video controls playsinline preload="none" poster="https://storyfire.ru/media/kit_teaser_poster.jpg" src="https://storyfire.ru/media/kit_teaser.mp4"></video>
+  <div>
+    <h3>Тизер квеста, 27 секунд</h3>
+    <p>Включите в шаге «Тайна»: свет приглушить, звук погромче. Ролик вертикальный, на большом экране идёт с полями по бокам.</p>
+    <a class="dl" href="https://storyfire.ru/media/kit_teaser.mp4" download="Истории у костра — тизер.mp4">Скачать ролик</a>
+    <p class="note">Если в кабинете нет интернета, скачайте заранее на свой ноутбук или телефон.</p>
+  </div>
+</div>
+
+<h2>Сценарий, 5 минут</h2>
+<div class="card">
+<ol class="steps">
+  <li><h3>Тайна <span>1 минута</span></h3>
+    <p>Говорите шёпотом, потом включаете тизер.</p>
+    <p class="say">«Этой зимой случилась беда. Лёд пришёл во все книги сразу, и герои выпали из своих историй в зимний лес».</p></li>
+  <li><h3>Гость <span>1 минута</span></h3>
+    <p>«К нашему костру кто-то идёт…» Читаете за Алису и ждёте дружного <b>Yes!</b></p>
+    <p class="say"><em>I followed a rabbit. Now my book is frozen! Will you help me?</em></p></li>
+  <li><h3>Испытание <span>2 минуты</span></h3>
+    <p>«Мыши Мышиного короля погрызли буквы!» После каждого слова: «Страница оттаяла!»</p>
+    <div class="vars">
+      <div><span class="v v-pic">картинки</span> Ещё не читают. Показываете или рисуете кролика, часы и шляпу. Дети называют: <b>rabbit, watch, hat</b>.</div>
+      <div><span class="v v-abc">буквы</span> Читают. На доске <span class="words"><span>R_BB_T</span> · <span>W_TCH</span> · <span>L_TE</span></span>. Группа восстанавливает <b>rabbit, watch, late</b>.</div>
+      <div><span class="v v-teen">старшие</span> Слова длиннее и на время, по командам: <span class="words"><span>FR_Z_N</span> · <span>M_ST_RY</span> · <span>C_R__US</span></span>. Ответы: <b>frozen, mystery, curious</b>.</div>
+    </div></li>
+  <li><h3>Награда <span>1 минута</span></h3>
+    <p class="say">«Кто помогает героям, собирает их значки. У Алисы значок „Любопытство“. А героев десять: Маугли, Шерлок, Питер Пэн… Чей значок вы хотите первым?»</p></li>
+  <li><h3>Финал</h3>
+    <p class="say">«Герои придут к костру 27 декабря».</p>
+    <p style="margin-top:10px">На этом останавливаетесь. Оборванная история зовёт сильнее законченной.</p></li>
+</ol>
+</div>
+
+<h2>Если дети спрашивают, как поиграть</h2>
+<div class="card"><p style="margin:0">«Начало открыто уже сейчас, ссылка у родителей в сообщениях от школы».</p></div>
+
+<h2>Что дальше делает школа</h2>
+<div class="card"><p style="margin:0">В понедельник 7 декабря вечером родителям уйдёт сообщение с песней героя и словами «на этой неделе учителя покажут детям гостей костра». От вас после урока ничего не нужно. Если дети особенно загорелись, расскажите об этом Оксане Владимировне: такие истории нам нужны.</p></div>
+
+<footer>Расписание взято из CRM 27.11.2026. Если урок перенесли, проводите на ближайшем.</footer>
+</div>
+<script>
+(function(){var b=document.querySelectorAll('.tabs button'),s=document.querySelectorAll('.t'),k='fire5min_teacher',cur='';
+try{cur=localStorage.getItem(k)||''}catch(e){}
+function show(f){var ok=false;[].forEach.call(s,function(x){if(x.getAttribute('data-t')===f)ok=true});if(!ok)f='';
+[].forEach.call(s,function(x){x.hidden=!!f&&x.getAttribute('data-t')!==f});
+[].forEach.call(b,function(x){x.setAttribute('aria-pressed',String(x.getAttribute('data-f')===f))});try{localStorage.setItem(k,f)}catch(e){}}
+[].forEach.call(b,function(x){x.addEventListener('click',function(){show(x.getAttribute('data-f'))})});show(cur);})();
+</script>
+</body>
+</html>
