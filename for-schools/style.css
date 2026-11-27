@@ -444,3 +444,16 @@ body.camp-page .film{margin-top:36px}
 .prod.phon:hover .art img:nth-child(4){transform:rotate(8.5deg) translateX(3px)}
 @media (prefers-reduced-motion:reduce){.prod.phon .art img{transition:none}}
 @media(min-width:900px){.prod.phon{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px 36px}.prod.phon .art{grid-row:1/span 4;margin:0 6px 0 4px}.prod.phon .art img{width:92px}.prod.phon .tag{margin:0}.prod.phon .meta{margin-top:0;padding-top:0}.prod.phon .go{grid-column:3;grid-row:1/span 4}}
+/* 27.11: на широком экране все плашки продуктов — во всю ширину, одна под другой (как лагерь и новинка) */
+@media(min-width:900px){
+  .prods{grid-template-columns:1fr}
+  .prod.app,.prod.dark{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px 36px}
+  .prod.app .icons,.prod.dark .art{grid-row:1/span 3;margin:0}
+  .prod.app .meta,.prod.dark .meta{margin-top:0;padding-top:0}
+  .prod.app .go,.prod.dark .go{grid-column:3;grid-row:1/span 3}
+  .prod.dark .art img{width:76px}
+}
+@media(min-width:900px){
+  .prod.app,.prod.dark,.prod.camp,.prod.phon{grid-template-columns:292px 1fr auto}
+  .prod.app .icons,.prod.dark .art,.prod.camp .art,.prod.phon .art{justify-self:center;margin:0}
+}
